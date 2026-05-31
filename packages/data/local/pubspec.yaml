@@ -1,0 +1,25 @@
+name: fnx_data_local
+description: FinNex local persistence via sqflite (web + mobile + desktop).
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  fnx_domain:
+    path: ../../domain
+  sqflite: ^2.4.0
+  sqflite_common_ffi_web: ^0.4.5
+  path: ^1.9.0
+  path_provider: ^2.1.4
+  meta: ^1.15.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  sqflite_common_ffi: ^2.3.3

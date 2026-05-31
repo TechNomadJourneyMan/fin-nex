@@ -1,0 +1,17 @@
+name: fnx_domain
+description: FinNex pure-Dart domain models, value objects, repositories, and use cases.
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  decimal: ^3.0.2
+  equatable: ^2.0.5
+  meta: ^1.15.0
+
+dev_dependencies:
+  test: ^1.25.7
+  mocktail: ^1.0.4
+  lints: ^4.0.0

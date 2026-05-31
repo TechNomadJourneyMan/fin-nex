@@ -1,0 +1,32 @@
+# Build artifacts
+build/
+**/build/
+.dart_tool/
+**/.dart_tool/
+
+# Native platform code — not needed for web deploy
+ios/
+android/
+macos/
+linux/
+windows/
+
+# Backend — deployed separately
+backend/
+
+# Test / dev
+**/test/
+**/.git/
+**/.idea/
+**/.vscode/
+**/node_modules/
+
+# Docs / source package
+../FinNex_Product_Package/
+
+# Local env
+.env
+.env.*
+
+# OS
+.DS_Store

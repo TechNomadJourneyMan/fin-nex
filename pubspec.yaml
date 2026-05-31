@@ -1,0 +1,10 @@
+name: finnex_workspace
+description: FinNex personal finance Flutter monorepo root.
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+
+dev_dependencies:
+  melos: ^6.1.0

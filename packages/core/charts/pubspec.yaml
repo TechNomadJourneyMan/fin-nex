@@ -1,0 +1,21 @@
+name: fnx_core_charts
+description: FinNex chart primitives — thin wrappers around fl_chart.
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  fnx_core_tokens:
+    path: ../tokens
+  fl_chart: ^0.69.0
+  intl: ^0.20.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0

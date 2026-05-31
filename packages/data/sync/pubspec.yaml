@@ -1,0 +1,27 @@
+name: fnx_data_sync
+description: FinNex offline-first sync engine (outbox, pull cursors, conflict resolver).
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  fnx_domain:
+    path: ../../domain
+  fnx_data_local:
+    path: ../local
+  fnx_data_api:
+    path: ../api
+  flutter_riverpod: ^2.5.0
+  connectivity_plus: ^6.1.0
+  shared_preferences: ^2.3.0
+  meta: ^1.15.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0

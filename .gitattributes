@@ -1,0 +1,28 @@
+# Normalize line endings on checkin.
+* text=auto eol=lf
+
+# Dart
+*.dart text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.html text eol=lf
+*.css  text eol=lf
+*.ts   text eol=lf
+*.tsx  text eol=lf
+*.js   text eol=lf
+*.sh   text eol=lf
+
+# Binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.zip binary
+*.pdf binary

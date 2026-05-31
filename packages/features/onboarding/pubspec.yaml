@@ -1,0 +1,30 @@
+name: fnx_feat_onboarding
+description: FinNex onboarding feature module.
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  go_router: ^14.2.7
+  shared_preferences: ^2.3.2
+  fnx_core_l10n:
+    path: ../../core/l10n
+  fnx_core_theme:
+    path: ../../core/theme
+  fnx_core_tokens:
+    path: ../../core/tokens
+  fnx_core_widgets:
+    path: ../../core/widgets
+  fnx_domain:
+    path: ../../domain
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0

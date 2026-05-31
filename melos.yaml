@@ -1,0 +1,42 @@
+name: finnex
+repository: https://github.com/TechNomadJourneyMan/fin-nex
+
+packages:
+  - apps/*
+  - packages/**
+
+command:
+  bootstrap:
+    runPubGetInParallel: true
+  version:
+    branch: main
+    workspaceChangelog: true
+
+scripts:
+  analyze:
+    description: Run flutter analyze across the workspace
+    run: melos exec -- "flutter analyze ."
+
+  format:
+    description: Format all Dart code
+    run: melos exec -- "dart format --line-length=90 ."
+
+  format_check:
+    description: Verify formatting without writing changes
+    run: melos exec -- "dart format --line-length=90 --set-exit-if-changed ."
+
+  test:
+    description: Run all tests
+    run: melos exec --concurrency=1 --fail-fast -- "flutter test"
+
+  clean:
+    description: Clean all build artifacts
+    run: melos exec -- "flutter clean"
+
+  build_runner_build:
+    description: Run code generation everywhere it is needed
+    run: melos exec --depends-on="build_runner" -- "dart run build_runner build --delete-conflicting-outputs"
+
+  build_runner_watch:
+    description: Watch code generation
+    run: melos exec --depends-on="build_runner" -- "dart run build_runner watch --delete-conflicting-outputs"

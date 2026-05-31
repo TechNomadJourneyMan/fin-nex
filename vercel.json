@@ -1,0 +1,9 @@
+{
+  "buildCommand": "bash install-flutter.sh",
+  "outputDirectory": "apps/finnex/build/web",
+  "framework": null,
+  "installCommand": "echo 'using install-flutter.sh'",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

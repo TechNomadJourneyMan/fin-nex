@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: finnex-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: finnex
+      POSTGRES_PASSWORD: finnex
+      POSTGRES_DB: finnex
+    ports:
+      - '5432:5432'
+    volumes:
+      - finnex_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U finnex']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: finnex-redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - finnex_redis_data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  adminer:
+    image: adminer:latest
+    container_name: finnex-adminer
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+
+volumes:
+  finnex_pg_data:
+  finnex_redis_data:

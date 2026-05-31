@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  flutter:
+    name: Flutter analyze, test, build web
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    defaults:
+      run:
+        working-directory: apps/finnex
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter 3.24.5 (stable)
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.24.5
+          channel: stable
+          cache: true
+
+      - name: Flutter version
+        run: flutter --version
+
+      - name: Pub get (app)
+        run: flutter pub get
+
+      - name: Pub get (workspace packages)
+        working-directory: .
+        run: |
+          set -e
+          for pkg in $(find packages -name pubspec.yaml -not -path '*/.*' -maxdepth 4); do
+            dir=$(dirname "$pkg")
+            echo "::group::pub get $dir"
+            (cd "$dir" && flutter pub get) || true
+            echo "::endgroup::"
+          done
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Test
+        run: flutter test --no-pub
+
+      - name: Build web (release)
+        run: flutter build web --release --base-href "/"
+
+      - name: Upload web build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: finnex-web-${{ github.sha }}
+          path: apps/finnex/build/web
+          retention-days: 7

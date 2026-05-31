@@ -1,0 +1,22 @@
+name: fnx_core_widgets
+description: FinNex shared widget library (buttons, cards, sheets, fields).
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  fnx_core_theme:
+    path: ../theme
+  fnx_core_tokens:
+    path: ../tokens
+  intl: ^0.20.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
