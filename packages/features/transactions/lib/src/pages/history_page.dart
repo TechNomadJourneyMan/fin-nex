@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Category;
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fnx_core_l10n/fnx_core_l10n.dart';
 import 'package:fnx_core_widgets/fnx_core_widgets.dart';
 import 'package:fnx_domain/fnx_domain.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../controllers/transactions_controller.dart';
@@ -36,9 +39,9 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
   Future<void> _openFilters() async {
     final TransactionFilterState? next =
         await showFnxBottomSheet<TransactionFilterState>(
-          context: context,
-          builder: (BuildContext ctx) => _FilterSheet(initial: _filter),
-        );
+      context: context,
+      builder: (BuildContext ctx) => _FilterSheet(initial: _filter),
+    );
     if (next != null) {
       setState(() => _filter = next);
     }
@@ -117,6 +120,9 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
                   ),
                 );
               },
+              onSwipeEdit: (Transaction t) {
+                context.push('/transactions/${t.id.value}/edit', extra: t);
+              },
               onSwipeDelete: (Transaction t) async {
                 final TransactionsController ctrl = ref.read(
                   transactionsControllerProvider(_filter).notifier,
@@ -127,7 +133,7 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
                 }
                 context.showFnxSnack(
                   l10n.txDeleted,
-                  duration: const Duration(seconds: 5),
+                  duration: const Duration(seconds: 3),
                   action: FnxSnackAction(
                     label: l10n.txUndo,
                     onPressed: () {
@@ -152,17 +158,25 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
   }
 }
 
+/// Brand-blue tint used behind a swipe-right (edit) action.
+const Color _kSwipeEditColor = Color(0xFF2E48E6);
+
+/// Error-red tint used behind a swipe-left (delete) action.
+const Color _kSwipeDeleteColor = Color(0xFFFF453A);
+
 class _SectionedList extends StatelessWidget {
   const _SectionedList({
     required this.transactions,
     required this.locale,
     required this.onTap,
+    required this.onSwipeEdit,
     required this.onSwipeDelete,
   });
 
   final List<Transaction> transactions;
   final String locale;
   final ValueChanged<Transaction> onTap;
+  final ValueChanged<Transaction> onSwipeEdit;
   final ValueChanged<Transaction> onSwipeDelete;
 
   List<_Section> _group() {
@@ -202,16 +216,40 @@ class _SectionedList extends StatelessWidget {
                   final int signed = t.type == TransactionType.expense
                       ? -t.amount.minor.toInt()
                       : t.amount.minor.toInt();
+                  final AppL10n l10n = AppL10n.of(ctx);
                   return Dismissible(
-                    key: ValueKey<String>('tx-${t.id.value}'),
-                    direction: DismissDirection.endToStart,
-                    background: Container(
-                      alignment: Alignment.centerRight,
-                      color: Theme.of(ctx).colorScheme.error,
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: const Icon(Icons.delete, color: Colors.white),
+                    key: Key('tx-${t.id.value}'),
+                    direction: DismissDirection.horizontal,
+                    // Swipe right (startToEnd): edit.
+                    background: _SwipeBackground(
+                      color: _kSwipeEditColor,
+                      icon: Icons.edit_outlined,
+                      label: l10n.txEdit,
+                      alignment: Alignment.centerLeft,
                     ),
-                    onDismissed: (_) => onSwipeDelete(t),
+                    // Swipe left (endToStart): delete.
+                    secondaryBackground: _SwipeBackground(
+                      color: _kSwipeDeleteColor,
+                      icon: Icons.delete_outline,
+                      label: l10n.commonDelete,
+                      alignment: Alignment.centerRight,
+                    ),
+                    confirmDismiss: (DismissDirection dir) async {
+                      // Crossing the threshold: tactile feedback (no-op web).
+                      _lightImpact();
+                      if (dir == DismissDirection.startToEnd) {
+                        // Edit: never dismiss the row, just navigate.
+                        onSwipeEdit(t);
+                        return false;
+                      }
+                      // Delete: ask for confirmation.
+                      return _confirmDelete(ctx, l10n);
+                    },
+                    onDismissed: (DismissDirection dir) {
+                      if (dir == DismissDirection.endToStart) {
+                        onSwipeDelete(t);
+                      }
+                    },
                     child: FnxTransactionItem(
                       category: t.categoryId?.value ?? '—',
                       amountMinor: signed,
@@ -238,6 +276,79 @@ class _Section {
   final List<Transaction> items;
 }
 
+/// Fires a light haptic tap. Silently no-ops on platforms (e.g. web) where the
+/// haptic channel isn't available.
+void _lightImpact() {
+  try {
+    // ignore: discarded_futures
+    HapticFeedback.lightImpact();
+  } catch (_) {
+    // No haptics on this platform; ignore.
+  }
+}
+
+/// Cupertino-style destructive confirmation for deleting a transaction.
+Future<bool> _confirmDelete(BuildContext context, AppL10n l10n) async {
+  final bool? ok = await showCupertinoDialog<bool>(
+    context: context,
+    builder: (BuildContext ctx) => CupertinoAlertDialog(
+      title: Text(l10n.txDeleteConfirm),
+      actions: <Widget>[
+        CupertinoDialogAction(
+          onPressed: () => Navigator.of(ctx).pop(false),
+          child: Text(l10n.commonCancel),
+        ),
+        CupertinoDialogAction(
+          isDestructiveAction: true,
+          onPressed: () => Navigator.of(ctx).pop(true),
+          child: Text(l10n.commonDelete),
+        ),
+      ],
+    ),
+  );
+  return ok ?? false;
+}
+
+/// Colored swipe affordance shown behind a [Dismissible] row.
+class _SwipeBackground extends StatelessWidget {
+  const _SwipeBackground({
+    required this.color,
+    required this.icon,
+    required this.label,
+    required this.alignment,
+  });
+
+  final Color color;
+  final IconData icon;
+  final String label;
+  final Alignment alignment;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool leading = alignment == Alignment.centerLeft;
+    final List<Widget> content = <Widget>[
+      Icon(icon, color: Colors.white),
+      const SizedBox(width: 8),
+      Text(
+        label,
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    ];
+    return Container(
+      color: color,
+      alignment: alignment,
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: leading ? content : content.reversed.toList(),
+      ),
+    );
+  }
+}
+
 class _HeaderDelegate extends SliverPersistentHeaderDelegate {
   _HeaderDelegate({required this.text});
   final String text;
@@ -261,9 +372,9 @@ class _HeaderDelegate extends SliverPersistentHeaderDelegate {
       child: Text(
         text,
         style: Theme.of(context).textTheme.labelMedium?.copyWith(
-          fontWeight: FontWeight.w600,
-          color: Theme.of(context).colorScheme.outline,
-        ),
+              fontWeight: FontWeight.w600,
+              color: Theme.of(context).colorScheme.outline,
+            ),
       ),
     );
   }
