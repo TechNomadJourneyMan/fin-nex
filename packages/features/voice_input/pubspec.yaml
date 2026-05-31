@@ -1,0 +1,30 @@
+name: fnx_feat_voice_input
+description: FinNex voice-input feature module (hold-to-record transcription).
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  decimal: ^3.0.2
+  dio: ^5.7.0
+  record: ^5.1.2
+  permission_handler: ^11.3.1
+  fnx_domain:
+    path: ../../domain
+  fnx_core_theme:
+    path: ../../core/theme
+  fnx_core_widgets:
+    path: ../../core/widgets
+  fnx_data_api:
+    path: ../../data/api
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0

@@ -15,6 +15,7 @@ import 'package:fnx_core_l10n/fnx_core_l10n.dart';
 import 'package:fnx_core_widgets/fnx_core_widgets.dart';
 import 'package:fnx_domain/fnx_domain.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/dashboard_controller.dart';
 import '../providers.dart';
@@ -37,17 +38,11 @@ class DashboardPage extends ConsumerWidget {
     final locale = Localizations.localeOf(context).toLanguageTag();
 
     return Scaffold(
-      backgroundColor: colors.background,
-      appBar: AppBar(
-        title: Text(l10n.navHome, style: typo.heading2),
-        elevation: 0,
-        backgroundColor: colors.background,
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _onQuickAdd(context),
-        icon: const Icon(Icons.add),
-        label: Text(l10n.dashFab),
-      ),
+      // The MainShell already owns the AppBar (title + AI/Subs/Notifications
+      // actions), so the dashboard is appbar-less.
+      backgroundColor: const Color(0xFF0A0A0C),
+      extendBody: true,
+      floatingActionButton: null,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () =>
@@ -93,79 +88,202 @@ class _DashboardContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colors = context.fnxColors;
-    final typo = context.fnxTypography;
+    final NumberFormat money = NumberFormat.currency(
+      locale: locale,
+      symbol: snapshot.totalBalance.currency.symbol,
+      decimalDigits: 0,
+    );
+    final Money delta = snapshot.periodIncome - snapshot.periodExpense;
 
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
-      children: [
-        BalanceCard(
-          totalBalance: snapshot.totalBalance,
-          income: snapshot.periodIncome,
-          expense: snapshot.periodExpense,
-          period: snapshot.period,
-          locale: locale,
-          todayLabel: l10n.dashPeriodDay,
-          weekLabel: l10n.dashPeriodWeek,
-          monthLabel: l10n.dashPeriodMonth,
-          onPeriodChanged: (p) =>
-              ref.read(dashboardControllerProvider.notifier).setPeriod(p),
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 128),
+      children: <Widget>[
+        // 1. Hero balance — the canvas centerpiece.
+        HeroBalance(
+          amount: snapshot.totalBalance,
+          delta: delta.isZero ? null : delta,
+          period: l10n.dashPeriodMonth.toLowerCase(),
         ),
-        const SizedBox(height: 16),
-        QuickStatsCard(
-          primaryLabel: l10n.dashRecent,
-          primaryValue: snapshot.recent.length.toString(),
-          secondaryLabel: l10n.dashPeriodMonth,
-          secondaryValue: formatFnxAmount(
-            snapshot.periodExpense.minor.toInt(),
-            locale: locale,
-            fractionDigits: 0,
-            currencySymbol: snapshot.periodExpense.currency.symbol,
-          ),
+        const SizedBox(height: 28),
+
+        // 2. Bento grid — 2×2 of GlassCards.
+        LayoutBuilder(
+          builder: (BuildContext _, BoxConstraints constraints) {
+            final bool wide = constraints.maxWidth > 600;
+            final int cols = wide ? 4 : 2;
+            final double gap = 12;
+            final double tileW =
+                (constraints.maxWidth - gap * (cols - 1)) / cols;
+            final List<Widget> tiles = <Widget>[
+              _BentoTile(
+                width: tileW,
+                title: 'Cashflow',
+                value: money.format(snapshot.periodIncome.major.toDouble()),
+                subtitle: 'Income · ${snapshot.period.name}',
+                accent: const Color(0xFF24A148),
+                icon: Icons.trending_up,
+                onTap: () => GoRouter.maybeOf(context)?.push('/analytics'),
+              ),
+              _BentoTile(
+                width: tileW,
+                title: 'Expenses',
+                value: money.format(snapshot.periodExpense.major.toDouble()),
+                subtitle: '${snapshot.recent.length} ops',
+                accent: const Color(0xFFFF453A),
+                icon: Icons.trending_down,
+                onTap: () =>
+                    GoRouter.maybeOf(context)?.push('/transactions'),
+              ),
+              _BentoTile(
+                width: tileW,
+                title: 'Подписки',
+                value: '4',
+                subtitle: 'Netflix, Spotify…',
+                accent: const Color(0xFFE5E5EA),
+                icon: Icons.subscriptions_outlined,
+                onTap: () =>
+                    GoRouter.maybeOf(context)?.push('/subscriptions'),
+              ),
+              _BentoTile(
+                width: tileW,
+                title: 'AI Insights',
+                value: 'Nova',
+                subtitle: 'Готова к разговору',
+                accent: const Color(0xFFE5E5EA),
+                icon: Icons.auto_awesome_outlined,
+                onTap: () => GoRouter.maybeOf(context)?.push('/ai-chat'),
+                glow: true,
+              ),
+            ];
+            return Wrap(
+              spacing: gap,
+              runSpacing: gap,
+              children: tiles,
+            );
+          },
         ),
-        const SizedBox(height: 16),
-        TopCategoriesPie(
-          slices: snapshot.topCategories,
-          categoriesById: snapshot.categoriesById,
-          title: l10n.dashRecent,
-          seeAllLabel: l10n.dashSeeAll,
-          onSeeAll: () => GoRouter.maybeOf(context)?.push('/analytics'),
-        ),
-        const SizedBox(height: 24),
+
+        const SizedBox(height: 28),
+
+        // 3. Recent transactions — inside a single GlassCard.
         Row(
-          children: [
-            Expanded(child: Text(l10n.dashRecent, style: typo.heading3)),
+          children: <Widget>[
+            const Expanded(
+              child: Text(
+                'Последние операции',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFFF2F2F3),
+                  letterSpacing: -0.3,
+                ),
+              ),
+            ),
             TextButton(
-              onPressed: () => GoRouter.maybeOf(context)?.push('/transactions'),
-              child: Text(l10n.dashSeeAll),
+              onPressed: () =>
+                  GoRouter.maybeOf(context)?.push('/transactions'),
+              child: const Text('See all'),
             ),
           ],
         ),
         const SizedBox(height: 8),
-        Container(
-          decoration: BoxDecoration(
-            color: colors.surface,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: colors.borderSubtle),
-          ),
+        GlassCard(
+          padding: EdgeInsets.zero,
+          radius: 24,
           child: RecentTransactionsList(
             transactions: snapshot.recent,
             categoriesById: snapshot.categoriesById,
             locale: locale,
             emptyTitle: l10n.dashEmptyTitle,
             emptyCta: l10n.dashEmptyCta,
-            onEmptyCta: () => GoRouter.maybeOf(context)?.push(
-              '/transactions/add',
-            ),
-            onTapTransaction: (Transaction t) =>
-                GoRouter.maybeOf(context)?.push('/transactions/${t.id.value}'),
+            onEmptyCta: () =>
+                GoRouter.maybeOf(context)?.push('/transactions/add'),
+            onTapTransaction: (Transaction t) => GoRouter.maybeOf(context)
+                ?.push('/transactions/${t.id.value}'),
           ),
         ),
       ],
     );
   }
+}
 
+/// A single Bento tile built on top of [GlassCard].
+class _BentoTile extends StatelessWidget {
+  const _BentoTile({
+    required this.width,
+    required this.title,
+    required this.value,
+    required this.subtitle,
+    required this.accent,
+    required this.icon,
+    required this.onTap,
+    this.glow = false,
+  });
+
+  final double width;
+  final String title;
+  final String value;
+  final String subtitle;
+  final Color accent;
+  final IconData icon;
+  final VoidCallback onTap;
+  final bool glow;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      child: GlassCard(
+        radius: 24,
+        glow: glow,
+        onTap: onTap,
+        semanticsLabel: '$title: $value, $subtitle',
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Icon(icon, color: accent, size: 18),
+                const SizedBox(width: 6),
+                Text(
+                  title.toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 2,
+                    color: Color(0xFF8A8A93),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
+            Text(
+              value,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFFF2F2F3),
+                letterSpacing: -0.4,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              subtitle,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: Color(0xFF8A8A93),
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _LoadingView extends StatelessWidget {

@@ -1,0 +1,30 @@
+name: fnx_feat_subscriptions
+description: FinNex subscriptions manager feature module (F-04).
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  intl: ^0.20.0
+  equatable: ^2.0.5
+  fnx_domain:
+    path: ../../domain
+  fnx_core_theme:
+    path: ../../core/theme
+  fnx_core_widgets:
+    path: ../../core/widgets
+  fnx_core_charts:
+    path: ../../core/charts
+  fnx_core_l10n:
+    path: ../../core/l10n
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0

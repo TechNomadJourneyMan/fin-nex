@@ -137,32 +137,32 @@ class FnxColors extends ThemeExtension<FnxColors> {
   static const Color textErrorLight = Color(0xFFB82B23);
 
   // ---------------------------------------------------------------------------
-  // Semantic — Dark mode
+  // Semantic — Dark mode (OmniFi OS — deep obsidian, glassmorphism-ready)
   // ---------------------------------------------------------------------------
-  /// Dark surface background.
-  static const Color surfaceBackgroundDark = Color(0xFF0F1115);
-  /// Dark default surface.
-  static const Color surfaceDefaultDark = Color(0xFF161A21);
-  /// Dark raised surface.
-  static const Color surfaceRaisedDark = Color(0xFF1E232C);
+  /// Dark surface background — deep obsidian (OLED-optimized).
+  static const Color surfaceBackgroundDark = Color(0xFF0A0A0C);
+  /// Dark default surface — subtle glass elevation.
+  static const Color surfaceDefaultDark = Color(0x0DFFFFFF); // rgba 255/255/255/0.05
+  /// Dark raised surface — stronger glass elevation.
+  static const Color surfaceRaisedDark = Color(0x14FFFFFF); // rgba 255/255/255/0.08
   /// Dark sunken surface.
-  static const Color surfaceSunkenDark = Color(0xFF0A0D12);
-  /// Dark primary text.
-  static const Color textPrimaryDark = Color(0xFFF0F2F5);
-  /// Dark secondary text.
-  static const Color textSecondaryDark = Color(0xFFB8BCC4);
+  static const Color surfaceSunkenDark = Color(0xFF070709);
+  /// Dark primary text — soft white.
+  static const Color textPrimaryDark = Color(0xFFF2F2F3);
+  /// Dark secondary text — silvery.
+  static const Color textSecondaryDark = Color(0xFF8A8A93);
   /// Dark muted text.
-  static const Color textMutedDark = Color(0xFF7C8290);
+  static const Color textMutedDark = Color(0xFF5C5C66);
   /// Dark disabled text.
-  static const Color textDisabledDark = Color(0xFF4A4F58);
-  /// Dark subtle border.
-  static const Color borderSubtleDark = Color(0xFF262B35);
-  /// Dark default border.
-  static const Color borderDefaultDark = Color(0xFF363C47);
+  static const Color textDisabledDark = Color(0xFF3C3C44);
+  /// Dark subtle border — 0.5px hairline (~5% white).
+  static const Color borderSubtleDark = Color(0x14FFFFFF);
+  /// Dark default border (~8% white).
+  static const Color borderDefaultDark = Color(0x1FFFFFFF);
   /// Dark strong border.
-  static const Color borderStrongDark = Color(0xFF5A6170);
+  static const Color borderStrongDark = Color(0x33FFFFFF);
   /// Dark divider.
-  static const Color dividerDark = Color(0xFF1F242E);
+  static const Color dividerDark = Color(0x14FFFFFF);
   /// Success (dark).
   static const Color successDark = Color(0xFF3FD9A8);
   /// Success subtle (dark).

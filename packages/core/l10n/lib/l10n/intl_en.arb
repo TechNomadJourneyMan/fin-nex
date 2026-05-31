@@ -567,6 +567,64 @@
   "setDeleteAccountConfirm": "Delete your account? All data will be erased.",
   "@setDeleteAccountConfirm": {"description": "Account deletion confirm."},
 
+  "subsTitle": "Subscriptions",
+  "@subsTitle": {"description": "Subscriptions manager screen title."},
+  "subsDetailTitle": "Subscription",
+  "@subsDetailTitle": {"description": "Subscription detail screen title."},
+  "subsEmptyTitle": "No subscriptions yet",
+  "@subsEmptyTitle": {"description": "Empty-state title on the subscriptions manager."},
+  "subsEmptyBody": "We'll show recurring charges here as we detect them.",
+  "@subsEmptyBody": {"description": "Empty-state body on the subscriptions manager."},
+  "subsNotFound": "Subscription not found.",
+  "@subsNotFound": {"description": "Shown when a detail page has no matching subscription."},
+  "subsMonthlyTotalLabel": "Total on subscriptions in {month}",
+  "@subsMonthlyTotalLabel": {
+    "description": "Label above the monthly subscriptions total.",
+    "placeholders": {"month": {"type": "String", "example": "May"}}
+  },
+  "subsActiveCount": "{count, plural, =0{No active subscriptions} =1{1 active subscription} other{{count} active subscriptions}}",
+  "@subsActiveCount": {
+    "description": "Active subscription count (ICU plural).",
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "subsNextBilling": "Next charge {date}",
+  "@subsNextBilling": {
+    "description": "Next billing date row.",
+    "placeholders": {"date": {"type": "String", "example": "May 14"}}
+  },
+  "subsPeriodWeekly": "Weekly",
+  "@subsPeriodWeekly": {"description": "Billing period label."},
+  "subsPeriodMonthly": "Monthly",
+  "@subsPeriodMonthly": {"description": "Billing period label."},
+  "subsPeriodQuarterly": "Quarterly",
+  "@subsPeriodQuarterly": {"description": "Billing period label."},
+  "subsPeriodYearly": "Yearly",
+  "@subsPeriodYearly": {"description": "Billing period label."},
+  "subsCancelledBadge": "Cancelled",
+  "@subsCancelledBadge": {"description": "Badge on a cancelled subscription card."},
+  "subsSourceTransactions": "Source transactions",
+  "@subsSourceTransactions": {"description": "Detail section heading."},
+  "subsNoSourceTransactions": "No linked transactions yet.",
+  "@subsNoSourceTransactions": {"description": "Shown when no source transactions are linked."},
+  "subsHowToUnsubscribe": "How to unsubscribe",
+  "@subsHowToUnsubscribe": {"description": "Action that opens the unsubscribe hint sheet."},
+  "subsUnsubscribeHint": "To cancel {merchant}, open the merchant's account or billing settings and stop the recurring payment.",
+  "@subsUnsubscribeHint": {
+    "description": "Unsubscribe hint body.",
+    "placeholders": {"merchant": {"type": "String", "example": "Netflix"}}
+  },
+  "subsUnsubscribeNoLink": "No cancellation link available yet.",
+  "@subsUnsubscribeNoLink": {"description": "Placeholder when no unsubscribe URL is known."},
+  "subsMarkCancelled": "Mark as cancelled",
+  "@subsMarkCancelled": {"description": "Action to mark a subscription cancelled."},
+  "subsAlreadyCancelled": "Already cancelled",
+  "@subsAlreadyCancelled": {"description": "Disabled state of the cancel action."},
+  "subsMarkedCancelled": "Marked {merchant} as cancelled",
+  "@subsMarkedCancelled": {
+    "description": "Confirmation snackbar after cancelling.",
+    "placeholders": {"merchant": {"type": "String", "example": "Netflix"}}
+  },
+
   "errorNetwork": "Network error. Check your connection.",
   "@errorNetwork": {"description": "Generic network error."},
   "errorServer": "Something went wrong on our end.",

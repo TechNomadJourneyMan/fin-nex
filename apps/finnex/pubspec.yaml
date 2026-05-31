@@ -64,6 +64,17 @@ dependencies:
     path: ../../packages/features/insights
   fnx_feat_dashboard:
     path: ../../packages/features/dashboard
+  fnx_feat_subscriptions:
+    path: ../../packages/features/subscriptions
+  fnx_feat_ai_chat:
+    path: ../../packages/features/ai_chat
+  fnx_feat_workspaces:
+    path: ../../packages/features/workspaces
+  fnx_sms_parser:
+    path: ../../packages/services/sms_parser
+
+  # Direct deps surfaced by the new feature packages.
+  flutter_markdown: ^0.7.4
 
 dev_dependencies:
   flutter_test:

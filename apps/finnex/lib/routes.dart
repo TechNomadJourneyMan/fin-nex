@@ -10,6 +10,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fnx_feat_ai_chat/fnx_feat_ai_chat.dart' as ai_chat;
 import 'package:fnx_feat_analytics/analytics.dart' as analytics;
 import 'package:fnx_feat_auth/auth.dart' as auth;
 import 'package:fnx_feat_budgets/fnx_feat_budgets.dart' as budgets;
@@ -19,8 +20,14 @@ import 'package:fnx_feat_notifications/fnx_feat_notifications.dart'
     as notifications;
 import 'package:fnx_feat_onboarding/onboarding.dart' as onboarding;
 import 'package:fnx_feat_settings/settings.dart' as settings;
+import 'package:fnx_feat_subscriptions/subscriptions.dart' as subs;
 import 'package:fnx_feat_transactions/transactions.dart' as transactions;
+import 'package:fnx_feat_workspaces/fnx_feat_workspaces.dart' as workspaces;
 import 'package:go_router/go_router.dart';
+
+import 'pages/achievements_page.dart';
+import 'pages/goals_page.dart';
+import 'pages/sms_sandbox_page.dart';
 
 import 'shell/main_shell.dart';
 
@@ -66,6 +73,49 @@ GoRouter buildFinnexRouter({ProviderContainer? container}) {
       // Top-level (non-shell) routes that sit above the bottom-nav scaffold.
       ...categories.categoriesRoutes(),
       ...budgets.budgetsRoutes(),
+
+      // Subscriptions manager (F-04) — top-level, pushed over the shell.
+      GoRoute(
+        path: '/subscriptions',
+        name: 'subscriptions',
+        builder: (BuildContext context, GoRouterState state) =>
+            const subs.SubscriptionsManagerPage(),
+      ),
+
+      // AI-CFO chat (F-07) — top-level, pushed over the shell.
+      GoRoute(
+        path: '/ai-chat',
+        name: 'ai-chat',
+        builder: (BuildContext context, GoRouterState state) =>
+            const ai_chat.AiChatPage(),
+      ),
+
+      // Workspaces feature (F-06).
+      ...workspaces.workspacesRoutes(),
+
+      // Financial goals (savings tracker).
+      GoRoute(
+        path: '/goals',
+        name: 'goals',
+        builder: (BuildContext context, GoRouterState state) =>
+            const GoalsPage(),
+      ),
+
+      // Gamification (F-08) — achievements + streak.
+      GoRoute(
+        path: '/achievements',
+        name: 'achievements',
+        builder: (BuildContext context, GoRouterState state) =>
+            const AchievementsPage(),
+      ),
+
+      // SMS parser sandbox (F-03 testing surface for Web).
+      GoRoute(
+        path: '/sms-sandbox',
+        name: 'sms-sandbox',
+        builder: (BuildContext context, GoRouterState state) =>
+            const SmsSandboxPage(),
+      ),
 
       // Notifications center + preferences
       GoRoute(
@@ -183,33 +233,216 @@ class _SplashScreen extends StatefulWidget {
   State<_SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<_SplashScreen> {
-  Timer? _timer;
+class _SplashScreenState extends State<_SplashScreen>
+    with SingleTickerProviderStateMixin {
+  Timer? _navTimer;
+  Timer? _slowTimer;
+  Timer? _tick;
+  String? _navError;
+  bool _slow = false;
+  final Stopwatch _sw = Stopwatch()..start();
+
+  late final AnimationController _shimmer = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1400),
+  )..repeat();
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer(const Duration(milliseconds: 600), () {
-      if (!mounted) return;
-      context.go('/home');
+    // Auto-navigate to /home once the router is ready (short delay so the
+    // splash isn't a flash).
+    _navTimer = Timer(const Duration(milliseconds: 600), _tryGoHome);
+    // If nav never succeeds within 8s, escalate to the "slow" hint.
+    _slowTimer = Timer(const Duration(seconds: 8), () {
+      if (mounted) setState(() => _slow = true);
     });
+    // Tick UI every 100ms so the elapsed counter updates.
+    _tick = Timer.periodic(const Duration(milliseconds: 100), (_) {
+      if (mounted) setState(() {});
+    });
+  }
+
+  void _tryGoHome() {
+    if (!mounted) return;
+    try {
+      context.go('/home');
+    } catch (e) {
+      // Router not ready / route missing / something else. Stay on splash
+      // with a visible error instead of hanging forever.
+      setState(() => _navError = e.toString());
+    }
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
+    _navTimer?.cancel();
+    _slowTimer?.cancel();
+    _tick?.cancel();
+    _shimmer.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    final double seconds = _sw.elapsedMilliseconds / 1000.0;
+    return Scaffold(
+      backgroundColor: const Color(0xFF0A0A0C),
       body: Center(
-        child: Text(
-          'FinNex',
-          style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text(
+                'Pocket Flow',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: -0.5,
+                  color: Color(0xFFF2F2F3),
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'OMNIFI OS',
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 4,
+                  color: Color(0xFF5C5C66),
+                ),
+              ),
+              const SizedBox(height: 48),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 280),
+                child: Column(
+                  children: <Widget>[
+                    _ShimmerBar(animation: _shimmer),
+                    const SizedBox(height: 12),
+                    Text(
+                      _navError == null
+                          ? (_slow ? 'Почти готово…' : 'Готовлю интерфейс…')
+                          : 'Ошибка маршрутизации',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: _navError == null
+                            ? const Color(0xFF8A8A93)
+                            : Colors.redAccent,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${seconds.toStringAsFixed(1)} s',
+                      style: const TextStyle(
+                        fontSize: 10,
+                        letterSpacing: 1,
+                        color: Color(0x2EFFFFFF),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (_navError != null) ...<Widget>[
+                const SizedBox(height: 24),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    _navError!,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontFamily: 'monospace',
+                      color: Color(0xFFFF8A80),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                FilledButton.tonal(
+                  onPressed: _tryGoHome,
+                  child: const Text('Повторить'),
+                ),
+              ] else if (_slow) ...<Widget>[
+                const SizedBox(height: 32),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    'Загрузка идёт дольше обычного.\nПопробуйте перезагрузить.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFFFFB840),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                FilledButton.tonal(
+                  onPressed: _tryGoHome,
+                  child: const Text('Перейти на главную'),
+                ),
+              ],
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+/// Indeterminate shimmer progress bar — 3px tall pill with a sliding
+/// highlight (OmniFi accent). Pure CustomPainter, no plugins.
+class _ShimmerBar extends StatelessWidget {
+  const _ShimmerBar({required this.animation});
+
+  final Animation<double> animation;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 3,
+      width: double.infinity,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(999),
+        child: AnimatedBuilder(
+          animation: animation,
+          builder: (BuildContext context, Widget? _) {
+            return CustomPaint(
+              painter: _ShimmerPainter(progress: animation.value),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _ShimmerPainter extends CustomPainter {
+  _ShimmerPainter({required this.progress});
+  final double progress;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint bg = Paint()..color = const Color(0x14FFFFFF);
+    canvas.drawRect(Offset.zero & size, bg);
+
+    final double bandW = size.width * 0.4;
+    final double travel = size.width + bandW;
+    final double x = -bandW + travel * progress;
+
+    final Rect bandRect = Rect.fromLTWH(x, 0, bandW, size.height);
+    final Paint band = Paint()
+      ..shader = const LinearGradient(
+        colors: <Color>[
+          Color(0x00E5E5EA),
+          Color(0xFFE5E5EA),
+          Color(0x00E5E5EA),
+        ],
+        stops: <double>[0.0, 0.5, 1.0],
+      ).createShader(bandRect);
+    canvas.drawRect(bandRect, band);
+  }
+
+  @override
+  bool shouldRepaint(_ShimmerPainter old) => old.progress != progress;
 }

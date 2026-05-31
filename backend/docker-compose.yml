@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: finnex
       POSTGRES_DB: finnex
     ports:
-      - '5432:5432'
+      - '5433:5432'
     volumes:
       - finnex_pg_data:/var/lib/postgresql/data
     healthcheck:
@@ -22,7 +22,7 @@ services:
     container_name: finnex-redis
     restart: unless-stopped
     ports:
-      - '6379:6379'
+      - '6380:6379'
     volumes:
       - finnex_redis_data:/data
     healthcheck:
@@ -36,7 +36,7 @@ services:
     container_name: finnex-adminer
     restart: unless-stopped
     ports:
-      - '8080:8080'
+      - '8081:8080'
     depends_on:
       - postgres
 

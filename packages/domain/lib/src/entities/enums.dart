@@ -45,6 +45,25 @@ enum AccountType {
   }
 }
 
+/// Tenancy kind of a [Workspace] — Personal vs Business (PRD F-06).
+enum WorkspaceType {
+  personal,
+  business;
+
+  /// Wire code.
+  String get code => name;
+
+  /// Parses a database code.
+  static WorkspaceType parse(String code) {
+    for (final t in WorkspaceType.values) {
+      if (t.code == code) {
+        return t;
+      }
+    }
+    throw ArgumentError.value(code, 'code', 'Unknown workspace type');
+  }
+}
+
 /// Direction/kind of a transaction.
 enum TransactionType {
   expense,
@@ -221,5 +240,34 @@ enum NotificationKind {
       }
     }
     throw ArgumentError.value(code, 'code', 'Unknown notification kind');
+  }
+}
+
+/// Bucket label for an [Achievement] (F-08 Gamification).
+enum AchievementCategory {
+  /// Logging discipline (streaks).
+  consistency,
+
+  /// Budgeting milestones.
+  budgeting,
+
+  /// Saving / investing milestones.
+  savings,
+
+  /// Onboarding and first-time actions.
+  exploration,
+
+  /// Misc / special events.
+  special;
+
+  /// Wire code.
+  String get code => name;
+
+  /// Parses a database code, defaulting to [special] for unknown codes.
+  static AchievementCategory parse(String code) {
+    for (final c in AchievementCategory.values) {
+      if (c.code == code) return c;
+    }
+    return AchievementCategory.special;
   }
 }

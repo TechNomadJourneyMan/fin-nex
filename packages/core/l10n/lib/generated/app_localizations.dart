@@ -1,18 +1,67 @@
-// Hand-authored counterpart of `flutter gen-l10n` output.
-// Keep in sync with ARB files under lib/l10n/.
-//
-// ignore_for_file: public_member_api_docs, type=lint
+import 'dart:async';
 
-import 'package:flutter/foundation.dart' show SynchronousFuture;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
-/// Alias kept for compatibility with feature packages that import
-/// `AppLocalizations` (the conventional Flutter gen-l10n class name).
-typedef AppLocalizations = AppL10n;
+import 'app_localizations_en.dart';
+import 'app_localizations_kk.dart';
+import 'app_localizations_ru.dart';
 
-/// Localized strings for FinNex. Use [AppL10n.of] to access in widgets.
+// ignore_for_file: type=lint
+
+/// Callers can lookup localized strings with an instance of AppL10n
+/// returned by `AppL10n.of(context)`.
+///
+/// Applications need to include `AppL10n.delegate()` in their app's
+/// `localizationDelegates` list, and the locales they support in the app's
+/// `supportedLocales` list. For example:
+///
+/// ```dart
+/// import 'generated/app_localizations.dart';
+///
+/// return MaterialApp(
+///   localizationsDelegates: AppL10n.localizationsDelegates,
+///   supportedLocales: AppL10n.supportedLocales,
+///   home: MyApplicationHome(),
+/// );
+/// ```
+///
+/// ## Update pubspec.yaml
+///
+/// Please make sure to update your pubspec.yaml to include the following
+/// packages:
+///
+/// ```yaml
+/// dependencies:
+///   # Internationalization support.
+///   flutter_localizations:
+///     sdk: flutter
+///   intl: any # Use the pinned version from flutter_localizations
+///
+///   # Rest of dependencies
+/// ```
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the AppL10n.supportedLocales
+/// property.
 abstract class AppL10n {
   AppL10n(String locale)
       : localeName = intl.Intl.canonicalizedLocale(locale.toString());
@@ -20,13 +69,21 @@ abstract class AppL10n {
   final String localeName;
 
   static AppL10n of(BuildContext context) {
-    final l10n = Localizations.of<AppL10n>(context, AppL10n);
-    assert(l10n != null, 'No AppL10n found in context');
-    return l10n!;
+    return Localizations.of<AppL10n>(context, AppL10n)!;
   }
 
   static const LocalizationsDelegate<AppL10n> delegate = _AppL10nDelegate();
 
+  /// A list of this localizations delegate along with the default localizations
+  /// delegates.
+  ///
+  /// Returns a list of localizations delegates containing this delegate along with
+  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
+  /// and GlobalWidgetsLocalizations.delegate.
+  ///
+  /// Additional delegates can be added by appending to this list in
+  /// MaterialApp. This list does not have to be used at all if a custom list
+  /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
     delegate,
@@ -35,271 +92,1601 @@ abstract class AppL10n {
     GlobalWidgetsLocalizations.delegate,
   ];
 
+  /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
-    Locale('ru'),
     Locale('kk'),
+    Locale('ru')
   ];
 
+  /// Application name. Do not translate.
+  ///
+  /// In en, this message translates to:
+  /// **'FinNex'**
   String get appName;
 
+  /// Generic cancel button.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
   String get commonCancel;
+
+  /// Generic save button.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
   String get commonSave;
+
+  /// Generic delete button.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
   String get commonDelete;
+
+  /// Generic edit button.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
   String get commonEdit;
+
+  /// Generic search action / placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
   String get commonSearch;
+
+  /// Retry button after an error.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
   String get commonRetry;
+
+  /// Generic confirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
   String get commonOk;
+
+  /// Generic affirmative.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
   String get commonYes;
+
+  /// Generic negative.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
   String get commonNo;
+
+  /// Generic done action.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
   String get commonDone;
+
+  /// Generic close action.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
   String get commonClose;
+
+  /// Generic next button.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
   String get commonNext;
+
+  /// Generic back action.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
   String get commonBack;
+
+  /// Generic continue button.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
   String get commonContinue;
+
+  /// Generic loading status.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading…'**
   String get commonLoading;
+
+  /// Generic 'see all' label.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
   String get commonAll;
+
+  /// Generic 'none' option.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
   String get commonNone;
+
+  /// Marks an optional field.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
   String get commonOptional;
+
+  /// Marks a required field.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
   String get commonRequired;
 
+  /// BottomNav: Home tab. Tight: keep under 10 chars.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
   String get navHome;
+
+  /// BottomNav: Analytics tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics'**
   String get navAnalytics;
+
+  /// BottomNav: Calendar tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
   String get navCalendar;
+
+  /// BottomNav: Settings tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
   String get navSettings;
+
+  /// Optional navigation label.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
   String get navTransactions;
+
+  /// Optional navigation label.
+  ///
+  /// In en, this message translates to:
+  /// **'Budgets'**
   String get navBudgets;
 
+  /// Shown after >1.5s of splash init.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading your data…'**
   String get splashLoadingLong;
+
+  /// Splash init failure title.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t start the app'**
   String get splashLoadingError;
 
+  /// Onboarding skip button.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
   String get onbSkip;
+
+  /// Onboarding next button.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
   String get onbNext;
+
+  /// Final onboarding CTA.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
   String get onbStart;
+
+  /// Onboarding secondary CTA to sign in.
+  ///
+  /// In en, this message translates to:
+  /// **'I already have an account'**
   String get onbHaveAccount;
+
+  /// Onboarding page 1 headline.
+  ///
+  /// In en, this message translates to:
+  /// **'Track in 3 seconds'**
   String get onbP1Title;
+
+  /// Onboarding page 1 body.
+  ///
+  /// In en, this message translates to:
+  /// **'Log expenses in one tap. No clunky forms.'**
   String get onbP1Body;
+
+  /// Onboarding page 2 headline.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories your way'**
   String get onbP2Title;
+
+  /// Onboarding page 2 body.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready-made KZ categories. Add your own.'**
   String get onbP2Body;
+
+  /// Onboarding page 3 headline.
+  ///
+  /// In en, this message translates to:
+  /// **'One tap, expense logged'**
   String get onbP3Title;
+
+  /// Onboarding page 3 body.
+  ///
+  /// In en, this message translates to:
+  /// **'Widgets for iOS and Android. No need to open the app.'**
   String get onbP3Body;
+
+  /// Onboarding page 4 headline.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to begin?'**
   String get onbP4Title;
+
+  /// Onboarding page 4 body.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick language and currency — 10 seconds.'**
   String get onbP4Body;
 
+  /// Auth landing screen title.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to FinNex'**
   String get authTitle;
+
+  /// Auth landing screen subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No password. Just your phone.'**
   String get authSubtitle;
+
+  /// Send OTP CTA.
+  ///
+  /// In en, this message translates to:
+  /// **'Get code'**
   String get authCtaSendCode;
+
+  /// Divider between phone and social login.
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
   String get authOr;
+
+  /// Apple sign-in button.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
   String get authContinueApple;
+
+  /// Google sign-in button.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
   String get authContinueGoogle;
+
+  /// Email sign-in button.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with email'**
   String get authContinueEmail;
+
+  /// Email sign-up button.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
   String get authSignUp;
+
+  /// OTP screen title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter code'**
   String get authOtpTitle;
+
+  /// OTP screen subtitle with masked phone.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent an SMS to {phone}.'**
   String authOtpSubtitle(String phone);
+
+  /// Resend countdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend in {time}'**
   String authOtpResendIn(String time);
+
+  /// Resend OTP button after countdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code'**
   String get authOtpResend;
+
+  /// Help link below OTP boxes.
+  ///
+  /// In en, this message translates to:
+  /// **'Didn\'t get the code?'**
   String get authOtpHelp;
+
+  /// Biometric unlock prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Use biometrics to sign in'**
   String get authBiometricPrompt;
+
+  /// Reason shown by the OS biometric dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm it\'s you to open FinNex'**
   String get authBiometricReason;
+
+  /// Network failure during auth.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your connection'**
   String get authErrorNetwork;
+
+  /// Invalid OTP entered.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong code'**
   String get authErrorInvalidCode;
+
+  /// OTP rate-limit dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Try again in 5 minutes.'**
   String get authErrorRateLimit;
+
+  /// Legal text below CTA. {terms} and {privacy} are clickable links.
+  ///
+  /// In en, this message translates to:
+  /// **'By continuing, you agree to {terms} and {privacy}.'**
   String authLegal(String terms, String privacy);
 
+  /// Dashboard greeting. Tight: keep total under 14 chars on sm.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi, {name}'**
   String dashGreeting(String name);
+
+  /// Dashboard period: day.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
   String get dashPeriodDay;
+
+  /// Dashboard period: week.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
   String get dashPeriodWeek;
+
+  /// Dashboard period: month.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
   String get dashPeriodMonth;
+
+  /// Spend delta up vs previous period.
+  ///
+  /// In en, this message translates to:
+  /// **'+{percent}% vs last week'**
   String dashDeltaUp(int percent);
+
+  /// Spend delta down vs previous period.
+  ///
+  /// In en, this message translates to:
+  /// **'−{percent}% vs last week'**
   String dashDeltaDown(int percent);
+
+  /// Dashboard budget card title.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly budget'**
   String get dashBudgetTitle;
+
+  /// Days remaining in the current budget period (ICU plural).
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{1 day left} other{{days} days left}}'**
   String dashBudgetDaysLeft(int days);
+
+  /// Shown when monthly budget exceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Over budget: {amount}'**
   String dashBudgetOver(String amount);
+
+  /// Section header for last transactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent activity'**
   String get dashRecent;
+
+  /// Link to all transactions.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
   String get dashSeeAll;
+
+  /// Dashboard empty state title.
+  ///
+  /// In en, this message translates to:
+  /// **'No expenses yet'**
   String get dashEmptyTitle;
+
+  /// Dashboard empty state CTA.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first expense'**
   String get dashEmptyCta;
+
+  /// Extended FAB label on dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
   String get dashFab;
+
+  /// Sticky offline banner under AppBar.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline. Changes will sync.'**
   String get dashOfflineBanner;
 
+  /// Quick-add expense sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
   String get qaExpenseTitle;
+
+  /// Quick-add income sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
   String get qaIncomeTitle;
+
+  /// Quick-add transfer sheet title.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer'**
   String get qaTransferTitle;
+
+  /// Inline error when amount empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter amount'**
   String get qaAmountRequired;
+
+  /// Collapsible 'details' label.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
   String get qaDetails;
+
+  /// Placeholder for the note field.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
   String get qaNotePlaceholder;
+
+  /// Default date chip label.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
   String get qaDateToday;
+
+  /// Toast after expense saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense {amount} added'**
   String qaSavedExpense(String amount);
+
+  /// Toast after income saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Income {amount} added'**
   String qaSavedIncome(String amount);
+
+  /// Inline error when save falls into outbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save. Queued.'**
   String get qaSaveErrorOffline;
+
+  /// Inline warning at >=80% of budget.
+  ///
+  /// In en, this message translates to:
+  /// **'Near limit: {spent} / {budget}'**
   String qaLimitNear(String spent, String budget);
+
+  /// Confirmation dialog title when over budget.
+  ///
+  /// In en, this message translates to:
+  /// **'This exceeds your limit by {amount}'**
   String qaLimitExceedTitle(String amount);
+
+  /// Confirm over-budget save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save anyway'**
   String get qaLimitExceedSave;
+
+  /// Reject over-budget save.
+  ///
+  /// In en, this message translates to:
+  /// **'Change amount'**
   String get qaLimitExceedAdjust;
+
+  /// Suggestion to convert to recurring income.
+  ///
+  /// In en, this message translates to:
+  /// **'Make this recurring?'**
   String get qaIncomeRecurringHint;
+
+  /// Progress vs expected monthly income.
+  ///
+  /// In en, this message translates to:
+  /// **'{current} of {expected}'**
   String qaIncomeProgress(String current, String expected);
 
+  /// Transaction field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
   String get txFieldAmount;
+
+  /// Transaction field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
   String get txFieldCategory;
+
+  /// Transaction field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
   String get txFieldAccount;
+
+  /// Transaction field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
   String get txFieldDate;
+
+  /// Transaction field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
   String get txFieldTime;
+
+  /// Transaction field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
   String get txFieldNote;
+
+  /// Transaction field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
   String get txFieldTags;
+
+  /// Transaction field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt'**
   String get txFieldReceipt;
+
+  /// Transaction field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
   String get txFieldLocation;
+
+  /// Transaction recurring field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat'**
   String get txFieldRepeat;
+
+  /// Toggle to exclude tx from budget totals.
+  ///
+  /// In en, this message translates to:
+  /// **'Exclude from budget'**
   String get txFieldExcludeBudget;
+
+  /// Full add-expense screen title (new).
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
   String get txTitleNewExpense;
+
+  /// Full add-expense screen title (edit).
+  ///
+  /// In en, this message translates to:
+  /// **'Edit expense'**
   String get txTitleEditExpense;
+
+  /// Confirm losing edits.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard changes?'**
   String get txUnsavedTitle;
+
+  /// Confirm discard edits.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
   String get txUnsavedDiscard;
+
+  /// Stay in editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
   String get txUnsavedKeep;
+
+  /// Hard delete confirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this transaction? Cannot be undone.'**
   String get txDeleteConfirm;
+
+  /// Toast after delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted'**
   String get txDeleted;
+
+  /// Undo action label.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
   String get txUndo;
+
+  /// Tx menu action.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
   String get txEdit;
+
+  /// Tx menu action.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate'**
   String get txDuplicate;
+
+  /// Tx menu action.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
   String get txShare;
+
+  /// Tx menu action.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
   String get txDelete;
+
+  /// Source of tx: home screen widget.
+  ///
+  /// In en, this message translates to:
+  /// **'Widget'**
   String get txSourceWidget;
+
+  /// Source of tx: manual entry.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual'**
   String get txSourceManual;
+
+  /// Source of tx: bulk import.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
   String get txSourceImport;
+
+  /// Badge for un-synced tx.
+  ///
+  /// In en, this message translates to:
+  /// **'Queued for sync'**
   String get txSyncQueued;
+
+  /// Empty state when tx id missing.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction not found'**
   String get txNotFound;
+
+  /// Plural transactions count (ICU).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No transactions} =1{1 transaction} other{{count} transactions}}'**
   String txCount(int count);
+
+  /// Relative day phrase (ICU plural).
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Today} =1{Yesterday} other{{days} days ago}}'**
   String txDaysAgo(int days);
+
+  /// Bulk-action selection count (ICU plural).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item selected} other{{count} items selected}}'**
   String txItemsSelected(int count);
 
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
   String get catFood;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Groceries'**
   String get catGroceries;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Café'**
   String get catCafe;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurants'**
   String get catRestaurants;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Transport'**
   String get catTransport;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Taxi'**
   String get catTaxi;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel'**
   String get catFuel;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping'**
   String get catShopping;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Clothing'**
   String get catClothing;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Electronics'**
   String get catElectronics;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Entertainment'**
   String get catEntertainment;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscriptions'**
   String get catSubscriptions;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills'**
   String get catBills;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Utilities'**
   String get catUtilities;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent'**
   String get catRent;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
   String get catHealth;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Pharmacy'**
   String get catPharmacy;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
   String get catEducation;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel'**
   String get catTravel;
+
+  /// System category (household).
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
   String get catHome;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Gifts'**
   String get catGifts;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Kids'**
   String get catKids;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Pets'**
   String get catPets;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Sports'**
   String get catSports;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Beauty'**
   String get catBeauty;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Charity'**
   String get catCharity;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Taxes'**
   String get catTaxes;
+
+  /// System category.
+  ///
+  /// In en, this message translates to:
+  /// **'Fees'**
   String get catFees;
+
+  /// System category fallback.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
   String get catOther;
+
+  /// Income category.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary'**
   String get catIncSalary;
+
+  /// Income category.
+  ///
+  /// In en, this message translates to:
+  /// **'Advance'**
   String get catIncAdvance;
+
+  /// Income category.
+  ///
+  /// In en, this message translates to:
+  /// **'Freelance'**
   String get catIncFreelance;
+
+  /// Income category.
+  ///
+  /// In en, this message translates to:
+  /// **'Gift'**
   String get catIncGift;
+
+  /// Income category.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund'**
   String get catIncRefund;
+
+  /// Income category.
+  ///
+  /// In en, this message translates to:
+  /// **'Cashback'**
   String get catIncCashback;
+
+  /// Income category.
+  ///
+  /// In en, this message translates to:
+  /// **'Dividends'**
   String get catIncDividends;
+
+  /// Income category.
+  ///
+  /// In en, this message translates to:
+  /// **'Interest'**
   String get catIncInterest;
 
+  /// Categories management screen title.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
   String get catScreenTitle;
+
+  /// Categories tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
   String get catTabExpense;
+
+  /// Categories tab.
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
   String get catTabIncome;
+
+  /// User-created categories section.
+  ///
+  /// In en, this message translates to:
+  /// **'My categories'**
   String get catSectionCustom;
+
+  /// Built-in categories section.
+  ///
+  /// In en, this message translates to:
+  /// **'Built-in'**
   String get catSectionSystem;
+
+  /// Add custom category CTA.
+  ///
+  /// In en, this message translates to:
+  /// **'Add category'**
   String get catAdd;
+
+  /// Custom category name field.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
   String get catFieldName;
+
+  /// Custom category icon picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
   String get catFieldIcon;
+
+  /// Custom category color picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
   String get catFieldColor;
+
+  /// Optional parent grouping.
+  ///
+  /// In en, this message translates to:
+  /// **'Parent category'**
   String get catFieldParent;
 
+  /// Budgets screen title.
+  ///
+  /// In en, this message translates to:
+  /// **'Budgets'**
   String get budgetsTitle;
+
+  /// Empty budgets state.
+  ///
+  /// In en, this message translates to:
+  /// **'No budgets yet'**
   String get budgetsEmpty;
+
+  /// Create budget CTA.
+  ///
+  /// In en, this message translates to:
+  /// **'Create budget'**
   String get budgetsCreate;
+
+  /// Budget name field.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
   String get budgetFieldName;
+
+  /// Budget amount limit field.
+  ///
+  /// In en, this message translates to:
+  /// **'Limit'**
   String get budgetFieldLimit;
+
+  /// Budget period field.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
   String get budgetFieldPeriod;
+
+  /// Budget scope: category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
   String get budgetFieldCategory;
+
+  /// Budget period option.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
   String get budgetPeriodWeek;
+
+  /// Budget period option.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
   String get budgetPeriodMonth;
+
+  /// Budget period option.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
   String get budgetPeriodYear;
+
+  /// Toggle for limit warning notification.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert me at 80%'**
   String get budgetAlertAt80;
+
+  /// Progress label on budget card.
+  ///
+  /// In en, this message translates to:
+  /// **'{spent} of {limit}'**
   String budgetProgressLabel(String spent, String limit);
 
+  /// Analytics screen title.
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics'**
   String get anTitle;
+
+  /// Analytics period selector.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
   String get anPeriodDay;
+
+  /// Analytics period selector.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
   String get anPeriodWeek;
+
+  /// Analytics period selector.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
   String get anPeriodMonth;
+
+  /// Analytics period selector.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
   String get anPeriodYear;
+
+  /// Analytics period selector.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
   String get anPeriodCustom;
+
+  /// Analytics summary block.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
   String get anSumExpense;
+
+  /// Analytics summary block.
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
   String get anSumIncome;
+
+  /// Analytics summary block.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
   String get anSumBalance;
+
+  /// Analytics breakdown header.
+  ///
+  /// In en, this message translates to:
+  /// **'By category'**
   String get anByCategory;
+
+  /// Analytics breakdown header.
+  ///
+  /// In en, this message translates to:
+  /// **'By week'**
   String get anByWeek;
+
+  /// Analytics breakdown header.
+  ///
+  /// In en, this message translates to:
+  /// **'By month'**
   String get anByMonth;
+
+  /// Analytics breakdown header.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash flow'**
   String get anCashFlow;
+
+  /// Empty analytics state.
+  ///
+  /// In en, this message translates to:
+  /// **'No data for this period'**
   String get anEmpty;
 
+  /// Calendar screen title.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
   String get calTitle;
+
+  /// Calendar view toggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
   String get calViewMonth;
+
+  /// Calendar view toggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
   String get calViewWeek;
+
+  /// Empty state for selected day.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions'**
   String get calDayEmpty;
+
+  /// Day detail CTA.
+  ///
+  /// In en, this message translates to:
+  /// **'Add for this day'**
   String get calDayAdd;
 
+  /// Notifications screen title.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
   String get notifTitle;
+
+  /// Empty notifications state.
+  ///
+  /// In en, this message translates to:
+  /// **'All caught up'**
   String get notifEmpty;
+
+  /// Daily reminder push title.
+  ///
+  /// In en, this message translates to:
+  /// **'Log today\'s expenses'**
   String get notifDailyReminderTitle;
+
+  /// Daily reminder push body.
+  ///
+  /// In en, this message translates to:
+  /// **'Takes 3 seconds. Tap to add.'**
   String get notifDailyReminderBody;
+
+  /// Weekly recap push title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your week in numbers'**
   String get notifWeeklyRecapTitle;
+
+  /// Weekly recap push body.
+  ///
+  /// In en, this message translates to:
+  /// **'You spent {amount} this week.'**
   String notifWeeklyRecapBody(String amount);
+
+  /// Limit warning push title.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget alert'**
   String get notifLimitWarningTitle;
+
+  /// Limit warning push body.
+  ///
+  /// In en, this message translates to:
+  /// **'{category} is at {percent}% of its limit.'**
   String notifLimitWarningBody(String category, int percent);
+
+  /// Insight ready push title.
+  ///
+  /// In en, this message translates to:
+  /// **'New insight'**
   String get notifInsightReadyTitle;
+
+  /// Insight ready push body.
+  ///
+  /// In en, this message translates to:
+  /// **'Open FinNex to see what changed.'**
   String get notifInsightReadyBody;
 
+  /// Settings screen title.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
   String get setTitle;
+
+  /// Settings section.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
   String get setProfile;
+
+  /// Settings section.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
   String get setAppearance;
+
+  /// Theme picker label.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
   String get setTheme;
+
+  /// Theme option.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
   String get setThemeSystem;
+
+  /// Theme option.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
   String get setThemeLight;
+
+  /// Theme option.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
   String get setThemeDark;
+
+  /// Language picker label.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
   String get setLanguage;
+
+  /// Language option.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
   String get setLanguageEn;
+
+  /// Language option (Russian endonym).
+  ///
+  /// In en, this message translates to:
+  /// **'Русский'**
   String get setLanguageRu;
+
+  /// Language option (Kazakh endonym).
+  ///
+  /// In en, this message translates to:
+  /// **'Қазақша'**
   String get setLanguageKk;
+
+  /// Currency picker label.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
   String get setCurrency;
+
+  /// Settings section.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
   String get setSecurity;
+
+  /// Biometric toggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock with biometrics'**
   String get setBiometric;
+
+  /// PIN setting.
+  ///
+  /// In en, this message translates to:
+  /// **'App PIN'**
   String get setPin;
+
+  /// Settings section.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
   String get setNotifications;
+
+  /// Notification toggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder'**
   String get setNotifDaily;
+
+  /// Notification toggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly recap'**
   String get setNotifWeekly;
+
+  /// Notification toggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget alerts'**
   String get setNotifLimit;
+
+  /// Notification toggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Insights'**
   String get setNotifInsights;
+
+  /// Settings section.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
   String get setData;
+
+  /// Export action.
+  ///
+  /// In en, this message translates to:
+  /// **'Export data'**
   String get setExport;
+
+  /// Import action.
+  ///
+  /// In en, this message translates to:
+  /// **'Import data'**
   String get setImport;
+
+  /// Force sync action.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync now'**
   String get setSync;
+
+  /// Settings section.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
   String get setAbout;
+
+  /// App version row.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
   String setVersion(String version);
+
+  /// Sign-out action.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
   String get setSignOut;
+
+  /// Account deletion action.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
   String get setDeleteAccount;
+
+  /// Account deletion confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your account? All data will be erased.'**
   String get setDeleteAccountConfirm;
 
+  /// Subscriptions manager screen title.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscriptions'**
+  String get subsTitle;
+
+  /// Subscription detail screen title.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get subsDetailTitle;
+
+  /// Empty-state title on the subscriptions manager.
+  ///
+  /// In en, this message translates to:
+  /// **'No subscriptions yet'**
+  String get subsEmptyTitle;
+
+  /// Empty-state body on the subscriptions manager.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll show recurring charges here as we detect them.'**
+  String get subsEmptyBody;
+
+  /// Shown when a detail page has no matching subscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription not found.'**
+  String get subsNotFound;
+
+  /// Label above the monthly subscriptions total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total on subscriptions in {month}'**
+  String subsMonthlyTotalLabel(String month);
+
+  /// Active subscription count (ICU plural).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No active subscriptions} =1{1 active subscription} other{{count} active subscriptions}}'**
+  String subsActiveCount(int count);
+
+  /// Next billing date row.
+  ///
+  /// In en, this message translates to:
+  /// **'Next charge {date}'**
+  String subsNextBilling(String date);
+
+  /// Billing period label.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get subsPeriodWeekly;
+
+  /// Billing period label.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get subsPeriodMonthly;
+
+  /// Billing period label.
+  ///
+  /// In en, this message translates to:
+  /// **'Quarterly'**
+  String get subsPeriodQuarterly;
+
+  /// Billing period label.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get subsPeriodYearly;
+
+  /// Badge on a cancelled subscription card.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get subsCancelledBadge;
+
+  /// Detail section heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Source transactions'**
+  String get subsSourceTransactions;
+
+  /// Shown when no source transactions are linked.
+  ///
+  /// In en, this message translates to:
+  /// **'No linked transactions yet.'**
+  String get subsNoSourceTransactions;
+
+  /// Action that opens the unsubscribe hint sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'How to unsubscribe'**
+  String get subsHowToUnsubscribe;
+
+  /// Unsubscribe hint body.
+  ///
+  /// In en, this message translates to:
+  /// **'To cancel {merchant}, open the merchant\'s account or billing settings and stop the recurring payment.'**
+  String subsUnsubscribeHint(String merchant);
+
+  /// Placeholder when no unsubscribe URL is known.
+  ///
+  /// In en, this message translates to:
+  /// **'No cancellation link available yet.'**
+  String get subsUnsubscribeNoLink;
+
+  /// Action to mark a subscription cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as cancelled'**
+  String get subsMarkCancelled;
+
+  /// Disabled state of the cancel action.
+  ///
+  /// In en, this message translates to:
+  /// **'Already cancelled'**
+  String get subsAlreadyCancelled;
+
+  /// Confirmation snackbar after cancelling.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked {merchant} as cancelled'**
+  String subsMarkedCancelled(String merchant);
+
+  /// Generic network error.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error. Check your connection.'**
   String get errorNetwork;
+
+  /// Generic server error.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong on our end.'**
   String get errorServer;
+
+  /// Generic form validation error.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check the highlighted fields.'**
   String get errorValidation;
+
+  /// Sync merge conflict resolved client-side.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync conflict. We kept your latest changes.'**
   String get errorSyncConflict;
+
+  /// Generic offline notice.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re offline. Changes are saved locally.'**
   String get errorOffline;
+
+  /// Fallback error title.
+  ///
+  /// In en, this message translates to:
+  /// **'Unexpected error'**
   String get errorUnknown;
 }
 
@@ -308,1687 +1695,31 @@ class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {
 
   @override
   Future<AppL10n> load(Locale locale) {
-    return SynchronousFuture<AppL10n>(_lookup(locale));
+    return SynchronousFuture<AppL10n>(lookupAppL10n(locale));
   }
 
   @override
   bool isSupported(Locale locale) =>
-      <String>{'en', 'ru', 'kk'}.contains(locale.languageCode);
+      <String>['en', 'kk', 'ru'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppL10nDelegate old) => false;
-
-  AppL10n _lookup(Locale locale) {
-    switch (locale.languageCode) {
-      case 'ru':
-        return AppL10nRu();
-      case 'kk':
-        return AppL10nKk();
-      case 'en':
-      default:
-        return AppL10nEn();
-    }
-  }
 }
 
-// ---------------------------------------------------------------------------
-// English
-// ---------------------------------------------------------------------------
-class AppL10nEn extends AppL10n {
-  AppL10nEn() : super('en');
-
-  @override
-  String get appName => 'FinNex';
-
-  @override
-  String get commonCancel => 'Cancel';
-  @override
-  String get commonSave => 'Save';
-  @override
-  String get commonDelete => 'Delete';
-  @override
-  String get commonEdit => 'Edit';
-  @override
-  String get commonSearch => 'Search';
-  @override
-  String get commonRetry => 'Retry';
-  @override
-  String get commonOk => 'OK';
-  @override
-  String get commonYes => 'Yes';
-  @override
-  String get commonNo => 'No';
-  @override
-  String get commonDone => 'Done';
-  @override
-  String get commonClose => 'Close';
-  @override
-  String get commonNext => 'Next';
-  @override
-  String get commonBack => 'Back';
-  @override
-  String get commonContinue => 'Continue';
-  @override
-  String get commonLoading => 'Loading…';
-  @override
-  String get commonAll => 'All';
-  @override
-  String get commonNone => 'None';
-  @override
-  String get commonOptional => 'Optional';
-  @override
-  String get commonRequired => 'Required';
-
-  @override
-  String get navHome => 'Home';
-  @override
-  String get navAnalytics => 'Analytics';
-  @override
-  String get navCalendar => 'Calendar';
-  @override
-  String get navSettings => 'Settings';
-  @override
-  String get navTransactions => 'Transactions';
-  @override
-  String get navBudgets => 'Budgets';
-
-  @override
-  String get splashLoadingLong => 'Loading your data…';
-  @override
-  String get splashLoadingError => "Couldn't start the app";
-
-  @override
-  String get onbSkip => 'Skip';
-  @override
-  String get onbNext => 'Next';
-  @override
-  String get onbStart => 'Get started';
-  @override
-  String get onbHaveAccount => 'I already have an account';
-  @override
-  String get onbP1Title => 'Track in 3 seconds';
-  @override
-  String get onbP1Body => 'Log expenses in one tap. No clunky forms.';
-  @override
-  String get onbP2Title => 'Categories your way';
-  @override
-  String get onbP2Body => 'Ready-made KZ categories. Add your own.';
-  @override
-  String get onbP3Title => 'One tap, expense logged';
-  @override
-  String get onbP3Body =>
-      'Widgets for iOS and Android. No need to open the app.';
-  @override
-  String get onbP4Title => 'Ready to begin?';
-  @override
-  String get onbP4Body => 'Pick language and currency — 10 seconds.';
-
-  @override
-  String get authTitle => 'Sign in to FinNex';
-  @override
-  String get authSubtitle => 'No password. Just your phone.';
-  @override
-  String get authCtaSendCode => 'Get code';
-  @override
-  String get authOr => 'or';
-  @override
-  String get authContinueApple => 'Continue with Apple';
-  @override
-  String get authContinueGoogle => 'Continue with Google';
-  @override
-  String get authContinueEmail => 'Continue with email';
-  @override
-  String get authSignUp => 'Create account';
-  @override
-  String get authOtpTitle => 'Enter code';
-  @override
-  String authOtpSubtitle(String phone) => 'We sent an SMS to $phone.';
-  @override
-  String authOtpResendIn(String time) => 'Resend in $time';
-  @override
-  String get authOtpResend => 'Resend code';
-  @override
-  String get authOtpHelp => "Didn't get the code?";
-  @override
-  String get authBiometricPrompt => 'Use biometrics to sign in';
-  @override
-  String get authBiometricReason => "Confirm it's you to open FinNex";
-  @override
-  String get authErrorNetwork => 'Check your connection';
-  @override
-  String get authErrorInvalidCode => 'Wrong code';
-  @override
-  String get authErrorRateLimit =>
-      'Too many attempts. Try again in 5 minutes.';
-  @override
-  String authLegal(String terms, String privacy) =>
-      'By continuing, you agree to $terms and $privacy.';
-
-  @override
-  String dashGreeting(String name) => 'Hi, $name';
-  @override
-  String get dashPeriodDay => 'Today';
-  @override
-  String get dashPeriodWeek => 'Week';
-  @override
-  String get dashPeriodMonth => 'Month';
-  @override
-  String dashDeltaUp(int percent) => '+$percent% vs last week';
-  @override
-  String dashDeltaDown(int percent) => '−$percent% vs last week';
-  @override
-  String get dashBudgetTitle => 'Monthly budget';
-  @override
-  String dashBudgetDaysLeft(int days) {
-    return intl.Intl.pluralLogic(
-      days,
-      locale: localeName,
-      one: '1 day left',
-      other: '$days days left',
-    );
+AppL10n lookupAppL10n(Locale locale) {
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'en':
+      return AppL10nEn();
+    case 'kk':
+      return AppL10nKk();
+    case 'ru':
+      return AppL10nRu();
   }
 
-  @override
-  String dashBudgetOver(String amount) => 'Over budget: $amount';
-  @override
-  String get dashRecent => 'Recent activity';
-  @override
-  String get dashSeeAll => 'See all';
-  @override
-  String get dashEmptyTitle => 'No expenses yet';
-  @override
-  String get dashEmptyCta => 'Add your first expense';
-  @override
-  String get dashFab => 'Add';
-  @override
-  String get dashOfflineBanner => 'Offline. Changes will sync.';
-
-  @override
-  String get qaExpenseTitle => 'Expense';
-  @override
-  String get qaIncomeTitle => 'Income';
-  @override
-  String get qaTransferTitle => 'Transfer';
-  @override
-  String get qaAmountRequired => 'Enter amount';
-  @override
-  String get qaDetails => 'Details';
-  @override
-  String get qaNotePlaceholder => 'Note (optional)';
-  @override
-  String get qaDateToday => 'Today';
-  @override
-  String qaSavedExpense(String amount) => 'Expense $amount added';
-  @override
-  String qaSavedIncome(String amount) => 'Income $amount added';
-  @override
-  String get qaSaveErrorOffline => "Couldn't save. Queued.";
-  @override
-  String qaLimitNear(String spent, String budget) =>
-      'Near limit: $spent / $budget';
-  @override
-  String qaLimitExceedTitle(String amount) =>
-      'This exceeds your limit by $amount';
-  @override
-  String get qaLimitExceedSave => 'Save anyway';
-  @override
-  String get qaLimitExceedAdjust => 'Change amount';
-  @override
-  String get qaIncomeRecurringHint => 'Make this recurring?';
-  @override
-  String qaIncomeProgress(String current, String expected) =>
-      '$current of $expected';
-
-  @override
-  String get txFieldAmount => 'Amount';
-  @override
-  String get txFieldCategory => 'Category';
-  @override
-  String get txFieldAccount => 'Account';
-  @override
-  String get txFieldDate => 'Date';
-  @override
-  String get txFieldTime => 'Time';
-  @override
-  String get txFieldNote => 'Note';
-  @override
-  String get txFieldTags => 'Tags';
-  @override
-  String get txFieldReceipt => 'Receipt';
-  @override
-  String get txFieldLocation => 'Location';
-  @override
-  String get txFieldRepeat => 'Repeat';
-  @override
-  String get txFieldExcludeBudget => 'Exclude from budget';
-  @override
-  String get txTitleNewExpense => 'Expense';
-  @override
-  String get txTitleEditExpense => 'Edit expense';
-  @override
-  String get txUnsavedTitle => 'Discard changes?';
-  @override
-  String get txUnsavedDiscard => 'Discard';
-  @override
-  String get txUnsavedKeep => 'Keep editing';
-  @override
-  String get txDeleteConfirm => 'Delete this transaction? Cannot be undone.';
-  @override
-  String get txDeleted => 'Deleted';
-  @override
-  String get txUndo => 'Undo';
-  @override
-  String get txEdit => 'Edit';
-  @override
-  String get txDuplicate => 'Duplicate';
-  @override
-  String get txShare => 'Share';
-  @override
-  String get txDelete => 'Delete';
-  @override
-  String get txSourceWidget => 'Widget';
-  @override
-  String get txSourceManual => 'Manual';
-  @override
-  String get txSourceImport => 'Import';
-  @override
-  String get txSyncQueued => 'Queued for sync';
-  @override
-  String get txNotFound => 'Transaction not found';
-  @override
-  String txCount(int count) {
-    return intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      zero: 'No transactions',
-      one: '1 transaction',
-      other: '$count transactions',
-    );
-  }
-
-  @override
-  String txDaysAgo(int days) {
-    if (days == 0) return 'Today';
-    if (days == 1) return 'Yesterday';
-    return '$days days ago';
-  }
-
-  @override
-  String txItemsSelected(int count) {
-    return intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      one: '1 item selected',
-      other: '$count items selected',
-    );
-  }
-
-  @override
-  String get catFood => 'Food';
-  @override
-  String get catGroceries => 'Groceries';
-  @override
-  String get catCafe => 'Café';
-  @override
-  String get catRestaurants => 'Restaurants';
-  @override
-  String get catTransport => 'Transport';
-  @override
-  String get catTaxi => 'Taxi';
-  @override
-  String get catFuel => 'Fuel';
-  @override
-  String get catShopping => 'Shopping';
-  @override
-  String get catClothing => 'Clothing';
-  @override
-  String get catElectronics => 'Electronics';
-  @override
-  String get catEntertainment => 'Entertainment';
-  @override
-  String get catSubscriptions => 'Subscriptions';
-  @override
-  String get catBills => 'Bills';
-  @override
-  String get catUtilities => 'Utilities';
-  @override
-  String get catRent => 'Rent';
-  @override
-  String get catHealth => 'Health';
-  @override
-  String get catPharmacy => 'Pharmacy';
-  @override
-  String get catEducation => 'Education';
-  @override
-  String get catTravel => 'Travel';
-  @override
-  String get catHome => 'Home';
-  @override
-  String get catGifts => 'Gifts';
-  @override
-  String get catKids => 'Kids';
-  @override
-  String get catPets => 'Pets';
-  @override
-  String get catSports => 'Sports';
-  @override
-  String get catBeauty => 'Beauty';
-  @override
-  String get catCharity => 'Charity';
-  @override
-  String get catTaxes => 'Taxes';
-  @override
-  String get catFees => 'Fees';
-  @override
-  String get catOther => 'Other';
-  @override
-  String get catIncSalary => 'Salary';
-  @override
-  String get catIncAdvance => 'Advance';
-  @override
-  String get catIncFreelance => 'Freelance';
-  @override
-  String get catIncGift => 'Gift';
-  @override
-  String get catIncRefund => 'Refund';
-  @override
-  String get catIncCashback => 'Cashback';
-  @override
-  String get catIncDividends => 'Dividends';
-  @override
-  String get catIncInterest => 'Interest';
-
-  @override
-  String get catScreenTitle => 'Categories';
-  @override
-  String get catTabExpense => 'Expenses';
-  @override
-  String get catTabIncome => 'Income';
-  @override
-  String get catSectionCustom => 'My categories';
-  @override
-  String get catSectionSystem => 'Built-in';
-  @override
-  String get catAdd => 'Add category';
-  @override
-  String get catFieldName => 'Name';
-  @override
-  String get catFieldIcon => 'Icon';
-  @override
-  String get catFieldColor => 'Color';
-  @override
-  String get catFieldParent => 'Parent category';
-
-  @override
-  String get budgetsTitle => 'Budgets';
-  @override
-  String get budgetsEmpty => 'No budgets yet';
-  @override
-  String get budgetsCreate => 'Create budget';
-  @override
-  String get budgetFieldName => 'Name';
-  @override
-  String get budgetFieldLimit => 'Limit';
-  @override
-  String get budgetFieldPeriod => 'Period';
-  @override
-  String get budgetFieldCategory => 'Category';
-  @override
-  String get budgetPeriodWeek => 'Weekly';
-  @override
-  String get budgetPeriodMonth => 'Monthly';
-  @override
-  String get budgetPeriodYear => 'Yearly';
-  @override
-  String get budgetAlertAt80 => 'Alert me at 80%';
-  @override
-  String budgetProgressLabel(String spent, String limit) =>
-      '$spent of $limit';
-
-  @override
-  String get anTitle => 'Analytics';
-  @override
-  String get anPeriodDay => 'Day';
-  @override
-  String get anPeriodWeek => 'Week';
-  @override
-  String get anPeriodMonth => 'Month';
-  @override
-  String get anPeriodYear => 'Year';
-  @override
-  String get anPeriodCustom => 'Custom';
-  @override
-  String get anSumExpense => 'Expenses';
-  @override
-  String get anSumIncome => 'Income';
-  @override
-  String get anSumBalance => 'Balance';
-  @override
-  String get anByCategory => 'By category';
-  @override
-  String get anByWeek => 'By week';
-  @override
-  String get anByMonth => 'By month';
-  @override
-  String get anCashFlow => 'Cash flow';
-  @override
-  String get anEmpty => 'No data for this period';
-
-  @override
-  String get calTitle => 'Calendar';
-  @override
-  String get calViewMonth => 'Month';
-  @override
-  String get calViewWeek => 'Week';
-  @override
-  String get calDayEmpty => 'No transactions';
-  @override
-  String get calDayAdd => 'Add for this day';
-
-  @override
-  String get notifTitle => 'Notifications';
-  @override
-  String get notifEmpty => 'All caught up';
-  @override
-  String get notifDailyReminderTitle => "Log today's expenses";
-  @override
-  String get notifDailyReminderBody => 'Takes 3 seconds. Tap to add.';
-  @override
-  String get notifWeeklyRecapTitle => 'Your week in numbers';
-  @override
-  String notifWeeklyRecapBody(String amount) =>
-      'You spent $amount this week.';
-  @override
-  String get notifLimitWarningTitle => 'Budget alert';
-  @override
-  String notifLimitWarningBody(String category, int percent) =>
-      '$category is at $percent% of its limit.';
-  @override
-  String get notifInsightReadyTitle => 'New insight';
-  @override
-  String get notifInsightReadyBody => 'Open FinNex to see what changed.';
-
-  @override
-  String get setTitle => 'Settings';
-  @override
-  String get setProfile => 'Profile';
-  @override
-  String get setAppearance => 'Appearance';
-  @override
-  String get setTheme => 'Theme';
-  @override
-  String get setThemeSystem => 'System';
-  @override
-  String get setThemeLight => 'Light';
-  @override
-  String get setThemeDark => 'Dark';
-  @override
-  String get setLanguage => 'Language';
-  @override
-  String get setLanguageEn => 'English';
-  @override
-  String get setLanguageRu => 'Русский';
-  @override
-  String get setLanguageKk => 'Қазақша';
-  @override
-  String get setCurrency => 'Currency';
-  @override
-  String get setSecurity => 'Security';
-  @override
-  String get setBiometric => 'Unlock with biometrics';
-  @override
-  String get setPin => 'App PIN';
-  @override
-  String get setNotifications => 'Notifications';
-  @override
-  String get setNotifDaily => 'Daily reminder';
-  @override
-  String get setNotifWeekly => 'Weekly recap';
-  @override
-  String get setNotifLimit => 'Budget alerts';
-  @override
-  String get setNotifInsights => 'Insights';
-  @override
-  String get setData => 'Data';
-  @override
-  String get setExport => 'Export data';
-  @override
-  String get setImport => 'Import data';
-  @override
-  String get setSync => 'Sync now';
-  @override
-  String get setAbout => 'About';
-  @override
-  String setVersion(String version) => 'Version $version';
-  @override
-  String get setSignOut => 'Sign out';
-  @override
-  String get setDeleteAccount => 'Delete account';
-  @override
-  String get setDeleteAccountConfirm =>
-      'Delete your account? All data will be erased.';
-
-  @override
-  String get errorNetwork => 'Network error. Check your connection.';
-  @override
-  String get errorServer => 'Something went wrong on our end.';
-  @override
-  String get errorValidation => 'Please check the highlighted fields.';
-  @override
-  String get errorSyncConflict =>
-      'Sync conflict. We kept your latest changes.';
-  @override
-  String get errorOffline =>
-      "You're offline. Changes are saved locally.";
-  @override
-  String get errorUnknown => 'Unexpected error';
-}
-
-// ---------------------------------------------------------------------------
-// Russian
-// ---------------------------------------------------------------------------
-class AppL10nRu extends AppL10n {
-  AppL10nRu() : super('ru');
-
-  @override
-  String get appName => 'FinNex';
-
-  @override
-  String get commonCancel => 'Отмена';
-  @override
-  String get commonSave => 'Сохранить';
-  @override
-  String get commonDelete => 'Удалить';
-  @override
-  String get commonEdit => 'Изменить';
-  @override
-  String get commonSearch => 'Поиск';
-  @override
-  String get commonRetry => 'Повторить';
-  @override
-  String get commonOk => 'ОК';
-  @override
-  String get commonYes => 'Да';
-  @override
-  String get commonNo => 'Нет';
-  @override
-  String get commonDone => 'Готово';
-  @override
-  String get commonClose => 'Закрыть';
-  @override
-  String get commonNext => 'Далее';
-  @override
-  String get commonBack => 'Назад';
-  @override
-  String get commonContinue => 'Продолжить';
-  @override
-  String get commonLoading => 'Загрузка…';
-  @override
-  String get commonAll => 'Все';
-  @override
-  String get commonNone => 'Нет';
-  @override
-  String get commonOptional => 'Необязательно';
-  @override
-  String get commonRequired => 'Обязательно';
-
-  @override
-  String get navHome => 'Главная';
-  @override
-  String get navAnalytics => 'Аналитика';
-  @override
-  String get navCalendar => 'Календарь';
-  @override
-  String get navSettings => 'Настройки';
-  @override
-  String get navTransactions => 'Операции';
-  @override
-  String get navBudgets => 'Бюджеты';
-
-  @override
-  String get splashLoadingLong => 'Загружаем ваши данные…';
-  @override
-  String get splashLoadingError => 'Не удалось запустить приложение';
-
-  @override
-  String get onbSkip => 'Пропустить';
-  @override
-  String get onbNext => 'Дальше';
-  @override
-  String get onbStart => 'Начать';
-  @override
-  String get onbHaveAccount => 'У меня уже есть аккаунт';
-  @override
-  String get onbP1Title => 'Учёт за 3 секунды';
-  @override
-  String get onbP1Body => 'Запишите расход одним тапом. Без сложных форм.';
-  @override
-  String get onbP2Title => 'Категории под вас';
-  @override
-  String get onbP2Body =>
-      'Готовые категории для Казахстана. Добавляйте свои.';
-  @override
-  String get onbP3Title => 'Один тап — расход записан';
-  @override
-  String get onbP3Body =>
-      'Виджет для iOS и Android. Не нужно открывать приложение.';
-  @override
-  String get onbP4Title => 'Готовы начать?';
-  @override
-  String get onbP4Body =>
-      'Выберите язык и валюту — займёт 10 секунд.';
-
-  @override
-  String get authTitle => 'Войти в FinNex';
-  @override
-  String get authSubtitle => 'Без пароля. Только номер телефона.';
-  @override
-  String get authCtaSendCode => 'Получить код';
-  @override
-  String get authOr => 'или';
-  @override
-  String get authContinueApple => 'Войти через Apple';
-  @override
-  String get authContinueGoogle => 'Войти через Google';
-  @override
-  String get authContinueEmail => 'Войти через email';
-  @override
-  String get authSignUp => 'Создать аккаунт';
-  @override
-  String get authOtpTitle => 'Введите код';
-  @override
-  String authOtpSubtitle(String phone) => 'Отправили SMS на $phone.';
-  @override
-  String authOtpResendIn(String time) => 'Отправить заново через $time';
-  @override
-  String get authOtpResend => 'Отправить заново';
-  @override
-  String get authOtpHelp => 'Не получили код?';
-  @override
-  String get authBiometricPrompt => 'Войти по биометрии';
-  @override
-  String get authBiometricReason => 'Подтвердите вход в FinNex';
-  @override
-  String get authErrorNetwork => 'Проверьте интернет';
-  @override
-  String get authErrorInvalidCode => 'Неверный код';
-  @override
-  String get authErrorRateLimit =>
-      'Слишком много попыток. Попробуйте через 5 минут.';
-  @override
-  String authLegal(String terms, String privacy) =>
-      'Продолжая, вы принимаете $terms и $privacy.';
-
-  @override
-  String dashGreeting(String name) => 'Привет, $name';
-  @override
-  String get dashPeriodDay => 'Сегодня';
-  @override
-  String get dashPeriodWeek => 'Неделя';
-  @override
-  String get dashPeriodMonth => 'Месяц';
-  @override
-  String dashDeltaUp(int percent) => '+$percent% к прошлой неделе';
-  @override
-  String dashDeltaDown(int percent) => '−$percent% к прошлой неделе';
-  @override
-  String get dashBudgetTitle => 'Бюджет на месяц';
-  @override
-  String dashBudgetDaysLeft(int days) {
-    return intl.Intl.pluralLogic(
-      days,
-      locale: localeName,
-      one: 'остался $days день',
-      few: 'осталось $days дня',
-      many: 'осталось $days дней',
-      other: 'осталось $days дня',
-    );
-  }
-
-  @override
-  String dashBudgetOver(String amount) => 'Сверх бюджета: $amount';
-  @override
-  String get dashRecent => 'Последние операции';
-  @override
-  String get dashSeeAll => 'Все';
-  @override
-  String get dashEmptyTitle => 'Пока нет расходов';
-  @override
-  String get dashEmptyCta => 'Добавить первый расход';
-  @override
-  String get dashFab => 'Добавить';
-  @override
-  String get dashOfflineBanner => 'Офлайн. Изменения сохранятся.';
-
-  @override
-  String get qaExpenseTitle => 'Расход';
-  @override
-  String get qaIncomeTitle => 'Доход';
-  @override
-  String get qaTransferTitle => 'Перевод';
-  @override
-  String get qaAmountRequired => 'Введите сумму';
-  @override
-  String get qaDetails => 'Детали';
-  @override
-  String get qaNotePlaceholder => 'Заметка (необязательно)';
-  @override
-  String get qaDateToday => 'Сегодня';
-  @override
-  String qaSavedExpense(String amount) => 'Расход $amount добавлен';
-  @override
-  String qaSavedIncome(String amount) => 'Доход $amount добавлен';
-  @override
-  String get qaSaveErrorOffline => 'Не сохранилось. Запись в очереди.';
-  @override
-  String qaLimitNear(String spent, String budget) =>
-      'Скоро лимит: $spent / $budget';
-  @override
-  String qaLimitExceedTitle(String amount) =>
-      'Превысите лимит на $amount';
-  @override
-  String get qaLimitExceedSave => 'Всё равно записать';
-  @override
-  String get qaLimitExceedAdjust => 'Изменить сумму';
-  @override
-  String get qaIncomeRecurringHint => 'Сделать регулярным?';
-  @override
-  String qaIncomeProgress(String current, String expected) =>
-      '$current из $expected';
-
-  @override
-  String get txFieldAmount => 'Сумма';
-  @override
-  String get txFieldCategory => 'Категория';
-  @override
-  String get txFieldAccount => 'Счёт';
-  @override
-  String get txFieldDate => 'Дата';
-  @override
-  String get txFieldTime => 'Время';
-  @override
-  String get txFieldNote => 'Заметка';
-  @override
-  String get txFieldTags => 'Теги';
-  @override
-  String get txFieldReceipt => 'Чек';
-  @override
-  String get txFieldLocation => 'Место';
-  @override
-  String get txFieldRepeat => 'Повтор';
-  @override
-  String get txFieldExcludeBudget => 'Не учитывать в бюджете';
-  @override
-  String get txTitleNewExpense => 'Расход';
-  @override
-  String get txTitleEditExpense => 'Изменить расход';
-  @override
-  String get txUnsavedTitle => 'Отменить изменения?';
-  @override
-  String get txUnsavedDiscard => 'Отменить';
-  @override
-  String get txUnsavedKeep => 'Продолжить';
-  @override
-  String get txDeleteConfirm => 'Удалить операцию? Это нельзя отменить.';
-  @override
-  String get txDeleted => 'Удалено';
-  @override
-  String get txUndo => 'Отменить';
-  @override
-  String get txEdit => 'Редактировать';
-  @override
-  String get txDuplicate => 'Дублировать';
-  @override
-  String get txShare => 'Поделиться';
-  @override
-  String get txDelete => 'Удалить';
-  @override
-  String get txSourceWidget => 'Виджет';
-  @override
-  String get txSourceManual => 'Ручной ввод';
-  @override
-  String get txSourceImport => 'Импорт';
-  @override
-  String get txSyncQueued => 'В очереди на синхронизацию';
-  @override
-  String get txNotFound => 'Операция не найдена';
-  @override
-  String txCount(int count) {
-    return intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      zero: 'Нет операций',
-      one: '$count операция',
-      few: '$count операции',
-      many: '$count операций',
-      other: '$count операции',
-    );
-  }
-
-  @override
-  String txDaysAgo(int days) {
-    if (days == 0) return 'Сегодня';
-    if (days == 1) return 'Вчера';
-    return intl.Intl.pluralLogic(
-      days,
-      locale: localeName,
-      one: '$days день назад',
-      few: '$days дня назад',
-      many: '$days дней назад',
-      other: '$days дня назад',
-    );
-  }
-
-  @override
-  String txItemsSelected(int count) {
-    return intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      one: 'Выбран $count элемент',
-      few: 'Выбрано $count элемента',
-      many: 'Выбрано $count элементов',
-      other: 'Выбрано $count элемента',
-    );
-  }
-
-  @override
-  String get catFood => 'Еда';
-  @override
-  String get catGroceries => 'Продукты';
-  @override
-  String get catCafe => 'Кафе';
-  @override
-  String get catRestaurants => 'Рестораны';
-  @override
-  String get catTransport => 'Транспорт';
-  @override
-  String get catTaxi => 'Такси';
-  @override
-  String get catFuel => 'Топливо';
-  @override
-  String get catShopping => 'Покупки';
-  @override
-  String get catClothing => 'Одежда';
-  @override
-  String get catElectronics => 'Электроника';
-  @override
-  String get catEntertainment => 'Развлечения';
-  @override
-  String get catSubscriptions => 'Подписки';
-  @override
-  String get catBills => 'Счета';
-  @override
-  String get catUtilities => 'Коммунальные';
-  @override
-  String get catRent => 'Аренда';
-  @override
-  String get catHealth => 'Здоровье';
-  @override
-  String get catPharmacy => 'Аптека';
-  @override
-  String get catEducation => 'Образование';
-  @override
-  String get catTravel => 'Путешествия';
-  @override
-  String get catHome => 'Дом';
-  @override
-  String get catGifts => 'Подарки';
-  @override
-  String get catKids => 'Дети';
-  @override
-  String get catPets => 'Питомцы';
-  @override
-  String get catSports => 'Спорт';
-  @override
-  String get catBeauty => 'Красота';
-  @override
-  String get catCharity => 'Благотворительность';
-  @override
-  String get catTaxes => 'Налоги';
-  @override
-  String get catFees => 'Комиссии';
-  @override
-  String get catOther => 'Прочее';
-  @override
-  String get catIncSalary => 'Зарплата';
-  @override
-  String get catIncAdvance => 'Аванс';
-  @override
-  String get catIncFreelance => 'Фриланс';
-  @override
-  String get catIncGift => 'Подарок';
-  @override
-  String get catIncRefund => 'Возврат';
-  @override
-  String get catIncCashback => 'Кэшбэк';
-  @override
-  String get catIncDividends => 'Дивиденды';
-  @override
-  String get catIncInterest => 'Проценты';
-
-  @override
-  String get catScreenTitle => 'Категории';
-  @override
-  String get catTabExpense => 'Расходы';
-  @override
-  String get catTabIncome => 'Доходы';
-  @override
-  String get catSectionCustom => 'Мои категории';
-  @override
-  String get catSectionSystem => 'Системные';
-  @override
-  String get catAdd => 'Добавить категорию';
-  @override
-  String get catFieldName => 'Название';
-  @override
-  String get catFieldIcon => 'Иконка';
-  @override
-  String get catFieldColor => 'Цвет';
-  @override
-  String get catFieldParent => 'Родительская категория';
-
-  @override
-  String get budgetsTitle => 'Бюджеты';
-  @override
-  String get budgetsEmpty => 'Бюджетов пока нет';
-  @override
-  String get budgetsCreate => 'Создать бюджет';
-  @override
-  String get budgetFieldName => 'Название';
-  @override
-  String get budgetFieldLimit => 'Лимит';
-  @override
-  String get budgetFieldPeriod => 'Период';
-  @override
-  String get budgetFieldCategory => 'Категория';
-  @override
-  String get budgetPeriodWeek => 'Неделя';
-  @override
-  String get budgetPeriodMonth => 'Месяц';
-  @override
-  String get budgetPeriodYear => 'Год';
-  @override
-  String get budgetAlertAt80 => 'Предупредить при 80%';
-  @override
-  String budgetProgressLabel(String spent, String limit) =>
-      '$spent из $limit';
-
-  @override
-  String get anTitle => 'Аналитика';
-  @override
-  String get anPeriodDay => 'День';
-  @override
-  String get anPeriodWeek => 'Неделя';
-  @override
-  String get anPeriodMonth => 'Месяц';
-  @override
-  String get anPeriodYear => 'Год';
-  @override
-  String get anPeriodCustom => 'Свой';
-  @override
-  String get anSumExpense => 'Расходы';
-  @override
-  String get anSumIncome => 'Доходы';
-  @override
-  String get anSumBalance => 'Баланс';
-  @override
-  String get anByCategory => 'По категориям';
-  @override
-  String get anByWeek => 'По неделям';
-  @override
-  String get anByMonth => 'По месяцам';
-  @override
-  String get anCashFlow => 'Денежный поток';
-  @override
-  String get anEmpty => 'Нет данных за этот период';
-
-  @override
-  String get calTitle => 'Календарь';
-  @override
-  String get calViewMonth => 'Месяц';
-  @override
-  String get calViewWeek => 'Неделя';
-  @override
-  String get calDayEmpty => 'Нет операций';
-  @override
-  String get calDayAdd => 'Добавить за этот день';
-
-  @override
-  String get notifTitle => 'Уведомления';
-  @override
-  String get notifEmpty => 'Всё прочитано';
-  @override
-  String get notifDailyReminderTitle => 'Запишите расходы за сегодня';
-  @override
-  String get notifDailyReminderBody =>
-      'Займёт 3 секунды. Нажмите, чтобы добавить.';
-  @override
-  String get notifWeeklyRecapTitle => 'Ваша неделя в цифрах';
-  @override
-  String notifWeeklyRecapBody(String amount) =>
-      'За эту неделю вы потратили $amount.';
-  @override
-  String get notifLimitWarningTitle => 'Бюджетный алерт';
-  @override
-  String notifLimitWarningBody(String category, int percent) =>
-      'Категория $category достигла $percent% лимита.';
-  @override
-  String get notifInsightReadyTitle => 'Новый инсайт';
-  @override
-  String get notifInsightReadyBody =>
-      'Откройте FinNex, чтобы узнать подробности.';
-
-  @override
-  String get setTitle => 'Настройки';
-  @override
-  String get setProfile => 'Профиль';
-  @override
-  String get setAppearance => 'Оформление';
-  @override
-  String get setTheme => 'Тема';
-  @override
-  String get setThemeSystem => 'Системная';
-  @override
-  String get setThemeLight => 'Светлая';
-  @override
-  String get setThemeDark => 'Тёмная';
-  @override
-  String get setLanguage => 'Язык';
-  @override
-  String get setLanguageEn => 'English';
-  @override
-  String get setLanguageRu => 'Русский';
-  @override
-  String get setLanguageKk => 'Қазақша';
-  @override
-  String get setCurrency => 'Валюта';
-  @override
-  String get setSecurity => 'Безопасность';
-  @override
-  String get setBiometric => 'Вход по биометрии';
-  @override
-  String get setPin => 'PIN-код';
-  @override
-  String get setNotifications => 'Уведомления';
-  @override
-  String get setNotifDaily => 'Ежедневное напоминание';
-  @override
-  String get setNotifWeekly => 'Еженедельная сводка';
-  @override
-  String get setNotifLimit => 'Бюджетные алерты';
-  @override
-  String get setNotifInsights => 'Инсайты';
-  @override
-  String get setData => 'Данные';
-  @override
-  String get setExport => 'Экспорт данных';
-  @override
-  String get setImport => 'Импорт данных';
-  @override
-  String get setSync => 'Синхронизировать';
-  @override
-  String get setAbout => 'О приложении';
-  @override
-  String setVersion(String version) => 'Версия $version';
-  @override
-  String get setSignOut => 'Выйти';
-  @override
-  String get setDeleteAccount => 'Удалить аккаунт';
-  @override
-  String get setDeleteAccountConfirm =>
-      'Удалить аккаунт? Все данные будут стёрты.';
-
-  @override
-  String get errorNetwork => 'Ошибка сети. Проверьте подключение.';
-  @override
-  String get errorServer => 'Что-то пошло не так на нашей стороне.';
-  @override
-  String get errorValidation => 'Проверьте подсвеченные поля.';
-  @override
-  String get errorSyncConflict =>
-      'Конфликт синхронизации. Мы сохранили последние изменения.';
-  @override
-  String get errorOffline =>
-      'Вы офлайн. Изменения сохранены локально.';
-  @override
-  String get errorUnknown => 'Непредвиденная ошибка';
-}
-
-// ---------------------------------------------------------------------------
-// Kazakh
-// ---------------------------------------------------------------------------
-class AppL10nKk extends AppL10n {
-  AppL10nKk() : super('kk');
-
-  @override
-  String get appName => 'FinNex';
-
-  @override
-  String get commonCancel => 'Болдырмау';
-  @override
-  String get commonSave => 'Сақтау';
-  @override
-  String get commonDelete => 'Жою';
-  @override
-  String get commonEdit => 'Өзгерту';
-  @override
-  String get commonSearch => 'Іздеу';
-  @override
-  String get commonRetry => 'Қайталау';
-  @override
-  String get commonOk => 'Жарайды';
-  @override
-  String get commonYes => 'Иә';
-  @override
-  String get commonNo => 'Жоқ';
-  @override
-  String get commonDone => 'Дайын';
-  @override
-  String get commonClose => 'Жабу';
-  @override
-  String get commonNext => 'Әрі қарай';
-  @override
-  String get commonBack => 'Артқа';
-  @override
-  String get commonContinue => 'Жалғастыру';
-  @override
-  String get commonLoading => 'Жүктелуде…';
-  @override
-  String get commonAll => 'Барлығы';
-  @override
-  String get commonNone => 'Жоқ';
-  @override
-  String get commonOptional => 'Міндетті емес';
-  @override
-  String get commonRequired => 'Міндетті';
-
-  @override
-  String get navHome => 'Басты';
-  @override
-  String get navAnalytics => 'Аналитика';
-  @override
-  String get navCalendar => 'Күнтізбе';
-  @override
-  String get navSettings => 'Баптаулар';
-  @override
-  String get navTransactions => 'Операциялар';
-  @override
-  String get navBudgets => 'Бюджеттер';
-
-  @override
-  String get splashLoadingLong => 'Деректер жүктелуде…';
-  @override
-  String get splashLoadingError => 'Қолданба іске қосылмады';
-
-  @override
-  String get onbSkip => 'Өткізіп жіберу';
-  @override
-  String get onbNext => 'Әрі қарай';
-  @override
-  String get onbStart => 'Бастау';
-  @override
-  String get onbHaveAccount => 'Менің аккаунтым бар';
-  @override
-  String get onbP1Title => '3 секундта есепке алу';
-  @override
-  String get onbP1Body =>
-      'Бір рет түртіп шығынды жазыңыз. Күрделі формасыз.';
-  @override
-  String get onbP2Title => 'Сізге арналған санаттар';
-  @override
-  String get onbP2Body =>
-      'Қазақстанға арналған дайын санаттар. Өзіңіздікін қосыңыз.';
-  @override
-  String get onbP3Title => 'Бір түрту — шығын жазылды';
-  @override
-  String get onbP3Body =>
-      'iOS пен Android виджеті. Қолданбаны ашудың қажеті жоқ.';
-  @override
-  String get onbP4Title => 'Бастауға дайынсыз ба?';
-  @override
-  String get onbP4Body =>
-      'Тіл мен валютаны таңдаңыз — 10 секундты алады.';
-
-  @override
-  String get authTitle => 'FinNex-ке кіру';
-  @override
-  String get authSubtitle => 'Парольсіз. Тек телефон нөмірі.';
-  @override
-  String get authCtaSendCode => 'Кодты алу';
-  @override
-  String get authOr => 'немесе';
-  @override
-  String get authContinueApple => 'Apple арқылы кіру';
-  @override
-  String get authContinueGoogle => 'Google арқылы кіру';
-  @override
-  String get authContinueEmail => 'Email арқылы кіру';
-  @override
-  String get authSignUp => 'Аккаунт құру';
-  @override
-  String get authOtpTitle => 'Кодты енгізіңіз';
-  @override
-  String authOtpSubtitle(String phone) => 'SMS жіберілді: $phone.';
-  @override
-  String authOtpResendIn(String time) => '$time кейін қайта жіберу';
-  @override
-  String get authOtpResend => 'Қайта жіберу';
-  @override
-  String get authOtpHelp => 'Кодты алмадыңыз ба?';
-  @override
-  String get authBiometricPrompt => 'Биометрия арқылы кіру';
-  @override
-  String get authBiometricReason => 'FinNex-ке кіруді растаңыз';
-  @override
-  String get authErrorNetwork => 'Интернетті тексеріңіз';
-  @override
-  String get authErrorInvalidCode => 'Қате код';
-  @override
-  String get authErrorRateLimit =>
-      'Тым көп әрекет. 5 минуттан кейін көріңіз.';
-  @override
-  String authLegal(String terms, String privacy) =>
-      'Жалғастыра отырып, сіз $terms және $privacy қабылдайсыз.';
-
-  @override
-  String dashGreeting(String name) => 'Сәлем, $name';
-  @override
-  String get dashPeriodDay => 'Бүгін';
-  @override
-  String get dashPeriodWeek => 'Апта';
-  @override
-  String get dashPeriodMonth => 'Ай';
-  @override
-  String dashDeltaUp(int percent) => 'Өткен аптадан $percent% көп';
-  @override
-  String dashDeltaDown(int percent) => 'Өткен аптадан $percent% аз';
-  @override
-  String get dashBudgetTitle => 'Айлық бюджет';
-  @override
-  String dashBudgetDaysLeft(int days) => '$days күн қалды';
-
-  @override
-  String dashBudgetOver(String amount) => 'Бюджеттен тыс: $amount';
-  @override
-  String get dashRecent => 'Соңғы операциялар';
-  @override
-  String get dashSeeAll => 'Барлығы';
-  @override
-  String get dashEmptyTitle => 'Шығындар әлі жоқ';
-  @override
-  String get dashEmptyCta => 'Алғашқы шығынды қосу';
-  @override
-  String get dashFab => 'Қосу';
-  @override
-  String get dashOfflineBanner => 'Офлайн. Өзгерістер сақталады.';
-
-  @override
-  String get qaExpenseTitle => 'Шығын';
-  @override
-  String get qaIncomeTitle => 'Кіріс';
-  @override
-  String get qaTransferTitle => 'Аударым';
-  @override
-  String get qaAmountRequired => 'Соманы енгізіңіз';
-  @override
-  String get qaDetails => 'Толығырақ';
-  @override
-  String get qaNotePlaceholder => 'Ескертпе (міндетті емес)';
-  @override
-  String get qaDateToday => 'Бүгін';
-  @override
-  String qaSavedExpense(String amount) => 'Шығын $amount қосылды';
-  @override
-  String qaSavedIncome(String amount) => 'Кіріс $amount қосылды';
-  @override
-  String get qaSaveErrorOffline => 'Сақталмады. Кезекте.';
-  @override
-  String qaLimitNear(String spent, String budget) =>
-      'Лимит жақын: $spent / $budget';
-  @override
-  String qaLimitExceedTitle(String amount) =>
-      'Лимиттен $amount асып кетесіз';
-  @override
-  String get qaLimitExceedSave => 'Сонда да жазу';
-  @override
-  String get qaLimitExceedAdjust => 'Соманы өзгерту';
-  @override
-  String get qaIncomeRecurringHint => 'Тұрақты етесіз бе?';
-  @override
-  String qaIncomeProgress(String current, String expected) =>
-      '$expected ішінен $current';
-
-  @override
-  String get txFieldAmount => 'Сома';
-  @override
-  String get txFieldCategory => 'Санат';
-  @override
-  String get txFieldAccount => 'Шот';
-  @override
-  String get txFieldDate => 'Күн';
-  @override
-  String get txFieldTime => 'Уақыт';
-  @override
-  String get txFieldNote => 'Ескертпе';
-  @override
-  String get txFieldTags => 'Тегтер';
-  @override
-  String get txFieldReceipt => 'Чек';
-  @override
-  String get txFieldLocation => 'Орын';
-  @override
-  String get txFieldRepeat => 'Қайталау';
-  @override
-  String get txFieldExcludeBudget => 'Бюджетке кірмесін';
-  @override
-  String get txTitleNewExpense => 'Шығын';
-  @override
-  String get txTitleEditExpense => 'Шығынды өзгерту';
-  @override
-  String get txUnsavedTitle => 'Өзгерістерді болдырмайсыз ба?';
-  @override
-  String get txUnsavedDiscard => 'Болдырмау';
-  @override
-  String get txUnsavedKeep => 'Жалғастыру';
-  @override
-  String get txDeleteConfirm => 'Операцияны жоясыз ба? Қайтарылмайды.';
-  @override
-  String get txDeleted => 'Жойылды';
-  @override
-  String get txUndo => 'Қайтару';
-  @override
-  String get txEdit => 'Өзгерту';
-  @override
-  String get txDuplicate => 'Көшіру';
-  @override
-  String get txShare => 'Бөлісу';
-  @override
-  String get txDelete => 'Жою';
-  @override
-  String get txSourceWidget => 'Виджет';
-  @override
-  String get txSourceManual => 'Қолмен';
-  @override
-  String get txSourceImport => 'Импорт';
-  @override
-  String get txSyncQueued => 'Синхрондау кезегінде';
-  @override
-  String get txNotFound => 'Операция табылмады';
-  @override
-  String txCount(int count) {
-    if (count == 0) return 'Операция жоқ';
-    return '$count операция';
-  }
-
-  @override
-  String txDaysAgo(int days) {
-    if (days == 0) return 'Бүгін';
-    if (days == 1) return 'Кеше';
-    return '$days күн бұрын';
-  }
-
-  @override
-  String txItemsSelected(int count) => '$count элемент таңдалды';
-
-  @override
-  String get catFood => 'Тағам';
-  @override
-  String get catGroceries => 'Азық-түлік';
-  @override
-  String get catCafe => 'Кафе';
-  @override
-  String get catRestaurants => 'Мейрамханалар';
-  @override
-  String get catTransport => 'Көлік';
-  @override
-  String get catTaxi => 'Такси';
-  @override
-  String get catFuel => 'Жанармай';
-  @override
-  String get catShopping => 'Сатып алу';
-  @override
-  String get catClothing => 'Киім';
-  @override
-  String get catElectronics => 'Электроника';
-  @override
-  String get catEntertainment => 'Ойын-сауық';
-  @override
-  String get catSubscriptions => 'Жазылымдар';
-  @override
-  String get catBills => 'Шоттар';
-  @override
-  String get catUtilities => 'Коммуналды';
-  @override
-  String get catRent => 'Жалдау';
-  @override
-  String get catHealth => 'Денсаулық';
-  @override
-  String get catPharmacy => 'Дәріхана';
-  @override
-  String get catEducation => 'Білім';
-  @override
-  String get catTravel => 'Саяхат';
-  @override
-  String get catHome => 'Үй';
-  @override
-  String get catGifts => 'Сыйлықтар';
-  @override
-  String get catKids => 'Балалар';
-  @override
-  String get catPets => 'Үй жануарлары';
-  @override
-  String get catSports => 'Спорт';
-  @override
-  String get catBeauty => 'Сұлулық';
-  @override
-  String get catCharity => 'Қайырымдылық';
-  @override
-  String get catTaxes => 'Салықтар';
-  @override
-  String get catFees => 'Комиссиялар';
-  @override
-  String get catOther => 'Басқа';
-  @override
-  String get catIncSalary => 'Жалақы';
-  @override
-  String get catIncAdvance => 'Аванс';
-  @override
-  String get catIncFreelance => 'Фриланс';
-  @override
-  String get catIncGift => 'Сыйлық';
-  @override
-  String get catIncRefund => 'Қайтару';
-  @override
-  String get catIncCashback => 'Кэшбэк';
-  @override
-  String get catIncDividends => 'Дивидендтер';
-  @override
-  String get catIncInterest => 'Пайыздар';
-
-  @override
-  String get catScreenTitle => 'Санаттар';
-  @override
-  String get catTabExpense => 'Шығындар';
-  @override
-  String get catTabIncome => 'Кірістер';
-  @override
-  String get catSectionCustom => 'Менің санаттарым';
-  @override
-  String get catSectionSystem => 'Жүйелік';
-  @override
-  String get catAdd => 'Санат қосу';
-  @override
-  String get catFieldName => 'Атауы';
-  @override
-  String get catFieldIcon => 'Белгіше';
-  @override
-  String get catFieldColor => 'Түс';
-  @override
-  String get catFieldParent => 'Аталық санат';
-
-  @override
-  String get budgetsTitle => 'Бюджеттер';
-  @override
-  String get budgetsEmpty => 'Бюджет әлі жоқ';
-  @override
-  String get budgetsCreate => 'Бюджет жасау';
-  @override
-  String get budgetFieldName => 'Атауы';
-  @override
-  String get budgetFieldLimit => 'Лимит';
-  @override
-  String get budgetFieldPeriod => 'Кезең';
-  @override
-  String get budgetFieldCategory => 'Санат';
-  @override
-  String get budgetPeriodWeek => 'Апталық';
-  @override
-  String get budgetPeriodMonth => 'Айлық';
-  @override
-  String get budgetPeriodYear => 'Жылдық';
-  @override
-  String get budgetAlertAt80 => '80%-да ескерту';
-  @override
-  String budgetProgressLabel(String spent, String limit) =>
-      '$limit ішінен $spent';
-
-  @override
-  String get anTitle => 'Аналитика';
-  @override
-  String get anPeriodDay => 'Күн';
-  @override
-  String get anPeriodWeek => 'Апта';
-  @override
-  String get anPeriodMonth => 'Ай';
-  @override
-  String get anPeriodYear => 'Жыл';
-  @override
-  String get anPeriodCustom => 'Өзгеше';
-  @override
-  String get anSumExpense => 'Шығындар';
-  @override
-  String get anSumIncome => 'Кірістер';
-  @override
-  String get anSumBalance => 'Теңгерім';
-  @override
-  String get anByCategory => 'Санаттар бойынша';
-  @override
-  String get anByWeek => 'Апталар бойынша';
-  @override
-  String get anByMonth => 'Айлар бойынша';
-  @override
-  String get anCashFlow => 'Ақша ағыны';
-  @override
-  String get anEmpty => 'Бұл кезеңде дерек жоқ';
-
-  @override
-  String get calTitle => 'Күнтізбе';
-  @override
-  String get calViewMonth => 'Ай';
-  @override
-  String get calViewWeek => 'Апта';
-  @override
-  String get calDayEmpty => 'Операция жоқ';
-  @override
-  String get calDayAdd => 'Осы күнге қосу';
-
-  @override
-  String get notifTitle => 'Хабарландырулар';
-  @override
-  String get notifEmpty => 'Барлығы оқылды';
-  @override
-  String get notifDailyReminderTitle => 'Бүгінгі шығындарды жазыңыз';
-  @override
-  String get notifDailyReminderBody =>
-      '3 секунд алады. Қосу үшін түртіңіз.';
-  @override
-  String get notifWeeklyRecapTitle => 'Аптаңыз сандармен';
-  @override
-  String notifWeeklyRecapBody(String amount) =>
-      'Осы аптада $amount жұмсадыңыз.';
-  @override
-  String get notifLimitWarningTitle => 'Бюджет ескертуі';
-  @override
-  String notifLimitWarningBody(String category, int percent) =>
-      '$category санаты лимиттің $percent%-ына жетті.';
-  @override
-  String get notifInsightReadyTitle => 'Жаңа түсінік';
-  @override
-  String get notifInsightReadyBody =>
-      'Толығырақ білу үшін FinNex-ті ашыңыз.';
-
-  @override
-  String get setTitle => 'Баптаулар';
-  @override
-  String get setProfile => 'Профиль';
-  @override
-  String get setAppearance => 'Көрініс';
-  @override
-  String get setTheme => 'Тақырып';
-  @override
-  String get setThemeSystem => 'Жүйелік';
-  @override
-  String get setThemeLight => 'Жарық';
-  @override
-  String get setThemeDark => 'Қараңғы';
-  @override
-  String get setLanguage => 'Тіл';
-  @override
-  String get setLanguageEn => 'English';
-  @override
-  String get setLanguageRu => 'Русский';
-  @override
-  String get setLanguageKk => 'Қазақша';
-  @override
-  String get setCurrency => 'Валюта';
-  @override
-  String get setSecurity => 'Қауіпсіздік';
-  @override
-  String get setBiometric => 'Биометрия арқылы кіру';
-  @override
-  String get setPin => 'PIN-код';
-  @override
-  String get setNotifications => 'Хабарландырулар';
-  @override
-  String get setNotifDaily => 'Күнделікті еске салу';
-  @override
-  String get setNotifWeekly => 'Апталық қорытынды';
-  @override
-  String get setNotifLimit => 'Бюджет ескертулері';
-  @override
-  String get setNotifInsights => 'Түсініктер';
-  @override
-  String get setData => 'Деректер';
-  @override
-  String get setExport => 'Деректерді экспорттау';
-  @override
-  String get setImport => 'Деректерді импорттау';
-  @override
-  String get setSync => 'Қазір синхрондау';
-  @override
-  String get setAbout => 'Қолданба туралы';
-  @override
-  String setVersion(String version) => 'Нұсқа $version';
-  @override
-  String get setSignOut => 'Шығу';
-  @override
-  String get setDeleteAccount => 'Аккаунтты жою';
-  @override
-  String get setDeleteAccountConfirm =>
-      'Аккаунтты жоясыз ба? Барлық дерек өшіріледі.';
-
-  @override
-  String get errorNetwork => 'Желі қатесі. Қосылымды тексеріңіз.';
-  @override
-  String get errorServer => 'Бізде бірдеңе дұрыс емес.';
-  @override
-  String get errorValidation => 'Белгіленген өрістерді тексеріңіз.';
-  @override
-  String get errorSyncConflict =>
-      'Синхрондау қайшылығы. Соңғы өзгерістер сақталды.';
-  @override
-  String get errorOffline =>
-      'Сіз офлайнсыз. Өзгерістер жергілікті сақталды.';
-  @override
-  String get errorUnknown => 'Күтпеген қате';
+  throw FlutterError(
+      'AppL10n.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }

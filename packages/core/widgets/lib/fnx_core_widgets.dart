@@ -34,3 +34,7 @@ export 'src/fnx_tabs.dart';
 export 'src/fnx_text_field.dart';
 export 'src/fnx_theme_ext.dart';
 export 'src/fnx_transaction_item.dart';
+// OmniFi OS components — see docs/DESIGN_SYSTEM_OMNIFI.md
+export 'src/omnifi_dynamic_island.dart';
+export 'src/omnifi_glass_card.dart';
+export 'src/omnifi_hero_balance.dart';

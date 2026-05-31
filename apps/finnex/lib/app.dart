@@ -20,15 +20,20 @@ class FinNexApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // OmniFi OS: dark mode is the canonical look — premium obsidian +
+    // glassmorphism surfaces. Light mode is still available via the settings
+    // page but the app launches into dark.
     final ThemeMode themeMode = ref.watch(settings.themeProvider);
+    final ThemeMode resolvedMode =
+        themeMode == ThemeMode.system ? ThemeMode.dark : themeMode;
     final Locale? locale = ref.watch(settings.localeProvider);
 
     return MaterialApp.router(
-      title: 'FinNex',
+      title: 'Pocket Flow',
       debugShowCheckedModeBanner: false,
       theme: FnxTheme.light(),
       darkTheme: FnxTheme.dark(),
-      themeMode: themeMode,
+      themeMode: resolvedMode,
       locale: locale,
       supportedLocales: FnxLocales.all,
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[

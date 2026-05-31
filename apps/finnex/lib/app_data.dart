@@ -6,9 +6,18 @@
 //
 // Created at app bootstrap and held for the app's lifetime; tear down via
 // [dispose] when running multiple isolated app instances (tests).
+//
+// Bootstrap is FAILSAFE: [openOrFallback] never throws. If sqflite cannot
+// be opened (web without worker, locked file, corrupt IndexedDB, plugin
+// missing) the module degrades to an in-memory implementation so the UI
+// always loads. [AppDataModule.fallbackReason] surfaces the underlying
+// error so the UI can warn the user that persistence is disabled.
 
 import 'dart:async';
 
+// Only import the symbol we need from flutter/foundation to avoid the
+// `Category` annotation clashing with the domain `Category` entity.
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:fnx_data_local/fnx_data_local.dart' as local;
 import 'package:fnx_domain/fnx_domain.dart';
 
@@ -18,22 +27,43 @@ class AppDataModule {
     this._db,
     this.transactions,
     this.accounts,
-    this.categories,
-  );
+    this.categories, {
+    AnalyticsRepository? analytics,
+    this.fallbackReason,
+    this.isInMemory = false,
+  }) : analytics = analytics ??
+            _LiveAnalyticsRepository(
+              transactions: transactions,
+              accounts: accounts,
+            );
 
-  final local.FnxDatabase _db;
+  final local.FnxDatabase? _db;
 
-  /// Domain-shaped transactions repository backed by sqflite.
+  /// Domain-shaped transactions repository.
   final TransactionsRepository transactions;
 
-  /// Domain-shaped accounts repository backed by sqflite.
+  /// Domain-shaped accounts repository.
   final AccountsRepository accounts;
 
-  /// Domain-shaped categories repository backed by sqflite.
+  /// Domain-shaped categories repository.
   final CategoriesRepository categories;
 
+  /// Live analytics repository computed over [transactions] + [accounts].
+  final AnalyticsRepository analytics;
+
+  /// Non-null when the module fell back to an in-memory implementation.
+  /// Holds a short, user-presentable description of the underlying error.
+  final String? fallbackReason;
+
+  /// True when this module is non-persistent (in-memory only).
+  final bool isInMemory;
+
+  /// True when persistence is working.
+  bool get isPersistent => fallbackReason == null && !isInMemory;
+
   /// Opens the application database, runs first-time seed (default account)
-  /// and returns the wired module.
+  /// and returns the wired module. Throws if sqflite cannot be opened —
+  /// prefer [openOrFallback] in production code paths.
   static Future<AppDataModule> open({
     required Ulid demoUserId,
     bool inMemory = false,
@@ -75,8 +105,64 @@ class AppDataModule {
     return AppDataModule._(db, txAdapter, acctAdapter, catAdapter);
   }
 
+  /// Failsafe entrypoint. Tries [open] up to two times (persistent → in-memory
+  /// sqflite → pure-Dart in-memory). Never throws. Always returns a usable
+  /// module so the UI can render even when storage is broken.
+  ///
+  /// On the way down it records the first error in [AppDataModule.fallbackReason]
+  /// so the UI can surface a warning banner.
+  static Future<AppDataModule> openOrFallback({
+    required Ulid demoUserId,
+    Duration timeout = const Duration(seconds: 8),
+  }) async {
+    Object? firstError;
+
+    // 1. Try persistent sqflite.
+    try {
+      return await open(demoUserId: demoUserId).timeout(timeout);
+    } catch (e, st) {
+      firstError = e;
+      debugPrint('AppDataModule.open() failed (persistent): $e\n$st');
+    }
+
+    // 2. Try in-memory sqflite (same SQL engine, no disk).
+    try {
+      final AppDataModule m =
+          await open(demoUserId: demoUserId, inMemory: true).timeout(timeout);
+      return AppDataModule._(
+        m._db,
+        m.transactions,
+        m.accounts,
+        m.categories,
+        fallbackReason: _shortError(firstError),
+        isInMemory: true,
+      );
+    } catch (e, st) {
+      debugPrint('AppDataModule.open(inMemory:true) failed: $e\n$st');
+      // firstError is already populated from the first try{} above.
+    }
+
+    // 3. Last resort — pure-Dart in-memory adapters. Always succeeds.
+    final _PureInMemoryModule pure = _PureInMemoryModule(demoUserId);
+    return AppDataModule._(
+      null,
+      pure.transactions,
+      pure.accounts,
+      pure.categories,
+      fallbackReason: _shortError(firstError) ??
+          'Local storage is unavailable. Running in-memory.',
+      isInMemory: true,
+    );
+  }
+
+  static String? _shortError(Object? e) {
+    if (e == null) return null;
+    final String s = e.toString().replaceAll('\n', ' ');
+    return s.length > 240 ? '${s.substring(0, 237)}...' : s;
+  }
+
   /// Closes the database.
-  Future<void> dispose() => _db.close();
+  Future<void> dispose() async => _db?.close();
 
   static Future<void> _seedDefaultAccountIfNeeded({
     required local.AccountsRepository acctRepo,
@@ -252,8 +338,10 @@ class _TransactionsAdapter implements TransactionsRepository {
   @override
   Stream<List<Transaction>> watchAll(Ulid userId) => _repo
       .watch(_ids.ulidToString(userId))
-      .map((List<local.TransactionRow> rows) =>
-          rows.map(_toDomain).toList(growable: false));
+      .map(
+        (List<local.TransactionRow> rows) =>
+            rows.map(_toDomain).toList(growable: false),
+      );
 
   @override
   Future<List<Transaction>> list(Ulid userId, TransactionFilter filter) async {
@@ -453,4 +541,345 @@ class _CategoriesAdapter implements CategoriesRepository {
 
   @override
   Future<void> softDelete(Ulid id) => _repo.remove(_ids.ulidToString(id));
+}
+
+// ---------------------------------------------------------------------------
+// Live analytics computed over [TransactionsRepository] + [AccountsRepository].
+//
+// Replaces the dashboard's seeded StubAnalyticsRepository so the home screen
+// reflects real persisted data instead of demo fixtures.
+
+class _LiveAnalyticsRepository implements AnalyticsRepository {
+  _LiveAnalyticsRepository({
+    required this.transactions,
+    required this.accounts,
+  });
+
+  final TransactionsRepository transactions;
+  final AccountsRepository accounts;
+
+  @override
+  Future<DashboardSummary> dashboardSummary(Ulid userId) async {
+    final List<Account> accs = await accounts.list(userId);
+    final List<Transaction> txs = await transactions.list(
+      userId,
+      const TransactionFilter(),
+    );
+
+    final Currency primary =
+        accs.isEmpty ? Currency.kzt : accs.first.currency;
+    Money netWorth = Money.zero(primary);
+    for (final Account a in accs) {
+      if (!a.includeInTotal || a.deletedAt != null) continue;
+      if (a.currency == primary) {
+        netWorth = netWorth + a.balance;
+      } else {
+        // No FX rate available — fall back to ignoring foreign currencies.
+        // (Real implementation would convert via ExchangeRate cache.)
+      }
+    }
+
+    final DateTime now = DateTime.now();
+    final DateTime monthStart = DateTime(now.year, now.month);
+    Money income = Money.zero(primary);
+    Money expense = Money.zero(primary);
+    for (final Transaction t in txs) {
+      if (t.deletedAt != null) continue;
+      if (t.occurredAt.isBefore(monthStart)) continue;
+      if (t.amount.currency != primary) continue;
+      switch (t.type) {
+        case TransactionType.income:
+          income = income + t.amount;
+        case TransactionType.expense:
+          expense = expense + t.amount;
+        case TransactionType.transfer:
+        case TransactionType.adjustment:
+          break;
+      }
+    }
+
+    double savingsRate = 0;
+    if (!income.isZero) {
+      final double i = income.minor.toDouble();
+      final double e = expense.minor.toDouble();
+      savingsRate = ((i - e) / i).clamp(-1.0, 1.0);
+    }
+
+    return DashboardSummary(
+      netWorth: netWorth,
+      incomeMonth: income,
+      expenseMonth: expense,
+      savingsRate: savingsRate,
+    );
+  }
+
+  @override
+  Future<List<CategoryBreakdownSlice>> categoryBreakdown(
+    Ulid userId, {
+    required DateTime from,
+    required DateTime to,
+  }) async {
+    final List<Transaction> txs = await transactions.list(
+      userId,
+      TransactionFilter(from: from, to: to),
+    );
+    final Map<Ulid, BigInt> totals = <Ulid, BigInt>{};
+    Currency? primary;
+    BigInt grandTotal = BigInt.zero;
+    for (final Transaction t in txs) {
+      if (t.deletedAt != null) continue;
+      if (t.type != TransactionType.expense) continue;
+      if (t.categoryId == null) continue;
+      primary ??= t.amount.currency;
+      if (t.amount.currency != primary) continue;
+      totals[t.categoryId!] =
+          (totals[t.categoryId!] ?? BigInt.zero) + t.amount.minor;
+      grandTotal += t.amount.minor;
+    }
+    if (grandTotal == BigInt.zero || primary == null) {
+      return const <CategoryBreakdownSlice>[];
+    }
+    final List<CategoryBreakdownSlice> slices = totals.entries
+        .map(
+          (MapEntry<Ulid, BigInt> e) => CategoryBreakdownSlice(
+            categoryId: e.key,
+            amount: Money(e.value, primary!),
+            percent: e.value.toDouble() / grandTotal.toDouble(),
+          ),
+        )
+        .toList(growable: false)
+      ..sort(
+        (CategoryBreakdownSlice a, CategoryBreakdownSlice b) =>
+            b.amount.minor.compareTo(a.amount.minor),
+      );
+    return slices;
+  }
+
+  @override
+  Future<List<CashflowBucket>> cashflow(
+    Ulid userId, {
+    required DateTime from,
+    required DateTime to,
+    required int bucketDays,
+  }) async {
+    final List<Transaction> txs = await transactions.list(
+      userId,
+      TransactionFilter(from: from, to: to),
+    );
+    if (txs.isEmpty) return const <CashflowBucket>[];
+    final Currency primary = txs.first.amount.currency;
+    final Map<int, _BucketAcc> buckets = <int, _BucketAcc>{};
+    final Duration step = Duration(days: bucketDays);
+    for (final Transaction t in txs) {
+      if (t.deletedAt != null) continue;
+      if (t.amount.currency != primary) continue;
+      final int slot = t.occurredAt.difference(from).inDays ~/ bucketDays;
+      final _BucketAcc acc = buckets.putIfAbsent(
+        slot,
+        () => _BucketAcc(from.add(step * slot), primary),
+      );
+      switch (t.type) {
+        case TransactionType.income:
+          acc.income = acc.income + t.amount;
+        case TransactionType.expense:
+          acc.expense = acc.expense + t.amount;
+        case TransactionType.transfer:
+        case TransactionType.adjustment:
+          break;
+      }
+    }
+    final List<CashflowBucket> out = buckets.values
+        .map(
+          (_BucketAcc a) => CashflowBucket(
+            bucketStart: a.start,
+            income: a.income,
+            expense: a.expense,
+          ),
+        )
+        .toList(growable: false)
+      ..sort(
+        (CashflowBucket a, CashflowBucket b) =>
+            a.bucketStart.compareTo(b.bucketStart),
+      );
+    return out;
+  }
+}
+
+class _BucketAcc {
+  _BucketAcc(this.start, Currency currency)
+      : income = Money.zero(currency),
+        expense = Money.zero(currency);
+  final DateTime start;
+  Money income;
+  Money expense;
+}
+
+// ---------------------------------------------------------------------------
+// Last-resort pure-Dart fallback.
+//
+// Used by [AppDataModule.openOrFallback] when BOTH the persistent and the
+// in-memory sqflite paths have failed. No external dependencies, no plugins,
+// no platform channels — guaranteed to work everywhere Dart runs. Data is
+// lost on app restart; the UI banner derived from `fallbackReason` warns the
+// user.
+
+class _PureInMemoryModule {
+  _PureInMemoryModule(Ulid userId)
+      : transactions = _MemTransactionsRepo(),
+        accounts = _MemAccountsRepo()..seed(userId),
+        categories = _MemCategoriesRepo();
+
+  final TransactionsRepository transactions;
+  final AccountsRepository accounts;
+  final CategoriesRepository categories;
+}
+
+class _MemTransactionsRepo implements TransactionsRepository {
+  final List<Transaction> _items = <Transaction>[];
+  final StreamController<List<Transaction>> _ctrl =
+      StreamController<List<Transaction>>.broadcast();
+
+  void _emit() => _ctrl.add(List<Transaction>.unmodifiable(_items));
+
+  @override
+  Stream<List<Transaction>> watchAll(Ulid userId) async* {
+    yield List<Transaction>.unmodifiable(_items);
+    yield* _ctrl.stream;
+  }
+
+  @override
+  Future<List<Transaction>> list(Ulid userId, TransactionFilter filter) async =>
+      List<Transaction>.unmodifiable(_items);
+
+  @override
+  Future<Transaction?> getById(Ulid id) async {
+    for (final Transaction t in _items) {
+      if (t.id == id) return t;
+    }
+    return null;
+  }
+
+  @override
+  Future<void> upsert(Transaction tx) async {
+    final int idx = _items.indexWhere((Transaction t) => t.id == tx.id);
+    if (idx >= 0) {
+      _items[idx] = tx;
+    } else {
+      _items.add(tx);
+    }
+    _emit();
+  }
+
+  @override
+  Future<void> softDelete(Ulid id) async {
+    _items.removeWhere((Transaction t) => t.id == id);
+    _emit();
+  }
+}
+
+class _MemAccountsRepo implements AccountsRepository {
+  final List<Account> _items = <Account>[];
+  final StreamController<List<Account>> _ctrl =
+      StreamController<List<Account>>.broadcast();
+
+  void _emit() => _ctrl.add(List<Account>.unmodifiable(_items));
+
+  void seed(Ulid userId) {
+    final DateTime now = DateTime.now().toUtc();
+    final Ulid id = Ulid.now(at: now);
+    _items.add(
+      Account(
+        id: id,
+        userId: userId,
+        type: AccountType.cash,
+        name: 'Кошелёк',
+        currency: Currency.kzt,
+        balance: Money.zero(Currency.kzt),
+        initialBalance: Money.zero(Currency.kzt),
+        color: CategoryColor('#1F8FFF'),
+        icon: 'account_balance_wallet',
+        isArchived: false,
+        includeInTotal: true,
+        sortOrder: 0,
+        createdAt: now,
+        updatedAt: now,
+      ),
+    );
+  }
+
+  @override
+  Stream<List<Account>> watchAll(Ulid userId) async* {
+    yield List<Account>.unmodifiable(_items);
+    yield* _ctrl.stream;
+  }
+
+  @override
+  Future<List<Account>> list(Ulid userId) async =>
+      List<Account>.unmodifiable(_items);
+
+  @override
+  Future<Account?> getById(Ulid id) async {
+    for (final Account a in _items) {
+      if (a.id == id) return a;
+    }
+    return null;
+  }
+
+  @override
+  Future<void> upsert(Account account) async {
+    final int idx = _items.indexWhere((Account a) => a.id == account.id);
+    if (idx >= 0) {
+      _items[idx] = account;
+    } else {
+      _items.add(account);
+    }
+    _emit();
+  }
+
+  @override
+  Future<void> softDelete(Ulid id) async {
+    _items.removeWhere((Account a) => a.id == id);
+    _emit();
+  }
+}
+
+class _MemCategoriesRepo implements CategoriesRepository {
+  final List<Category> _items = <Category>[];
+  final StreamController<List<Category>> _ctrl =
+      StreamController<List<Category>>.broadcast();
+
+  @override
+  Stream<List<Category>> watchAll(Ulid userId) async* {
+    yield List<Category>.unmodifiable(_items);
+    yield* _ctrl.stream;
+  }
+
+  @override
+  Future<List<Category>> list(Ulid userId) async =>
+      List<Category>.unmodifiable(_items);
+
+  @override
+  Future<Category?> getById(Ulid id) async {
+    for (final Category c in _items) {
+      if (c.id == id) return c;
+    }
+    return null;
+  }
+
+  @override
+  Future<void> upsert(Category category) async {
+    final int idx = _items.indexWhere((Category c) => c.id == category.id);
+    if (idx >= 0) {
+      _items[idx] = category;
+    } else {
+      _items.add(category);
+    }
+    _ctrl.add(List<Category>.unmodifiable(_items));
+  }
+
+  @override
+  Future<void> softDelete(Ulid id) async {
+    _items.removeWhere((Category c) => c.id == id);
+    _ctrl.add(List<Category>.unmodifiable(_items));
+  }
 }

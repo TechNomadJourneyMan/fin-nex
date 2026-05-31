@@ -1,11 +1,11 @@
 {
-  "name": "FinNex",
-  "short_name": "FinNex",
+  "name": "Pocket Flow",
+  "short_name": "Pocket Flow",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#0B1220",
-  "theme_color": "#0EA5E9",
-  "description": "Personal finance tracker.",
+  "background_color": "#0A0A0C",
+  "theme_color": "#0A0A0C",
+  "description": "Pocket Flow — premium personal finance OS (OmniFi OS design philosophy).",
   "orientation": "portrait-primary",
   "prefer_related_applications": false,
   "icons": [

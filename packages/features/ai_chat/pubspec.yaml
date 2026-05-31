@@ -1,0 +1,33 @@
+name: fnx_feat_ai_chat
+description: FinNex in-app AI chat (conversational CFO) feature module.
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  dio: ^5.7.0
+  fnx_domain:
+    path: ../../domain
+  fnx_core_theme:
+    path: ../../core/theme
+  fnx_core_tokens:
+    path: ../../core/tokens
+  fnx_core_widgets:
+    path: ../../core/widgets
+  fnx_core_charts:
+    path: ../../core/charts
+  fnx_data_api:
+    path: ../../data/api
+  intl: ^0.20.0
+  flutter_markdown: ^0.7.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0

@@ -24,6 +24,7 @@ export 'src/entities/subscription.dart';
 export 'src/entities/tag.dart';
 export 'src/entities/transaction.dart';
 export 'src/entities/user.dart';
+export 'src/entities/workspace.dart';
 
 // Repositories
 export 'src/repositories/accounts_repository.dart';
@@ -38,6 +39,8 @@ export 'src/repositories/settings_repository.dart';
 export 'src/repositories/streak_repository.dart';
 export 'src/repositories/sync_repository.dart';
 export 'src/repositories/transactions_repository.dart';
+// 'src/repositories/workspaces_repository.dart' removed — fnx_feat_workspaces
+// ships its own contract until the data layer needs a domain-level one.
 
 // Use cases
 export 'src/usecases/add_transaction.dart';
