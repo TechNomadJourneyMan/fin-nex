@@ -75,7 +75,7 @@ class DashboardPage extends ConsumerWidget {
     // TODO(F-DASH-QA): replace string with named route once router is wired.
     final router = GoRouter.maybeOf(context);
     if (router != null) {
-      router.push('/transactions/new');
+      router.push('/transactions/add');
     }
   }
 }
@@ -156,7 +156,7 @@ class _DashboardContent extends ConsumerWidget {
             emptyTitle: l10n.dashEmptyTitle,
             emptyCta: l10n.dashEmptyCta,
             onEmptyCta: () => GoRouter.maybeOf(context)?.push(
-              '/transactions/new',
+              '/transactions/add',
             ),
             onTapTransaction: (Transaction t) =>
                 GoRouter.maybeOf(context)?.push('/transactions/${t.id.value}'),
