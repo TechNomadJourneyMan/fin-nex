@@ -27,6 +27,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_data.dart';
 import 'demo_seed.dart';
+import 'onboarding/demo_seed_service.dart';
 import 'services/auth_session_store.dart';
 import 'services/device_id_provider.dart';
 
@@ -167,6 +168,24 @@ List<Override> buildAppProviderOverrides(AppDataModule module) {
         .overrideWithValue(categoriesRepo),
     dashboard.dashboardAnalyticsRepositoryProvider
         .overrideWithValue(module.analytics),
+
+    // Dashboard demo banner — visibility + actions wired to DemoSeedService
+    // and SharedPreferences. The dashboard package owns abstract defaults;
+    // these overrides supply the real behaviour.
+    dashboard.demoBannerVisibleProvider.overrideWith((ref) async {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final bool seeded = prefs.getBool(kDemoSeededKey) ?? false;
+      final bool dismissed = prefs.getBool(kDemoBannerDismissedKey) ?? false;
+      return seeded && !dismissed;
+    }),
+    dashboard.demoBannerClearProvider.overrideWithValue(() async {
+      await DemoSeedService(module.transactions, kDemoUserId, Currency.kzt)
+          .clearDemo();
+    }),
+    dashboard.demoBannerDismissProvider.overrideWithValue(() async {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(kDemoBannerDismissedKey, true);
+    }),
 
     // Notifications feature
     notifications.notificationsUserIdProvider.overrideWithValue(kDemoUserId),

@@ -56,3 +56,29 @@ final dashboardControllerProvider =
     AsyncNotifierProvider<DashboardController, DashboardSnapshot>(
   DashboardController.new,
 );
+
+// ---------------------------------------------------------------------------
+// First-run demo banner
+//
+// These three providers are intentionally abstract: the dashboard package has
+// no access to SharedPreferences or the app's DemoSeedService. The app
+// composition root (apps/finnex/lib/providers.dart) overrides them with the
+// real implementation. The defaults keep the banner hidden so the feature
+// renders cleanly in isolation (previews / golden tests).
+// ---------------------------------------------------------------------------
+
+/// Whether the dismissable demo banner should be shown. Resolves to
+/// `hasSeeded && !dismissed`. Defaults to `false` (hidden).
+final demoBannerVisibleProvider = FutureProvider<bool>((ref) async => false);
+
+/// Soft-deletes the demo transactions and resets the demo flags. Overridden
+/// by the app to call `DemoSeedService.clearDemo`. Default is a no-op.
+final demoBannerClearProvider = Provider<Future<void> Function()>(
+  (ref) => () async {},
+);
+
+/// Persists the banner-dismissed flag (the "×" action). Overridden by the app.
+/// Default is a no-op.
+final demoBannerDismissProvider = Provider<Future<void> Function()>(
+  (ref) => () async {},
+);

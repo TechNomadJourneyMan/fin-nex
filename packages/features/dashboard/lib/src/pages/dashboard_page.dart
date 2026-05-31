@@ -107,6 +107,10 @@ class _DashboardContent extends ConsumerWidget {
         ),
         const SizedBox(height: 28),
 
+        // 1b. First-run demo-data banner. Self-hides unless demo data is
+        // present and the user hasn't dismissed it.
+        const _DemoBanner(),
+
         // 2. Bento grid — 2×2 of GlassCards.
         LayoutBuilder(
           builder: (BuildContext _, BoxConstraints constraints) {
@@ -132,8 +136,7 @@ class _DashboardContent extends ConsumerWidget {
                 subtitle: '${snapshot.recent.length} ops',
                 accent: const Color(0xFFFF453A),
                 icon: Icons.trending_down,
-                onTap: () =>
-                    GoRouter.maybeOf(context)?.push('/transactions'),
+                onTap: () => GoRouter.maybeOf(context)?.push('/transactions'),
               ),
               _BentoTile(
                 width: tileW,
@@ -142,8 +145,7 @@ class _DashboardContent extends ConsumerWidget {
                 subtitle: 'Netflix, Spotify…',
                 accent: const Color(0xFFE5E5EA),
                 icon: Icons.subscriptions_outlined,
-                onTap: () =>
-                    GoRouter.maybeOf(context)?.push('/subscriptions'),
+                onTap: () => GoRouter.maybeOf(context)?.push('/subscriptions'),
               ),
               _BentoTile(
                 width: tileW,
@@ -181,8 +183,7 @@ class _DashboardContent extends ConsumerWidget {
               ),
             ),
             TextButton(
-              onPressed: () =>
-                  GoRouter.maybeOf(context)?.push('/transactions'),
+              onPressed: () => GoRouter.maybeOf(context)?.push('/transactions'),
               child: const Text('See all'),
             ),
           ],
@@ -199,8 +200,8 @@ class _DashboardContent extends ConsumerWidget {
             emptyCta: l10n.dashEmptyCta,
             onEmptyCta: () =>
                 GoRouter.maybeOf(context)?.push('/transactions/add'),
-            onTapTransaction: (Transaction t) => GoRouter.maybeOf(context)
-                ?.push('/transactions/${t.id.value}'),
+            onTapTransaction: (Transaction t) =>
+                GoRouter.maybeOf(context)?.push('/transactions/${t.id.value}'),
           ),
         ),
       ],
@@ -295,13 +296,17 @@ class _LoadingView extends StatelessWidget {
       physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
       children: const <Widget>[
-        FnxSkeleton(height: 168, borderRadius: BorderRadius.all(Radius.circular(16))),
+        FnxSkeleton(
+            height: 168, borderRadius: BorderRadius.all(Radius.circular(16))),
         SizedBox(height: 16),
-        FnxSkeleton(height: 88, borderRadius: BorderRadius.all(Radius.circular(16))),
+        FnxSkeleton(
+            height: 88, borderRadius: BorderRadius.all(Radius.circular(16))),
         SizedBox(height: 16),
-        FnxSkeleton(height: 240, borderRadius: BorderRadius.all(Radius.circular(16))),
+        FnxSkeleton(
+            height: 240, borderRadius: BorderRadius.all(Radius.circular(16))),
         SizedBox(height: 24),
-        FnxSkeleton(height: 320, borderRadius: BorderRadius.all(Radius.circular(16))),
+        FnxSkeleton(
+            height: 320, borderRadius: BorderRadius.all(Radius.circular(16))),
       ],
     );
   }
@@ -330,9 +335,103 @@ class _ErrorView extends StatelessWidget {
           children: [
             Icon(Icons.error_outline, size: 48, color: colors.error),
             const SizedBox(height: 12),
-            Text(error.toString(), style: typo.bodyMd, textAlign: TextAlign.center),
+            Text(error.toString(),
+                style: typo.bodyMd, textAlign: TextAlign.center),
             const SizedBox(height: 16),
             FnxButton(label: retryLabel, onPressed: onRetry),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// First-run banner shown above the Bento grid while demo data is present.
+///
+/// Visibility comes from [demoBannerVisibleProvider] (resolves to
+/// `hasSeeded && !dismissed`). "Удалить демо" soft-deletes the demo
+/// transactions via [demoBannerClearProvider]; "×" persists the dismissed
+/// flag via [demoBannerDismissProvider]. Both refresh the visibility provider
+/// so the banner disappears immediately.
+class _DemoBanner extends ConsumerWidget {
+  const _DemoBanner();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<bool> visible = ref.watch(demoBannerVisibleProvider);
+    final bool show = visible.maybeWhen(
+      data: (bool v) => v,
+      orElse: () => false,
+    );
+    if (!show) {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 28),
+      child: GlassCard(
+        elevation: GlassElevation.raised,
+        radius: 24,
+        padding: const EdgeInsets.fromLTRB(16, 14, 8, 14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.only(top: 2, right: 12),
+                  child: Icon(
+                    Icons.auto_awesome_outlined,
+                    size: 20,
+                    color: Color(0xFFE5E5EA),
+                  ),
+                ),
+                const Expanded(
+                  child: Text(
+                    'Это демо-данные. Удалите их, когда добавите свои '
+                    'операции.',
+                    style: TextStyle(
+                      fontSize: 14,
+                      height: 1.35,
+                      color: Color(0xFFF2F2F3),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  tooltip: 'Скрыть',
+                  iconSize: 18,
+                  visualDensity: VisualDensity.compact,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints.tightFor(
+                    width: 32,
+                    height: 32,
+                  ),
+                  icon: const Icon(Icons.close, color: Color(0xFF8A8A93)),
+                  onPressed: () async {
+                    await ref.read(demoBannerDismissProvider)();
+                    ref.invalidate(demoBannerVisibleProvider);
+                  },
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: const Color(0xFFFF453A),
+                  padding: const EdgeInsets.symmetric(horizontal: 0),
+                  minimumSize: const Size(0, 36),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                onPressed: () async {
+                  await ref.read(demoBannerClearProvider)();
+                  ref.invalidate(demoBannerVisibleProvider);
+                  ref.read(dashboardControllerProvider.notifier).refresh();
+                },
+                child: const Text('Удалить демо'),
+              ),
+            ),
           ],
         ),
       ),

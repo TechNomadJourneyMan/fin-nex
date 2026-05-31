@@ -14,11 +14,13 @@
 import 'package:flutter/foundation.dart' show debugPrint, kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fnx_domain/fnx_domain.dart' show Currency;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
 import 'app_data.dart';
 import 'bootstrap.dart';
+import 'onboarding/demo_seed_service.dart';
 import 'providers.dart';
 
 /// Exposes a one-line warning when the app booted in degraded mode
@@ -62,6 +64,13 @@ void main() {
       runApp(_BootErrorApp(error: bootError, stack: bootStack));
       return;
     }
+
+    // First-run demo data. Best-effort: a seeding failure must never block
+    // boot, so swallow any error and continue to runApp.
+    try {
+      await DemoSeedService(module.transactions, kDemoUserId, Currency.kzt)
+          .seedIfNeeded();
+    } catch (_) {}
 
     runApp(
       ProviderScope(
