@@ -14,6 +14,7 @@
 import 'package:flutter/foundation.dart' show debugPrint, kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
 import 'app_data.dart';
@@ -36,6 +37,17 @@ void main() {
     Object? bootError;
     StackTrace? bootStack;
 
+    // Load shared_preferences up-front so the auth session store and device-id
+    // provider can hydrate synchronously inside the ProviderScope. Best-effort:
+    // a failure here must not block boot, so we fall back to a null instance
+    // and skip the auth overrides below.
+    SharedPreferences? prefs;
+    try {
+      prefs = await SharedPreferences.getInstance();
+    } catch (e, st) {
+      debugPrint('SharedPreferences unavailable: $e\n$st');
+    }
+
     try {
       module = await AppDataModule.openOrFallback(demoUserId: kDemoUserId);
     } catch (e, st) {
@@ -55,6 +67,13 @@ void main() {
       ProviderScope(
         overrides: <Override>[
           ...buildAppProviderOverrides(module),
+          // Auth wiring requires shared_preferences; only install the override
+          // (and the backend-backed auth repository it unlocks) when prefs
+          // loaded successfully. Otherwise the auth feature keeps its stub.
+          if (prefs != null) ...<Override>[
+            sharedPreferencesProvider.overrideWithValue(prefs),
+            authRepositoryOverride,
+          ],
           if (module.fallbackReason != null)
             bootstrapWarningProvider.overrideWithValue(
               'Локальная база недоступна — данные хранятся только в памяти. '

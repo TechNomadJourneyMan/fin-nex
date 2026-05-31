@@ -9,7 +9,9 @@
 //   2. AppDataModule.open(...)
 //   3. runApp(ProviderScope(overrides: buildAppProviderOverrides(module), ...))
 
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fnx_data_api/fnx_data_api.dart';
 import 'package:fnx_domain/fnx_domain.dart';
 import 'package:fnx_feat_ai_chat/fnx_feat_ai_chat.dart' as ai_chat;
 import 'package:fnx_feat_analytics/analytics.dart' as analytics;
@@ -17,17 +19,102 @@ import 'package:fnx_feat_dashboard/dashboard.dart' as dashboard;
 import 'package:fnx_feat_insights/fnx_feat_insights.dart' as insights;
 import 'package:fnx_feat_notifications/fnx_feat_notifications.dart'
     as notifications;
+import 'package:fnx_feat_auth/auth.dart' as auth;
 import 'package:fnx_feat_subscriptions/subscriptions.dart' as subs;
 import 'package:fnx_feat_transactions/transactions.dart' as transactions;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_data.dart';
 import 'demo_seed.dart';
+import 'services/auth_session_store.dart';
+import 'services/device_id_provider.dart';
 
 /// The placeholder signed-in user ULID used until real auth is wired.
 ///
 /// All feature `currentUserIdProvider` variants are overridden to this value
 /// so streams resolve to the same persisted data set.
 final Ulid kDemoUserId = Ulid('00000000000000000000000001');
+
+// ---------------------------------------------------------------------------
+// Auth wiring — HttpAuthRepository → backend /v1/auth/*
+// ---------------------------------------------------------------------------
+
+/// Holds the [SharedPreferences] instance used for token + device-id storage.
+///
+/// Overridden at bootstrap (see main.dart). Reading it before the override is
+/// installed throws, which is intentional — the app must hydrate prefs first.
+final sharedPreferencesProvider = Provider<SharedPreferences>((Ref ref) {
+  throw StateError(
+    'sharedPreferencesProvider must be overridden at app bootstrap.',
+  );
+});
+
+/// Persistent auth-token store (access + refresh + expiry).
+final authSessionStoreProvider =
+    StateNotifierProvider<AuthSessionStore, AuthSessionTokens?>((Ref ref) {
+  final prefs = ref.watch(sharedPreferencesProvider);
+  return AuthSessionStore(prefs)..hydrate();
+});
+
+/// Stable per-install device id (ULID) for the `X-Device-Id` header.
+final deviceIdProvider = Provider<DeviceIdStore>((Ref ref) {
+  return DeviceIdStore(ref.watch(sharedPreferencesProvider));
+});
+
+/// API base URL, overridable at build time:
+///   --dart-define=POCKET_FLOW_API_BASE=https://api.example.com
+const String kApiBaseUrl = String.fromEnvironment(
+  'POCKET_FLOW_API_BASE',
+  defaultValue: 'http://localhost:3000/v1',
+);
+
+/// Authenticated [Dio] wired to the backend with the FinNex interceptor stack
+/// (auth header, device id, idempotency, retry, problem-details).
+final authedDioProvider = Provider<Dio>((Ref ref) {
+  final store = ref.watch(authSessionStoreProvider.notifier);
+  final deviceIds = ref.watch(deviceIdProvider);
+  return DioFactory.create(
+    config: const ApiConfig(baseUrl: kApiBaseUrl),
+    getAccessToken: store.getAccessToken,
+    onRefresh: () async {
+      // TODO(F-AUTH-REFRESH): exchange the refresh token for a new access
+      // token via AuthService(refreshDio).refresh(...) and update the store.
+      // Until that lands we return the current (possibly stale) access token,
+      // forcing the user to re-authenticate when it expires.
+      return store.getAccessToken();
+    },
+    getDeviceId: deviceIds.getDeviceId,
+  );
+});
+
+/// Backend-backed [AuthRepository] persisting tokens into
+/// [authSessionStoreProvider].
+final httpAuthRepositoryProvider = Provider<AuthRepository>((Ref ref) {
+  final dio = ref.watch(authedDioProvider);
+  final store = ref.watch(authSessionStoreProvider.notifier);
+  final repo = HttpAuthRepository(
+    AuthService(dio),
+    onPersist: (AuthSession session) => store.saveTokens(
+      accessToken: session.accessToken,
+      refreshToken: session.refreshToken,
+      expiresAt: session.expiresAt,
+    ),
+    onClear: store.clear,
+  );
+  ref.onDispose(repo.dispose);
+  return repo;
+});
+
+/// Override that swaps the auth feature's in-memory stub repository for the
+/// backend-backed [httpAuthRepositoryProvider].
+///
+/// Only safe to install once [sharedPreferencesProvider] is overridden, since
+/// the repository's token store depends on it. The bootstrap sequence guards
+/// this (see main.dart).
+final Override authRepositoryOverride =
+    auth.authRepositoryProvider.overrideWith(
+  (Ref ref) => ref.watch(httpAuthRepositoryProvider),
+);
 
 /// Cross-feature provider overrides applied at app bootstrap.
 ///
@@ -43,8 +130,7 @@ List<Override> buildAppProviderOverrides(AppDataModule module) {
     transactions.currentUserIdProvider.overrideWithValue(kDemoUserId),
     transactions.transactionsRepositoryProvider.overrideWithValue(txRepo),
     transactions.accountsRepositoryProvider.overrideWithValue(accountsRepo),
-    transactions.categoriesRepositoryProvider
-        .overrideWithValue(categoriesRepo),
+    transactions.categoriesRepositoryProvider.overrideWithValue(categoriesRepo),
 
     // Analytics feature
     analytics.analyticsCurrentUserIdProvider.overrideWithValue(kDemoUserId),
@@ -56,7 +142,8 @@ List<Override> buildAppProviderOverrides(AppDataModule module) {
     // not derived from the transactions/analytics providers, so wire each
     // explicitly to the same persisted module.
     dashboard.dashboardUserIdProvider.overrideWithValue(kDemoUserId),
-    dashboard.dashboardAccountsRepositoryProvider.overrideWithValue(accountsRepo),
+    dashboard.dashboardAccountsRepositoryProvider
+        .overrideWithValue(accountsRepo),
     dashboard.dashboardTransactionsRepositoryProvider.overrideWithValue(txRepo),
     dashboard.dashboardCategoriesRepositoryProvider
         .overrideWithValue(categoriesRepo),

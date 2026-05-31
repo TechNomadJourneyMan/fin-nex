@@ -52,6 +52,7 @@ export 'src/services/export_service.dart';
 
 // Repository implementations
 export 'src/repositories/auth_repository_impl.dart';
+export 'src/repositories/http_auth_repository.dart';
 export 'src/repositories/remote_transactions_repository.dart';
 export 'src/repositories/remote_accounts_repository.dart';
 export 'src/repositories/remote_categories_repository.dart';
