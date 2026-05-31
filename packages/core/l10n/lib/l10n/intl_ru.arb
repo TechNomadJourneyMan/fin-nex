@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "appName": "FinNex",
+  "appName": "Pocket Flow",
 
   "commonCancel": "Отмена",
   "commonSave": "Сохранить",
@@ -45,7 +45,7 @@
   "onbP4Title": "Готовы начать?",
   "onbP4Body": "Выберите язык и валюту — займёт 10 секунд.",
 
-  "authTitle": "Войти в FinNex",
+  "authTitle": "Войти в Pocket Flow",
   "authSubtitle": "Без пароля. Только номер телефона.",
   "authCtaSendCode": "Получить код",
   "authOr": "или",
@@ -59,7 +59,7 @@
   "authOtpResend": "Отправить заново",
   "authOtpHelp": "Не получили код?",
   "authBiometricPrompt": "Войти по биометрии",
-  "authBiometricReason": "Подтвердите вход в FinNex",
+  "authBiometricReason": "Подтвердите вход в Pocket Flow",
   "authErrorNetwork": "Проверьте интернет",
   "authErrorInvalidCode": "Неверный код",
   "authErrorRateLimit": "Слишком много попыток. Попробуйте через 5 минут.",
@@ -222,7 +222,7 @@
   "notifLimitWarningTitle": "Бюджетный алерт",
   "notifLimitWarningBody": "Категория {category} достигла {percent}% лимита.",
   "notifInsightReadyTitle": "Новый инсайт",
-  "notifInsightReadyBody": "Откройте FinNex, чтобы узнать подробности.",
+  "notifInsightReadyBody": "Откройте Pocket Flow, чтобы узнать подробности.",
 
   "setTitle": "Настройки",
   "setProfile": "Профиль",

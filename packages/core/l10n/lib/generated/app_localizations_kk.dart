@@ -9,7 +9,7 @@ class AppL10nKk extends AppL10n {
   AppL10nKk([String locale = 'kk']) : super(locale);
 
   @override
-  String get appName => 'FinNex';
+  String get appName => 'Pocket Flow';
 
   @override
   String get commonCancel => 'Болдырмау';
@@ -131,7 +131,7 @@ class AppL10nKk extends AppL10n {
   String get onbP4Body => 'Тіл мен валютаны таңдаңыз — 10 секундты алады.';
 
   @override
-  String get authTitle => 'FinNex-ке кіру';
+  String get authTitle => 'Pocket Flow-ке кіру';
 
   @override
   String get authSubtitle => 'Парольсіз. Тек телефон нөмірі.';
@@ -177,7 +177,7 @@ class AppL10nKk extends AppL10n {
   String get authBiometricPrompt => 'Биометрия арқылы кіру';
 
   @override
-  String get authBiometricReason => 'FinNex-ке кіруді растаңыз';
+  String get authBiometricReason => 'Pocket Flow-ке кіруді растаңыз';
 
   @override
   String get authErrorNetwork => 'Интернетті тексеріңіз';
@@ -696,7 +696,8 @@ class AppL10nKk extends AppL10n {
   String get notifInsightReadyTitle => 'Жаңа түсінік';
 
   @override
-  String get notifInsightReadyBody => 'Толығырақ білу үшін FinNex-ті ашыңыз.';
+  String get notifInsightReadyBody =>
+      'Толығырақ білу үшін Pocket Flow-ты ашыңыз.';
 
   @override
   String get setTitle => 'Баптаулар';

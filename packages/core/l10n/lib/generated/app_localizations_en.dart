@@ -9,7 +9,7 @@ class AppL10nEn extends AppL10n {
   AppL10nEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'FinNex';
+  String get appName => 'Pocket Flow';
 
   @override
   String get commonCancel => 'Cancel';
@@ -130,7 +130,7 @@ class AppL10nEn extends AppL10n {
   String get onbP4Body => 'Pick language and currency — 10 seconds.';
 
   @override
-  String get authTitle => 'Sign in to FinNex';
+  String get authTitle => 'Sign in to Pocket Flow';
 
   @override
   String get authSubtitle => 'No password. Just your phone.';
@@ -176,7 +176,7 @@ class AppL10nEn extends AppL10n {
   String get authBiometricPrompt => 'Use biometrics to sign in';
 
   @override
-  String get authBiometricReason => 'Confirm it\'s you to open FinNex';
+  String get authBiometricReason => 'Confirm it\'s you to open Pocket Flow';
 
   @override
   String get authErrorNetwork => 'Check your connection';
@@ -698,7 +698,7 @@ class AppL10nEn extends AppL10n {
   String get notifInsightReadyTitle => 'New insight';
 
   @override
-  String get notifInsightReadyBody => 'Open FinNex to see what changed.';
+  String get notifInsightReadyBody => 'Open Pocket Flow to see what changed.';
 
   @override
   String get setTitle => 'Settings';

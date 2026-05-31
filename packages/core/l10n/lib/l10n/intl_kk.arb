@@ -1,6 +1,6 @@
 {
   "@@locale": "kk",
-  "appName": "FinNex",
+  "appName": "Pocket Flow",
 
   "commonCancel": "Болдырмау",
   "commonSave": "Сақтау",
@@ -45,7 +45,7 @@
   "onbP4Title": "Бастауға дайынсыз ба?",
   "onbP4Body": "Тіл мен валютаны таңдаңыз — 10 секундты алады.",
 
-  "authTitle": "FinNex-ке кіру",
+  "authTitle": "Pocket Flow-ке кіру",
   "authSubtitle": "Парольсіз. Тек телефон нөмірі.",
   "authCtaSendCode": "Кодты алу",
   "authOr": "немесе",
@@ -59,7 +59,7 @@
   "authOtpResend": "Қайта жіберу",
   "authOtpHelp": "Кодты алмадыңыз ба?",
   "authBiometricPrompt": "Биометрия арқылы кіру",
-  "authBiometricReason": "FinNex-ке кіруді растаңыз",
+  "authBiometricReason": "Pocket Flow-ке кіруді растаңыз",
   "authErrorNetwork": "Интернетті тексеріңіз",
   "authErrorInvalidCode": "Қате код",
   "authErrorRateLimit": "Тым көп әрекет. 5 минуттан кейін көріңіз.",
@@ -222,7 +222,7 @@
   "notifLimitWarningTitle": "Бюджет ескертуі",
   "notifLimitWarningBody": "{category} санаты лимиттің {percent}%-ына жетті.",
   "notifInsightReadyTitle": "Жаңа түсінік",
-  "notifInsightReadyBody": "Толығырақ білу үшін FinNex-ті ашыңыз.",
+  "notifInsightReadyBody": "Толығырақ білу үшін Pocket Flow-ты ашыңыз.",
 
   "setTitle": "Баптаулар",
   "setProfile": "Профиль",

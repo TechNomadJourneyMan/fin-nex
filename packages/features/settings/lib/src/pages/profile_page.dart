@@ -23,7 +23,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    _name = TextEditingController(text: 'FinNex User');
+    _name = TextEditingController(text: 'Pocket Flow User');
   }
 
   @override
@@ -53,15 +53,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               ),
             ),
             const SizedBox(height: 24),
-            Text('Name', style: typo.bodySm.copyWith(
-              color: colors.textMuted,
-            )),
+            Text('Name', style: typo.bodySm.copyWith(color: colors.textMuted)),
             const SizedBox(height: 4),
             TextField(controller: _name),
             const SizedBox(height: 16),
-            Text('Email', style: typo.bodySm.copyWith(
-              color: colors.textMuted,
-            )),
+            Text('Email', style: typo.bodySm.copyWith(color: colors.textMuted)),
             const SizedBox(height: 4),
             TextField(
               enabled: false,

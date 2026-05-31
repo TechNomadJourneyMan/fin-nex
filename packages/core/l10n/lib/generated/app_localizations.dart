@@ -102,7 +102,7 @@ abstract class AppL10n {
   /// Application name. Do not translate.
   ///
   /// In en, this message translates to:
-  /// **'FinNex'**
+  /// **'Pocket Flow'**
   String get appName;
 
   /// Generic cancel button.
@@ -342,7 +342,7 @@ abstract class AppL10n {
   /// Auth landing screen title.
   ///
   /// In en, this message translates to:
-  /// **'Sign in to FinNex'**
+  /// **'Sign in to Pocket Flow'**
   String get authTitle;
 
   /// Auth landing screen subtitle.
@@ -426,7 +426,7 @@ abstract class AppL10n {
   /// Reason shown by the OS biometric dialog.
   ///
   /// In en, this message translates to:
-  /// **'Confirm it\'s you to open FinNex'**
+  /// **'Confirm it\'s you to open Pocket Flow'**
   String get authBiometricReason;
 
   /// Network failure during auth.
@@ -1350,7 +1350,7 @@ abstract class AppL10n {
   /// Insight ready push body.
   ///
   /// In en, this message translates to:
-  /// **'Open FinNex to see what changed.'**
+  /// **'Open Pocket Flow to see what changed.'**
   String get notifInsightReadyBody;
 
   /// Settings screen title.

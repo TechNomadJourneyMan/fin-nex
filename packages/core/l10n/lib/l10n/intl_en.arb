@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appName": "FinNex",
+  "appName": "Pocket Flow",
   "@appName": {"description": "Application name. Do not translate."},
 
   "commonCancel": "Cancel",
@@ -85,7 +85,7 @@
   "onbP4Body": "Pick language and currency — 10 seconds.",
   "@onbP4Body": {"description": "Onboarding page 4 body."},
 
-  "authTitle": "Sign in to FinNex",
+  "authTitle": "Sign in to Pocket Flow",
   "@authTitle": {"description": "Auth landing screen title."},
   "authSubtitle": "No password. Just your phone.",
   "@authSubtitle": {"description": "Auth landing screen subtitle."},
@@ -119,7 +119,7 @@
   "@authOtpHelp": {"description": "Help link below OTP boxes."},
   "authBiometricPrompt": "Use biometrics to sign in",
   "@authBiometricPrompt": {"description": "Biometric unlock prompt."},
-  "authBiometricReason": "Confirm it's you to open FinNex",
+  "authBiometricReason": "Confirm it's you to open Pocket Flow",
   "@authBiometricReason": {"description": "Reason shown by the OS biometric dialog."},
   "authErrorNetwork": "Check your connection",
   "@authErrorNetwork": {"description": "Network failure during auth."},
@@ -502,7 +502,7 @@
   },
   "notifInsightReadyTitle": "New insight",
   "@notifInsightReadyTitle": {"description": "Insight ready push title."},
-  "notifInsightReadyBody": "Open FinNex to see what changed.",
+  "notifInsightReadyBody": "Open Pocket Flow to see what changed.",
   "@notifInsightReadyBody": {"description": "Insight ready push body."},
 
   "setTitle": "Settings",

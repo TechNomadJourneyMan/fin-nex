@@ -28,8 +28,13 @@ class AboutPage extends ConsumerWidget {
         child: ListView(
           children: [
             const SizedBox(height: 24),
+            Center(child: Text(l10n.appName, style: typo.heading1)),
+            const SizedBox(height: 4),
             Center(
-              child: Text(l10n.appName, style: typo.heading1),
+              child: Text(
+                'OmniFi OS · design philosophy',
+                style: typo.bodySm.copyWith(color: colors.textSecondary),
+              ),
             ),
             const SizedBox(height: 4),
             Center(
@@ -40,18 +45,23 @@ class AboutPage extends ConsumerWidget {
             ),
             const SizedBox(height: 24),
             FnxListItem(
-              leading: Icon(Icons.shield_outlined,
-                  color: colors.textSecondary),
+              leading: Icon(Icons.shield_outlined, color: colors.textSecondary),
               title: 'Privacy policy',
               trailing: Icon(Icons.open_in_new, color: colors.textMuted),
-              onTap: () {/* TODO(F-LEGAL): open privacy URL. */},
+              onTap: () {
+                /* TODO(F-LEGAL): open privacy URL. */
+              },
             ),
             FnxListItem(
-              leading: Icon(Icons.description_outlined,
-                  color: colors.textSecondary),
+              leading: Icon(
+                Icons.description_outlined,
+                color: colors.textSecondary,
+              ),
               title: 'Terms of service',
               trailing: Icon(Icons.open_in_new, color: colors.textMuted),
-              onTap: () {/* TODO(F-LEGAL): open terms URL. */},
+              onTap: () {
+                /* TODO(F-LEGAL): open terms URL. */
+              },
             ),
           ],
         ),
