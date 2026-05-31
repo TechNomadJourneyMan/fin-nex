@@ -72,6 +72,8 @@ dependencies:
     path: ../../packages/features/workspaces
   fnx_sms_parser:
     path: ../../packages/services/sms_parser
+  fnx_local_llm:
+    path: ../../packages/services/local_llm
 
   # Direct deps surfaced by the new feature packages.
   flutter_markdown: ^0.7.4

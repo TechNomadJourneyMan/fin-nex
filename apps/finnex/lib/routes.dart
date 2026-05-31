@@ -27,6 +27,7 @@ import 'package:go_router/go_router.dart';
 
 import 'pages/achievements_page.dart';
 import 'pages/goals_page.dart';
+import 'pages/local_llm_settings_page.dart';
 import 'pages/sms_sandbox_page.dart';
 
 import 'shell/main_shell.dart';
@@ -205,6 +206,12 @@ GoRouter buildFinnexRouter({ProviderContainer? container}) {
                     name: 'settings.about',
                     builder: (BuildContext context, GoRouterState state) =>
                         const settings.AboutPage(),
+                  ),
+                  GoRoute(
+                    path: 'local-llm',
+                    name: 'settings.localLlm',
+                    builder: (BuildContext context, GoRouterState state) =>
+                        const LocalLlmSettingsPage(),
                   ),
                 ],
               ),

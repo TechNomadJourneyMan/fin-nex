@@ -51,6 +51,11 @@ class SettingsRootPage extends ConsumerWidget {
         title: l10n.setData,
         route: '/settings/data',
       ),
+      const _SectionData(
+        icon: Icons.memory,
+        title: 'Локальная модель (Gemma)',
+        route: '/settings/local-llm',
+      ),
       _SectionData(
         icon: Icons.info_outline,
         title: l10n.setAbout,

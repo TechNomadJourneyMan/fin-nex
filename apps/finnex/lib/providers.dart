@@ -22,6 +22,7 @@ import 'package:fnx_feat_notifications/fnx_feat_notifications.dart'
 import 'package:fnx_feat_auth/auth.dart' as auth;
 import 'package:fnx_feat_subscriptions/subscriptions.dart' as subs;
 import 'package:fnx_feat_transactions/transactions.dart' as transactions;
+import 'package:fnx_local_llm/fnx_local_llm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_data.dart';
@@ -34,6 +35,23 @@ import 'services/device_id_provider.dart';
 /// All feature `currentUserIdProvider` variants are overridden to this value
 /// so streams resolve to the same persisted data set.
 final Ulid kDemoUserId = Ulid('00000000000000000000000001');
+
+// ---------------------------------------------------------------------------
+// On-device LLM (fnx_local_llm) — Gemma via flutter_gemma on mobile/desktop,
+// no-op stub on Web. The local-LLM settings/playground page reads this.
+// ---------------------------------------------------------------------------
+
+/// Singleton [LocalLlmService] for the running platform.
+///
+/// Built once via [defaultLocalLlmService] (kIsWeb → no-op stub, otherwise the
+/// Gemma-backed service). The service holds native model/session handles, so a
+/// single instance is shared across the app and disposed with the container.
+final Provider<LocalLlmService> localLlmServiceProvider =
+    Provider<LocalLlmService>((Ref ref) {
+  final LocalLlmService service = defaultLocalLlmService();
+  ref.onDispose(service.dispose);
+  return service;
+});
 
 // ---------------------------------------------------------------------------
 // Auth wiring — HttpAuthRepository → backend /v1/auth/*
