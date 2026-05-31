@@ -274,6 +274,55 @@ class IdMapper {
   }
 }
 
+/// Catches sqflite_common_ffi_web's intermittent "Bad state: Database N not
+/// found" errors and returns a safe fallback instead of propagating up.
+///
+/// The Web worker occasionally loses its database handle (idle, GC, page
+/// freeze). When that happens our streams used to emit errors and pages
+/// turned blank. This wrapper degrades gracefully — the UI shows the last
+/// good snapshot or an empty list.
+Future<T> _safeDb<T>(Future<T> Function() op, T fallback) async {
+  try {
+    return await op();
+  } catch (e) {
+    final String msg = e.toString();
+    if (msg.contains('Database') && msg.contains('not found')) {
+      debugPrint('sqflite handle lost — degraded read: $e');
+      return fallback;
+    }
+    rethrow;
+  }
+}
+
+Stream<T> _safeStream<T>(Stream<T> Function() build, T fallback) {
+  late StreamController<T> ctrl;
+  StreamSubscription<T>? sub;
+  void subscribe() {
+    try {
+      sub = build().listen(
+        ctrl.add,
+        onError: (Object e, StackTrace st) {
+          final String msg = e.toString();
+          if (msg.contains('Database') && msg.contains('not found')) {
+            debugPrint('sqflite stream handle lost — emitting fallback: $e');
+            ctrl.add(fallback);
+          } else {
+            ctrl.addError(e, st);
+          }
+        },
+      );
+    } catch (e) {
+      ctrl.add(fallback);
+    }
+  }
+
+  ctrl = StreamController<T>(
+    onListen: subscribe,
+    onCancel: () => sub?.cancel(),
+  );
+  return ctrl.stream;
+}
+
 class _TransactionsAdapter implements TransactionsRepository {
   _TransactionsAdapter(this._repo, this._ids);
 
@@ -336,47 +385,54 @@ class _TransactionsAdapter implements TransactionsRepository {
   }
 
   @override
-  Stream<List<Transaction>> watchAll(Ulid userId) => _repo
-      .watch(_ids.ulidToString(userId))
-      .map(
-        (List<local.TransactionRow> rows) =>
-            rows.map(_toDomain).toList(growable: false),
+  Stream<List<Transaction>> watchAll(Ulid userId) => _safeStream<List<Transaction>>(
+        () => _repo.watch(_ids.ulidToString(userId)).map(
+              (List<local.TransactionRow> rows) =>
+                  rows.map(_toDomain).toList(growable: false),
+            ),
+        const <Transaction>[],
       );
 
   @override
   Future<List<Transaction>> list(Ulid userId, TransactionFilter filter) async {
-    final String? accountId = filter.accountIds.isEmpty
-        ? null
-        : _ids.ulidToString(filter.accountIds.first);
-    final String? categoryId = filter.categoryIds.isEmpty
-        ? null
-        : _ids.ulidToString(filter.categoryIds.first);
-    final String? typeCode = filter.types.isEmpty ? null : filter.types.first;
-    final List<local.TransactionRow> rows = await _repo.list(
-      _ids.ulidToString(userId),
-      from: filter.from,
-      to: filter.to,
-      accountId: accountId,
-      categoryId: categoryId,
-      typeCode: typeCode,
-      limit: filter.limit,
-    );
-    return rows.map(_toDomain).toList(growable: false);
+    return _safeDb<List<Transaction>>(() async {
+      final String? accountId = filter.accountIds.isEmpty
+          ? null
+          : _ids.ulidToString(filter.accountIds.first);
+      final String? categoryId = filter.categoryIds.isEmpty
+          ? null
+          : _ids.ulidToString(filter.categoryIds.first);
+      final String? typeCode =
+          filter.types.isEmpty ? null : filter.types.first;
+      final List<local.TransactionRow> rows = await _repo.list(
+        _ids.ulidToString(userId),
+        from: filter.from,
+        to: filter.to,
+        accountId: accountId,
+        categoryId: categoryId,
+        typeCode: typeCode,
+        limit: filter.limit,
+      );
+      return rows.map(_toDomain).toList(growable: false);
+    }, const <Transaction>[]);
   }
 
   @override
   Future<Transaction?> getById(Ulid id) async {
-    final local.TransactionRow? row =
-        await _repo.findById(_ids.ulidToString(id));
-    return row == null ? null : _toDomain(row);
+    return _safeDb<Transaction?>(() async {
+      final local.TransactionRow? row =
+          await _repo.findById(_ids.ulidToString(id));
+      return row == null ? null : _toDomain(row);
+    }, null);
   }
 
   @override
-  Future<void> upsert(Transaction tx) => _repo.save(_toRow(tx));
+  Future<void> upsert(Transaction tx) =>
+      _safeDb<void>(() => _repo.save(_toRow(tx)), null);
 
   @override
   Future<void> softDelete(Ulid id) =>
-      _repo.remove(_ids.ulidToString(id));
+      _safeDb<void>(() => _repo.remove(_ids.ulidToString(id)), null);
 }
 
 class _AccountsAdapter implements AccountsRepository {
@@ -440,31 +496,39 @@ class _AccountsAdapter implements AccountsRepository {
   }
 
   @override
-  Stream<List<Account>> watchAll(Ulid userId) =>
-      _repo.watch(_ids.ulidToString(userId)).map(
-            (List<local.AccountRow> rows) =>
-                rows.map(_toDomain).toList(growable: false),
-          );
+  Stream<List<Account>> watchAll(Ulid userId) => _safeStream<List<Account>>(
+        () => _repo.watch(_ids.ulidToString(userId)).map(
+              (List<local.AccountRow> rows) =>
+                  rows.map(_toDomain).toList(growable: false),
+            ),
+        const <Account>[],
+      );
 
   @override
   Future<List<Account>> list(Ulid userId) async {
-    final List<local.AccountRow> rows =
-        await _repo.list(_ids.ulidToString(userId));
-    return rows.map(_toDomain).toList(growable: false);
+    return _safeDb<List<Account>>(() async {
+      final List<local.AccountRow> rows =
+          await _repo.list(_ids.ulidToString(userId));
+      return rows.map(_toDomain).toList(growable: false);
+    }, const <Account>[]);
   }
 
   @override
   Future<Account?> getById(Ulid id) async {
-    final local.AccountRow? row =
-        await _repo.findById(_ids.ulidToString(id));
-    return row == null ? null : _toDomain(row);
+    return _safeDb<Account?>(() async {
+      final local.AccountRow? row =
+          await _repo.findById(_ids.ulidToString(id));
+      return row == null ? null : _toDomain(row);
+    }, null);
   }
 
   @override
-  Future<void> upsert(Account account) => _repo.save(_toRow(account));
+  Future<void> upsert(Account account) =>
+      _safeDb<void>(() => _repo.save(_toRow(account)), null);
 
   @override
-  Future<void> softDelete(Ulid id) => _repo.remove(_ids.ulidToString(id));
+  Future<void> softDelete(Ulid id) =>
+      _safeDb<void>(() => _repo.remove(_ids.ulidToString(id)), null);
 }
 
 class _CategoriesAdapter implements CategoriesRepository {
@@ -516,31 +580,39 @@ class _CategoriesAdapter implements CategoriesRepository {
       );
 
   @override
-  Stream<List<Category>> watchAll(Ulid userId) =>
-      _repo.watch(_ids.ulidToString(userId)).map(
-            (List<local.CategoryRow> rows) =>
-                rows.map(_toDomain).toList(growable: false),
-          );
+  Stream<List<Category>> watchAll(Ulid userId) => _safeStream<List<Category>>(
+        () => _repo.watch(_ids.ulidToString(userId)).map(
+              (List<local.CategoryRow> rows) =>
+                  rows.map(_toDomain).toList(growable: false),
+            ),
+        const <Category>[],
+      );
 
   @override
   Future<List<Category>> list(Ulid userId) async {
-    final List<local.CategoryRow> rows =
-        await _repo.list(_ids.ulidToString(userId));
-    return rows.map(_toDomain).toList(growable: false);
+    return _safeDb<List<Category>>(() async {
+      final List<local.CategoryRow> rows =
+          await _repo.list(_ids.ulidToString(userId));
+      return rows.map(_toDomain).toList(growable: false);
+    }, const <Category>[]);
   }
 
   @override
   Future<Category?> getById(Ulid id) async {
-    final local.CategoryRow? row =
-        await _repo.findById(_ids.ulidToString(id));
-    return row == null ? null : _toDomain(row);
+    return _safeDb<Category?>(() async {
+      final local.CategoryRow? row =
+          await _repo.findById(_ids.ulidToString(id));
+      return row == null ? null : _toDomain(row);
+    }, null);
   }
 
   @override
-  Future<void> upsert(Category category) => _repo.save(_toRow(category));
+  Future<void> upsert(Category category) =>
+      _safeDb<void>(() => _repo.save(_toRow(category)), null);
 
   @override
-  Future<void> softDelete(Ulid id) => _repo.remove(_ids.ulidToString(id));
+  Future<void> softDelete(Ulid id) =>
+      _safeDb<void>(() => _repo.remove(_ids.ulidToString(id)), null);
 }
 
 // ---------------------------------------------------------------------------

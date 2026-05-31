@@ -105,11 +105,16 @@ class _TransactionFormPageState extends ConsumerState<TransactionFormPage> {
         return;
       }
       Navigator.of(context).maybePop(tx);
-    } on Object catch (_) {
+    } on Object catch (e) {
       if (!mounted) {
         return;
       }
-      context.showFnxSnack(l10n.qaSaveErrorOffline, isError: true);
+      // Surface the real cause to the user instead of a generic message so
+      // platform/database errors are debuggable. Truncate to fit a snack.
+      final String detail = e.toString();
+      final String msg = '${l10n.qaSaveErrorOffline}\n'
+          '${detail.length > 160 ? '${detail.substring(0, 157)}...' : detail}';
+      context.showFnxSnack(msg, isError: true);
     }
   }
 
@@ -121,8 +126,40 @@ class _TransactionFormPageState extends ConsumerState<TransactionFormPage> {
     final DateFormat dateFmt = DateFormat.yMMMd(l10n.localeName);
     final DateFormat timeFmt = DateFormat.Hm(l10n.localeName);
 
+    // Auto-fill account and category from streams once they hydrate.
+    // Without this, async repos that finish loading AFTER the form mounted
+    // leave the user with null defaults → "Please check highlighted fields"
+    // error on save even when their visible input looks complete.
+    ref.listen<AsyncValue<List<Account>>>(
+      accountsStreamProvider,
+      (AsyncValue<List<Account>>? prev, AsyncValue<List<Account>> next) {
+        if (_accountId != null) return;
+        final List<Account>? list = next.valueOrNull;
+        if (list == null || list.isEmpty) return;
+        setState(() => _accountId = list.first.id);
+      },
+    );
+    ref.listen<AsyncValue<List<Category>>>(
+      categoriesStreamProvider,
+      (AsyncValue<List<Category>>? prev, AsyncValue<List<Category>> next) {
+        if (_categoryId != null) return;
+        final List<Category>? list = next.valueOrNull;
+        if (list == null || list.isEmpty) return;
+        final CategoryType wanted = _matchType(_type);
+        final Iterable<Category> matching = list.where(
+          (Category c) => c.type == wanted && !c.isArchived,
+        );
+        if (matching.isNotEmpty) {
+          setState(() => _categoryId = matching.first.id);
+        }
+      },
+    );
+
     return Scaffold(
+      backgroundColor: const Color(0xFF0A0A0C),
       appBar: AppBar(
+        backgroundColor: const Color(0xFF0A0A0C),
+        elevation: 0,
         title: Text(isEdit ? l10n.txTitleEditExpense : l10n.txTitleNewExpense),
         actions: <Widget>[
           IconButton(

@@ -86,6 +86,33 @@ class QuickAddController
     // Seed with smart defaults pulled synchronously from the cached
     // streams — values arrive once those streams have any data.
     final QuickAddDefaults defaults = suggestFor(arg);
+
+    // If the streams haven't loaded yet, watch them and back-fill the
+    // missing defaults the moment data arrives. Without this the form
+    // would stay invalid because categoryId/accountId are null, and the
+    // user would get a misleading "enter amount" error even with a valid
+    // amount typed.
+    ref.listen<AsyncValue<List<Category>>>(
+      categoriesStreamProvider,
+      (AsyncValue<List<Category>>? prev, AsyncValue<List<Category>> next) {
+        if (state.categoryId != null) return;
+        final QuickAddDefaults d = suggestFor(arg);
+        if (d.categoryId != null) {
+          state = state.copyWith(categoryId: d.categoryId);
+        }
+      },
+    );
+    ref.listen<AsyncValue<List<Account>>>(
+      accountsStreamProvider,
+      (AsyncValue<List<Account>>? prev, AsyncValue<List<Account>> next) {
+        if (state.accountId != null) return;
+        final QuickAddDefaults d = suggestFor(arg);
+        if (d.accountId != null) {
+          state = state.copyWith(accountId: d.accountId);
+        }
+      },
+    );
+
     return QuickAddFormState(
       type: arg,
       accountId: defaults.accountId,

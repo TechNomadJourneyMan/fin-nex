@@ -139,12 +139,18 @@ class FnxColors extends ThemeExtension<FnxColors> {
   // ---------------------------------------------------------------------------
   // Semantic — Dark mode (OmniFi OS — deep obsidian, glassmorphism-ready)
   // ---------------------------------------------------------------------------
+  // Note: the SOLID dark surface tokens below feed Material's ColorScheme so
+  // every Scaffold/AppBar/Card/Sheet that uses theme defaults gets a fully-
+  // opaque obsidian background. The translucent glass fills (rgba 5%/8%
+  // white) live as literal constants inside `omnifi_glass_card.dart` and
+  // related OmniFi widgets — using semi-transparent ColorScheme entries
+  // makes the whole app bleed grey.
   /// Dark surface background — deep obsidian (OLED-optimized).
   static const Color surfaceBackgroundDark = Color(0xFF0A0A0C);
-  /// Dark default surface — subtle glass elevation.
-  static const Color surfaceDefaultDark = Color(0x0DFFFFFF); // rgba 255/255/255/0.05
-  /// Dark raised surface — stronger glass elevation.
-  static const Color surfaceRaisedDark = Color(0x14FFFFFF); // rgba 255/255/255/0.08
+  /// Dark default surface — solid one shade above the canvas.
+  static const Color surfaceDefaultDark = Color(0xFF14141A);
+  /// Dark raised surface — solid two shades above the canvas.
+  static const Color surfaceRaisedDark = Color(0xFF1C1C24);
   /// Dark sunken surface.
   static const Color surfaceSunkenDark = Color(0xFF070709);
   /// Dark primary text — soft white.
