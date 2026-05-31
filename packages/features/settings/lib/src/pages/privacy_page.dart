@@ -38,7 +38,7 @@ class PrivacyPage extends ConsumerWidget {
               value: state.hideBalances,
               onChanged: ctl.setHideBalances,
               title: Text(l10n.setPin),
-              activeThumbColor: colors.brand,
+              activeColor: colors.brand,
             ),
             // Screenshot-lock is a mobile-only privacy primitive; hidden on
             // web where there is no platform hook for it.
