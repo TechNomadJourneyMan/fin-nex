@@ -11,7 +11,10 @@ import '../sheets/quick_add_expense_sheet.dart';
 import '../state/transaction_filter_state.dart';
 import 'transaction_details_page.dart';
 
-/// History list page with sticky date sections, search, filters, and FAB.
+/// History list page with sticky date sections, search, and filters.
+///
+/// No in-page Add FAB: the Dynamic Island's "+" owns the "new transaction"
+/// action app-wide. The empty-state inline CTA remains as a separate entry.
 class HistoryPage extends ConsumerStatefulWidget {
   /// Default ctor.
   const HistoryPage({super.key});
@@ -31,10 +34,11 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
   }
 
   Future<void> _openFilters() async {
-    final TransactionFilterState? next = await showFnxBottomSheet<TransactionFilterState>(
-      context: context,
-      builder: (BuildContext ctx) => _FilterSheet(initial: _filter),
-    );
+    final TransactionFilterState? next =
+        await showFnxBottomSheet<TransactionFilterState>(
+          context: context,
+          builder: (BuildContext ctx) => _FilterSheet(initial: _filter),
+        );
     if (next != null) {
       setState(() => _filter = next);
     }
@@ -49,8 +53,9 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppL10n.of(context);
-    final AsyncValue<List<Transaction>> async =
-        ref.watch(transactionsControllerProvider(_filter));
+    final AsyncValue<List<Transaction>> async = ref.watch(
+      transactionsControllerProvider(_filter),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -81,11 +86,6 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
             ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => showQuickAddExpenseSheet(context),
-        icon: const Icon(Icons.add),
-        label: Text(l10n.dashFab),
       ),
       body: RefreshIndicator(
         onRefresh: _refresh,
@@ -166,8 +166,7 @@ class _SectionedList extends StatelessWidget {
   final ValueChanged<Transaction> onSwipeDelete;
 
   List<_Section> _group() {
-    final Map<String, List<Transaction>> bucket =
-        <String, List<Transaction>>{};
+    final Map<String, List<Transaction>> bucket = <String, List<Transaction>>{};
     final DateFormat keyFmt = DateFormat('yyyy-MM-dd');
     for (final Transaction t in transactions) {
       final DateTime local = t.occurredAt.toLocal();
@@ -178,10 +177,7 @@ class _SectionedList extends StatelessWidget {
       ..sort((String a, String b) => b.compareTo(a));
     return <_Section>[
       for (final String k in keys)
-        _Section(
-          date: DateTime.parse(k),
-          items: bucket[k]!,
-        ),
+        _Section(date: DateTime.parse(k), items: bucket[k]!),
     ];
   }
 
@@ -197,9 +193,7 @@ class _SectionedList extends StatelessWidget {
             slivers: <Widget>[
               SliverPersistentHeader(
                 pinned: true,
-                delegate: _HeaderDelegate(
-                  text: headerFmt.format(sec.date),
-                ),
+                delegate: _HeaderDelegate(text: headerFmt.format(sec.date)),
               ),
               SliverList.builder(
                 itemCount: sec.items.length,
@@ -255,7 +249,11 @@ class _HeaderDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => 36;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return Container(
       color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -263,9 +261,9 @@ class _HeaderDelegate extends SliverPersistentHeaderDelegate {
       child: Text(
         text,
         style: Theme.of(context).textTheme.labelMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-              color: Theme.of(context).colorScheme.outline,
-            ),
+          fontWeight: FontWeight.w600,
+          color: Theme.of(context).colorScheme.outline,
+        ),
       ),
     );
   }
@@ -336,10 +334,7 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Text(
-            l10n.commonAll,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
+          Text(l10n.commonAll, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 12),
           Wrap(
             spacing: 8,
@@ -368,8 +363,9 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
               ))
                 FnxChip(
                   label: c.name,
-                  selected: _draft.categoryIds
-                      .any((Ulid u) => u.value == c.id.value),
+                  selected: _draft.categoryIds.any(
+                    (Ulid u) => u.value == c.id.value,
+                  ),
                   onTap: () => _toggleCategory(c.id),
                 ),
             ],
@@ -386,8 +382,9 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
               ))
                 FnxChip(
                   label: a.name,
-                  selected: _draft.accountIds
-                      .any((Ulid u) => u.value == a.id.value),
+                  selected: _draft.accountIds.any(
+                    (Ulid u) => u.value == a.id.value,
+                  ),
                   onTap: () => _toggleAccount(a.id),
                 ),
             ],
@@ -399,8 +396,8 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
                 child: FnxButton(
                   label: l10n.commonNone,
                   variant: FnxButtonVariant.secondary,
-                  onPressed: () => Navigator.of(context)
-                      .pop(const TransactionFilterState()),
+                  onPressed: () =>
+                      Navigator.of(context).pop(const TransactionFilterState()),
                 ),
               ),
               const SizedBox(width: 12),
