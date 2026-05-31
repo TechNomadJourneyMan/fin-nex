@@ -29,35 +29,11 @@ class _GoalVm {
       targetMinor == 0 ? 0 : (currentMinor / targetMinor).clamp(0.0, 1.0);
 }
 
-final _goalsProvider = StateProvider<List<_GoalVm>>((Ref ref) {
-  final DateTime now = DateTime.now();
-  return <_GoalVm>[
-    _GoalVm(
-      name: 'Подушка безопасности',
-      icon: Icons.shield_outlined,
-      color: const Color(0xFF24A148),
-      targetMinor: 300000000, // 3 000 000 ₸ в тиынах
-      currentMinor: 145000000,
-      dueDate: DateTime(now.year + 1, now.month),
-    ),
-    _GoalVm(
-      name: 'Отпуск в Грузии',
-      icon: Icons.flight_takeoff,
-      color: const Color(0xFFFFB840),
-      targetMinor: 80000000,
-      currentMinor: 22000000,
-      dueDate: DateTime(now.year, now.month + 3),
-    ),
-    _GoalVm(
-      name: 'MacBook Pro M4',
-      icon: Icons.laptop_mac,
-      color: const Color(0xFFE5E5EA),
-      targetMinor: 150000000,
-      currentMinor: 9000000,
-      dueDate: DateTime(now.year, now.month + 6),
-    ),
-  ];
-});
+// Goals start empty — the user creates them via the "+ Новая цель" CTA.
+// Persistence to local storage will be wired in a follow-up; for now the
+// list lives in this StateProvider so additions survive navigation but
+// not full reloads.
+final _goalsProvider = StateProvider<List<_GoalVm>>((Ref ref) => <_GoalVm>[]);
 
 /// Financial-goals page. Wired at `/goals`.
 class GoalsPage extends ConsumerWidget {
@@ -84,10 +60,12 @@ class GoalsPage extends ConsumerWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              const Expanded(
+              Expanded(
                 child: Text(
-                  '3 активные цели',
-                  style: TextStyle(
+                  goals.isEmpty
+                      ? 'Нет активных целей'
+                      : '${goals.length} ${goals.length == 1 ? 'цель' : 'целей'}',
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF8A8A93),
@@ -102,6 +80,39 @@ class GoalsPage extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 12),
+          if (goals.isEmpty)
+            GlassCard(
+              radius: 24,
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                children: <Widget>[
+                  const Icon(
+                    Icons.flag_outlined,
+                    color: Color(0xFF5C5C66),
+                    size: 48,
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Целей пока нет',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFFF2F2F3),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Создайте цель — Pocket Flow рассчитает\nежемесячный взнос для её достижения.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Color(0xFF8A8A93),
+                      height: 1.4,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           for (final _GoalVm g in goals) ...<Widget>[
             GlassCard(
               radius: 24,

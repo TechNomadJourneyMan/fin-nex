@@ -26,8 +26,8 @@ import 'package:fnx_local_llm/fnx_local_llm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_data.dart';
-import 'demo_seed.dart';
-import 'onboarding/demo_seed_service.dart';
+// demo_seed.dart and onboarding/demo_seed_service.dart imports removed —
+// the app no longer ships any mock data. Only persisted user data.
 import 'services/auth_session_store.dart';
 import 'services/device_id_provider.dart';
 
@@ -169,23 +169,8 @@ List<Override> buildAppProviderOverrides(AppDataModule module) {
     dashboard.dashboardAnalyticsRepositoryProvider
         .overrideWithValue(module.analytics),
 
-    // Dashboard demo banner — visibility + actions wired to DemoSeedService
-    // and SharedPreferences. The dashboard package owns abstract defaults;
-    // these overrides supply the real behaviour.
-    dashboard.demoBannerVisibleProvider.overrideWith((ref) async {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      final bool seeded = prefs.getBool(kDemoSeededKey) ?? false;
-      final bool dismissed = prefs.getBool(kDemoBannerDismissedKey) ?? false;
-      return seeded && !dismissed;
-    }),
-    dashboard.demoBannerClearProvider.overrideWithValue(() async {
-      await DemoSeedService(module.transactions, kDemoUserId, Currency.kzt)
-          .clearDemo();
-    }),
-    dashboard.demoBannerDismissProvider.overrideWithValue(() async {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(kDemoBannerDismissedKey, true);
-    }),
+    // Demo banner is force-hidden — demo mode has been removed app-wide.
+    dashboard.demoBannerVisibleProvider.overrideWith((ref) async => false),
 
     // Notifications feature
     notifications.notificationsUserIdProvider.overrideWithValue(kDemoUserId),
@@ -193,13 +178,12 @@ List<Override> buildAppProviderOverrides(AppDataModule module) {
     // Insights feature
     insights.insightsUserIdProvider.overrideWithValue(kDemoUserId),
 
-    // Subscriptions (F-04) — seeded in-memory repository so the manager page
-    // has something to show until a real backend feed lands.
+    // Subscriptions (F-04) — empty repository. Real entries will appear
+    // once the subscription detector runs against the user's persisted
+    // transactions. No demo data.
     subs.subscriptionsUserIdProvider.overrideWithValue(kDemoUserId),
     subs.detectedSubscriptionsRepositoryProvider.overrideWithValue(
-      subs.InMemoryDetectedSubscriptionsRepository(
-        buildDemoSubscriptions(kDemoUserId),
-      ),
+      subs.InMemoryDetectedSubscriptionsRepository(),
     ),
 
     // AI-CFO chat (F-07) — fake stream service for preview, no backend.

@@ -107,9 +107,7 @@ class _DashboardContent extends ConsumerWidget {
         ),
         const SizedBox(height: 28),
 
-        // 1b. First-run demo-data banner. Self-hides unless demo data is
-        // present and the user hasn't dismissed it.
-        const _DemoBanner(),
+        // Demo banner removed — the app no longer ships any mock data.
 
         // 2. Bento grid — 2×2 of GlassCards.
         LayoutBuilder(
@@ -141,8 +139,8 @@ class _DashboardContent extends ConsumerWidget {
               _BentoTile(
                 width: tileW,
                 title: 'Подписки',
-                value: '4',
-                subtitle: 'Netflix, Spotify…',
+                value: '—',
+                subtitle: 'Откроется когда обнаружим',
                 accent: const Color(0xFFE5E5EA),
                 icon: Icons.subscriptions_outlined,
                 onTap: () => GoRouter.maybeOf(context)?.push('/subscriptions'),
@@ -151,7 +149,7 @@ class _DashboardContent extends ConsumerWidget {
                 width: tileW,
                 title: 'AI Insights',
                 value: 'Nova',
-                subtitle: 'Готова к разговору',
+                subtitle: 'Спросите про бюджет',
                 accent: const Color(0xFFE5E5EA),
                 icon: Icons.auto_awesome_outlined,
                 onTap: () => GoRouter.maybeOf(context)?.push('/ai-chat'),

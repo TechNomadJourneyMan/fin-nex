@@ -24,13 +24,16 @@ class _Badge {
   final String subtitle;
 }
 
+// All badges start LOCKED — they unlock as the user actually uses the app.
+// The "unlocked" flag will be computed by a future RecomputeAchievements
+// use-case against the user's persisted transaction history.
 const List<_Badge> _badges = <_Badge>[
   _Badge(
     title: 'Первая операция',
     icon: Icons.flag,
     color: Color(0xFF24A148),
     xp: 50,
-    unlocked: true,
+    unlocked: false,
     subtitle: 'Записан первый расход',
   ),
   _Badge(
@@ -38,7 +41,7 @@ const List<_Badge> _badges = <_Badge>[
     icon: Icons.local_fire_department,
     color: Color(0xFFFFB840),
     xp: 100,
-    unlocked: true,
+    unlocked: false,
     subtitle: 'Неделя ведения учёта',
   ),
   _Badge(
@@ -138,17 +141,17 @@ class AchievementsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       const Text(
-                        '7 дней подряд',
+                        'Стрик ещё не начат',
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 20,
                           fontWeight: FontWeight.w600,
                           color: Color(0xFFF2F2F3),
-                          letterSpacing: -0.4,
+                          letterSpacing: -0.3,
                         ),
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'Лучший: 14 · Всего: $totalXp XP',
+                        'Сегодня · Всего: $totalXp XP',
                         style: const TextStyle(
                           fontSize: 12,
                           color: Color(0xFF8A8A93),
