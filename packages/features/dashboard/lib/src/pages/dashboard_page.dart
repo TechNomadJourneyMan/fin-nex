@@ -45,8 +45,15 @@ class DashboardPage extends ConsumerWidget {
       floatingActionButton: null,
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: () =>
+          // Brief 300 ms floor so the spinner is visibly present even on a
+          // cached/instant refresh; PfMotion.effective is unused here because
+          // the indicator owns its own timing.
+          onRefresh: () async {
+            await Future.wait<void>(<Future<void>>[
               ref.read(dashboardControllerProvider.notifier).refresh(),
+              Future<void>.delayed(const Duration(milliseconds: 300)),
+            ]);
+          },
           child: async.when(
             data: (snap) =>
                 _DashboardContent(snapshot: snap, locale: locale, l10n: l10n),

@@ -77,6 +77,8 @@ dependencies:
 
   # Direct deps surfaced by the new feature packages.
   flutter_markdown: ^0.7.4
+  # Material motion (PageTransitionSwitcher + SharedAxisTransition).
+  animations: ^2.0.11
 
   # Auth wiring: token + device-id persistence and the typed Dio client.
   shared_preferences: ^2.3.2

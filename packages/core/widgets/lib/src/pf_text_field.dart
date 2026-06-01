@@ -2,11 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pf_core_tokens/pf_core_tokens.dart';
 
 import 'pf_theme_ext.dart';
 
 /// PocketFlow outlined text field.
-class PfTextField extends StatelessWidget {
+class PfTextField extends StatefulWidget {
   /// Creates a PocketFlow text field.
   const PfTextField({
     super.key,
@@ -89,76 +90,124 @@ class PfTextField extends StatelessWidget {
   final String? semanticLabel;
 
   @override
+  State<PfTextField> createState() => _PfTextFieldState();
+}
+
+class _PfTextFieldState extends State<PfTextField> {
+  final FocusNode _focusNode = FocusNode();
+  bool _focused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_handleFocusChange);
+  }
+
+  void _handleFocusChange() {
+    if (_focused == _focusNode.hasFocus) return;
+    setState(() => _focused = _focusNode.hasFocus);
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_handleFocusChange);
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colors = context.fnxColors;
     final radius = context.fnxRadii;
     final typo = context.fnxTypography;
     final spacing = context.fnxSpacing;
 
-    final border = OutlineInputBorder(
+    // The InputDecorator already animates border transitions internally, but
+    // we wrap the field in an AnimatedContainer so the *outer* border ramps
+    // its width 1 -> 2 and color neutral -> primary using PfMotion tokens.
+    // This honors reduced-motion via PfMotion.effective.
+    final Duration borderDuration =
+        PfMotion.effective(context, PfMotion.fast);
+    final Color borderColor = widget.errorText != null
+        ? colors.error
+        : (_focused ? colors.brand : colors.borderDefault);
+    final double borderWidth = _focused || widget.errorText != null ? 2 : 1;
+
+    // The TextFormField uses transparent inner borders so the only visible
+    // ring is the AnimatedContainer outline.
+    final OutlineInputBorder noBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(radius.r3),
-      borderSide: BorderSide(color: colors.borderDefault),
+      borderSide: BorderSide.none,
     );
 
     return Semantics(
       textField: true,
-      label: semanticLabel ?? label,
-      value: errorText,
+      label: widget.semanticLabel ?? widget.label,
+      value: widget.errorText,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (label != null) ...[
+          if (widget.label != null) ...[
             Text(
-              label!,
+              widget.label!,
               style: typo.bodySm
                   .copyWith(fontWeight: FontWeight.w500, color: colors.textSecondary),
             ),
             SizedBox(height: spacing.s2),
           ],
-          TextFormField(
-            controller: controller,
-            onChanged: onChanged,
-            onFieldSubmitted: onSubmitted,
-            obscureText: obscure,
-            keyboardType: keyboardType,
-            textInputAction: textInputAction,
-            inputFormatters: inputFormatters,
-            maxLength: maxLength,
-            maxLines: obscure ? 1 : maxLines,
-            enabled: enabled,
-            autofocus: autofocus,
-            validator: validator,
-            style: typo.bodyMd,
-            decoration: InputDecoration(
-              hintText: hint,
-              hintStyle: typo.bodyMd.copyWith(color: colors.textMuted),
-              helperText: errorText == null ? helperText : null,
-              errorText: errorText,
-              prefixIcon: prefixIcon != null
-                  ? Icon(prefixIcon, color: colors.textMuted, size: 20)
-                  : null,
-              suffixIcon: suffixIcon != null
-                  ? Icon(suffixIcon, color: colors.textMuted, size: 20)
-                  : null,
-              filled: true,
-              fillColor: enabled ? colors.surface : colors.surfaceSunken,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 14,
-              ),
-              border: border,
-              enabledBorder: border,
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(radius.r3),
-                borderSide: BorderSide(color: colors.brand, width: 2),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(radius.r3),
-                borderSide: BorderSide(color: colors.error),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(radius.r3),
-                borderSide: BorderSide(color: colors.error, width: 2),
+          AnimatedContainer(
+            duration: borderDuration,
+            curve: PfEasing.standard,
+            decoration: BoxDecoration(
+              color: widget.enabled ? colors.surface : colors.surfaceSunken,
+              borderRadius: BorderRadius.circular(radius.r3),
+              border: Border.all(color: borderColor, width: borderWidth),
+            ),
+            child: TextFormField(
+              controller: widget.controller,
+              focusNode: _focusNode,
+              onChanged: widget.onChanged,
+              onFieldSubmitted: widget.onSubmitted,
+              obscureText: widget.obscure,
+              keyboardType: widget.keyboardType,
+              textInputAction: widget.textInputAction,
+              inputFormatters: widget.inputFormatters,
+              maxLength: widget.maxLength,
+              maxLines: widget.obscure ? 1 : widget.maxLines,
+              enabled: widget.enabled,
+              autofocus: widget.autofocus,
+              validator: widget.validator,
+              style: typo.bodyMd,
+              decoration: InputDecoration(
+                hintText: widget.hint,
+                hintStyle: typo.bodyMd.copyWith(color: colors.textMuted),
+                helperText: widget.errorText == null ? widget.helperText : null,
+                errorText: widget.errorText,
+                prefixIcon: widget.prefixIcon != null
+                    ? Icon(
+                        widget.prefixIcon,
+                        color: colors.textMuted,
+                        size: 20,
+                      )
+                    : null,
+                suffixIcon: widget.suffixIcon != null
+                    ? Icon(
+                        widget.suffixIcon,
+                        color: colors.textMuted,
+                        size: 20,
+                      )
+                    : null,
+                filled: false,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 14,
+                ),
+                border: noBorder,
+                enabledBorder: noBorder,
+                focusedBorder: noBorder,
+                errorBorder: noBorder,
+                focusedErrorBorder: noBorder,
+                disabledBorder: noBorder,
               ),
             ),
           ),

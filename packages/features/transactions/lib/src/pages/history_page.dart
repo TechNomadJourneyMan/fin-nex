@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' hide Category;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_tokens/pf_core_tokens.dart';
 import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:pf_domain/pf_domain.dart';
 import 'package:go_router/go_router.dart';
@@ -50,7 +51,12 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
   Future<void> _refresh() async {
     // Trigger a rebuild of the family; AsyncNotifier re-runs build().
     ref.invalidate(transactionsControllerProvider(_filter));
-    await ref.read(transactionsControllerProvider(_filter).future);
+    // Briefly delay so the RefreshIndicator spinner is visible even when
+    // the underlying provider is essentially instant (cached / fake repo).
+    await Future.wait<void>(<Future<void>>[
+      ref.read(transactionsControllerProvider(_filter).future),
+      Future<void>.delayed(const Duration(milliseconds: 300)),
+    ]);
   }
 
   @override
@@ -164,7 +170,7 @@ const Color _kSwipeEditColor = Color(0xFF2E48E6);
 /// Error-red tint used behind a swipe-left (delete) action.
 const Color _kSwipeDeleteColor = Color(0xFFFF453A);
 
-class _SectionedList extends StatelessWidget {
+class _SectionedList extends StatefulWidget {
   const _SectionedList({
     required this.transactions,
     required this.locale,
@@ -179,85 +185,198 @@ class _SectionedList extends StatelessWidget {
   final ValueChanged<Transaction> onSwipeEdit;
   final ValueChanged<Transaction> onSwipeDelete;
 
-  List<_Section> _group() {
+  @override
+  State<_SectionedList> createState() => _SectionedListState();
+}
+
+class _SectionedListState extends State<_SectionedList> {
+  /// Stable per-section animated-list state keys, keyed by the section's
+  /// `yyyy-MM-dd` date string so the same key survives across rebuilds and
+  /// only animates additions/removals.
+  final Map<String, GlobalKey<SliverAnimatedListState>> _listKeys =
+      <String, GlobalKey<SliverAnimatedListState>>{};
+
+  /// Snapshot of the items we last rendered, keyed by section date. Mutating
+  /// this map drives [SliverAnimatedListState.insertItem] /
+  /// [SliverAnimatedListState.removeItem] calls.
+  final Map<String, List<Transaction>> _current = <String, List<Transaction>>{};
+
+  /// Insertion order of sections; recomputed from `widget.transactions` on
+  /// each rebuild.
+  List<String> _sectionOrder = <String>[];
+
+  static final DateFormat _keyFmt = DateFormat('yyyy-MM-dd');
+
+  @override
+  void initState() {
+    super.initState();
+    _seed();
+  }
+
+  @override
+  void didUpdateWidget(covariant _SectionedList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _reconcile();
+  }
+
+  /// First-time fill — no animations are scheduled because the SliverAnimatedList
+  /// builds with its initial item count.
+  void _seed() {
+    _current.clear();
+    final Map<String, List<Transaction>> grouped = _group(widget.transactions);
+    _sectionOrder = grouped.keys.toList(growable: false);
+    grouped.forEach((String key, List<Transaction> items) {
+      _current[key] = items;
+      _listKeys.putIfAbsent(key, () => GlobalKey<SliverAnimatedListState>());
+    });
+  }
+
+  /// Diff new `widget.transactions` against `_current` per section and call
+  /// insertItem/removeItem to drive animations.
+  void _reconcile() {
+    final Map<String, List<Transaction>> grouped = _group(widget.transactions);
+    _sectionOrder = grouped.keys.toList(growable: false);
+
+    // Sections that disappeared entirely — drop their keys.
+    final Set<String> nextSectionSet = grouped.keys.toSet();
+    _current.keys
+        .where((String k) => !nextSectionSet.contains(k))
+        .toList(growable: false)
+        .forEach(_current.remove);
+
+    for (final String section in _sectionOrder) {
+      final List<Transaction> next = grouped[section]!;
+      final List<Transaction> prev = _current[section] ?? <Transaction>[];
+      final GlobalKey<SliverAnimatedListState> key =
+          _listKeys.putIfAbsent(section, () => GlobalKey<SliverAnimatedListState>());
+      final SliverAnimatedListState? listState = key.currentState;
+      if (listState == null) {
+        // The list hasn't mounted yet (new section first render). Seed in place
+        // and let it build with the right initial item count.
+        _current[section] = next;
+        continue;
+      }
+      _applyDiff(listState, prev, next, section);
+      _current[section] = next;
+    }
+  }
+
+  void _applyDiff(
+    SliverAnimatedListState state,
+    List<Transaction> prev,
+    List<Transaction> next,
+    String section,
+  ) {
+    final Map<String, int> prevIndex = <String, int>{};
+    for (int i = 0; i < prev.length; i++) {
+      prevIndex[prev[i].id.value] = i;
+    }
+    final Set<String> nextIds = next.map((Transaction t) => t.id.value).toSet();
+
+    // Remove anything no longer present, working from highest index down so
+    // earlier indices stay valid.
+    final List<int> removeAt = <int>[];
+    for (int i = 0; i < prev.length; i++) {
+      if (!nextIds.contains(prev[i].id.value)) removeAt.add(i);
+    }
+    removeAt.sort((int a, int b) => b.compareTo(a));
+    for (final int idx in removeAt) {
+      final Transaction removed = prev[idx];
+      state.removeItem(
+        idx,
+        (BuildContext ctx, Animation<double> anim) => SizeTransition(
+          sizeFactor: anim,
+          child: FadeTransition(
+            opacity: anim,
+            child: _txRowDummy(removed),
+          ),
+        ),
+        duration: PfMotion.effective(context, PfMotion.fast),
+      );
+    }
+
+    // Insert anything new at its target position. We use the target list's
+    // index for stable ordering.
+    for (int i = 0; i < next.length; i++) {
+      if (!prevIndex.containsKey(next[i].id.value)) {
+        state.insertItem(
+          i,
+          duration: PfMotion.effective(context, PfMotion.fast),
+        );
+      }
+    }
+  }
+
+  Map<String, List<Transaction>> _group(List<Transaction> all) {
     final Map<String, List<Transaction>> bucket = <String, List<Transaction>>{};
-    final DateFormat keyFmt = DateFormat('yyyy-MM-dd');
-    for (final Transaction t in transactions) {
-      final DateTime local = t.occurredAt.toLocal();
-      final String key = keyFmt.format(local);
+    for (final Transaction t in all) {
+      final String key = _keyFmt.format(t.occurredAt.toLocal());
       bucket.putIfAbsent(key, () => <Transaction>[]).add(t);
     }
+    // Section keys descending (newest first).
     final List<String> keys = bucket.keys.toList(growable: false)
       ..sort((String a, String b) => b.compareTo(a));
-    return <_Section>[
-      for (final String k in keys)
-        _Section(date: DateTime.parse(k), items: bucket[k]!),
-    ];
+    return <String, List<Transaction>>{
+      for (final String k in keys) k: bucket[k]!,
+    };
+  }
+
+  /// Used by the remove animation so the disappearing row keeps its layout
+  /// during the size-collapse animation. Pulls live data from the removed
+  /// model so we don't reference a stale list index.
+  Widget _txRowDummy(Transaction t) {
+    final int signed = t.type == TransactionType.expense
+        ? -t.amount.minor.toInt()
+        : t.amount.minor.toInt();
+    return IgnorePointer(
+      child: PfTransactionItem(
+        category: t.categoryId?.value ?? '—',
+        amountMinor: signed,
+        date: t.occurredAt.toLocal(),
+        description: t.description,
+        currencySymbol: t.amount.currency.symbol,
+        locale: widget.locale,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<_Section> sections = _group();
-    final DateFormat headerFmt = DateFormat.yMMMMEEEEd(locale);
+    final DateFormat headerFmt = DateFormat.yMMMMEEEEd(widget.locale);
     return CustomScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
       slivers: <Widget>[
-        for (final _Section sec in sections)
+        for (final String section in _sectionOrder)
           SliverMainAxisGroup(
             slivers: <Widget>[
               SliverPersistentHeader(
                 pinned: true,
-                delegate: _HeaderDelegate(text: headerFmt.format(sec.date)),
+                delegate: _HeaderDelegate(
+                  text: headerFmt.format(DateTime.parse(section)),
+                ),
               ),
-              SliverList.builder(
-                itemCount: sec.items.length,
-                itemBuilder: (BuildContext ctx, int i) {
-                  final Transaction t = sec.items[i];
-                  final int signed = t.type == TransactionType.expense
-                      ? -t.amount.minor.toInt()
-                      : t.amount.minor.toInt();
-                  final AppL10n l10n = AppL10n.of(ctx);
-                  return Dismissible(
-                    key: Key('tx-${t.id.value}'),
-                    direction: DismissDirection.horizontal,
-                    // Swipe right (startToEnd): edit.
-                    background: _SwipeBackground(
-                      color: _kSwipeEditColor,
-                      icon: Icons.edit_outlined,
-                      label: l10n.txEdit,
-                      alignment: Alignment.centerLeft,
+              SliverAnimatedList(
+                key: _listKeys[section],
+                initialItemCount: _current[section]?.length ?? 0,
+                itemBuilder: (
+                  BuildContext ctx,
+                  int index,
+                  Animation<double> animation,
+                ) {
+                  final List<Transaction> items =
+                      _current[section] ?? const <Transaction>[];
+                  if (index >= items.length) {
+                    return const SizedBox.shrink();
+                  }
+                  final Transaction t = items[index];
+                  return SizeTransition(
+                    sizeFactor: CurvedAnimation(
+                      parent: animation,
+                      curve: PfEasing.standard,
                     ),
-                    // Swipe left (endToStart): delete.
-                    secondaryBackground: _SwipeBackground(
-                      color: _kSwipeDeleteColor,
-                      icon: Icons.delete_outline,
-                      label: l10n.commonDelete,
-                      alignment: Alignment.centerRight,
-                    ),
-                    confirmDismiss: (DismissDirection dir) async {
-                      // Crossing the threshold: tactile feedback (no-op web).
-                      _lightImpact();
-                      if (dir == DismissDirection.startToEnd) {
-                        // Edit: never dismiss the row, just navigate.
-                        onSwipeEdit(t);
-                        return false;
-                      }
-                      // Delete: ask for confirmation.
-                      return _confirmDelete(ctx, l10n);
-                    },
-                    onDismissed: (DismissDirection dir) {
-                      if (dir == DismissDirection.endToStart) {
-                        onSwipeDelete(t);
-                      }
-                    },
-                    child: PfTransactionItem(
-                      category: t.categoryId?.value ?? '—',
-                      amountMinor: signed,
-                      date: t.occurredAt.toLocal(),
-                      description: t.description,
-                      currencySymbol: t.amount.currency.symbol,
-                      locale: locale,
-                      onTap: () => onTap(t),
+                    child: FadeTransition(
+                      opacity: animation,
+                      child: _buildRow(ctx, t),
                     ),
                   );
                 },
@@ -268,12 +387,52 @@ class _SectionedList extends StatelessWidget {
       ],
     );
   }
-}
 
-class _Section {
-  const _Section({required this.date, required this.items});
-  final DateTime date;
-  final List<Transaction> items;
+  Widget _buildRow(BuildContext ctx, Transaction t) {
+    final int signed = t.type == TransactionType.expense
+        ? -t.amount.minor.toInt()
+        : t.amount.minor.toInt();
+    final AppL10n l10n = AppL10n.of(ctx);
+    return Dismissible(
+      key: Key('tx-${t.id.value}'),
+      direction: DismissDirection.horizontal,
+      background: _SwipeBackground(
+        color: _kSwipeEditColor,
+        icon: Icons.edit_outlined,
+        label: l10n.txEdit,
+        alignment: Alignment.centerLeft,
+      ),
+      secondaryBackground: _SwipeBackground(
+        color: _kSwipeDeleteColor,
+        icon: Icons.delete_outline,
+        label: l10n.commonDelete,
+        alignment: Alignment.centerRight,
+      ),
+      confirmDismiss: (DismissDirection dir) async {
+        _lightImpact();
+        if (dir == DismissDirection.startToEnd) {
+          widget.onSwipeEdit(t);
+          return false;
+        }
+        return _confirmDelete(ctx, l10n);
+      },
+      onDismissed: (DismissDirection dir) {
+        if (dir == DismissDirection.endToStart) {
+          widget.onSwipeDelete(t);
+        }
+      },
+      child: PfTransactionItem(
+        category: t.categoryId?.value ?? '—',
+        amountMinor: signed,
+        date: t.occurredAt.toLocal(),
+        description: t.description,
+        currencySymbol: t.amount.currency.symbol,
+        locale: widget.locale,
+        leadingHeroTag: 'tx-icon-${t.id.value}',
+        onTap: () => widget.onTap(t),
+      ),
+    );
+  }
 }
 
 /// Fires a light haptic tap. Silently no-ops on platforms (e.g. web) where the

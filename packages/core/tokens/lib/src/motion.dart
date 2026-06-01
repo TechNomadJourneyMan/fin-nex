@@ -28,10 +28,39 @@ class PfMotion extends ThemeExtension<PfMotion> {
   /// Exiting content.
   static const Cubic accelerated = Cubic(0.3, 0.0, 1.0, 1.0);
 
+  /// Returns [d] when the OS-level "reduce motion" toggle is off, and
+  /// [Duration.zero] when it is on. Use this at any call site that drives
+  /// an implicit/explicit Animated* widget or a `TweenAnimationBuilder` so
+  /// the app honors accessibility preferences.
+  ///
+  /// `Hero` already respects reduced motion via the Navigator/Theme so it
+  /// doesn't need this helper.
+  static Duration effective(BuildContext context, Duration d) {
+    return MediaQuery.disableAnimationsOf(context) ? Duration.zero : d;
+  }
+
   @override
   PfMotion copyWith() => const PfMotion();
 
   @override
   ThemeExtension<PfMotion> lerp(ThemeExtension<PfMotion>? other, double t) =>
       this;
+}
+
+/// Convenience aliases — `PfEasing.standard`, `PfEasing.emphasized`, etc.
+///
+/// Mirrors [PfMotion]'s curve tokens under a name that reads more naturally
+/// when used next to a duration token (e.g.
+/// `duration: PfMotion.base, curve: PfEasing.standard`).
+class PfEasing {
+  const PfEasing._();
+
+  /// See [PfMotion.standard].
+  static const Cubic standard = PfMotion.standard;
+  /// See [PfMotion.emphasized].
+  static const Cubic emphasized = PfMotion.emphasized;
+  /// See [PfMotion.decelerated].
+  static const Cubic decelerated = PfMotion.decelerated;
+  /// See [PfMotion.accelerated].
+  static const Cubic accelerated = PfMotion.accelerated;
 }

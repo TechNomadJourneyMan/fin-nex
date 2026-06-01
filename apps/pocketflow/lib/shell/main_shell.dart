@@ -9,6 +9,7 @@
 // into an extended FAB on tablet+. AppBar uses translucent dark surface and
 // keeps the brand wordmark.
 
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pf_core_l10n/pf_core_l10n.dart';
@@ -227,12 +228,38 @@ class _AdaptiveShell extends StatelessWidget {
       ],
     );
 
-    // Body content: navigationShell with the floating island on phone,
-    // or a non-floating action bar on tablet/desktop.
+    // Wrap the navigationShell in a PageTransitionSwitcher so tab swaps fade
+    // across the horizontal shared axis. The child is keyed by the current
+    // tab index so PageTransitionSwitcher detects the change.
+    final Duration tabDuration = PfMotion.effective(context, PfMotion.base);
+    final Widget animatedShell = PageTransitionSwitcher(
+      duration: tabDuration,
+      reverse: false,
+      transitionBuilder: (
+        Widget child,
+        Animation<double> primary,
+        Animation<double> secondary,
+      ) {
+        return SharedAxisTransition(
+          animation: primary,
+          secondaryAnimation: secondary,
+          transitionType: SharedAxisTransitionType.horizontal,
+          fillColor: _bg,
+          child: child,
+        );
+      },
+      child: KeyedSubtree(
+        key: ValueKey<int>(current),
+        child: navigationShell,
+      ),
+    );
+
+    // Body content: animatedShell with the floating island on phone, or a
+    // non-floating action bar on tablet/desktop.
     final Widget body = isPhone
         ? Stack(
             children: <Widget>[
-              navigationShell,
+              animatedShell,
               Positioned(
                 left: 0,
                 right: 0,
@@ -243,7 +270,7 @@ class _AdaptiveShell extends StatelessWidget {
           )
         : Stack(
             children: <Widget>[
-              navigationShell,
+              animatedShell,
               Positioned(
                 right: 16,
                 bottom: 16,

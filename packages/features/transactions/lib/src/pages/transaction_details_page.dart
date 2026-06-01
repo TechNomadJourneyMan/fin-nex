@@ -111,10 +111,69 @@ class _DetailsBody extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Text(
-            amountText,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.displaySmall,
+          // Per-row icon hero: matches the leading icon on the history row so
+          // it morphs into place when the user taps a transaction.
+          Center(
+            child: Hero(
+              tag: 'tx-icon-${tx.id.value}',
+              flightShuttleBuilder: (
+                BuildContext _,
+                Animation<double> __,
+                HeroFlightDirection ___,
+                BuildContext fromCtx,
+                BuildContext toCtx,
+              ) =>
+                  Material(
+                type: MaterialType.transparency,
+                child: toCtx.widget,
+              ),
+              child: Material(
+                type: MaterialType.transparency,
+                child: CircleAvatar(
+                  radius: 28,
+                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                  child: Icon(
+                    tx.type == TransactionType.income
+                        ? Icons.south_west
+                        : Icons.north_east,
+                    color: tx.type == TransactionType.income
+                        ? Colors.greenAccent
+                        : Colors.redAccent,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          // Amount hero: shares 'pf-balance-hero' so it morphs from the
+          // dashboard balance card.
+          Hero(
+            tag: kPfBalanceHeroTag,
+            createRectTween: (Rect? begin, Rect? end) =>
+                MaterialRectArcTween(begin: begin, end: end),
+            flightShuttleBuilder: (
+              BuildContext _,
+              Animation<double> __,
+              HeroFlightDirection ___,
+              BuildContext fromCtx,
+              BuildContext toCtx,
+            ) {
+              return DefaultTextStyle(
+                style: DefaultTextStyle.of(toCtx).style,
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: toCtx.widget,
+                ),
+              );
+            },
+            child: Material(
+              type: MaterialType.transparency,
+              child: Text(
+                amountText,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.displaySmall,
+              ),
+            ),
           ),
           const SizedBox(height: 16),
           _Row(label: l10n.txFieldDate, value: dateFmt.format(tx.occurredAt.toLocal())),

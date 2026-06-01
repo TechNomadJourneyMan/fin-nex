@@ -22,6 +22,7 @@ class PfTransactionItem extends StatelessWidget {
     this.locale = 'ru',
     this.pendingSync = false,
     this.currencySymbol = kPfDefaultCurrencySymbol,
+    this.leadingHeroTag,
   });
 
   /// Category label (used as title).
@@ -57,6 +58,11 @@ class PfTransactionItem extends StatelessWidget {
   /// Currency symbol.
   final String currencySymbol;
 
+  /// Optional Hero tag for the leading avatar. When non-null, the avatar is
+  /// wrapped in a [Hero] so the icon morphs smoothly into a matching Hero on
+  /// the destination page (typically `tx-icon-<id>`).
+  final Object? leadingHeroTag;
+
   String _formatTime(DateTime d) {
     final hh = d.hour.toString().padLeft(2, '0');
     final mm = d.minute.toString().padLeft(2, '0');
@@ -88,7 +94,31 @@ class PfTransactionItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(
               children: [
-                PfAvatar(icon: icon ?? Icons.category, color: accent, size: 40),
+                if (leadingHeroTag != null)
+                  Hero(
+                    tag: leadingHeroTag!,
+                    flightShuttleBuilder: (
+                      BuildContext _,
+                      Animation<double> __,
+                      HeroFlightDirection ___,
+                      BuildContext fromCtx,
+                      BuildContext toCtx,
+                    ) =>
+                        Material(
+                      type: MaterialType.transparency,
+                      child: toCtx.widget,
+                    ),
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: PfAvatar(
+                        icon: icon ?? Icons.category,
+                        color: accent,
+                        size: 40,
+                      ),
+                    ),
+                  )
+                else
+                  PfAvatar(icon: icon ?? Icons.category, color: accent, size: 40),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
