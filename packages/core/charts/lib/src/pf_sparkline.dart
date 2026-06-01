@@ -11,6 +11,7 @@ class PfSparkline extends StatelessWidget {
   const PfSparkline({
     super.key,
     required this.values,
+    required this.semanticDescription,
     this.width = 60,
     this.height = 20,
     this.color,
@@ -20,6 +21,10 @@ class PfSparkline extends StatelessWidget {
 
   /// Y values in chronological order.
   final List<double> values;
+
+  /// Human-readable screen-reader description of the trend. Exposed via
+  /// [Semantics.value] so the inline trend is meaningful to assistive tech.
+  final String semanticDescription;
 
   /// Render width.
   final double width;
@@ -39,16 +44,20 @@ class PfSparkline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color resolved = color ??
-        (overBudget ? PfChartPalette.rose : PfChartPalette.mint);
-    return SizedBox(
-      width: width,
-      height: height,
-      child: CustomPaint(
-        painter: _SparkPainter(
-          values: values,
-          color: resolved,
-          strokeWidth: strokeWidth,
+    final Color resolved =
+        color ?? (overBudget ? PfChartPalette.rose : PfChartPalette.mint);
+    return Semantics(
+      label: 'Trend',
+      value: semanticDescription,
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: CustomPaint(
+          painter: _SparkPainter(
+            values: values,
+            color: resolved,
+            strokeWidth: strokeWidth,
+          ),
         ),
       ),
     );

@@ -43,11 +43,15 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Profile'), findsOneWidget);
+    // The "Appearance" navigation tile (distinct from the new "Accessibility"
+    // section header above it).
     expect(find.text('Appearance'), findsOneWidget);
+    expect(find.text('Accessibility'), findsOneWidget);
+    // Sections below the fold — the "Sound & Haptics" and "Accessibility"
+    // sections push the routed-tile list down, so scroll each into view
+    // before asserting.
+    await tester.scrollUntilVisible(find.text('Language'), 200);
     expect(find.text('Language'), findsOneWidget);
-    // "About" sits at the bottom of the list and may be offscreen after the
-    // new "Sound & Haptics" section pushed everything down — scroll it into
-    // view before asserting.
     await tester.scrollUntilVisible(find.text('About'), 200);
     expect(find.text('About'), findsOneWidget);
   });

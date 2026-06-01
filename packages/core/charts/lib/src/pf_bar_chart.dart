@@ -35,6 +35,7 @@ class PfBarChart extends StatelessWidget {
   const PfBarChart({
     super.key,
     required this.data,
+    required this.semanticDescription,
     this.height = 220,
     this.numberFormat,
     this.barWidth = 16,
@@ -46,6 +47,11 @@ class PfBarChart extends StatelessWidget {
 
   /// Bar points in display order.
   final List<PfBarPoint> data;
+
+  /// Human-readable screen-reader description of the chart's data (e.g.
+  /// "Income vs expense by weekday: Mon 12000, Tue 8000, …"). Exposed via
+  /// [Semantics.value] so the chart is meaningful to assistive technology.
+  final String semanticDescription;
 
   /// Reserved chart height.
   final double height;
@@ -83,110 +89,113 @@ class PfBarChart extends StatelessWidget {
     final bool grouped = hasIncome && hasExpense;
     final double maxY = _computeMaxY();
 
-    return SizedBox(
-      height: height,
-      child: BarChart(
-        BarChartData(
-          maxY: maxY,
-          minY: 0,
-          alignment: BarChartAlignment.spaceAround,
-          groupsSpace: groupSpace,
-          gridData: FlGridData(
-            show: true,
-            drawVerticalLine: false,
-            horizontalInterval: maxY / 4,
-            getDrawingHorizontalLine: (double _) => FlLine(
-              color: theme.dividerColor.withValues(alpha: 0.4),
-              strokeWidth: 1,
+    return Semantics(
+      label: 'Bar chart',
+      value: semanticDescription,
+      child: SizedBox(
+        height: height,
+        child: BarChart(
+          BarChartData(
+            maxY: maxY,
+            minY: 0,
+            alignment: BarChartAlignment.spaceAround,
+            groupsSpace: groupSpace,
+            gridData: FlGridData(
+              show: true,
+              drawVerticalLine: false,
+              horizontalInterval: maxY / 4,
+              getDrawingHorizontalLine: (double _) => FlLine(
+                color: theme.dividerColor.withValues(alpha: 0.4),
+                strokeWidth: 1,
+              ),
             ),
-          ),
-          borderData: FlBorderData(show: false),
-          titlesData: FlTitlesData(
-            topTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-            ),
-            rightTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-            ),
-            leftTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                interval: maxY / 4,
-                reservedSize: 40,
-                getTitlesWidget: (double v, TitleMeta meta) => Padding(
-                  padding: const EdgeInsets.only(right: PfTokens.space1),
-                  child: Text(
-                    fmt.format(v),
-                    style: theme.textTheme.labelSmall,
+            borderData: FlBorderData(show: false),
+            titlesData: FlTitlesData(
+              topTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              rightTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              leftTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  interval: maxY / 4,
+                  reservedSize: 40,
+                  getTitlesWidget: (double v, TitleMeta meta) => Padding(
+                    padding: const EdgeInsets.only(right: PfTokens.space1),
+                    child: Text(
+                      fmt.format(v),
+                      style: theme.textTheme.labelSmall,
+                    ),
                   ),
                 ),
               ),
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  reservedSize: 24,
+                  getTitlesWidget: (double v, TitleMeta meta) {
+                    final int i = v.toInt();
+                    if (i < 0 || i >= data.length) {
+                      return const SizedBox.shrink();
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(top: PfTokens.space1),
+                      child: Text(
+                        data[i].label,
+                        style: theme.textTheme.labelSmall,
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
-            bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 24,
-                getTitlesWidget: (double v, TitleMeta meta) {
-                  final int i = v.toInt();
-                  if (i < 0 || i >= data.length) {
-                    return const SizedBox.shrink();
-                  }
-                  return Padding(
-                    padding: const EdgeInsets.only(top: PfTokens.space1),
-                    child: Text(
-                      data[i].label,
-                      style: theme.textTheme.labelSmall,
-                    ),
+            barTouchData: BarTouchData(
+              enabled: true,
+              touchCallback: (FlTouchEvent event, BarTouchResponse? response) {
+                if (!event.isInterestedForInteractions) return;
+                final int? i = response?.spot?.touchedBarGroupIndex;
+                if (i != null) onBarTap?.call(i);
+              },
+              touchTooltipData: BarTouchTooltipData(
+                getTooltipColor: (BarChartGroupData _) =>
+                    theme.colorScheme.inverseSurface,
+                getTooltipItem: (
+                  BarChartGroupData group,
+                  int groupIndex,
+                  BarChartRodData rod,
+                  int rodIndex,
+                ) {
+                  return BarTooltipItem(
+                    fmt.format(rod.toY),
+                    theme.textTheme.labelMedium?.copyWith(
+                          color: theme.colorScheme.onInverseSurface,
+                          fontWeight: FontWeight.w600,
+                        ) ??
+                        const TextStyle(),
                   );
                 },
               ),
             ),
-          ),
-          barTouchData: BarTouchData(
-            enabled: true,
-            touchCallback:
-                (FlTouchEvent event, BarTouchResponse? response) {
-              if (!event.isInterestedForInteractions) return;
-              final int? i = response?.spot?.touchedBarGroupIndex;
-              if (i != null) onBarTap?.call(i);
-            },
-            touchTooltipData: BarTouchTooltipData(
-              getTooltipColor: (BarChartGroupData _) =>
-                  theme.colorScheme.inverseSurface,
-              getTooltipItem: (
-                BarChartGroupData group,
-                int groupIndex,
-                BarChartRodData rod,
-                int rodIndex,
-              ) {
-                return BarTooltipItem(
-                  fmt.format(rod.toY),
-                  theme.textTheme.labelMedium?.copyWith(
-                        color: theme.colorScheme.onInverseSurface,
-                        fontWeight: FontWeight.w600,
-                      ) ??
-                      const TextStyle(),
-                );
-              },
-            ),
-          ),
-          barGroups: <BarChartGroupData>[
-            for (int i = 0; i < data.length; i++)
-              BarChartGroupData(
-                x: i,
-                barsSpace: 4,
-                barRods: <BarChartRodData>[
-                  if (!grouped && hasIncome)
-                    _rod(data[i].income, incomeColor),
-                  if (!grouped && hasExpense)
-                    _rod(data[i].expense, expenseColor),
-                  if (grouped) ...<BarChartRodData>[
-                    _rod(data[i].income, incomeColor),
-                    _rod(data[i].expense, expenseColor),
+            barGroups: <BarChartGroupData>[
+              for (int i = 0; i < data.length; i++)
+                BarChartGroupData(
+                  x: i,
+                  barsSpace: 4,
+                  barRods: <BarChartRodData>[
+                    if (!grouped && hasIncome)
+                      _rod(data[i].income, incomeColor),
+                    if (!grouped && hasExpense)
+                      _rod(data[i].expense, expenseColor),
+                    if (grouped) ...<BarChartRodData>[
+                      _rod(data[i].income, incomeColor),
+                      _rod(data[i].expense, expenseColor),
+                    ],
                   ],
-                ],
-              ),
-          ],
+                ),
+            ],
+          ),
         ),
       ),
     );

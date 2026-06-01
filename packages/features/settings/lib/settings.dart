@@ -1,6 +1,7 @@
 /// Public API for the PocketFlow settings feature.
 library pf_feat_settings;
 
+export 'src/controllers/high_contrast_controller.dart';
 export 'src/controllers/settings_controller.dart';
 export 'src/pages/about_page.dart';
 export 'src/pages/appearance_page.dart';

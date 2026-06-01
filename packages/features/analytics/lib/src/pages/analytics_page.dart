@@ -274,6 +274,9 @@ class _CategoryDonutSection extends ConsumerWidget {
           Center(
             child: PfDonutChart(
               data: slices,
+              semanticDescription: '${l10n.anByCategory}: '
+                  '${slices.map((PfDonutSlice s) => '${s.label} '
+                      '${fmt.format(s.value)}').join(', ')}',
               centerLabel: l10n.anSumExpense,
               numberFormat: fmt,
               onSliceTap: (int? idx) {
@@ -339,7 +342,13 @@ class _ByWeekdaySection extends StatelessWidget {
         children: <Widget>[
           Text(l10n.anByWeek, style: typo.heading3),
           SizedBox(height: context.fnxSpacing.s4),
-          PfBarChart(data: points),
+          PfBarChart(
+            data: points,
+            semanticDescription: '${l10n.anByWeek}: '
+                '${points.map((PfBarPoint p) => '${p.label} '
+                    '${l10n.anSumIncome} ${p.income.round()} '
+                    '${l10n.anSumExpense} ${p.expense.round()}').join(', ')}',
+          ),
         ],
       ),
     );
@@ -385,6 +394,11 @@ class _CashflowSection extends StatelessWidget {
           Text(l10n.anCashFlow, style: typo.heading3),
           SizedBox(height: context.fnxSpacing.s4),
           PfLineChart(
+            semanticDescription: '${l10n.anCashFlow}. '
+                '${l10n.anSumIncome}: '
+                '${income.fold<double>(0, (double a, PfLinePoint p) => a + p.y).round()}. '
+                '${l10n.anSumExpense}: '
+                '${expense.fold<double>(0, (double a, PfLinePoint p) => a + p.y).round()}.',
             series: <PfLineSeries>[
               PfLineSeries(
                 name: l10n.anSumIncome,
@@ -422,8 +436,7 @@ class _SparseDataHint extends StatelessWidget {
           SizedBox(height: context.fnxSpacing.s3),
           Text(
             l10n.onbP2Body,
-            style: typo.bodyMd
-                .copyWith(color: context.fnxColors.textSecondary),
+            style: typo.bodyMd.copyWith(color: context.fnxColors.textSecondary),
           ),
           SizedBox(height: context.fnxSpacing.s4),
           Text(

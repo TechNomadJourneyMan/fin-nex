@@ -11,6 +11,7 @@ void main() {
           body: SizedBox(
             width: 400,
             child: PfLineChart(
+              semanticDescription: 'Balance over time',
               series: const <PfLineSeries>[
                 PfLineSeries(
                   name: 'Balance',
@@ -36,6 +37,7 @@ void main() {
       const MaterialApp(
         home: Scaffold(
           body: PfLineChart(
+            semanticDescription: 'No data',
             series: <PfLineSeries>[
               PfLineSeries(name: 'a', points: <PfLinePoint>[]),
             ],

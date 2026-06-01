@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'controllers/high_contrast_controller.dart';
 import 'controllers/locale_controller.dart';
 import 'controllers/notification_prefs_controller.dart';
 import 'controllers/privacy_controller.dart';
@@ -18,20 +19,26 @@ final preferencesStoreProvider = Provider<PreferencesStore>((ref) {
 });
 
 /// Active theme mode. Persists on every change.
-final themeProvider =
-    StateNotifierProvider<ThemeController, ThemeMode>((ref) {
+final themeProvider = StateNotifierProvider<ThemeController, ThemeMode>((ref) {
   return ThemeController(ref.watch(preferencesStoreProvider));
 });
 
 /// Active locale. `null` means "follow the system".
-final localeProvider =
-    StateNotifierProvider<LocaleController, Locale?>((ref) {
+final localeProvider = StateNotifierProvider<LocaleController, Locale?>((ref) {
   return LocaleController(ref.watch(preferencesStoreProvider));
 });
 
+/// Whether the high-contrast accessibility theme is enabled. Persists on
+/// every change under the `pf_high_contrast` key.
+final highContrastProvider =
+    StateNotifierProvider<HighContrastController, bool>((ref) {
+  return HighContrastController(ref.watch(preferencesStoreProvider));
+});
+
 /// Notification preferences (daily, weekly, limits, insights).
-final notificationPrefsProvider = StateNotifierProvider<
-    NotificationPrefsController, NotificationPrefs>((ref) {
+final notificationPrefsProvider =
+    StateNotifierProvider<NotificationPrefsController, NotificationPrefs>(
+        (ref) {
   return NotificationPrefsController(ref.watch(preferencesStoreProvider));
 });
 
@@ -42,7 +49,6 @@ final privacyProvider =
 });
 
 /// The top-level [SettingsController] composed from the smaller providers.
-final settingsControllerProvider =
-    Provider<SettingsController>((ref) {
+final settingsControllerProvider = Provider<SettingsController>((ref) {
   return SettingsController(ref);
 });

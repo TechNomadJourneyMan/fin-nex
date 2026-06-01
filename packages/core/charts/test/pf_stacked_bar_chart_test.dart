@@ -11,6 +11,7 @@ void main() {
           body: SizedBox(
             width: 500,
             child: PfStackedBarChart(
+              semanticDescription: 'Categories per day',
               categories: const <String>['Food', 'Transit', 'Fun'],
               data: const <PfStackedBarPoint>[
                 PfStackedBarPoint(
@@ -41,6 +42,7 @@ void main() {
       const MaterialApp(
         home: Scaffold(
           body: PfStackedBarChart(
+            semanticDescription: 'No data',
             categories: <String>['a'],
             data: <PfStackedBarPoint>[],
           ),

@@ -603,16 +603,24 @@ class _CategoryChip extends StatelessWidget {
               child: Icon(icon, color: color, size: 22),
             ),
             const SizedBox(height: 6),
-            Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 10,
-                color: selected
-                    ? const Color(0xFFF2F2F3)
-                    : const Color(0xFF8A8A93),
+            // Flexible + FittedBox(scaleDown) keeps the label inside the fixed
+            // 76dp chip height when the OS text scale is large, preventing a
+            // RenderFlex overflow at textScaler 2.0.
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: selected
+                        ? const Color(0xFFF2F2F3)
+                        : const Color(0xFF8A8A93),
+                  ),
+                ),
               ),
             ),
           ],

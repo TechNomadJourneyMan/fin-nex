@@ -751,6 +751,16 @@ class AppL10nRu extends AppL10n {
   String get setThemeDark => 'Тёмная';
 
   @override
+  String get setAccessibility => 'Специальные возможности';
+
+  @override
+  String get setHighContrast => 'Высокая контрастность';
+
+  @override
+  String get setHighContrastDesc =>
+      'Чисто чёрно-белые поверхности с насыщенным фирменным цветом.';
+
+  @override
   String get setLanguage => 'Язык';
 
   @override

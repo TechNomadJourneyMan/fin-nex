@@ -1,6 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:pf_core_tokens/tokens.dart';
 
+/// The set of theme variants PocketFlow can render.
+///
+/// [light] / [dark] are the standard brand themes. [highContrast] pairs with
+/// the current [Brightness] to select [PfTheme.lightHighContrast] or
+/// [PfTheme.darkHighContrast] — pure black/white surfaces and text with a
+/// fully-saturated indigo brand, for users who enable the accessibility
+/// "high contrast" preference.
+enum PfThemeMode {
+  /// Standard light brand theme.
+  light,
+
+  /// Standard dark brand theme.
+  dark,
+
+  /// High-contrast variant (brightness-aware).
+  highContrast,
+}
+
 /// PocketFlow Material 3 theme builders.
 ///
 /// Wire from `MaterialApp(theme: PfTheme.light(), darkTheme: PfTheme.dark())`.
@@ -19,33 +37,48 @@ abstract final class PfTheme {
         colors: PfColors.dark,
       );
 
+  /// Build the light high-contrast [ThemeData]: pure white surfaces, pure
+  /// black text/borders, fully-saturated indigo brand.
+  static ThemeData lightHighContrast() => _build(
+        brightness: Brightness.light,
+        colors: PfColors.lightHighContrast,
+        highContrast: true,
+      );
+
+  /// Build the dark high-contrast [ThemeData]: pure black surfaces, pure
+  /// white text/borders, fully-saturated indigo brand.
+  static ThemeData darkHighContrast() => _build(
+        brightness: Brightness.dark,
+        colors: PfColors.darkHighContrast,
+        highContrast: true,
+      );
+
   static ThemeData _build({
     required Brightness brightness,
     required PfColors colors,
+    bool highContrast = false,
   }) {
     final bool isDark = brightness == Brightness.dark;
-    final PfTypography typography = const PfTypography();
+    const PfTypography typography = PfTypography();
+    // High-contrast themes use the fully-saturated indigo brand.
+    final Color primary =
+        highContrast ? PfColors.primaryHc : PfColors.primary500;
 
     final ColorScheme scheme = ColorScheme(
       brightness: brightness,
-      primary: PfColors.primary500,
+      primary: primary,
       onPrimary: PfColors.neutral0,
-      primaryContainer:
-          isDark ? PfColors.indigo800 : PfColors.indigo50,
-      onPrimaryContainer:
-          isDark ? PfColors.indigo100 : PfColors.indigo700,
+      primaryContainer: isDark ? PfColors.indigo800 : PfColors.indigo50,
+      onPrimaryContainer: isDark ? PfColors.indigo100 : PfColors.indigo700,
       secondary: PfColors.mint500,
       onSecondary: PfColors.neutral900,
       secondaryContainer:
           isDark ? PfColors.successSubtleDark : PfColors.mint100,
-      onSecondaryContainer:
-          isDark ? PfColors.mint500 : PfColors.mint600,
+      onSecondaryContainer: isDark ? PfColors.mint500 : PfColors.mint600,
       tertiary: PfColors.coral500,
       onTertiary: PfColors.neutral0,
-      tertiaryContainer:
-          isDark ? PfColors.errorSubtleDark : PfColors.coral100,
-      onTertiaryContainer:
-          isDark ? PfColors.coral500 : PfColors.coral500,
+      tertiaryContainer: isDark ? PfColors.errorSubtleDark : PfColors.coral100,
+      onTertiaryContainer: PfColors.coral500,
       error: colors.error,
       onError: PfColors.neutral0,
       errorContainer: colors.errorSubtle,
@@ -57,17 +90,15 @@ abstract final class PfTheme {
       surfaceContainer: colors.surfaceDefault,
       surfaceContainerHigh: colors.surfaceRaised,
       surfaceContainerHighest: colors.surfaceRaised,
-      surfaceTint: PfColors.primary500,
       onSurfaceVariant: colors.textSecondary,
       outline: colors.borderDefault,
       outlineVariant: colors.borderSubtle,
+      surfaceTint: primary,
       shadow: const Color(0xFF000000),
       scrim: const Color(0xFF000000),
       inverseSurface: isDark ? PfColors.neutral50 : PfColors.neutral900,
-      onInverseSurface:
-          isDark ? PfColors.neutral900 : PfColors.neutral50,
-      inversePrimary:
-          isDark ? PfColors.indigo600 : PfColors.indigo300,
+      onInverseSurface: isDark ? PfColors.neutral900 : PfColors.neutral50,
+      inversePrimary: isDark ? PfColors.indigo600 : PfColors.indigo300,
     );
 
     final TextTheme textTheme = TextTheme(
@@ -122,7 +153,7 @@ abstract final class PfTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          backgroundColor: PfColors.primary500,
+          backgroundColor: primary,
           foregroundColor: PfColors.neutral0,
           disabledBackgroundColor: colors.textDisabled,
           disabledForegroundColor: colors.textInverse,
@@ -137,7 +168,7 @@ abstract final class PfTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: PfColors.primary500,
+          backgroundColor: primary,
           foregroundColor: PfColors.neutral0,
           elevation: 0,
           minimumSize: const Size(0, 44),
@@ -246,9 +277,7 @@ abstract final class PfTheme {
             typography.bodyM.copyWith(color: colors.textSecondary),
       ),
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: isDark
-            ? PfColors.neutral50
-            : PfColors.neutral900,
+        backgroundColor: isDark ? PfColors.neutral50 : PfColors.neutral900,
         contentTextStyle: typography.bodyM.copyWith(
           color: isDark ? PfColors.neutral900 : PfColors.neutral0,
         ),
@@ -297,8 +326,8 @@ abstract final class PfTheme {
         thickness: 1,
         space: 1,
       ),
-      progressIndicatorTheme: const ProgressIndicatorThemeData(
-        color: PfColors.primary500,
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: primary,
         linearTrackColor: PfColors.neutral200,
       ),
       switchTheme: SwitchThemeData(
@@ -309,14 +338,14 @@ abstract final class PfTheme {
         ),
         trackColor: WidgetStateProperty.resolveWith(
           (states) => states.contains(WidgetState.selected)
-              ? PfColors.primary500
+              ? primary
               : PfColors.neutral300,
         ),
       ),
       checkboxTheme: CheckboxThemeData(
         fillColor: WidgetStateProperty.resolveWith(
           (states) => states.contains(WidgetState.selected)
-              ? PfColors.primary500
+              ? primary
               : Colors.transparent,
         ),
         side: BorderSide(color: colors.borderDefault, width: 2),
@@ -325,7 +354,7 @@ abstract final class PfTheme {
       radioTheme: RadioThemeData(
         fillColor: WidgetStateProperty.resolveWith(
           (states) => states.contains(WidgetState.selected)
-              ? PfColors.primary500
+              ? primary
               : colors.borderDefault,
         ),
       ),

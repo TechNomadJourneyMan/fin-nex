@@ -51,6 +51,7 @@ class PfLineChart extends StatelessWidget {
   const PfLineChart({
     super.key,
     required this.series,
+    required this.semanticDescription,
     this.height = 220,
     this.numberFormat,
     this.showArea = true,
@@ -58,6 +59,10 @@ class PfLineChart extends StatelessWidget {
 
   /// One or more series to render.
   final List<PfLineSeries> series;
+
+  /// Human-readable screen-reader description of the chart's data. Exposed
+  /// via [Semantics.value] so the chart is meaningful to assistive tech.
+  final String semanticDescription;
 
   /// Reserved height.
   final double height;
@@ -83,83 +88,85 @@ class PfLineChart extends StatelessWidget {
     final double maxX = _maxX();
     final double maxY = _maxY();
 
-    return SizedBox(
-      height: height,
-      child: LineChart(
-        LineChartData(
-          minX: minX,
-          maxX: maxX,
-          minY: 0,
-          maxY: maxY == 0 ? 1 : maxY * 1.1,
-          gridData: FlGridData(
-            show: true,
-            drawVerticalLine: false,
-            horizontalInterval: (maxY == 0 ? 1 : maxY) / 4,
-            getDrawingHorizontalLine: (double _) => FlLine(
-              color: theme.dividerColor.withValues(alpha: 0.4),
-              strokeWidth: 1,
+    return Semantics(
+      label: 'Line chart',
+      value: semanticDescription,
+      child: SizedBox(
+        height: height,
+        child: LineChart(
+          LineChartData(
+            minX: minX,
+            maxX: maxX,
+            minY: 0,
+            maxY: maxY == 0 ? 1 : maxY * 1.1,
+            gridData: FlGridData(
+              show: true,
+              drawVerticalLine: false,
+              horizontalInterval: (maxY == 0 ? 1 : maxY) / 4,
+              getDrawingHorizontalLine: (double _) => FlLine(
+                color: theme.dividerColor.withValues(alpha: 0.4),
+                strokeWidth: 1,
+              ),
             ),
-          ),
-          borderData: FlBorderData(show: false),
-          titlesData: FlTitlesData(
-            topTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-            ),
-            rightTitles: const AxisTitles(
-              sideTitles: SideTitles(showTitles: false),
-            ),
-            leftTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 40,
-                getTitlesWidget: (double v, TitleMeta meta) => Padding(
-                  padding: const EdgeInsets.only(right: PfTokens.space1),
-                  child: Text(
-                    fmt.format(v),
-                    style: theme.textTheme.labelSmall,
+            borderData: FlBorderData(show: false),
+            titlesData: FlTitlesData(
+              topTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              rightTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              leftTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  reservedSize: 40,
+                  getTitlesWidget: (double v, TitleMeta meta) => Padding(
+                    padding: const EdgeInsets.only(right: PfTokens.space1),
+                    child: Text(
+                      fmt.format(v),
+                      style: theme.textTheme.labelSmall,
+                    ),
                   ),
                 ),
               ),
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  reservedSize: 24,
+                  getTitlesWidget: (double v, TitleMeta meta) {
+                    final String? label = _labelForX(v);
+                    if (label == null) return const SizedBox.shrink();
+                    return Padding(
+                      padding: const EdgeInsets.only(top: PfTokens.space1),
+                      child: Text(label, style: theme.textTheme.labelSmall),
+                    );
+                  },
+                ),
+              ),
             ),
-            bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 24,
-                getTitlesWidget: (double v, TitleMeta meta) {
-                  final String? label = _labelForX(v);
-                  if (label == null) return const SizedBox.shrink();
-                  return Padding(
-                    padding: const EdgeInsets.only(top: PfTokens.space1),
-                    child: Text(label,
-                        style: theme.textTheme.labelSmall),
-                  );
+            lineTouchData: LineTouchData(
+              enabled: true,
+              touchTooltipData: LineTouchTooltipData(
+                getTooltipColor: (LineBarSpot _) =>
+                    theme.colorScheme.inverseSurface,
+                getTooltipItems: (List<LineBarSpot> spots) {
+                  return spots.map((LineBarSpot s) {
+                    return LineTooltipItem(
+                      fmt.format(s.y),
+                      theme.textTheme.labelMedium?.copyWith(
+                            color: theme.colorScheme.onInverseSurface,
+                            fontWeight: FontWeight.w600,
+                          ) ??
+                          const TextStyle(),
+                    );
+                  }).toList();
                 },
               ),
             ),
+            lineBarsData: <LineChartBarData>[
+              for (int i = 0; i < series.length; i++) _buildBar(i, series[i]),
+            ],
           ),
-          lineTouchData: LineTouchData(
-            enabled: true,
-            touchTooltipData: LineTouchTooltipData(
-              getTooltipColor: (LineBarSpot _) =>
-                  theme.colorScheme.inverseSurface,
-              getTooltipItems: (List<LineBarSpot> spots) {
-                return spots.map((LineBarSpot s) {
-                  return LineTooltipItem(
-                    fmt.format(s.y),
-                    theme.textTheme.labelMedium?.copyWith(
-                          color: theme.colorScheme.onInverseSurface,
-                          fontWeight: FontWeight.w600,
-                        ) ??
-                        const TextStyle(),
-                  );
-                }).toList();
-              },
-            ),
-          ),
-          lineBarsData: <LineChartBarData>[
-            for (int i = 0; i < series.length; i++)
-              _buildBar(i, series[i]),
-          ],
         ),
       ),
     );

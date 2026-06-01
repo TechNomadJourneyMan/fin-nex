@@ -9,6 +9,7 @@ void main() {
         home: Scaffold(
           body: Center(
             child: PfDonutChart(
+              semanticDescription: 'Expenses by category',
               data: <PfDonutSlice>[
                 PfDonutSlice(label: 'Food', value: 1200),
                 PfDonutSlice(label: 'Rent', value: 800),
@@ -29,7 +30,10 @@ void main() {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
-          body: PfDonutChart(data: <PfDonutSlice>[]),
+          body: PfDonutChart(
+            data: <PfDonutSlice>[],
+            semanticDescription: 'No data',
+          ),
         ),
       ),
     );

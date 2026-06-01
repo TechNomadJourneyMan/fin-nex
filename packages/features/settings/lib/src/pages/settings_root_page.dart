@@ -8,6 +8,7 @@ import 'package:pf_core_l10n/pf_core_l10n.dart';
 import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
+import '../providers.dart';
 import '../widgets/sound_haptics_section.dart';
 
 /// Settings hub page. Routed at `/settings`.
@@ -21,6 +22,7 @@ class SettingsRootPage extends ConsumerWidget {
     final colors = context.fnxColors;
     final typo = context.fnxTypography;
     final router = GoRouter.maybeOf(context);
+    final bool highContrast = ref.watch(highContrastProvider);
 
     final sections = <_SectionData>[
       _SectionData(
@@ -75,6 +77,36 @@ class SettingsRootPage extends ConsumerWidget {
             // New "Sound & Haptics" section sits above the routed-section
             // list so it's immediately discoverable on first open.
             const SoundHapticsSection(),
+            // Accessibility section: toggles that apply app-wide (sits under
+            // the Appearance grouping; uses a distinct "Accessibility" header
+            // so it doesn't collide with the routed Appearance tile).
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+              child: Text(
+                l10n.setAccessibility,
+                style: typo.bodySm.copyWith(
+                  color: colors.textMuted,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.4,
+                ),
+              ),
+            ),
+            SwitchListTile(
+              key: const Key('settings.appearance.highContrast'),
+              title: Text(l10n.setHighContrast),
+              subtitle: Text(l10n.setHighContrastDesc),
+              value: highContrast,
+              onChanged: (bool v) {
+                // ignore: discarded_futures
+                ref.read(highContrastProvider.notifier).set(v);
+              },
+            ),
+            Divider(
+              height: 1,
+              color: colors.divider,
+              indent: 16,
+              endIndent: 16,
+            ),
             for (int i = 0; i < sections.length; i++) ...<Widget>[
               PfListItem(
                 leading: Icon(sections[i].icon, color: colors.textSecondary),

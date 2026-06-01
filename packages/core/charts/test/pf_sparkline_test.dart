@@ -11,6 +11,7 @@ void main() {
           body: Center(
             child: PfSparkline(
               values: <double>[1, 4, 2, 6, 3, 5, 7],
+              semanticDescription: 'Upward trend',
             ),
           ),
         ),
@@ -24,7 +25,10 @@ void main() {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
-          body: PfSparkline(values: <double>[1]),
+          body: PfSparkline(
+            values: <double>[1],
+            semanticDescription: 'Flat trend',
+          ),
         ),
       ),
     );

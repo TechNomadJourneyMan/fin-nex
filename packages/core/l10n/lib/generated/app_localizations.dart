@@ -1431,6 +1431,24 @@ abstract class AppL10n {
   /// **'Dark'**
   String get setThemeDark;
 
+  /// Settings section grouping accessibility toggles.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessibility'**
+  String get setAccessibility;
+
+  /// Accessibility toggle for the high-contrast theme.
+  ///
+  /// In en, this message translates to:
+  /// **'High contrast mode'**
+  String get setHighContrast;
+
+  /// Subtitle for the high-contrast toggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pure black-and-white surfaces with a saturated brand color.'**
+  String get setHighContrastDesc;
+
   /// Language picker label.
   ///
   /// In en, this message translates to:

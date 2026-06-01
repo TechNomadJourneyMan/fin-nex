@@ -739,6 +739,16 @@ class AppL10nKk extends AppL10n {
   String get setThemeDark => 'Қараңғы';
 
   @override
+  String get setAccessibility => 'Қолжетімділік';
+
+  @override
+  String get setHighContrast => 'Жоғары контраст режимі';
+
+  @override
+  String get setHighContrastDesc =>
+      'Қаныққан бренд түсі бар таза қара-ақ беттер.';
+
+  @override
   String get setLanguage => 'Тіл';
 
   @override

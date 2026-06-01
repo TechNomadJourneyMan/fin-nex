@@ -79,6 +79,15 @@ class CalendarViewPage extends ConsumerWidget {
                       ),
                       SizedBox(height: context.fnxSpacing.s4),
                       PfHeatmapCalendar(
+                        semanticDescription: 'Daily expenses '
+                            '${df.format(period.from)} – '
+                            '${df.format(period.to.subtract(
+                          const Duration(milliseconds: 1),
+                        ))}. '
+                            'Total ${fmt.format(byDay.values.fold<double>(
+                          0,
+                          (double a, double v) => a + v,
+                        ))}.',
                         from: period.from,
                         to: period.to.subtract(const Duration(days: 1)),
                         valueByDay: byDay,

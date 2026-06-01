@@ -20,6 +20,9 @@ class InlineWidgetRenderer extends StatelessWidget {
     final Widget chart = switch (spec) {
       final BarChartSpec s => PfBarChart(
           height: 180,
+          semanticDescription: '${spec.title ?? 'Bar chart'}: '
+              '${s.bars.map((BarChartBar b) => '${b.label} '
+                  '${b.value.round()}').join(', ')}',
           data: <PfBarPoint>[
             for (final BarChartBar b in s.bars)
               PfBarPoint(label: b.label, expense: b.value),
@@ -27,6 +30,9 @@ class InlineWidgetRenderer extends StatelessWidget {
         ),
       final LineChartSpec s => PfLineChart(
           height: 180,
+          semanticDescription: '${spec.title ?? s.seriesName}: '
+              '${s.points.map((LineChartPoint p) => '${p.label ?? p.x} '
+                  '${p.y.round()}').join(', ')}',
           series: <PfLineSeries>[
             PfLineSeries(
               name: s.seriesName,

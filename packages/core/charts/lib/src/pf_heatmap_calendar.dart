@@ -15,6 +15,7 @@ class PfHeatmapCalendar extends StatelessWidget {
     required this.from,
     required this.to,
     required this.valueByDay,
+    required this.semanticDescription,
     this.tileSize = 32,
     this.gap = 4,
     this.baseColor = PfChartPalette.indigo,
@@ -31,6 +32,10 @@ class PfHeatmapCalendar extends StatelessWidget {
 
   /// Value per day. Missing days are treated as 0.
   final Map<DateTime, double> valueByDay;
+
+  /// Human-readable screen-reader description of the calendar's data. Exposed
+  /// via [Semantics.value] so the heatmap is meaningful to assistive tech.
+  final String semanticDescription;
 
   /// Square cell size. Caller should pass `40` on tablet.
   final double tileSize;
@@ -77,31 +82,34 @@ class PfHeatmapCalendar extends StatelessWidget {
     final List<List<DateTime?>> columns = _buildColumns(start, end);
 
     final ThemeData theme = Theme.of(context);
-    final Color emptyCell =
-        theme.colorScheme.onSurface.withValues(alpha: 0.06);
+    final Color emptyCell = theme.colorScheme.onSurface.withValues(alpha: 0.06);
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          for (int c = 0; c < columns.length; c++) ...<Widget>[
-            Column(
-              children: <Widget>[
-                for (int r = 0; r < 7; r++) ...<Widget>[
-                  _buildCell(
-                    columns[c][r],
-                    normalized,
-                    maxV,
-                    emptyCell,
-                  ),
-                  if (r != 6) SizedBox(height: gap),
+    return Semantics(
+      label: 'Calendar heatmap',
+      value: semanticDescription,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            for (int c = 0; c < columns.length; c++) ...<Widget>[
+              Column(
+                children: <Widget>[
+                  for (int r = 0; r < 7; r++) ...<Widget>[
+                    _buildCell(
+                      columns[c][r],
+                      normalized,
+                      maxV,
+                      emptyCell,
+                    ),
+                    if (r != 6) SizedBox(height: gap),
+                  ],
                 ],
-              ],
-            ),
-            if (c != columns.length - 1) SizedBox(width: gap),
+              ),
+              if (c != columns.length - 1) SizedBox(width: gap),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
@@ -117,9 +125,8 @@ class PfHeatmapCalendar extends StatelessWidget {
     }
     final double v = values[day] ?? 0;
     final int level = _level(v, maxV);
-    final Color color = level == 0
-        ? emptyCell
-        : baseColor.withValues(alpha: 0.25 * level);
+    final Color color =
+        level == 0 ? emptyCell : baseColor.withValues(alpha: 0.25 * level);
     final Widget tile = Container(
       width: tileSize,
       height: tileSize,

@@ -11,6 +11,7 @@ void main() {
       MaterialApp(
         home: Scaffold(
           body: PfHeatmapCalendar(
+            semanticDescription: 'Daily spending heatmap for January 2026',
             from: from,
             to: to,
             valueByDay: <DateTime, double>{

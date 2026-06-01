@@ -90,6 +90,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  # In-memory sqflite for accessibility / widget tests.
+  sqflite_common_ffi: ^2.3.3
+  # Serve bundled Google Fonts from disk in tests (transitive via
+  # pf_core_tokens); http is needed to build the offline fake client.
+  google_fonts: ^6.2.0
+  http: ^1.0.0
   build_runner: ^2.4.13
   freezed: ^2.5.7
   json_serializable: ^6.8.0

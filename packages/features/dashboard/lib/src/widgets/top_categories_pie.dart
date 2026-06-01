@@ -86,6 +86,9 @@ class TopCategoriesPie extends StatelessWidget {
               height: 180,
               child: PfDonutChart(
                 data: donutData,
+                semanticDescription: '$title: '
+                    '${donutData.map((PfDonutSlice s) => '${s.label} '
+                        '${s.value.round()}%').join(', ')}',
                 size: 180,
                 outerRadius: 80,
                 innerRadius: 56,

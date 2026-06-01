@@ -11,6 +11,7 @@ void main() {
           body: SizedBox(
             width: 400,
             child: PfBarChart(
+              semanticDescription: 'Income vs expense by weekday',
               data: const <PfBarPoint>[
                 PfBarPoint(label: 'Mon', income: 1000, expense: 200),
                 PfBarPoint(label: 'Tue', income: 0, expense: 500),
@@ -28,7 +29,12 @@ void main() {
       (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: Scaffold(body: PfBarChart(data: <PfBarPoint>[])),
+        home: Scaffold(
+          body: PfBarChart(
+            data: <PfBarPoint>[],
+            semanticDescription: 'No data',
+          ),
+        ),
       ),
     );
     expect(find.byType(PfChartEmpty), findsOneWidget);

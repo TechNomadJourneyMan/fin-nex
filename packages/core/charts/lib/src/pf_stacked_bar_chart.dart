@@ -30,6 +30,7 @@ class PfStackedBarChart extends StatelessWidget {
     super.key,
     required this.data,
     required this.categories,
+    required this.semanticDescription,
     this.categoryColors = const <String, Color>{},
     this.height = 240,
     this.barWidth = 18,
@@ -46,6 +47,10 @@ class PfStackedBarChart extends StatelessWidget {
   /// Fixed category order. The first [maxCategories] are shown
   /// individually; remaining categories are summed into "Other".
   final List<String> categories;
+
+  /// Human-readable screen-reader description of the chart's data. Exposed
+  /// via [Semantics.value] so the chart is meaningful to assistive tech.
+  final String semanticDescription;
 
   /// Optional per-category color overrides.
   final Map<String, Color> categoryColors;
@@ -186,23 +191,33 @@ class PfStackedBarChart extends StatelessWidget {
       ),
     );
 
-    if (!showLegend) return chart;
+    if (!showLegend) {
+      return Semantics(
+        label: 'Stacked bar chart',
+        value: semanticDescription,
+        child: chart,
+      );
+    }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        PfChartLegend(
-          entries: <PfLegendEntry>[
-            for (int i = 0; i < legendCats.length; i++)
-              PfLegendEntry(
-                label: legendCats[i],
-                color: colorFor(legendCats[i], i),
-              ),
-          ],
-        ),
-        const SizedBox(height: PfTokens.space3),
-        chart,
-      ],
+    return Semantics(
+      label: 'Stacked bar chart',
+      value: semanticDescription,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          PfChartLegend(
+            entries: <PfLegendEntry>[
+              for (int i = 0; i < legendCats.length; i++)
+                PfLegendEntry(
+                  label: legendCats[i],
+                  color: colorFor(legendCats[i], i),
+                ),
+            ],
+          ),
+          const SizedBox(height: PfTokens.space3),
+          chart,
+        ],
+      ),
     );
   }
 
@@ -217,7 +232,8 @@ class PfStackedBarChart extends StatelessWidget {
     for (int i = 0; i < shown.length; i++) {
       final double v = point.values[shown[i]] ?? 0;
       if (v <= 0) continue;
-      stacks.add(BarChartRodStackItem(cursor, cursor + v, colorFor(shown[i], i)));
+      stacks
+          .add(BarChartRodStackItem(cursor, cursor + v, colorFor(shown[i], i)));
       cursor += v;
     }
     double otherSum = 0;

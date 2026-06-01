@@ -740,6 +740,16 @@ class AppL10nEn extends AppL10n {
   String get setThemeDark => 'Dark';
 
   @override
+  String get setAccessibility => 'Accessibility';
+
+  @override
+  String get setHighContrast => 'High contrast mode';
+
+  @override
+  String get setHighContrastDesc =>
+      'Pure black-and-white surfaces with a saturated brand color.';
+
+  @override
   String get setLanguage => 'Language';
 
   @override

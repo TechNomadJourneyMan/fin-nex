@@ -5,12 +5,14 @@
 // settings provider is overridden in tests.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pf_core_l10n/pf_core_l10n.dart';
 import 'package:pf_core_theme/pf_core_theme.dart';
 import 'package:pf_feat_settings/settings.dart' as settings;
 
+import 'intents.dart';
 import 'routes.dart';
 
 /// Top-level application widget. Hosts the router, theme and locale.
@@ -28,21 +30,46 @@ class PocketFlowApp extends ConsumerWidget {
         themeMode == ThemeMode.system ? ThemeMode.dark : themeMode;
     final Locale? locale = ref.watch(settings.localeProvider);
 
-    return MaterialApp.router(
-      title: 'Pocket Flow',
-      debugShowCheckedModeBanner: false,
-      theme: PfTheme.light(),
-      darkTheme: PfTheme.dark(),
-      themeMode: resolvedMode,
-      locale: locale,
-      supportedLocales: PfLocales.all,
-      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
-        AppL10n.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      routerConfig: pocketFlowRouter,
+    // High-contrast accessibility theme swaps in the pure black/white +
+    // saturated-brand variants for both brightnesses.
+    final bool highContrast = ref.watch(settings.highContrastProvider);
+    final ThemeData lightTheme =
+        highContrast ? PfTheme.lightHighContrast() : PfTheme.light();
+    final ThemeData darkTheme =
+        highContrast ? PfTheme.darkHighContrast() : PfTheme.dark();
+
+    // App-wide keyboard shortcuts (web/desktop). Cmd+K / Ctrl+K opens the
+    // command palette; Esc maps to Flutter's built-in DismissIntent, which
+    // dialogs and bottom sheets already honor to close.
+    return Shortcuts(
+      shortcuts: const <ShortcutActivator, Intent>{
+        SingleActivator(LogicalKeyboardKey.keyK, meta: true):
+            OpenCommandPaletteIntent(),
+        SingleActivator(LogicalKeyboardKey.keyK, control: true):
+            OpenCommandPaletteIntent(),
+        SingleActivator(LogicalKeyboardKey.escape): DismissIntent(),
+      },
+      child: Actions(
+        actions: <Type, Action<Intent>>{
+          OpenCommandPaletteIntent: OpenCommandPaletteAction(),
+        },
+        child: MaterialApp.router(
+          title: 'Pocket Flow',
+          debugShowCheckedModeBanner: false,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: resolvedMode,
+          locale: locale,
+          supportedLocales: PfLocales.all,
+          localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+            AppL10n.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          routerConfig: pocketFlowRouter,
+        ),
+      ),
     );
   }
 }

@@ -89,6 +89,9 @@ abstract final class PreferenceKeys {
   /// Active locale: BCP-47 tag (`en`, `ru`, `kk`).
   static const String locale = 'fnx.locale';
 
+  /// High-contrast accessibility theme enabled.
+  static const String highContrast = 'pf_high_contrast';
+
   /// Daily reminder enabled.
   static const String dailyReminder = 'fnx.notif.daily';
 
