@@ -58,4 +58,14 @@ logs/
 .history/
 tmp/
 .cache/
-.claude/worktrees/
+.claude/
+apps/finnex/macos/Podfile
+apps/finnex/macos/Flutter/Flutter-Debug.xcconfig
+apps/finnex/macos/Flutter/Flutter-Release.xcconfig
+apps/finnex/ios/Flutter/Generated.xcconfig
+apps/finnex/ios/Flutter/flutter_export_environment.sh
+apps/finnex/ios/Flutter/ephemeral/
+apps/finnex/macos/Flutter/ephemeral/
+apps/finnex/ios/Runner/GeneratedPluginRegistrant.h
+apps/finnex/ios/Runner/GeneratedPluginRegistrant.m
+**/*.flutter-plugins-dependencies
