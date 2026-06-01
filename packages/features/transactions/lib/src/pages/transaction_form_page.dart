@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pf_core_feedback/pf_core_feedback.dart';
 import 'package:pf_core_l10n/pf_core_l10n.dart';
 import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:pf_domain/pf_domain.dart';
@@ -70,11 +71,14 @@ class _TransactionFormPageState extends ConsumerState<TransactionFormPage> {
 
   Future<void> _save() async {
     final l10n = AppL10n.of(context);
+    final FeedbackService feedback = ref.read(feedbackServiceProvider);
     if (_amountMinor <= 0) {
+      feedback.error();
       context.showPfSnack(l10n.qaAmountRequired, isError: true);
       return;
     }
     if (_accountId == null || _categoryId == null) {
+      feedback.error();
       context.showPfSnack(l10n.errorValidation, isError: true);
       return;
     }
@@ -104,11 +108,13 @@ class _TransactionFormPageState extends ConsumerState<TransactionFormPage> {
       if (!mounted) {
         return;
       }
+      feedback.confirmAction();
       Navigator.of(context).maybePop(tx);
     } on Object catch (e) {
       if (!mounted) {
         return;
       }
+      feedback.error();
       // Surface the real cause to the user instead of a generic message so
       // platform/database errors are debuggable. Truncate to fit a snack.
       final String detail = e.toString();

@@ -261,6 +261,11 @@
   "setDeleteAccount": "Удалить аккаунт",
   "setDeleteAccountConfirm": "Удалить аккаунт? Все данные будут стёрты.",
 
+  "settings_section_feedback": "Звук и вибрация",
+  "feedback_haptics": "Тактильный отклик",
+  "feedback_sound": "Звуковые эффекты",
+  "feedback_preview": "Прослушать",
+
   "subsTitle": "Подписки",
   "subsDetailTitle": "Подписка",
   "subsEmptyTitle": "Подписок пока нет",

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Category;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pf_core_feedback/pf_core_feedback.dart';
 import 'package:pf_core_l10n/pf_core_l10n.dart';
 import 'package:pf_core_tokens/pf_core_tokens.dart';
 import 'package:pf_core_widgets/pf_core_widgets.dart';
@@ -119,12 +120,20 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
               transactions: txs,
               locale: l10n.localeName,
               onTap: (Transaction t) {
+                // Selection-class haptic + (optional) tap sound on every row
+                // tap. Replaces the legacy direct HapticFeedback call so all
+                // feedback flows through the same on/off toggle in Settings.
+                ref.read(feedbackServiceProvider).selectTap();
                 Navigator.of(context).push<void>(
                   MaterialPageRoute<void>(
                     builder: (BuildContext _) =>
                         TransactionDetailsPage(transactionId: t.id),
                   ),
                 );
+              },
+              onLongPress: (Transaction t) {
+                // Long-press is the entry point for the swipe-edit shortcut.
+                ref.read(feedbackServiceProvider).longPress();
               },
               onSwipeEdit: (Transaction t) {
                 context.push('/transactions/${t.id.value}/edit', extra: t);
@@ -175,6 +184,7 @@ class _SectionedList extends StatefulWidget {
     required this.transactions,
     required this.locale,
     required this.onTap,
+    required this.onLongPress,
     required this.onSwipeEdit,
     required this.onSwipeDelete,
   });
@@ -182,6 +192,7 @@ class _SectionedList extends StatefulWidget {
   final List<Transaction> transactions;
   final String locale;
   final ValueChanged<Transaction> onTap;
+  final ValueChanged<Transaction> onLongPress;
   final ValueChanged<Transaction> onSwipeEdit;
   final ValueChanged<Transaction> onSwipeDelete;
 
@@ -430,6 +441,7 @@ class _SectionedListState extends State<_SectionedList> {
         locale: widget.locale,
         leadingHeroTag: 'tx-icon-${t.id.value}',
         onTap: () => widget.onTap(t),
+        onLongPress: () => widget.onLongPress(t),
       ),
     );
   }

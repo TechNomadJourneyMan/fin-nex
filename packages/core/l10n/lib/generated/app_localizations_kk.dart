@@ -808,6 +808,18 @@ class AppL10nKk extends AppL10n {
       'Аккаунтты жоясыз ба? Барлық дерек өшіріледі.';
 
   @override
+  String get settings_section_feedback => 'Дыбыс және дірілдеу';
+
+  @override
+  String get feedback_haptics => 'Тактильді қайтарым';
+
+  @override
+  String get feedback_sound => 'Дыбыс әсерлері';
+
+  @override
+  String get feedback_preview => 'Тыңдау';
+
+  @override
   String get subsTitle => 'Жазылымдар';
 
   @override

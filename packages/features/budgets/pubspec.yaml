@@ -13,6 +13,8 @@ dependencies:
   flutter_riverpod: ^2.5.1
   go_router: ^14.2.7
   intl: ^0.20.0
+  pf_core_feedback:
+    path: ../../core/feedback
   pf_core_theme:
     path: ../../core/theme
   pf_core_tokens:

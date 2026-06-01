@@ -1,0 +1,32 @@
+name: pf_core_feedback
+description: >-
+  Pocket Flow haptic + sound feedback service. Wraps Flutter's HapticFeedback
+  channel and a just_audio player behind a single [FeedbackService] with a
+  small set of semantic methods (selectTap / confirmAction / warn / error /
+  achievement / navigate / longPress). User preferences (sound on/off,
+  haptics on/off) persist in SharedPreferences.
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  shared_preferences: ^2.3.2
+  just_audio: ^0.9.40
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  assets:
+    - assets/sounds/tap.wav
+    - assets/sounds/success.wav
+    - assets/sounds/error.wav
+    - assets/sounds/achievement.wav

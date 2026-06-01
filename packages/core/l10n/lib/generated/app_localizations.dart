@@ -1563,6 +1563,30 @@ abstract class AppL10n {
   /// **'Delete your account? All data will be erased.'**
   String get setDeleteAccountConfirm;
 
+  /// Settings section header for sound + haptic toggles.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound & Haptics'**
+  String get settings_section_feedback;
+
+  /// Toggle label: enable vibration on actions.
+  ///
+  /// In en, this message translates to:
+  /// **'Haptic feedback'**
+  String get feedback_haptics;
+
+  /// Toggle label: enable sound effects on actions.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound effects'**
+  String get feedback_sound;
+
+  /// Button: play a sample achievement cue.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get feedback_preview;
+
   /// Subscriptions manager screen title.
   ///
   /// In en, this message translates to:

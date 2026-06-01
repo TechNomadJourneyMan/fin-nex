@@ -36,6 +36,8 @@ dependencies:
     path: ../../packages/core/charts
   pf_core_l10n:
     path: ../../packages/core/l10n
+  pf_core_feedback:
+    path: ../../packages/core/feedback
   pf_domain:
     path: ../../packages/domain
   pf_data_local:

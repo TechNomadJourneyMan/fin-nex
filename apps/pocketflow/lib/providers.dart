@@ -11,6 +11,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pf_core_feedback/pf_core_feedback.dart' as feedback;
 import 'package:pf_data_api/pf_data_api.dart';
 import 'package:pf_domain/pf_domain.dart';
 import 'package:pf_feat_ai_chat/pf_feat_ai_chat.dart' as ai_chat;
@@ -123,6 +124,31 @@ final httpAuthRepositoryProvider = Provider<AuthRepository>((Ref ref) {
   ref.onDispose(repo.dispose);
   return repo;
 });
+
+// ---------------------------------------------------------------------------
+// Feedback (haptics + sound)
+// ---------------------------------------------------------------------------
+
+/// Singleton [FeedbackService] backed by [sharedPreferencesProvider].
+///
+/// Holds platform audio players keyed by asset, so it must outlive any
+/// single page. Disposed with the container.
+final Provider<feedback.FeedbackService> feedbackServiceProvider =
+    Provider<feedback.FeedbackService>((Ref ref) {
+  final prefs = ref.watch(sharedPreferencesProvider);
+  final feedback.FeedbackService svc =
+      feedback.FeedbackService(prefs: prefs);
+  ref.onDispose(svc.dispose);
+  return svc;
+});
+
+/// Bootstrap override wiring the package-level
+/// `feedback.feedbackServiceProvider` (the one feature modules import) to the
+/// app singleton.
+final Override feedbackServiceOverride =
+    feedback.feedbackServiceProvider.overrideWith(
+  (Ref ref) => ref.watch(feedbackServiceProvider),
+);
 
 /// Override that swaps the auth feature's in-memory stub repository for the
 /// backend-backed [httpAuthRepositoryProvider].

@@ -580,6 +580,15 @@
   "setDeleteAccountConfirm": "Delete your account? All data will be erased.",
   "@setDeleteAccountConfirm": {"description": "Account deletion confirm."},
 
+  "settings_section_feedback": "Sound & Haptics",
+  "@settings_section_feedback": {"description": "Settings section header for sound + haptic toggles."},
+  "feedback_haptics": "Haptic feedback",
+  "@feedback_haptics": {"description": "Toggle label: enable vibration on actions."},
+  "feedback_sound": "Sound effects",
+  "@feedback_sound": {"description": "Toggle label: enable sound effects on actions."},
+  "feedback_preview": "Preview",
+  "@feedback_preview": {"description": "Button: play a sample achievement cue."},
+
   "subsTitle": "Subscriptions",
   "@subsTitle": {"description": "Subscriptions manager screen title."},
   "subsDetailTitle": "Subscription",

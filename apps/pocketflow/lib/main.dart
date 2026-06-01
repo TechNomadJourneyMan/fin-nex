@@ -77,6 +77,9 @@ void main() {
           if (prefs != null) ...<Override>[
             sharedPreferencesProvider.overrideWithValue(prefs),
             authRepositoryOverride,
+            // FeedbackService depends on SharedPreferences for persistence,
+            // so the override is only installed when prefs hydrated.
+            feedbackServiceOverride,
           ],
           if (module.fallbackReason != null)
             bootstrapWarningProvider.overrideWithValue(

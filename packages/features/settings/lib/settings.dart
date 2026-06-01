@@ -11,3 +11,4 @@ export 'src/pages/profile_page.dart';
 export 'src/pages/settings_root_page.dart';
 export 'src/preferences_store.dart';
 export 'src/providers.dart';
+export 'src/widgets/sound_haptics_section.dart';

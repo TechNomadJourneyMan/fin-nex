@@ -261,6 +261,11 @@
   "setDeleteAccount": "Аккаунтты жою",
   "setDeleteAccountConfirm": "Аккаунтты жоясыз ба? Барлық дерек өшіріледі.",
 
+  "settings_section_feedback": "Дыбыс және дірілдеу",
+  "feedback_haptics": "Тактильді қайтарым",
+  "feedback_sound": "Дыбыс әсерлері",
+  "feedback_preview": "Тыңдау",
+
   "subsTitle": "Жазылымдар",
   "subsDetailTitle": "Жазылым",
   "subsEmptyTitle": "Әзірге жазылымдар жоқ",

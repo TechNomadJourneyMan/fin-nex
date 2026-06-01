@@ -11,7 +11,9 @@
 
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pf_core_feedback/pf_core_feedback.dart';
 import 'package:pf_core_l10n/pf_core_l10n.dart';
 import 'package:pf_core_tokens/pf_core_tokens.dart';
 import 'package:pf_core_widgets/pf_core_widgets.dart';
@@ -26,14 +28,19 @@ const double kShellRailBreakpoint = 600;
 const double kShellExtendedBreakpoint = 1200;
 
 /// Top-level shell with persistent adaptive navigation.
-class MainShell extends StatelessWidget {
+class MainShell extends ConsumerWidget {
   /// Create the shell with a [StatefulNavigationShell] from go_router.
   const MainShell({super.key, required this.navigationShell});
 
   /// The navigation shell that owns the per-tab navigation stacks.
   final StatefulNavigationShell navigationShell;
 
-  void _onTap(int index) {
+  void _onTap(int index, WidgetRef ref) {
+    // Light selection haptic on every tab change. Sound is intentionally OFF
+    // for navigation per the feedback spec — would be too chatty.
+    if (index != navigationShell.currentIndex) {
+      ref.read(feedbackServiceProvider).navigate();
+    }
     navigationShell.goBranch(
       index,
       initialLocation: index == navigationShell.currentIndex,
@@ -41,7 +48,7 @@ class MainShell extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final double width = constraints.maxWidth;
@@ -56,7 +63,7 @@ class MainShell extends StatelessWidget {
         return _AdaptiveShell(
           layout: layout,
           navigationShell: navigationShell,
-          onTap: _onTap,
+          onTap: (int idx) => _onTap(idx, ref),
         );
       },
     );

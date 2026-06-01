@@ -8,6 +8,8 @@ import 'package:pf_core_l10n/pf_core_l10n.dart';
 import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
+import '../widgets/sound_haptics_section.dart';
+
 /// Settings hub page. Routed at `/settings`.
 class SettingsRootPage extends ConsumerWidget {
   /// Default constructor.
@@ -67,28 +69,34 @@ class SettingsRootPage extends ConsumerWidget {
       backgroundColor: colors.background,
       appBar: AppBar(title: Text(l10n.setTitle)),
       body: SafeArea(
-        child: ListView.separated(
+        child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8),
-          itemCount: sections.length,
-          separatorBuilder: (_, __) => Divider(
-            height: 1,
-            color: colors.divider,
-            indent: 16,
-            endIndent: 16,
-          ),
-          itemBuilder: (context, index) {
-            final s = sections[index];
-            return PfListItem(
-              leading: Icon(s.icon, color: colors.textSecondary),
-              title: s.title,
-              trailing: Icon(
-                Icons.chevron_right,
-                color: colors.textMuted,
+          children: <Widget>[
+            // New "Sound & Haptics" section sits above the routed-section
+            // list so it's immediately discoverable on first open.
+            const SoundHapticsSection(),
+            for (int i = 0; i < sections.length; i++) ...<Widget>[
+              PfListItem(
+                leading: Icon(sections[i].icon, color: colors.textSecondary),
+                title: sections[i].title,
+                trailing: Icon(
+                  Icons.chevron_right,
+                  color: colors.textMuted,
+                ),
+                onTap: router == null
+                    ? null
+                    : () => router.push(sections[i].route),
+                semanticLabel: sections[i].title,
               ),
-              onTap: router == null ? null : () => router.push(s.route),
-              semanticLabel: s.title,
-            );
-          },
+              if (i < sections.length - 1)
+                Divider(
+                  height: 1,
+                  color: colors.divider,
+                  indent: 16,
+                  endIndent: 16,
+                ),
+            ],
+          ],
         ),
       ),
       bottomNavigationBar: SafeArea(

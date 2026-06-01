@@ -820,6 +820,18 @@ class AppL10nRu extends AppL10n {
       'Удалить аккаунт? Все данные будут стёрты.';
 
   @override
+  String get settings_section_feedback => 'Звук и вибрация';
+
+  @override
+  String get feedback_haptics => 'Тактильный отклик';
+
+  @override
+  String get feedback_sound => 'Звуковые эффекты';
+
+  @override
+  String get feedback_preview => 'Прослушать';
+
+  @override
   String get subsTitle => 'Подписки';
 
   @override

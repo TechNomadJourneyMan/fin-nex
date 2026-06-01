@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pf_core_feedback/pf_core_feedback.dart';
 import 'package:pf_core_l10n/pf_core_l10n.dart';
 import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:pf_domain/domain.dart';
@@ -12,12 +13,21 @@ import '../controllers/budgets_controller.dart';
 import '../providers.dart';
 
 /// List of active budgets with progress bars and a "create" FAB.
-class BudgetsListPage extends ConsumerWidget {
+class BudgetsListPage extends ConsumerStatefulWidget {
   /// Creates the page.
   const BudgetsListPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BudgetsListPage> createState() => _BudgetsListPageState();
+}
+
+class _BudgetsListPageState extends ConsumerState<BudgetsListPage> {
+  /// Budget IDs we've already fired a "limit reached" haptic for this session,
+  /// so re-renders don't re-buzz the device.
+  final Set<String> _warnedExceeded = <String>{};
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppL10n.of(context);
     final colors = context.fnxColors;
     final spacing = context.fnxSpacing;
@@ -59,9 +69,24 @@ class BudgetsListPage extends ConsumerWidget {
             itemBuilder: (context, i) {
               final b = budgets[i];
               final spent = calc.spent(b, txList);
+              final int spentMinor = spent.minor.toInt();
+              final int limitMinor = b.amount.minor.toInt();
+              // Fire a "warn" haptic the first time we observe a budget at or
+              // over its limit during this session. The Set guards against
+              // re-buzzing on every rebuild while the budget stays exceeded.
+              if (limitMinor > 0 && spentMinor >= limitMinor) {
+                final String key = b.id.value;
+                if (!_warnedExceeded.contains(key)) {
+                  _warnedExceeded.add(key);
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (!mounted) return;
+                    ref.read(feedbackServiceProvider).warn();
+                  });
+                }
+              }
               return _BudgetRow(
                 budget: b,
-                spentMinor: spent.minor.toInt(),
+                spentMinor: spentMinor,
                 onTap: () => context.push('/budgets/${b.id.value}/edit'),
               );
             },

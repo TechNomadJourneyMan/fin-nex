@@ -809,6 +809,18 @@ class AppL10nEn extends AppL10n {
       'Delete your account? All data will be erased.';
 
   @override
+  String get settings_section_feedback => 'Sound & Haptics';
+
+  @override
+  String get feedback_haptics => 'Haptic feedback';
+
+  @override
+  String get feedback_sound => 'Sound effects';
+
+  @override
+  String get feedback_preview => 'Preview';
+
+  @override
   String get subsTitle => 'Subscriptions';
 
   @override
