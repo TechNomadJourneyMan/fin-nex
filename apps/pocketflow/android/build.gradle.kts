@@ -1,4 +1,4 @@
-// Top-level build file for FinNex Android.
+// Top-level build file for Pocket Flow Android.
 plugins {
     // Versions are declared in settings.gradle.kts via pluginManagement.
 }

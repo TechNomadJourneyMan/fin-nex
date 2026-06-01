@@ -268,7 +268,7 @@ floating glass pill — three icon actions that hover above the canvas.
    - Mounts `HeroBalance` at top
    - Below: a 4-tile Bento grid built from `GlassCard`
    - Removes the in-page FAB; instead the app shell adds `DynamicIslandActions` overlay
-6. **Splash refresh** — already done in `web/index.html` (Pocket Flow / OmniFi OS lockup); mirror in `_SplashScreen` of `apps/finnex/lib/routes.dart`.
+6. **Splash refresh** — already done in `web/index.html` (Pocket Flow / OmniFi OS lockup); mirror in `_SplashScreen` of `apps/pocketflow/lib/routes.dart`.
 7. **Force dark** — already done via `app.dart` resolving `ThemeMode.system → dark`.
 
 ---

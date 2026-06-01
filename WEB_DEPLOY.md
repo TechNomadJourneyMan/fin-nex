@@ -6,7 +6,7 @@ Pocket Flow's primary deployment target is **Flutter Web on Vercel**.
 
 ```bash
 # One-time
-cd apps/finnex
+cd apps/pocketflow
 flutter pub get
 
 # Run in Chrome with hot reload
@@ -22,7 +22,7 @@ flutter run -d chrome --web-port 5173
 ## Local production build
 
 ```bash
-cd apps/finnex
+cd apps/pocketflow
 flutter build web --release --base-href "/"
 
 # Serve the built output with any static file server
@@ -31,7 +31,7 @@ npx http-server build/web -p 8080
 python3 -m http.server -d build/web 8080
 ```
 
-Output: `apps/finnex/build/web/`
+Output: `apps/pocketflow/build/web/`
 
 ## Vercel deployment
 
@@ -43,7 +43,7 @@ Output: `apps/finnex/build/web/`
 3. Leave Build Command, Install Command, and Output Directory blank —
    `vercel.json` overrides them:
    - Build:  `bash install-flutter.sh`
-   - Output: `apps/finnex/build/web`
+   - Output: `apps/pocketflow/build/web`
 4. Deploy.
 
 `install-flutter.sh` clones the pinned Flutter SDK

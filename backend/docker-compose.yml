@@ -1,30 +1,30 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: finnex-postgres
+    container_name: pocketflow-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: finnex
-      POSTGRES_PASSWORD: finnex
-      POSTGRES_DB: finnex
+      POSTGRES_USER: pocketflow
+      POSTGRES_PASSWORD: pocketflow
+      POSTGRES_DB: pocketflow
     ports:
       - '5433:5432'
     volumes:
-      - finnex_pg_data:/var/lib/postgresql/data
+      - pocketflow_pg_data:/var/lib/postgresql/data
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U finnex']
+      test: ['CMD-SHELL', 'pg_isready -U pocketflow']
       interval: 5s
       timeout: 5s
       retries: 5
 
   redis:
     image: redis:7-alpine
-    container_name: finnex-redis
+    container_name: pocketflow-redis
     restart: unless-stopped
     ports:
       - '6380:6379'
     volumes:
-      - finnex_redis_data:/data
+      - pocketflow_redis_data:/data
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
       interval: 5s
@@ -33,7 +33,7 @@ services:
 
   adminer:
     image: adminer:latest
-    container_name: finnex-adminer
+    container_name: pocketflow-adminer
     restart: unless-stopped
     ports:
       - '8081:8080'
@@ -41,5 +41,5 @@ services:
       - postgres
 
 volumes:
-  finnex_pg_data:
-  finnex_redis_data:
+  pocketflow_pg_data:
+  pocketflow_redis_data:

@@ -46,7 +46,7 @@ Skipped: none (❌ none).
 
 | Area | Files |
 |------|-------|
-| `apps/finnex/` | 10 (main.dart, providers.dart, routes.dart, pubspec.yaml, DECISIONS.md, onboarding/demo_seed_service.dart, pages/local_llm_settings_page.dart, services/auth_session_store.dart, services/device_id_provider.dart, test/demo_seed_service_test.dart) |
+| `apps/pocketflow/` | 10 (main.dart, providers.dart, routes.dart, pubspec.yaml, DECISIONS.md, onboarding/demo_seed_service.dart, pages/local_llm_settings_page.dart, services/auth_session_store.dart, services/device_id_provider.dart, test/demo_seed_service_test.dart) |
 | `packages/core/` | 7 (l10n: 4 generated + 3 .arb) |
 | `packages/features/` | 7 (dashboard ×2, settings ×3, transactions: history_page.dart + 2 tests) |
 | `packages/services/` | 19 (e2e_crypto ×10, local_llm ×9) |
@@ -68,9 +68,9 @@ Skipped: none (❌ none).
 - All other test suites pass: e2e_crypto (23), auth smoke (3), demo_seed (5), no_history_fab (1), swipe_delete.
 
 **Deps needing a manual `flutter pub get`:**
-- `apps/finnex/pubspec.yaml` adds: `fnx_local_llm` (path dep), `shared_preferences ^2.3.2`, `dio ^5.7.0`.
+- `apps/pocketflow/pubspec.yaml` adds: `fnx_local_llm` (path dep), `shared_preferences ^2.3.2`, `dio ^5.7.0`.
 - New packages with their own resolution: `fnx_local_llm` (`flutter_gemma ^0.10.0`, `path_provider ^2.1.4`), `fnx_e2e_crypto` (`cryptography ^2.7.0`, `convert ^3.1.1`, `meta ^1.15.0`).
-- Run `flutter pub get` in `apps/finnex/` (and `gen-l10n` in `packages/core/l10n/`) before building.
+- Run `flutter pub get` in `apps/pocketflow/` (and `gen-l10n` in `packages/core/l10n/`) before building.
 
 **Untracked, intentionally not committed:**
 - `.claude/` (agent harness config)
@@ -95,9 +95,9 @@ From `.agent-report.md`:
 
 ```bash
 cd packages/core/l10n && flutter pub get && flutter gen-l10n
-cd apps/finnex && flutter pub get
-cd apps/finnex && dart run sqflite_common_ffi_web:setup
-cd apps/finnex && flutter build web --release --no-tree-shake-icons
+cd apps/pocketflow && flutter pub get
+cd apps/pocketflow && dart run sqflite_common_ffi_web:setup
+cd apps/pocketflow && flutter build web --release --no-tree-shake-icons
 ```
 
 > Flutter version constraint: Vercel builds with **Flutter 3.32.5 (Dart 3.8)**. Avoid `SwitchListTile.activeThumbColor` (use `activeColor`) and digit separators (`1_000_000`). `Color.withValues(alpha:)` is fine.

@@ -1,7 +1,7 @@
 // Riverpod providers for the subscriptions manager feature (F-04).
 //
 // The repository and user-id providers throw by default and MUST be overridden
-// in app composition (apps/finnex/lib/providers.dart) with the real
+// in app composition (apps/pocketflow/lib/providers.dart) with the real
 // `pf_domain` implementation and the authenticated user id. The stream
 // provider derives from them so pages can `ref.watch` a live list.
 
@@ -18,7 +18,7 @@ final detectedSubscriptionsRepositoryProvider =
     Provider<DetectedSubscriptionsRepository>((ref) {
   throw UnimplementedError(
     'detectedSubscriptionsRepositoryProvider must be overridden in the app '
-    'composition layer (apps/finnex/lib/providers.dart).',
+    'composition layer (apps/pocketflow/lib/providers.dart).',
   );
 });
 

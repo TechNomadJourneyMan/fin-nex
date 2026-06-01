@@ -1,7 +1,7 @@
 # Web Compatibility Audit
 
 Snapshot taken during initial scaffolding. Scope: all `lib/` Dart files in
-`apps/finnex/` and `packages/`. Test files are out of scope (tests run on
+`apps/pocketflow/` and `packages/`. Test files are out of scope (tests run on
 the Dart VM, not in the browser).
 
 ## Status legend
@@ -61,7 +61,7 @@ from disk during unit tests. Test code never ships to the browser.
 
 ### 6. `dart:ffi` — OK
 
-No matches in `apps/finnex/lib/` or `packages/`.
+No matches in `apps/pocketflow/lib/` or `packages/`.
 
 ## Top-5 critical fixes
 

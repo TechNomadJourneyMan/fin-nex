@@ -27,7 +27,7 @@ fi
 # Generate l10n bundle (the l10n package has `flutter: generate: true`).
 ( cd packages/core/l10n && flutter pub get && flutter gen-l10n ) || true
 
-cd apps/finnex
+cd apps/pocketflow
 flutter pub get
 # Web sqflite worker (downloaded at runtime; safe to skip on Vercel because
 # the app falls back to in-memory if missing).

@@ -1,7 +1,7 @@
 # Pocket Flow app — engineering decisions
 
 A running log of non-obvious decisions made in the app shell
-(`apps/finnex`). Keep entries short; link to code where useful.
+(`apps/pocketflow`). Keep entries short; link to code where useful.
 
 ## Auth wiring (HttpAuthRepository → backend `/v1/auth/*`)
 

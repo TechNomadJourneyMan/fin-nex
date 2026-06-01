@@ -58,7 +58,7 @@ export async function issueTokens(opts: {
     env.JWT_SECRET,
     {
       issuer: 'https://api.finnex.kz',
-      audience: 'finnex-mobile',
+      audience: 'pocketflow-mobile',
       expiresIn: env.JWT_ACCESS_TTL_SECONDS,
       jwtid: jti,
     },

@@ -14,7 +14,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "kz.finnex.app"
+    namespace = "kz.pocketflow.app"
     compileSdk = 35
     ndkVersion = "26.1.10909125"
 
@@ -32,7 +32,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "kz.finnex.app"
+        applicationId = "kz.pocketflow.app"
         minSdk = 24
         targetSdk = 35
         versionCode = flutter.versionCode
@@ -57,17 +57,17 @@ android {
             dimension = "env"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            resValue("string", "app_name", "FinNex Dev")
+            resValue("string", "app_name", "Pocket Flow Dev")
         }
         create("staging") {
             dimension = "env"
             applicationIdSuffix = ".staging"
             versionNameSuffix = "-staging"
-            resValue("string", "app_name", "FinNex Staging")
+            resValue("string", "app_name", "Pocket Flow Staging")
         }
         create("prod") {
             dimension = "env"
-            resValue("string", "app_name", "FinNex")
+            resValue("string", "app_name", "Pocket Flow")
         }
     }
 

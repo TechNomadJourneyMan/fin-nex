@@ -10,7 +10,7 @@ import 'factory_stub.dart'
     if (dart.library.html) 'factory_web.dart';
 
 /// Default filename for the application database.
-const String kPfDatabaseFilename = 'finnex.db';
+const String kPfDatabaseFilename = 'pocketflow.db';
 
 /// In-memory broadcaster used by DAOs to publish "table changed" events so
 /// repository layers can build `Stream` watchers without polling.

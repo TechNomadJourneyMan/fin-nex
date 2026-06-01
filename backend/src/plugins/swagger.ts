@@ -8,8 +8,8 @@ async function plugin(app: FastifyInstance): Promise<void> {
   await app.register(swagger, {
     openapi: {
       info: {
-        title: 'FinNex API',
-        description: 'FinNex personal finance API (v1).',
+        title: 'Pocket Flow API',
+        description: 'Pocket Flow personal finance API (v1).',
         version: '1.0.0',
       },
       servers: [{ url: 'http://localhost:3000', description: 'Local' }],
@@ -27,4 +27,4 @@ async function plugin(app: FastifyInstance): Promise<void> {
   });
 }
 
-export default fp(plugin, { name: 'finnex-swagger' });
+export default fp(plugin, { name: 'pocketflow-swagger' });

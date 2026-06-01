@@ -27,7 +27,7 @@ export const env: Env = {
   LOG_LEVEL: process.env.LOG_LEVEL ?? 'info',
   DATABASE_URL:
     process.env.DATABASE_URL ??
-    'postgresql://finnex:finnex@localhost:5432/finnex?schema=public',
+    'postgresql://pocketflow:pocketflow@localhost:5432/pocketflow?schema=public',
   REDIS_URL: process.env.REDIS_URL ?? 'redis://localhost:6379',
   JWT_SECRET: process.env.JWT_SECRET ?? 'dev-jwt-secret-change-me',
   JWT_ACCESS_TTL_SECONDS: int(process.env.JWT_ACCESS_TTL_SECONDS, 900),

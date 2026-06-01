@@ -8,7 +8,7 @@ _None yet — initial v1.0 build is complete pending Flutter SDK install + analy
 
 ## Next (v1.1)
 
-- **F-DATA-WIRE** — Replace in-memory app providers (`apps/finnex/lib/providers.dart`)
+- **F-DATA-WIRE** — Replace in-memory app providers (`apps/pocketflow/lib/providers.dart`)
   with the Drift-backed repositories from `fnx_data_local`, wrapped by
   `fnx_data_sync` for offline queueing.
 - **F-AUTH-OAUTH** — Real Apple / Google OAuth (currently the `auth` feature

@@ -14,7 +14,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: apps/finnex
+        working-directory: apps/pocketflow
 
     steps:
       - name: Checkout
@@ -56,6 +56,6 @@ jobs:
       - name: Upload web build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: finnex-web-${{ github.sha }}
-          path: apps/finnex/build/web
+          name: pocketflow-web-${{ github.sha }}
+          path: apps/pocketflow/build/web
           retention-days: 7

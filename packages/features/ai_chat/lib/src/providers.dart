@@ -16,7 +16,7 @@ final aiChatDioProvider = Provider<Dio>((ref) {
 /// Convenience override builder for the app shell: wires
 /// [aiChatServiceProvider] to an [HttpAiChatService] over [aiChatDioProvider].
 ///
-/// Usage in `apps/finnex/lib/providers.dart`:
+/// Usage in `apps/pocketflow/lib/providers.dart`:
 /// ```dart
 /// aiChatServiceProvider.overrideWith(
 ///   (ref) => HttpAiChatService(ref.watch(authedDioProvider)),

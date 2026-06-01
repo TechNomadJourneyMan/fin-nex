@@ -70,7 +70,7 @@ class FirebasePushService implements PushService {
   Future<void> initialize() async {
     throw UnimplementedError(
       'FirebasePushService requires firebase_core + firebase_messaging '
-      'wired into apps/finnex/ios and apps/finnex/android. For Web '
+      'wired into apps/pocketflow/ios and apps/pocketflow/android. For Web '
       'preview we use WebNoopPushService.',
     );
   }

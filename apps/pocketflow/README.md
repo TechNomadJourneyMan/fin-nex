@@ -1,4 +1,4 @@
-# finnex
+# pocketflow
 
 A new Flutter project.
 

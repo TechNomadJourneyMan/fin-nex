@@ -49,7 +49,7 @@ class SecureStorageKeyProvider implements EncryptionKeyProvider {
     }
     throw UnimplementedError(
       'SecureStorageKeyProvider requires flutter_secure_storage. '
-      'Wire it up in a native build profile (apps/finnex/lib/services/'
+      'Wire it up in a native build profile (apps/pocketflow/lib/services/'
       'encryption_key_provider.dart). For Web preview we use the no-op.',
     );
   }

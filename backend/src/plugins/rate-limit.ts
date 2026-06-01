@@ -15,4 +15,4 @@ async function plugin(app: FastifyInstance): Promise<void> {
   });
 }
 
-export default fp(plugin, { name: 'finnex-rate-limit' });
+export default fp(plugin, { name: 'pocketflow-rate-limit' });

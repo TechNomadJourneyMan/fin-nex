@@ -7,7 +7,7 @@
 // the contracts and let the feature render in isolation (e.g. golden
 // tests, storybook, web preview).
 //
-// TODO(F-DASH-WIRE): replace the stubs in `apps/finnex/lib/main.dart`
+// TODO(F-DASH-WIRE): replace the stubs in `apps/pocketflow/lib/main.dart`
 // with the real repos from `pf_data_local`.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,7 +62,7 @@ final dashboardControllerProvider =
 //
 // These three providers are intentionally abstract: the dashboard package has
 // no access to SharedPreferences or the app's DemoSeedService. The app
-// composition root (apps/finnex/lib/providers.dart) overrides them with the
+// composition root (apps/pocketflow/lib/providers.dart) overrides them with the
 // real implementation. The defaults keep the banner hidden so the feature
 // renders cleanly in isolation (previews / golden tests).
 // ---------------------------------------------------------------------------

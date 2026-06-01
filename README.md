@@ -13,14 +13,14 @@ flutter --version
 flutter pub get
 
 # Run the app in Chrome
-cd apps/finnex
+cd apps/pocketflow
 flutter run -d chrome
 ```
 
 ## Repo layout
 
 ```
-apps/finnex/                 # Main Flutter app entrypoint
+apps/pocketflow/                 # Main Flutter app entrypoint
 packages/core/theme          # MaterialTheme + FnxTheme
 packages/core/tokens         # Design tokens (colors, spacing, type)
 packages/core/widgets        # Shared widget library

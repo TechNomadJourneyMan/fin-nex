@@ -21,7 +21,7 @@ requires explicit consensus from all feature owners.
 | 12 | Monorepo managed by Melos 6.x | 2026-05 | `pubspec.yaml` at root is workspace shell only. Globs: `apps/*`, `packages/**`. |
 | 13 | No SQLCipher in v1 | 2026-05 | Plain DB only. SQLCipher requires native FFI which would block the Web build. See `F-SQLCIPHER`. |
 | 14 | Auth stubs in v1 | 2026-05 | The `auth` feature exposes complete UI (sign-in, sign-up, OTP, biometric, device list, delete account) but defaults to `StubAuthRepository`. Real OAuth + OTP land in v1.1 — see `F-AUTH-OAUTH`, `F-AUTH-OTP-REAL`. |
-| 15 | App-level cross-feature provider overrides live in `apps/finnex/lib/providers.dart` | 2026-05 | Features that require external repositories (`transactions`, `analytics`, `notifications`, `insights`) declare `UnimplementedError`-throwing defaults; the app supplies in-memory implementations until the data layer is wired. |
+| 15 | App-level cross-feature provider overrides live in `apps/pocketflow/lib/providers.dart` | 2026-05 | Features that require external repositories (`transactions`, `analytics`, `notifications`, `insights`) declare `UnimplementedError`-throwing defaults; the app supplies in-memory implementations until the data layer is wired. |
 | 16 | Push notifications are no-op on Web and local-only on native in v1 | 2026-05 | `flutter_local_notifications` for scheduled reminders; remote FCM / APNS push deferred to `F-PUSH`. |
 
 ## Open questions

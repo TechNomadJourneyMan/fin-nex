@@ -1,6 +1,6 @@
 {
   "buildCommand": "bash install-flutter.sh",
-  "outputDirectory": "apps/finnex/build/web",
+  "outputDirectory": "apps/pocketflow/build/web",
   "framework": null,
   "installCommand": "echo 'using install-flutter.sh'",
   "rewrites": [

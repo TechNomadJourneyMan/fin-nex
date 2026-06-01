@@ -3,7 +3,7 @@ class ApiConfig {
   /// Default constructor.
   const ApiConfig({
     required this.baseUrl,
-    this.clientVersion = 'finnex-flutter/0.1.0',
+    this.clientVersion = 'pocketflow-flutter/0.1.0',
     this.defaultLocale = 'ru-RU',
     this.connectTimeout = const Duration(seconds: 10),
     this.receiveTimeout = const Duration(seconds: 30),

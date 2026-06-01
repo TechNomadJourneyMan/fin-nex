@@ -38,7 +38,7 @@ test` validation happens after this document is written.
   - `fnx_feat_insights` — engine + rules, feed page.
   - `fnx_feat_settings` — profile, appearance, language, privacy, data,
     about + persisted theme/locale via `SharedPreferences`.
-- **App shell** (`apps/finnex`)
+- **App shell** (`apps/pocketflow`)
   - `MainShell` with Material 3 `NavigationBar` (Home / Transactions /
     Analytics / Settings) and a context-aware FAB on the Transactions tab.
   - Composed `GoRouter` via `StatefulShellRoute.indexedStack` plus
@@ -46,7 +46,7 @@ test` validation happens after this document is written.
     budgets, and notifications.
   - `Pocket FlowApp` reads `themeMode` and `locale` from the settings
     providers and supplies the full `AppL10n` delegate chain.
-  - Cross-feature provider overrides in `apps/finnex/lib/providers.dart`.
+  - Cross-feature provider overrides in `apps/pocketflow/lib/providers.dart`.
 - **Web deploy** — `vercel.json` + `web/index.html` ready for `flutter build web`.
 - **Backend** — Fastify + Prisma + Postgres scaffold under `backend/`.
 
@@ -55,7 +55,7 @@ test` validation happens after this document is written.
 - **Auth** — `StubAuthRepository`. UI flows fully clickable; sessions are
   in-memory only. (`F-AUTH-OAUTH`, `F-AUTH-OTP-REAL`, `F-AUTH-WIRE`.)
 - **Transactions / Accounts / Categories repositories** at the app layer —
-  the in-memory implementations in `apps/finnex/lib/providers.dart` start
+  the in-memory implementations in `apps/pocketflow/lib/providers.dart` start
   empty; users can create rows but nothing persists across reload.
   (`F-DATA-WIRE`.)
 - **Analytics** — reads from the same in-memory transactions stream;
@@ -85,7 +85,7 @@ test` validation happens after this document is written.
 
 - The smoke test mounts `Pocket FlowApp` and verifies no exceptions, but cannot
   exercise navigation past the splash redirect without a pumped timer.
-- `apps/finnex/lib/providers.dart` uses a single fixed demo user ULID
+- `apps/pocketflow/lib/providers.dart` uses a single fixed demo user ULID
   (`kDemoUserId`); once real auth lands, replace these overrides with a
   derived provider that watches `authControllerProvider`.
 - `analytics` / `transactions` feature providers throw `UnimplementedError`
@@ -94,7 +94,7 @@ test` validation happens after this document is written.
 - No code-gen is run anywhere in v1; if you add freezed/json_serializable
   or riverpod_generator in a package, also add it to the Melos
   `build_runner_build` group.
-- Native iOS / Android directories under `apps/finnex/` are placeholder
+- Native iOS / Android directories under `apps/pocketflow/` are placeholder
   scaffolds — full mobile build requires `flutter create --platforms=...`.
 
 ## Validation hooks (run after Flutter SDK install)
@@ -102,4 +102,4 @@ test` validation happens after this document is written.
 - `melos bootstrap`
 - `melos run analyze`
 - `melos run test`
-- `cd apps/finnex && flutter build web --release`
+- `cd apps/pocketflow && flutter build web --release`

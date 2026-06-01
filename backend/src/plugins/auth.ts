@@ -47,4 +47,4 @@ async function plugin(app: FastifyInstance): Promise<void> {
   });
 }
 
-export default fp(plugin, { name: 'finnex-auth' });
+export default fp(plugin, { name: 'pocketflow-auth' });

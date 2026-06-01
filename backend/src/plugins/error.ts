@@ -44,4 +44,4 @@ async function plugin(app: FastifyInstance): Promise<void> {
   });
 }
 
-export default fp(plugin, { name: 'finnex-error' });
+export default fp(plugin, { name: 'pocketflow-error' });

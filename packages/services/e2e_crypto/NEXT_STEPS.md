@@ -1,7 +1,7 @@
 # NEXT STEPS — wiring `fnx_e2e_crypto` into sync
 
 This package (`fnx_e2e_crypto`) is the **foundation only**. It is intentionally
-*not* wired into the app or the sync engine yet — `apps/finnex/pubspec.yaml` is
+*not* wired into the app or the sync engine yet — `apps/pocketflow/pubspec.yaml` is
 untouched and `fnx_data_sync` does not depend on it. The merger owns the
 integration described below.
 
@@ -128,9 +128,9 @@ class EncryptedSyncService implements SyncService {
    ciphertext. Strip any server logic that reads inside the payload (search,
    server-side categorization) — it cannot work on E2E-encrypted data. Conflict
    resolution must rely on metadata (`serverVersion`, `updatedAt`) only.
-5. Wire the decorator in `apps/finnex/lib/providers.dart`: when the user has an
+5. Wire the decorator in `apps/pocketflow/lib/providers.dart`: when the user has an
    unlocked master key, provide `EncryptedSyncService(realService, key)` instead
-   of the raw service. Until then, `apps/finnex/pubspec.yaml` stays untouched —
+   of the raw service. Until then, `apps/pocketflow/pubspec.yaml` stays untouched —
    E2E is opt-in.
 6. Migration: existing plaintext rows on the server must be re-encrypted on
    first sync after enabling E2E (one-shot re-push of the local outbox).
