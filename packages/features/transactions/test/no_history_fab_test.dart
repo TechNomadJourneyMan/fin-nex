@@ -44,11 +44,17 @@ void main() {
         currentUserIdProvider.overrideWithValue(user),
         defaultCurrencyProvider.overrideWithValue(Currency.kzt),
       ],
-      child: const MaterialApp(
-        locale: Locale('ru'),
+      child: MaterialApp(
+        locale: const Locale('ru'),
         localizationsDelegates: AppL10n.localizationsDelegates,
         supportedLocales: PfLocales.all,
-        home: HistoryPage(),
+        // Reduced motion freezes the empty-state Lottie / loading skeletons so
+        // `pumpAndSettle` terminates (infinite animations never settle).
+        builder: (BuildContext context, Widget? child) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(disableAnimations: true),
+          child: child!,
+        ),
+        home: const HistoryPage(),
       ),
     );
   }

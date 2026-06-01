@@ -35,7 +35,7 @@ class SubscriptionsManagerPage extends ConsumerWidget {
       backgroundColor: colors.background,
       appBar: AppBar(title: Text(l10n.subsTitle)),
       body: async.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => _SubscriptionsSkeleton(spacing: spacing),
         error: (e, _) => Center(
           child: Text('$e', style: TextStyle(color: colors.error)),
         ),
@@ -45,6 +45,7 @@ class SubscriptionsManagerPage extends ConsumerWidget {
           if (subs.isEmpty) {
             return PfEmptyState(
               icon: Icons.subscriptions_outlined,
+              lottieAsset: 'assets/lottie/empty_subscriptions.json',
               title: l10n.subsEmptyTitle,
               body: l10n.subsEmptyBody,
             );
@@ -83,6 +84,34 @@ class SubscriptionsManagerPage extends ConsumerWidget {
           );
         },
       ),
+    );
+  }
+}
+
+/// Shimmer placeholder shown while detected subscriptions load.
+class _SubscriptionsSkeleton extends StatelessWidget {
+  const _SubscriptionsSkeleton({required this.spacing});
+
+  final PfSemanticSpacing spacing;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.all(spacing.s5),
+      children: <Widget>[
+        // Calendar strip placeholder.
+        const PfSkeleton(height: 72),
+        SizedBox(height: spacing.s6),
+        // Monthly total card placeholder.
+        const PfSkeletonCard(height: 96),
+        SizedBox(height: spacing.s6),
+        // Subscription card placeholders.
+        for (int i = 0; i < 4; i++) ...<Widget>[
+          const PfSkeletonCard(height: 72),
+          SizedBox(height: spacing.s4),
+        ],
+      ],
     );
   }
 }

@@ -110,6 +110,7 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
                     title: l10n.dashEmptyTitle,
                     body: l10n.qaNotePlaceholder,
                     icon: Icons.receipt_long_outlined,
+                    lottieAsset: 'assets/lottie/empty_transactions.json',
                     ctaLabel: l10n.dashEmptyCta,
                     onCta: () => showQuickAddExpenseSheet(context),
                   ),
@@ -142,25 +143,41 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
                 final TransactionsController ctrl = ref.read(
                   transactionsControllerProvider(_filter).notifier,
                 );
+                final FeedbackService feedback =
+                    ref.read(feedbackServiceProvider);
+                // Confirm-class haptic (mediumImpact) on the actual delete.
+                feedback.confirmAction();
                 await ctrl.softDelete(t.id);
                 if (!context.mounted) {
                   return;
                 }
+                bool undone = false;
                 context.showPfSnack(
                   l10n.txDeleted,
-                  duration: const Duration(seconds: 3),
+                  // 5 s undo window; restoring re-inserts at the original
+                  // position because the transaction keeps its occurredAt and
+                  // the list re-groups by date.
+                  duration: const Duration(seconds: 5),
                   action: PfSnackAction(
                     label: l10n.txUndo,
                     onPressed: () {
+                      undone = true;
                       // ignore: discarded_futures
                       ctrl.restore(t);
                     },
                   ),
                 );
+                // Error-class haptic if the window elapses without an undo
+                // (the delete is now permanent for this session).
+                Future<void>.delayed(const Duration(seconds: 5), () {
+                  if (!undone) {
+                    feedback.error();
+                  }
+                });
               },
             );
           },
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: () => const _HistorySkeleton(),
           error: (Object e, _) => Center(
             child: Padding(
               padding: const EdgeInsets.all(24),
@@ -169,6 +186,48 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Shimmer placeholder shown while the transaction list loads. Mimics a few
+/// date-sectioned rows so the layout doesn't jump when data arrives.
+class _HistorySkeleton extends StatelessWidget {
+  const _HistorySkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      children: <Widget>[
+        for (int section = 0; section < 3; section++) ...<Widget>[
+          const PfSkeleton(
+            shape: PfSkeletonShape.text,
+            width: 120,
+            height: 14,
+          ),
+          const SizedBox(height: 16),
+          for (int row = 0; row < 3; row++) ...<Widget>[
+            const Row(
+              children: <Widget>[
+                PfSkeletonCircle(size: 40),
+                SizedBox(width: 12),
+                Expanded(
+                  child: PfSkeletonText(lines: 2, lineHeight: 12),
+                ),
+                SizedBox(width: 12),
+                PfSkeleton(
+                  shape: PfSkeletonShape.text,
+                  width: 64,
+                  height: 14,
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+          ],
+        ],
+      ],
     );
   }
 }

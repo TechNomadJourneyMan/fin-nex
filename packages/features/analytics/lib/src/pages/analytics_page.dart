@@ -56,7 +56,7 @@ class AnalyticsPage extends ConsumerWidget {
       ),
       body: SafeArea(
         child: async.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: () => const _AnalyticsHeaderSkeleton(),
           error: (Object e, StackTrace _) => Center(
             child: Padding(
               padding: EdgeInsets.all(context.fnxSpacing.s6),
@@ -73,6 +73,34 @@ class AnalyticsPage extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Header-only shimmer placeholder for the analytics page.
+///
+/// Deliberately covers ONLY the period selector + totals card — the chart
+/// area is left blank while loading because animating shimmer over the
+/// (already expensive) chart canvas region is a perf concern.
+class _AnalyticsHeaderSkeleton extends StatelessWidget {
+  const _AnalyticsHeaderSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    final double gap = context.fnxSpacing.s5;
+    return ListView(
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.all(gap),
+      children: <Widget>[
+        // Period segmented control placeholder.
+        PfSkeleton(
+          height: 44,
+          borderRadius: BorderRadius.circular(context.fnxRadii.r3),
+        ),
+        SizedBox(height: gap),
+        // Totals card placeholder.
+        const PfSkeletonCard(height: 96),
+      ],
     );
   }
 }

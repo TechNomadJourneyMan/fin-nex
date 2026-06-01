@@ -64,6 +64,7 @@ class CategoryDetailPage extends ConsumerWidget {
             if (filtered.isEmpty) {
               return PfEmptyState(
                 icon: Icons.receipt_long_outlined,
+                lottieAsset: 'assets/lottie/empty_transactions.json',
                 title: l10n.anEmpty,
                 body: l10n.calDayEmpty,
               );

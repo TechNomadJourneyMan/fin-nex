@@ -17,8 +17,13 @@ dependencies:
   pf_domain:
     path: ../../domain
   intl: ^0.20.0
+  lottie: ^3.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+
+flutter:
+  assets:
+    - assets/lottie/

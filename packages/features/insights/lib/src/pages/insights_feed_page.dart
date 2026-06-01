@@ -35,9 +35,10 @@ class InsightsFeedPage extends ConsumerWidget {
               ? const Center(
                   child: PfEmptyState(
                     icon: Icons.auto_awesome_outlined,
+                    lottieAsset: 'assets/lottie/empty_insights.json',
                     title: 'No insights yet',
                     body:
-                        'Log a few transactions and PocketFlow will start finding patterns.',
+                        'Log a few transactions and Pocket Flow will start finding patterns.',
                   ),
                 )
               : ListView.separated(
