@@ -31,10 +31,16 @@ import 'pages/local_llm_settings_page.dart';
 import 'pages/sms_sandbox_page.dart';
 
 import 'shell/main_shell.dart';
+import 'widgets/drop_import.dart';
 
 final GlobalKey<NavigatorState> _rootKey = GlobalKey<NavigatorState>(
   debugLabel: 'root',
 );
+
+/// The root navigator key used by [pocketFlowRouter]. Exposed so app-level
+/// overlays (e.g. the command palette) can obtain a context that sits *inside*
+/// the Navigator, which [MaterialApp.router]'s `builder` context does not.
+GlobalKey<NavigatorState> get rootNavigatorKey => _rootKey;
 
 /// Build the top-level [GoRouter] for PocketFlow.
 ///
@@ -150,13 +156,15 @@ GoRouter buildPocketFlowRouter({ProviderContainer? container}) {
                 path: '/home',
                 name: 'home',
                 builder: (BuildContext context, GoRouterState state) =>
-                    const dashboard.DashboardPage(),
+                    const DropImportTarget(child: dashboard.DashboardPage()),
               ),
             ],
           ),
           // 1 — Transactions (+ details/edit/quick-add forms)
           StatefulShellBranch(
-            routes: transactions.buildTransactionsRoutes(),
+            routes: transactions.buildTransactionsRoutes(
+              listWrapper: (Widget child) => DropImportTarget(child: child),
+            ),
           ),
           // 2 — Analytics (+ category detail, calendar)
           StatefulShellBranch(

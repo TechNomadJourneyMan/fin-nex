@@ -66,6 +66,8 @@ dependencies:
     path: ../../packages/features/insights
   pf_feat_dashboard:
     path: ../../packages/features/dashboard
+  pf_feat_receipt_scanner:
+    path: ../../packages/features/receipt_scanner
   pf_feat_subscriptions:
     path: ../../packages/features/subscriptions
   pf_feat_ai_chat:
@@ -85,6 +87,12 @@ dependencies:
   # Auth wiring: token + device-id persistence and the typed Dio client.
   shared_preferences: ^2.3.2
   dio: ^5.7.0
+
+  # Drag-and-drop file import (web/desktop) + CSV parsing.
+  desktop_drop: ^0.4.4
+  csv: ^6.0.0
+  # XFile type used by desktop_drop's DropDoneDetails.
+  cross_file: ^0.3.4
 
 dev_dependencies:
   flutter_test:

@@ -30,6 +30,7 @@ class PfTextField extends StatefulWidget {
     this.enabled = true,
     this.autofocus = false,
     this.semanticLabel,
+    this.focusNode,
   });
 
   /// Field label, shown above the input.
@@ -89,13 +90,21 @@ class PfTextField extends StatefulWidget {
   /// Optional override for semantic label.
   final String? semanticLabel;
 
+  /// Optional external focus node. When provided, the caller owns its
+  /// lifecycle (e.g. to programmatically focus the field); otherwise the
+  /// field manages an internal node.
+  final FocusNode? focusNode;
+
   @override
   State<PfTextField> createState() => _PfTextFieldState();
 }
 
 class _PfTextFieldState extends State<PfTextField> {
-  final FocusNode _focusNode = FocusNode();
+  FocusNode? _internalFocusNode;
   bool _focused = false;
+
+  FocusNode get _focusNode =>
+      widget.focusNode ?? (_internalFocusNode ??= FocusNode());
 
   @override
   void initState() {
@@ -111,7 +120,7 @@ class _PfTextFieldState extends State<PfTextField> {
   @override
   void dispose() {
     _focusNode.removeListener(_handleFocusChange);
-    _focusNode.dispose();
+    _internalFocusNode?.dispose();
     super.dispose();
   }
 

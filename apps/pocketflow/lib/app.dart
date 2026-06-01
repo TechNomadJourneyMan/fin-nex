@@ -4,6 +4,7 @@
 // preferences take effect app-wide. Falls back to system defaults when the
 // settings provider is overridden in tests.
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -14,14 +15,40 @@ import 'package:pf_feat_settings/settings.dart' as settings;
 
 import 'intents.dart';
 import 'routes.dart';
+import 'widgets/command_palette.dart';
 
 /// Top-level application widget. Hosts the router, theme and locale.
-class PocketFlowApp extends ConsumerWidget {
+class PocketFlowApp extends ConsumerStatefulWidget {
   /// Create the root PocketFlow application widget.
   const PocketFlowApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PocketFlowApp> createState() => _PocketFlowAppState();
+}
+
+class _PocketFlowAppState extends ConsumerState<PocketFlowApp> {
+  /// True while a palette dialog is open, so repeated Cmd+K presses don't
+  /// stack dialogs.
+  bool _paletteOpen = false;
+
+  void _openCommandPalette() {
+    // Command palette is a web/desktop affordance; no-op on touch platforms.
+    if (!kIsWeb) {
+      return;
+    }
+    // Use the router's root navigator context so the dialog route resolves
+    // against a Navigator (the MaterialApp.router builder context does not
+    // include one).
+    final BuildContext? ctx = rootNavigatorKey.currentContext;
+    if (ctx == null || _paletteOpen) {
+      return;
+    }
+    _paletteOpen = true;
+    showCommandPalette(ctx).whenComplete(() => _paletteOpen = false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     // OmniFi OS: dark mode is the canonical look — premium obsidian +
     // glassmorphism surfaces. Light mode is still available via the settings
     // page but the app launches into dark.
@@ -51,7 +78,8 @@ class PocketFlowApp extends ConsumerWidget {
       },
       child: Actions(
         actions: <Type, Action<Intent>>{
-          OpenCommandPaletteIntent: OpenCommandPaletteAction(),
+          OpenCommandPaletteIntent:
+              OpenCommandPaletteAction(_openCommandPalette),
         },
         child: MaterialApp.router(
           title: 'Pocket Flow',

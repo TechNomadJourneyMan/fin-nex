@@ -928,4 +928,93 @@ class AppL10nKk extends AppL10n {
 
   @override
   String get errorUnknown => 'Күтпеген қате';
+
+  @override
+  String get filterIncome => 'Кіріс';
+
+  @override
+  String get filterExpense => 'Шығыс';
+
+  @override
+  String get filterCategory => 'Санат';
+
+  @override
+  String get filterDateRange => 'Кезең';
+
+  @override
+  String get filterNothingMatches => 'Сәйкестік жоқ';
+
+  @override
+  String get filterNothingMatchesBody =>
+      'Сұрауды өзгертіңіз немесе сүзгілерді тазалаңыз.';
+
+  @override
+  String get filterClear => 'Сүзгілерді тазарту';
+
+  @override
+  String get txRecategorize => 'Санатын өзгерту';
+
+  @override
+  String get txSplit => 'Бөлу';
+
+  @override
+  String get txSplitTitle => 'N бөлікке бөлу';
+
+  @override
+  String get txSplitParts => 'Бөліктер';
+
+  @override
+  String get cmdPaletteHint => 'Команда теріңіз…';
+
+  @override
+  String get cmdAddExpense => 'Шығыс қосу';
+
+  @override
+  String get cmdAddIncome => 'Кіріс қосу';
+
+  @override
+  String get cmdSearchTransactions => 'Операцияларды іздеу';
+
+  @override
+  String get cmdOpenDashboard => 'Басты бетті ашу';
+
+  @override
+  String get cmdOpenTransactions => 'Операцияларды ашу';
+
+  @override
+  String get cmdOpenAnalytics => 'Аналитиканы ашу';
+
+  @override
+  String get cmdOpenSettings => 'Параметрлерді ашу';
+
+  @override
+  String get cmdToggleTheme => 'Тақырыпты ауыстыру (ашық/қараңғы)';
+
+  @override
+  String get cmdSwitchLanguage => 'Тілді ауыстыру (en/ru/kk)';
+
+  @override
+  String get importPreviewTitle => 'Импорт алдын ала қарау';
+
+  @override
+  String get importColumnDate => 'Күні';
+
+  @override
+  String get importColumnAmount => 'Сома';
+
+  @override
+  String get importColumnMerchant => 'Сатушы';
+
+  @override
+  String get importColumnCategory => 'Санат';
+
+  @override
+  String importConfirm(int count) {
+    return '$count жолды импорттау';
+  }
+
+  @override
+  String importDone(int count) {
+    return 'Импортталған операциялар: $count';
+  }
 }

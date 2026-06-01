@@ -20,6 +20,7 @@ export 'src/predictor/category_predictor.dart';
 
 // State
 export 'src/state/transaction_filter_state.dart';
+export 'src/state/transaction_filters_notifier.dart';
 
 // Routing
 export 'src/routing/transactions_routes.dart';

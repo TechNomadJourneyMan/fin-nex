@@ -928,4 +928,93 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get errorUnknown => 'Unexpected error';
+
+  @override
+  String get filterIncome => 'Income';
+
+  @override
+  String get filterExpense => 'Expense';
+
+  @override
+  String get filterCategory => 'Category';
+
+  @override
+  String get filterDateRange => 'Date range';
+
+  @override
+  String get filterNothingMatches => 'Nothing matches';
+
+  @override
+  String get filterNothingMatchesBody =>
+      'Try a different search or clear your filters.';
+
+  @override
+  String get filterClear => 'Clear filters';
+
+  @override
+  String get txRecategorize => 'Recategorize';
+
+  @override
+  String get txSplit => 'Split';
+
+  @override
+  String get txSplitTitle => 'Split into N parts';
+
+  @override
+  String get txSplitParts => 'Parts';
+
+  @override
+  String get cmdPaletteHint => 'Type a command…';
+
+  @override
+  String get cmdAddExpense => 'Add expense';
+
+  @override
+  String get cmdAddIncome => 'Add income';
+
+  @override
+  String get cmdSearchTransactions => 'Search transactions';
+
+  @override
+  String get cmdOpenDashboard => 'Open Dashboard';
+
+  @override
+  String get cmdOpenTransactions => 'Open Transactions';
+
+  @override
+  String get cmdOpenAnalytics => 'Open Analytics';
+
+  @override
+  String get cmdOpenSettings => 'Open Settings';
+
+  @override
+  String get cmdToggleTheme => 'Toggle theme (light/dark)';
+
+  @override
+  String get cmdSwitchLanguage => 'Switch language (en/ru/kk)';
+
+  @override
+  String get importPreviewTitle => 'Import preview';
+
+  @override
+  String get importColumnDate => 'Date';
+
+  @override
+  String get importColumnAmount => 'Amount';
+
+  @override
+  String get importColumnMerchant => 'Merchant';
+
+  @override
+  String get importColumnCategory => 'Category';
+
+  @override
+  String importConfirm(int count) {
+    return 'Import $count rows';
+  }
+
+  @override
+  String importDone(int count) {
+    return 'Imported $count transactions';
+  }
 }

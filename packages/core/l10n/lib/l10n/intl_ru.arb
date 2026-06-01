@@ -296,5 +296,37 @@
   "errorValidation": "Проверьте подсвеченные поля.",
   "errorSyncConflict": "Конфликт синхронизации. Мы сохранили последние изменения.",
   "errorOffline": "Вы офлайн. Изменения сохранены локально.",
-  "errorUnknown": "Непредвиденная ошибка"
+  "errorUnknown": "Непредвиденная ошибка",
+
+  "filterIncome": "Доход",
+  "filterExpense": "Расход",
+  "filterCategory": "Категория",
+  "filterDateRange": "Период",
+  "filterNothingMatches": "Ничего не найдено",
+  "filterNothingMatchesBody": "Измените запрос или сбросьте фильтры.",
+  "filterClear": "Сбросить фильтры",
+
+  "txRecategorize": "Изменить категорию",
+  "txSplit": "Разделить",
+  "txSplitTitle": "Разделить на N частей",
+  "txSplitParts": "Части",
+
+  "cmdPaletteHint": "Введите команду…",
+  "cmdAddExpense": "Добавить расход",
+  "cmdAddIncome": "Добавить доход",
+  "cmdSearchTransactions": "Поиск операций",
+  "cmdOpenDashboard": "Открыть Главную",
+  "cmdOpenTransactions": "Открыть Операции",
+  "cmdOpenAnalytics": "Открыть Аналитику",
+  "cmdOpenSettings": "Открыть Настройки",
+  "cmdToggleTheme": "Сменить тему (светлая/тёмная)",
+  "cmdSwitchLanguage": "Сменить язык (en/ru/kk)",
+
+  "importPreviewTitle": "Предпросмотр импорта",
+  "importColumnDate": "Дата",
+  "importColumnAmount": "Сумма",
+  "importColumnMerchant": "Продавец",
+  "importColumnCategory": "Категория",
+  "importConfirm": "Импортировать {count} строк",
+  "importDone": "Импортировано операций: {count}"
 }

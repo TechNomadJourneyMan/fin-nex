@@ -29,11 +29,20 @@ abstract final class TransactionsRoutePaths {
 /// Returns the [GoRoute]s contributed by this feature.
 ///
 /// Mount these on the app's root [GoRouter] in `main()`.
-List<GoRoute> buildTransactionsRoutes() {
+///
+/// [listWrapper] optionally wraps the [HistoryPage] (e.g. with a drag-and-drop
+/// import target on web). It defaults to an identity pass-through so callers
+/// that don't need it can ignore it.
+List<GoRoute> buildTransactionsRoutes({
+  Widget Function(Widget child)? listWrapper,
+}) {
+  final Widget Function(Widget) wrap =
+      listWrapper ?? (Widget child) => child;
   return <GoRoute>[
     GoRoute(
       path: TransactionsRoutePaths.list,
-      builder: (BuildContext ctx, GoRouterState state) => const HistoryPage(),
+      builder: (BuildContext ctx, GoRouterState state) =>
+          wrap(const HistoryPage()),
       routes: <GoRoute>[
         GoRoute(
           path: 'add',

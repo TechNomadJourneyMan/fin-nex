@@ -1766,6 +1766,174 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Unexpected error'**
   String get errorUnknown;
+
+  /// History filter chip: income only.
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get filterIncome;
+
+  /// History filter chip: expense only.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get filterExpense;
+
+  /// History filter chip: opens category multi-select.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get filterCategory;
+
+  /// History filter chip: opens date-range picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Date range'**
+  String get filterDateRange;
+
+  /// Empty state when filters exclude all rows.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches'**
+  String get filterNothingMatches;
+
+  /// Body of the no-match empty state.
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different search or clear your filters.'**
+  String get filterNothingMatchesBody;
+
+  /// Action to reset all active filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear filters'**
+  String get filterClear;
+
+  /// Quick-action: change a transaction's category.
+  ///
+  /// In en, this message translates to:
+  /// **'Recategorize'**
+  String get txRecategorize;
+
+  /// Quick-action: split a transaction into N parts.
+  ///
+  /// In en, this message translates to:
+  /// **'Split'**
+  String get txSplit;
+
+  /// Title of the split dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Split into N parts'**
+  String get txSplitTitle;
+
+  /// Label for the split-parts count field.
+  ///
+  /// In en, this message translates to:
+  /// **'Parts'**
+  String get txSplitParts;
+
+  /// Command-palette search placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a command…'**
+  String get cmdPaletteHint;
+
+  /// Command: open quick-add expense.
+  ///
+  /// In en, this message translates to:
+  /// **'Add expense'**
+  String get cmdAddExpense;
+
+  /// Command: open quick-add income.
+  ///
+  /// In en, this message translates to:
+  /// **'Add income'**
+  String get cmdAddIncome;
+
+  /// Command: go to History and focus search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search transactions'**
+  String get cmdSearchTransactions;
+
+  /// Command: navigate to Dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Dashboard'**
+  String get cmdOpenDashboard;
+
+  /// Command: navigate to Transactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Transactions'**
+  String get cmdOpenTransactions;
+
+  /// Command: navigate to Analytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Analytics'**
+  String get cmdOpenAnalytics;
+
+  /// Command: navigate to Settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get cmdOpenSettings;
+
+  /// Command: flip between light and dark theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle theme (light/dark)'**
+  String get cmdToggleTheme;
+
+  /// Command: open the language sub-menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch language (en/ru/kk)'**
+  String get cmdSwitchLanguage;
+
+  /// Title of the CSV import column-mapping dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Import preview'**
+  String get importPreviewTitle;
+
+  /// CSV import column: date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get importColumnDate;
+
+  /// CSV import column: amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get importColumnAmount;
+
+  /// CSV import column: merchant/note.
+  ///
+  /// In en, this message translates to:
+  /// **'Merchant'**
+  String get importColumnMerchant;
+
+  /// CSV import column: category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get importColumnCategory;
+
+  /// CSV import confirm button.
+  ///
+  /// In en, this message translates to:
+  /// **'Import {count} rows'**
+  String importConfirm(int count);
+
+  /// Snackbar after a successful CSV import.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported {count} transactions'**
+  String importDone(int count);
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

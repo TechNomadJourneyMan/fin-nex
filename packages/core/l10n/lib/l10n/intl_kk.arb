@@ -296,5 +296,37 @@
   "errorValidation": "Белгіленген өрістерді тексеріңіз.",
   "errorSyncConflict": "Синхрондау қайшылығы. Соңғы өзгерістер сақталды.",
   "errorOffline": "Сіз офлайнсыз. Өзгерістер жергілікті сақталды.",
-  "errorUnknown": "Күтпеген қате"
+  "errorUnknown": "Күтпеген қате",
+
+  "filterIncome": "Кіріс",
+  "filterExpense": "Шығыс",
+  "filterCategory": "Санат",
+  "filterDateRange": "Кезең",
+  "filterNothingMatches": "Сәйкестік жоқ",
+  "filterNothingMatchesBody": "Сұрауды өзгертіңіз немесе сүзгілерді тазалаңыз.",
+  "filterClear": "Сүзгілерді тазарту",
+
+  "txRecategorize": "Санатын өзгерту",
+  "txSplit": "Бөлу",
+  "txSplitTitle": "N бөлікке бөлу",
+  "txSplitParts": "Бөліктер",
+
+  "cmdPaletteHint": "Команда теріңіз…",
+  "cmdAddExpense": "Шығыс қосу",
+  "cmdAddIncome": "Кіріс қосу",
+  "cmdSearchTransactions": "Операцияларды іздеу",
+  "cmdOpenDashboard": "Басты бетті ашу",
+  "cmdOpenTransactions": "Операцияларды ашу",
+  "cmdOpenAnalytics": "Аналитиканы ашу",
+  "cmdOpenSettings": "Параметрлерді ашу",
+  "cmdToggleTheme": "Тақырыпты ауыстыру (ашық/қараңғы)",
+  "cmdSwitchLanguage": "Тілді ауыстыру (en/ru/kk)",
+
+  "importPreviewTitle": "Импорт алдын ала қарау",
+  "importColumnDate": "Күні",
+  "importColumnAmount": "Сома",
+  "importColumnMerchant": "Сатушы",
+  "importColumnCategory": "Санат",
+  "importConfirm": "{count} жолды импорттау",
+  "importDone": "Импортталған операциялар: {count}"
 }

@@ -942,4 +942,93 @@ class AppL10nRu extends AppL10n {
 
   @override
   String get errorUnknown => 'Непредвиденная ошибка';
+
+  @override
+  String get filterIncome => 'Доход';
+
+  @override
+  String get filterExpense => 'Расход';
+
+  @override
+  String get filterCategory => 'Категория';
+
+  @override
+  String get filterDateRange => 'Период';
+
+  @override
+  String get filterNothingMatches => 'Ничего не найдено';
+
+  @override
+  String get filterNothingMatchesBody =>
+      'Измените запрос или сбросьте фильтры.';
+
+  @override
+  String get filterClear => 'Сбросить фильтры';
+
+  @override
+  String get txRecategorize => 'Изменить категорию';
+
+  @override
+  String get txSplit => 'Разделить';
+
+  @override
+  String get txSplitTitle => 'Разделить на N частей';
+
+  @override
+  String get txSplitParts => 'Части';
+
+  @override
+  String get cmdPaletteHint => 'Введите команду…';
+
+  @override
+  String get cmdAddExpense => 'Добавить расход';
+
+  @override
+  String get cmdAddIncome => 'Добавить доход';
+
+  @override
+  String get cmdSearchTransactions => 'Поиск операций';
+
+  @override
+  String get cmdOpenDashboard => 'Открыть Главную';
+
+  @override
+  String get cmdOpenTransactions => 'Открыть Операции';
+
+  @override
+  String get cmdOpenAnalytics => 'Открыть Аналитику';
+
+  @override
+  String get cmdOpenSettings => 'Открыть Настройки';
+
+  @override
+  String get cmdToggleTheme => 'Сменить тему (светлая/тёмная)';
+
+  @override
+  String get cmdSwitchLanguage => 'Сменить язык (en/ru/kk)';
+
+  @override
+  String get importPreviewTitle => 'Предпросмотр импорта';
+
+  @override
+  String get importColumnDate => 'Дата';
+
+  @override
+  String get importColumnAmount => 'Сумма';
+
+  @override
+  String get importColumnMerchant => 'Продавец';
+
+  @override
+  String get importColumnCategory => 'Категория';
+
+  @override
+  String importConfirm(int count) {
+    return 'Импортировать $count строк';
+  }
+
+  @override
+  String importDone(int count) {
+    return 'Импортировано операций: $count';
+  }
 }
