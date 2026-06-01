@@ -152,8 +152,7 @@ class QuickAddController
     final List<Transaction> recent =
         ref.read(transactionsStreamProvider).valueOrNull ?? <Transaction>[];
 
-    Ulid? account =
-        predictor.predictAccount(transactions: recent, type: type);
+    Ulid? account = predictor.predictAccount(transactions: recent, type: type);
     if (account == null) {
       // Fall back to the first available account.
       final List<Account> accounts =
@@ -163,8 +162,7 @@ class QuickAddController
       }
     }
 
-    Ulid? category =
-        predictor.predict(transactions: recent, type: type);
+    Ulid? category = predictor.predict(transactions: recent, type: type);
     if (category == null) {
       // Fall back to the first matching category for the type.
       final List<Category> categories =

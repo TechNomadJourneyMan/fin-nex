@@ -35,8 +35,7 @@ void main() {
     test('every translatable English key has @-metadata', () {
       final keys = en.keys.where((k) => !k.startsWith('@'));
       final missing = keys.where((k) => !en.containsKey('@$k')).toList();
-      expect(missing, isEmpty,
-          reason: 'Missing @-metadata for: $missing');
+      expect(missing, isEmpty, reason: 'Missing @-metadata for: $missing');
     });
 
     test('master locale tag is en', () {

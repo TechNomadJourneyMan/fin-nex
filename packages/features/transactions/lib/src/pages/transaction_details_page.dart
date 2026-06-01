@@ -103,8 +103,7 @@ class _DetailsBody extends ConsumerWidget {
     final NumberFormat money = NumberFormat.decimalPattern(l10n.localeName);
     final String amountText =
         '${money.format(tx.amount.major.toDouble())} ${currency.symbol}';
-    final DateFormat dateFmt = DateFormat.yMMMd(l10n.localeName)
-        .add_Hm();
+    final DateFormat dateFmt = DateFormat.yMMMd(l10n.localeName).add_Hm();
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -131,7 +130,8 @@ class _DetailsBody extends ConsumerWidget {
                 type: MaterialType.transparency,
                 child: CircleAvatar(
                   radius: 28,
-                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.surfaceContainerHighest,
                   child: Icon(
                     tx.type == TransactionType.income
                         ? Icons.south_west
@@ -176,7 +176,9 @@ class _DetailsBody extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          _Row(label: l10n.txFieldDate, value: dateFmt.format(tx.occurredAt.toLocal())),
+          _Row(
+              label: l10n.txFieldDate,
+              value: dateFmt.format(tx.occurredAt.toLocal())),
           _Row(label: l10n.txFieldNote, value: tx.description ?? '—'),
           _Row(label: l10n.txFieldCategory, value: tx.categoryId?.value ?? '—'),
           _Row(label: l10n.txFieldAccount, value: tx.accountId.value),

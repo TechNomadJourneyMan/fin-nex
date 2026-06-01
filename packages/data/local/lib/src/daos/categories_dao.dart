@@ -61,7 +61,10 @@ class CategoriesDao {
     String? typeCode,
     bool includeArchived = false,
   }) async {
-    final where = <String>['(user_id = ? OR is_system = 1)', 'deleted_at IS NULL'];
+    final where = <String>[
+      '(user_id = ? OR is_system = 1)',
+      'deleted_at IS NULL'
+    ];
     final args = <Object?>[userId];
     if (!includeArchived) where.add('is_archived = 0');
     if (typeCode != null) {

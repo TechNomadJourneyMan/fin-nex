@@ -75,13 +75,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey<String>('signin.email')), findsOneWidget);
-    expect(find.byKey(const ValueKey<String>('signin.password')),
-        findsOneWidget);
-    expect(find.byKey(const ValueKey<String>('signin.submit')),
-        findsOneWidget);
-    expect(find.byKey(const ValueKey<String>('signin.google')),
-        findsOneWidget);
-    expect(find.byKey(const ValueKey<String>('signin.phone')),
-        findsOneWidget);
+    expect(
+        find.byKey(const ValueKey<String>('signin.password')), findsOneWidget);
+    expect(find.byKey(const ValueKey<String>('signin.submit')), findsOneWidget);
+    expect(find.byKey(const ValueKey<String>('signin.google')), findsOneWidget);
+    expect(find.byKey(const ValueKey<String>('signin.phone')), findsOneWidget);
   });
 }

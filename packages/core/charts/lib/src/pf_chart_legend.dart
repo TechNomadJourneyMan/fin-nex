@@ -74,9 +74,8 @@ class _LegendRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextStyle? base = theme.textTheme.bodySmall;
-    final TextStyle? label = highlighted
-        ? base?.copyWith(fontWeight: FontWeight.w600)
-        : base;
+    final TextStyle? label =
+        highlighted ? base?.copyWith(fontWeight: FontWeight.w600) : base;
     final Widget row = Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[

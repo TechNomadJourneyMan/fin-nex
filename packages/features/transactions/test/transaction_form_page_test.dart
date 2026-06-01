@@ -98,7 +98,8 @@ void main() {
     expect(rows, isEmpty, reason: 'zero-amount save must not persist');
   });
 
-  testWidgets('tapping a category chip selects it', (WidgetTester tester) async {
+  testWidgets('tapping a category chip selects it',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       await _host(overrides: overrides, child: const TransactionFormPage()),
     );

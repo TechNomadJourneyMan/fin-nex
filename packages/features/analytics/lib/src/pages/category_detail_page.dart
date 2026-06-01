@@ -146,8 +146,8 @@ class CategoryDetailPage extends ConsumerWidget {
       if (!when.isBefore(period.to)) continue;
       out.add(tx);
     }
-    out.sort((Transaction a, Transaction b) =>
-        b.occurredAt.compareTo(a.occurredAt));
+    out.sort(
+        (Transaction a, Transaction b) => b.occurredAt.compareTo(a.occurredAt));
     return out;
   }
 }

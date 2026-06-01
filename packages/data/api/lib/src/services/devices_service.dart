@@ -13,11 +13,9 @@ class DevicesService {
   /// List registered devices.
   Future<List<DeviceDto>> list() => DioServiceHelpers.guard(() async {
         final res = await _dio.get<Map<String, dynamic>>('/devices');
-        final data =
-            (res.data?['data'] as List<dynamic>?) ?? const <dynamic>[];
+        final data = (res.data?['data'] as List<dynamic>?) ?? const <dynamic>[];
         return data
-            .map((dynamic e) =>
-                DeviceDto.fromJson(e as Map<String, dynamic>))
+            .map((dynamic e) => DeviceDto.fromJson(e as Map<String, dynamic>))
             .toList(growable: false);
       });
 

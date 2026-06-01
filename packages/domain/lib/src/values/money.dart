@@ -73,7 +73,8 @@ class Money extends Equatable implements Comparable<Money> {
       final product = Decimal.fromBigInt(minor) * factor;
       return Money(product.round(scale: 0).toBigInt(), currency);
     }
-    throw ArgumentError.value(factor, 'factor', 'Must be int, BigInt, or Decimal');
+    throw ArgumentError.value(
+        factor, 'factor', 'Must be int, BigInt, or Decimal');
   }
 
   /// Negation.

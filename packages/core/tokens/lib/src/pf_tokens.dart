@@ -26,21 +26,28 @@ abstract final class PfTokens {
 
   /// 4 px spacing unit.
   static const double space1 = PfSpacing.x1;
+
   /// 8 px spacing unit.
   static const double space2 = PfSpacing.x2;
+
   /// 12 px spacing unit.
   static const double space3 = PfSpacing.x3;
+
   /// 16 px spacing unit.
   static const double space4 = PfSpacing.x4;
+
   /// 24 px spacing unit.
   static const double space6 = PfSpacing.x6;
+
   /// 32 px spacing unit.
   static const double space8 = PfSpacing.x8;
 
   /// Small corner radius (8 px).
   static const double radiusSm = 8;
+
   /// Medium corner radius (12 px).
   static const double radiusMd = 12;
+
   /// Large corner radius (16 px).
   static const double radiusLg = 16;
 

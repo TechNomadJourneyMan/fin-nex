@@ -25,11 +25,9 @@ class CategoriesService {
             'include_user': includeUser,
           },
         );
-        final data =
-            (res.data?['data'] as List<dynamic>?) ?? const <dynamic>[];
+        final data = (res.data?['data'] as List<dynamic>?) ?? const <dynamic>[];
         return data
-            .map((dynamic e) =>
-                CategoryDto.fromJson(e as Map<String, dynamic>))
+            .map((dynamic e) => CategoryDto.fromJson(e as Map<String, dynamic>))
             .toList(growable: false);
       });
 

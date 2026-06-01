@@ -18,7 +18,8 @@ sealed class Result<T, F extends Failure> {
   /// Unwraps the success value or throws if this is an [Err].
   T unwrap() => switch (this) {
         Ok<T, F>(:final value) => value,
-        Err<T, F>(:final failure) => throw StateError('unwrap on Err: $failure'),
+        Err<T, F>(:final failure) =>
+          throw StateError('unwrap on Err: $failure'),
       };
 
   /// Returns the success value, or [fallback] if this is an [Err].

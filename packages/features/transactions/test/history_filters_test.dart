@@ -87,7 +87,9 @@ void main() {
   test('kind filter (expense) excludes income', () async {
     final ProviderContainer c = makeContainer();
     addTearDown(c.dispose);
-    c.read(transactionFiltersProvider.notifier).setKind(TransactionType.expense);
+    c
+        .read(transactionFiltersProvider.notifier)
+        .setKind(TransactionType.expense);
     final List<Transaction> rows = await readFiltered(c);
     expect(rows.length, 2);
     expect(

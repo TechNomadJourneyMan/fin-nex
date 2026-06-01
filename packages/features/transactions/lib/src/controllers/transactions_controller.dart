@@ -7,13 +7,14 @@ import '../providers.dart';
 import '../state/transaction_filter_state.dart';
 
 /// Holds the live, filter-aware list of transactions for the current user.
-class TransactionsController
-    extends AutoDisposeFamilyAsyncNotifier<List<Transaction>, TransactionFilterState> {
+class TransactionsController extends AutoDisposeFamilyAsyncNotifier<
+    List<Transaction>, TransactionFilterState> {
   StreamSubscription<List<Transaction>>? _sub;
 
   @override
   FutureOr<List<Transaction>> build(TransactionFilterState arg) {
-    final TransactionsRepository repo = ref.watch(transactionsRepositoryProvider);
+    final TransactionsRepository repo =
+        ref.watch(transactionsRepositoryProvider);
     final Ulid userId = ref.watch(currentUserIdProvider);
 
     // Cancel any previous live subscription when the family argument changes
@@ -42,13 +43,15 @@ class TransactionsController
   /// Soft-deletes a transaction. Caller is responsible for offering undo via
   /// [restore] within the snackbar window.
   Future<void> softDelete(Ulid id) async {
-    final TransactionsRepository repo = ref.read(transactionsRepositoryProvider);
+    final TransactionsRepository repo =
+        ref.read(transactionsRepositoryProvider);
     await repo.softDelete(id);
   }
 
   /// Restores a previously soft-deleted [tx] by clearing `deletedAt`.
   Future<void> restore(Transaction tx) async {
-    final TransactionsRepository repo = ref.read(transactionsRepositoryProvider);
+    final TransactionsRepository repo =
+        ref.read(transactionsRepositoryProvider);
     final Transaction restored = tx.copyWith(
       updatedAt: DateTime.now().toUtc(),
     );
@@ -80,7 +83,8 @@ class TransactionsController
 
   /// Persists [tx]. Used by both quick-add and the full form.
   Future<void> save(Transaction tx) async {
-    final TransactionsRepository repo = ref.read(transactionsRepositoryProvider);
+    final TransactionsRepository repo =
+        ref.read(transactionsRepositoryProvider);
     await repo.upsert(tx);
   }
 
@@ -103,13 +107,11 @@ class TransactionsController
       out = out.where((Transaction t) => t.occurredAt.isBefore(f.to!));
     }
     if (f.accountIds.isNotEmpty) {
-      final Set<String> ids =
-          f.accountIds.map((Ulid u) => u.value).toSet();
+      final Set<String> ids = f.accountIds.map((Ulid u) => u.value).toSet();
       out = out.where((Transaction t) => ids.contains(t.accountId.value));
     }
     if (f.categoryIds.isNotEmpty) {
-      final Set<String> ids =
-          f.categoryIds.map((Ulid u) => u.value).toSet();
+      final Set<String> ids = f.categoryIds.map((Ulid u) => u.value).toSet();
       out = out.where(
         (Transaction t) =>
             t.categoryId != null && ids.contains(t.categoryId!.value),

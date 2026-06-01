@@ -118,7 +118,8 @@ class PfTransactionItem extends StatelessWidget {
                     ),
                   )
                 else
-                  PfAvatar(icon: icon ?? Icons.category, color: accent, size: 40),
+                  PfAvatar(
+                      icon: icon ?? Icons.category, color: accent, size: 40),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -148,8 +149,8 @@ class PfTransactionItem extends StatelessWidget {
                               ),
                             ),
                           Text(amountText,
-                              style: typo.amountMd
-                                  .copyWith(color: amountColor)),
+                              style:
+                                  typo.amountMd.copyWith(color: amountColor)),
                         ],
                       ),
                       const SizedBox(height: 2),
@@ -158,16 +159,16 @@ class PfTransactionItem extends StatelessWidget {
                           Expanded(
                             child: Text(
                               description ?? '',
-                              style: typo.bodySm
-                                  .copyWith(color: colors.textMuted),
+                              style:
+                                  typo.bodySm.copyWith(color: colors.textMuted),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           Text(
                             _formatTime(date),
-                            style: typo.caption
-                                .copyWith(color: colors.textMuted),
+                            style:
+                                typo.caption.copyWith(color: colors.textMuted),
                           ),
                         ],
                       ),

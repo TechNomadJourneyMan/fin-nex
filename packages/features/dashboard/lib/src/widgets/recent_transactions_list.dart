@@ -91,8 +91,7 @@ class RecentTransactionsList extends StatelessWidget {
                     : colors.error,
               ),
             ),
-            title: t.description ??
-                (categoriesById[t.categoryId]?.name ?? '—'),
+            title: t.description ?? (categoriesById[t.categoryId]?.name ?? '—'),
             subtitle: timeFmt.format(t.occurredAt.toLocal()),
             trailing: Text(
               _formatSigned(t),
@@ -102,9 +101,7 @@ class RecentTransactionsList extends StatelessWidget {
                     : colors.error,
               ),
             ),
-            onTap: onTapTransaction == null
-                ? null
-                : () => onTapTransaction!(t),
+            onTap: onTapTransaction == null ? null : () => onTapTransaction!(t),
           ),
       ],
     );

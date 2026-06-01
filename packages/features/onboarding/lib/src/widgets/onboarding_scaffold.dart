@@ -113,10 +113,10 @@ class OnboardingStepIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.fnxColors;
-    final reduceMotion = MediaQuery.maybeOf(context)?.disableAnimations ?? false;
-    final duration = reduceMotion
-        ? Duration.zero
-        : const Duration(milliseconds: 200);
+    final reduceMotion =
+        MediaQuery.maybeOf(context)?.disableAnimations ?? false;
+    final duration =
+        reduceMotion ? Duration.zero : const Duration(milliseconds: 200);
 
     return Semantics(
       label: 'Step ${currentStep + 1} of $totalSteps',

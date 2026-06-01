@@ -58,8 +58,8 @@ void main() {
     });
 
     test('parses quantity from "N x price" form', () {
-      final ReceiptLineItem milk =
-          result.lineItems.firstWhere((ReceiptLineItem i) => i.name == 'Молоко Айран 1л');
+      final ReceiptLineItem milk = result.lineItems
+          .firstWhere((ReceiptLineItem i) => i.name == 'Молоко Айран 1л');
       expect(milk.quantity, 2);
       expect(milk.priceMinor, 90000); // 900,00 KZT
     });
@@ -108,8 +108,8 @@ CHANGE                   470.00
     });
 
     test('default quantity is 1 when not printed', () {
-      final ReceiptLineItem croissant =
-          result.lineItems.firstWhere((ReceiptLineItem i) => i.name == 'Croissant');
+      final ReceiptLineItem croissant = result.lineItems
+          .firstWhere((ReceiptLineItem i) => i.name == 'Croissant');
       expect(croissant.quantity, 1);
       expect(croissant.priceMinor, 65000);
     });
@@ -139,7 +139,8 @@ CHANGE                   470.00
       final List<String> names =
           result.lineItems.map((ReceiptLineItem i) => i.name).toList();
       expect(names, containsAll(<String>['Аспирин 500мг', 'Витамин С']));
-      expect(names.any((String n) => n.toUpperCase().contains('СКИДКА')), isFalse);
+      expect(
+          names.any((String n) => n.toUpperCase().contains('СКИДКА')), isFalse);
     });
   });
 

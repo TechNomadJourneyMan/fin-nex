@@ -227,8 +227,7 @@ class PfSkeletonCard extends StatelessWidget {
     return PfSkeleton(
       width: width,
       height: height,
-      borderRadius:
-          borderRadius ?? BorderRadius.circular(context.fnxRadii.r4),
+      borderRadius: borderRadius ?? BorderRadius.circular(context.fnxRadii.r4),
     );
   }
 }

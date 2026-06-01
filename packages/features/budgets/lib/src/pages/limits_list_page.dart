@@ -51,16 +51,15 @@ class LimitsListPage extends ConsumerWidget {
                   padding: EdgeInsets.all(spacing.s5),
                   child: Row(
                     children: <Widget>[
-                      Icon(Icons.shield_outlined,
-                          color: colors.warning),
+                      Icon(Icons.shield_outlined, color: colors.warning),
                       SizedBox(width: spacing.s4),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(l.name,
-                                style: typo.bodyLg.copyWith(
-                                    fontWeight: FontWeight.w600)),
+                                style: typo.bodyLg
+                                    .copyWith(fontWeight: FontWeight.w600)),
                             SizedBox(height: spacing.s1),
                             Text(
                               '${l.scope} · ${l.period.code} · '

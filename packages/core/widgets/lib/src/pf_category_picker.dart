@@ -74,7 +74,8 @@ class PfCategoryPicker extends StatelessWidget {
           selected: selected,
           label: cat.label,
           child: Material(
-            color: selected ? cat.color.withValues(alpha: 0.12) : colors.surface,
+            color:
+                selected ? cat.color.withValues(alpha: 0.12) : colors.surface,
             borderRadius: BorderRadius.circular(radius.r3),
             child: InkWell(
               onTap: () => onSelected(cat),

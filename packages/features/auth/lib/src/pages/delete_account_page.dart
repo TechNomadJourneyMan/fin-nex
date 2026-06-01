@@ -38,8 +38,7 @@ class _DeleteAccountPageState extends ConsumerState<DeleteAccountPage> {
   Widget build(BuildContext context) {
     final l10n = AppL10n.of(context);
     final state = ref.watch(authControllerProvider);
-    final loading =
-        state.isLoading || (state.valueOrNull is Authenticating);
+    final loading = state.isLoading || (state.valueOrNull is Authenticating);
     final canSubmit = _confirm.text.trim() == _gate && !loading;
     final failure = state.hasError && !state.isLoading
         ? state.error

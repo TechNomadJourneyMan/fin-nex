@@ -76,8 +76,7 @@ class FirebasePushService implements PushService {
   }
 
   @override
-  Stream<PushMessage> get onMessage =>
-      const Stream<PushMessage>.empty();
+  Stream<PushMessage> get onMessage => const Stream<PushMessage>.empty();
 
   @override
   Future<String?> get token async => null;

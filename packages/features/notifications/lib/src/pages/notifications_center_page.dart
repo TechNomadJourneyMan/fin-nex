@@ -155,15 +155,13 @@ class _NotificationTile extends StatelessWidget {
                   Text(
                     notification.title,
                     style: typo.bodyMd.copyWith(
-                      fontWeight:
-                          unread ? FontWeight.w700 : FontWeight.w500,
+                      fontWeight: unread ? FontWeight.w700 : FontWeight.w500,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     notification.body,
-                    style: typo.bodySm
-                        .copyWith(color: colors.textSecondary),
+                    style: typo.bodySm.copyWith(color: colors.textSecondary),
                   ),
                 ],
               ),

@@ -186,14 +186,13 @@ final class Transaction extends Equatable {
         externalRef: json['external_ref'] as String?,
         lat: (json['lat'] as num?)?.toDouble(),
         lng: (json['lng'] as num?)?.toDouble(),
-        attachmentIds: ((json['attachment_ids'] as List<dynamic>?) ??
-                const <dynamic>[])
-            .map((dynamic id) => Ulid(id as String))
-            .toList(growable: false),
-        tagIds:
-            ((json['tag_ids'] as List<dynamic>?) ?? const <dynamic>[])
+        attachmentIds:
+            ((json['attachment_ids'] as List<dynamic>?) ?? const <dynamic>[])
                 .map((dynamic id) => Ulid(id as String))
                 .toList(growable: false),
+        tagIds: ((json['tag_ids'] as List<dynamic>?) ?? const <dynamic>[])
+            .map((dynamic id) => Ulid(id as String))
+            .toList(growable: false),
         createdAt: DateTime.parse(json['created_at'] as String),
         updatedAt: DateTime.parse(json['updated_at'] as String),
         deletedAt: json['deleted_at'] == null

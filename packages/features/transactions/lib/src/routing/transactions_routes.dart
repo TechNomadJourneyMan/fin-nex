@@ -36,8 +36,7 @@ abstract final class TransactionsRoutePaths {
 List<GoRoute> buildTransactionsRoutes({
   Widget Function(Widget child)? listWrapper,
 }) {
-  final Widget Function(Widget) wrap =
-      listWrapper ?? (Widget child) => child;
+  final Widget Function(Widget) wrap = listWrapper ?? (Widget child) => child;
   return <GoRoute>[
     GoRoute(
       path: TransactionsRoutePaths.list,

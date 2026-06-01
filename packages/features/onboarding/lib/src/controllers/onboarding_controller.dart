@@ -150,7 +150,8 @@ class OnboardingController extends StateNotifier<OnboardingState> {
   /// Mark onboarding as complete and persist the flag.
   Future<void> complete() async {
     await _prefs.setBool(kOnboardingCompletedKey, true);
-    state = state.copyWith(completed: true, step: OnboardingStep.firstTransaction);
+    state =
+        state.copyWith(completed: true, step: OnboardingStep.firstTransaction);
   }
 
   /// Reset for test/debug only.

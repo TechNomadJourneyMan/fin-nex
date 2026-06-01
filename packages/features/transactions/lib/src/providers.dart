@@ -7,7 +7,8 @@ import 'predictor/category_predictor.dart';
 ///
 /// Must be overridden in `main()` (typically with the sync-aware repository
 /// from `pf_data_sync`).
-final transactionsRepositoryProvider = Provider<TransactionsRepository>((Ref ref) {
+final transactionsRepositoryProvider =
+    Provider<TransactionsRepository>((Ref ref) {
   throw UnimplementedError(
     'transactionsRepositoryProvider must be overridden with a concrete '
     'TransactionsRepository instance.',

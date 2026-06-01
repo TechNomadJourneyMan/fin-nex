@@ -72,64 +72,65 @@ final class Workspace extends Equatable {
     DateTime? updatedAt,
     DateTime? deletedAt,
     bool? isDefault,
-  }) => Workspace(
-    id: id ?? this.id,
-    userId: userId ?? this.userId,
-    name: name ?? this.name,
-    type: type ?? this.type,
-    baseCurrency: baseCurrency ?? this.baseCurrency,
-    colorHex: colorHex ?? this.colorHex,
-    iconKey: iconKey ?? this.iconKey,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    deletedAt: deletedAt ?? this.deletedAt,
-    isDefault: isDefault ?? this.isDefault,
-  );
+  }) =>
+      Workspace(
+        id: id ?? this.id,
+        userId: userId ?? this.userId,
+        name: name ?? this.name,
+        type: type ?? this.type,
+        baseCurrency: baseCurrency ?? this.baseCurrency,
+        colorHex: colorHex ?? this.colorHex,
+        iconKey: iconKey ?? this.iconKey,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        deletedAt: deletedAt ?? this.deletedAt,
+        isDefault: isDefault ?? this.isDefault,
+      );
 
   /// Serializes to JSON.
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'id': id.value,
-    'user_id': userId.value,
-    'name': name,
-    'type': type.code,
-    'base_currency': baseCurrency.code,
-    'color_hex': colorHex,
-    'icon_key': iconKey,
-    'created_at': createdAt.toUtc().toIso8601String(),
-    'updated_at': updatedAt.toUtc().toIso8601String(),
-    'deleted_at': deletedAt?.toUtc().toIso8601String(),
-    'is_default': isDefault,
-  };
+        'id': id.value,
+        'user_id': userId.value,
+        'name': name,
+        'type': type.code,
+        'base_currency': baseCurrency.code,
+        'color_hex': colorHex,
+        'icon_key': iconKey,
+        'created_at': createdAt.toUtc().toIso8601String(),
+        'updated_at': updatedAt.toUtc().toIso8601String(),
+        'deleted_at': deletedAt?.toUtc().toIso8601String(),
+        'is_default': isDefault,
+      };
 
   /// Reconstructs from JSON.
   factory Workspace.fromJson(Map<String, dynamic> json) => Workspace(
-    id: Ulid(json['id'] as String),
-    userId: Ulid(json['user_id'] as String),
-    name: json['name'] as String,
-    type: WorkspaceType.parse(json['type'] as String),
-    baseCurrency: Currency.parse(json['base_currency'] as String),
-    colorHex: json['color_hex'] as String,
-    iconKey: json['icon_key'] as String?,
-    createdAt: DateTime.parse(json['created_at'] as String),
-    updatedAt: DateTime.parse(json['updated_at'] as String),
-    deletedAt: json['deleted_at'] == null
-        ? null
-        : DateTime.parse(json['deleted_at'] as String),
-    isDefault: json['is_default'] as bool,
-  );
+        id: Ulid(json['id'] as String),
+        userId: Ulid(json['user_id'] as String),
+        name: json['name'] as String,
+        type: WorkspaceType.parse(json['type'] as String),
+        baseCurrency: Currency.parse(json['base_currency'] as String),
+        colorHex: json['color_hex'] as String,
+        iconKey: json['icon_key'] as String?,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        updatedAt: DateTime.parse(json['updated_at'] as String),
+        deletedAt: json['deleted_at'] == null
+            ? null
+            : DateTime.parse(json['deleted_at'] as String),
+        isDefault: json['is_default'] as bool,
+      );
 
   @override
   List<Object?> get props => <Object?>[
-    id,
-    userId,
-    name,
-    type,
-    baseCurrency,
-    colorHex,
-    iconKey,
-    createdAt,
-    updatedAt,
-    deletedAt,
-    isDefault,
-  ];
+        id,
+        userId,
+        name,
+        type,
+        baseCurrency,
+        colorHex,
+        iconKey,
+        createdAt,
+        updatedAt,
+        deletedAt,
+        isDefault,
+      ];
 }

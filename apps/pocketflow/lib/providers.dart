@@ -136,8 +136,7 @@ final httpAuthRepositoryProvider = Provider<AuthRepository>((Ref ref) {
 final Provider<feedback.FeedbackService> feedbackServiceProvider =
     Provider<feedback.FeedbackService>((Ref ref) {
   final prefs = ref.watch(sharedPreferencesProvider);
-  final feedback.FeedbackService svc =
-      feedback.FeedbackService(prefs: prefs);
+  final feedback.FeedbackService svc = feedback.FeedbackService(prefs: prefs);
   ref.onDispose(svc.dispose);
   return svc;
 });

@@ -42,8 +42,8 @@ void main() {
   test('Light + dark semantic bundles expose distinct surfaces', () {
     expect(PfColors.light.surfaceBackground,
         isNot(equals(PfColors.dark.surfaceBackground)));
-    expect(PfColors.light.textPrimary,
-        isNot(equals(PfColors.dark.textPrimary)));
+    expect(
+        PfColors.light.textPrimary, isNot(equals(PfColors.dark.textPrimary)));
   });
 
   test('Data-viz palette has exactly 8 entries', () {

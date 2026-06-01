@@ -122,8 +122,7 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
       });
     }
 
-    final TransactionFilterState filter =
-        ref.watch(transactionFiltersProvider);
+    final TransactionFilterState filter = ref.watch(transactionFiltersProvider);
     final AsyncValue<List<Transaction>> async =
         ref.watch(filteredTransactionsProvider);
 
@@ -139,9 +138,8 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
               flexibleSpace: _SearchFlexibleSpace(
                 controller: _searchCtrl,
                 focusNode: _searchFocus,
-                onChanged: (String v) => ref
-                    .read(transactionFiltersProvider.notifier)
-                    .setQuery(v),
+                onChanged: (String v) =>
+                    ref.read(transactionFiltersProvider.notifier).setQuery(v),
               ),
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(48),

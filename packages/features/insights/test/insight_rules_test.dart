@@ -163,7 +163,8 @@ void main() {
   group('inactivityRule', () {
     test('fires after 5+ idle days', () {
       final tx = <Transaction>[
-        expense(majorUnits: 10, occurredAt: now.subtract(const Duration(days: 7))),
+        expense(
+            majorUnits: 10, occurredAt: now.subtract(const Duration(days: 7))),
       ];
       final insight = inactivityRule(ctxWith(transactions: tx));
       expect(insight, isNotNull);
@@ -172,7 +173,8 @@ void main() {
 
     test('does not fire when active recently', () {
       final tx = <Transaction>[
-        expense(majorUnits: 10, occurredAt: now.subtract(const Duration(days: 1))),
+        expense(
+            majorUnits: 10, occurredAt: now.subtract(const Duration(days: 1))),
       ];
       expect(inactivityRule(ctxWith(transactions: tx)), isNull);
     });

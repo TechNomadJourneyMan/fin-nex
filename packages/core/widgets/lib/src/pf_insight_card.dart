@@ -75,8 +75,7 @@ class PfInsightCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            Text(body,
-                style: typo.bodyMd.copyWith(color: colors.textPrimary)),
+            Text(body, style: typo.bodyMd.copyWith(color: colors.textPrimary)),
             if (actionLabel != null)
               Padding(
                 padding: const EdgeInsets.only(top: 12),

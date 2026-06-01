@@ -131,9 +131,8 @@ class DashboardController extends AsyncNotifier<DashboardSnapshot> {
     final breakdown = results[1] as List<CategoryBreakdownSlice>;
     final categories = results[2] as List<Category>;
 
-    final currency = accounts.isNotEmpty
-        ? accounts.first.currency
-        : Currency.kzt;
+    final currency =
+        accounts.isNotEmpty ? accounts.first.currency : Currency.kzt;
 
     var income = Money.zero(currency);
     var expense = Money.zero(currency);

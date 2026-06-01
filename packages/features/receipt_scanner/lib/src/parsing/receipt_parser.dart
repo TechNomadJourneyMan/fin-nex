@@ -60,10 +60,12 @@ class ReceiptParser {
   static const int _topWindow = 6;
 
   // dd.MM.yyyy or dd/MM/yyyy or dd-MM-yyyy
-  static final RegExp _ddmmyyyy = RegExp(r'\b(\d{2})[.\-/](\d{2})[.\-/](\d{4})\b');
+  static final RegExp _ddmmyyyy =
+      RegExp(r'\b(\d{2})[.\-/](\d{2})[.\-/](\d{4})\b');
 
   // yyyy-MM-dd or yyyy.MM.dd or yyyy/MM/dd
-  static final RegExp _yyyymmdd = RegExp(r'\b(\d{4})[.\-/](\d{2})[.\-/](\d{2})\b');
+  static final RegExp _yyyymmdd =
+      RegExp(r'\b(\d{4})[.\-/](\d{2})[.\-/](\d{2})\b');
 
   // Optional time HH:mm(:ss) appearing anywhere on a line.
   static final RegExp _time = RegExp(r'\b(\d{2}):(\d{2})(?::(\d{2}))?\b');
@@ -108,7 +110,8 @@ class ReceiptParser {
     final int totalMinor = _findTotalMinor(lines, currency);
     final DateTime occurredAt = _findDate(lines, fallback: nowResolved);
     final String? merchant = _findMerchant(lines);
-    final List<ReceiptLineItem> items = _findLineItems(lines, currency, totalMinor);
+    final List<ReceiptLineItem> items =
+        _findLineItems(lines, currency, totalMinor);
 
     return ParsedReceipt(
       totalMinor: totalMinor,
@@ -157,10 +160,11 @@ class ReceiptParser {
     BigInt minorFrac = BigInt.zero;
     if (fracPart != null && fracPart.isNotEmpty) {
       // Pad/truncate the fraction to the currency's minor-unit width.
-      final String padded = fracPart.padRight(currency.minorUnit, '0').substring(
-            0,
-            currency.minorUnit,
-          );
+      final String padded =
+          fracPart.padRight(currency.minorUnit, '0').substring(
+                0,
+                currency.minorUnit,
+              );
       minorFrac = BigInt.tryParse(padded) ?? BigInt.zero;
     }
     return (major * scale + minorFrac).toInt();
@@ -284,7 +288,8 @@ class ReceiptParser {
         continue;
       }
       // Must contain at least a couple of letters to be a name.
-      final int letters = line.replaceAll(RegExp(r'[^A-Za-zА-Яа-яЁё]'), '').length;
+      final int letters =
+          line.replaceAll(RegExp(r'[^A-Za-zА-Яа-яЁё]'), '').length;
       if (letters >= 2) {
         return line;
       }
@@ -327,7 +332,8 @@ class ReceiptParser {
         continue;
       }
       // A bare amount with no name (e.g. a stray subtotal) is skipped.
-      final int nameLetters = name.replaceAll(RegExp(r'[^A-Za-zА-Яа-яЁё]'), '').length;
+      final int nameLetters =
+          name.replaceAll(RegExp(r'[^A-Za-zА-Яа-яЁё]'), '').length;
       if (nameLetters < 2) {
         continue;
       }

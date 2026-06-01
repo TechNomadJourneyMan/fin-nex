@@ -394,9 +394,7 @@ class _AdaptiveRail extends StatelessWidget {
       extended: extended,
       selectedIndex: currentIndex,
       onDestinationSelected: onTap,
-      labelType: extended
-          ? null
-          : NavigationRailLabelType.selected,
+      labelType: extended ? null : NavigationRailLabelType.selected,
       indicatorColor: const Color(0x1FFFFFFF),
       destinations: <NavigationRailDestination>[
         for (final _NavSpec spec in destinations)

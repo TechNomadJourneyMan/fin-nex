@@ -104,7 +104,9 @@ class _DynamicIslandActionsState extends State<DynamicIslandActions>
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      for (int i = 0; i < widget.actions.length; i++) ...<Widget>[
+                      for (int i = 0;
+                          i < widget.actions.length;
+                          i++) ...<Widget>[
                         _IslandIconButton(
                           action: widget.actions[i],
                           expanded: widget.expanded,

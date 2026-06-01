@@ -25,11 +25,13 @@ class PfElevation extends ThemeExtension<PfElevation> {
 
   /// Flat — no shadow.
   static const List<BoxShadow> e0Light = <BoxShadow>[];
+
   /// Cards (default) — elevation 1, light.
   static const List<BoxShadow> e1Light = <BoxShadow>[
     BoxShadow(color: _lightAmbient, offset: Offset(0, 1), blurRadius: 2),
     BoxShadow(color: _lightAmbientLouder, offset: Offset(0, 1), blurRadius: 3),
   ];
+
   /// Raised cards / dropdowns — elevation 2, light.
   static const List<BoxShadow> e2Light = <BoxShadow>[
     BoxShadow(color: _lightAmbient, offset: Offset(0, 2), blurRadius: 4),
@@ -39,6 +41,7 @@ class PfElevation extends ThemeExtension<PfElevation> {
       blurRadius: 8,
     ),
   ];
+
   /// Bottom sheets / modals — elevation 3, light.
   static const List<BoxShadow> e3Light = <BoxShadow>[
     BoxShadow(
@@ -52,6 +55,7 @@ class PfElevation extends ThemeExtension<PfElevation> {
       blurRadius: 16,
     ),
   ];
+
   /// Dialogs / popovers — elevation 4, light.
   static const List<BoxShadow> e4Light = <BoxShadow>[
     BoxShadow(
@@ -65,6 +69,7 @@ class PfElevation extends ThemeExtension<PfElevation> {
       blurRadius: 24,
     ),
   ];
+
   /// Floating overlays / menus — elevation 5, light.
   static const List<BoxShadow> e5Light = <BoxShadow>[
     BoxShadow(
@@ -81,22 +86,27 @@ class PfElevation extends ThemeExtension<PfElevation> {
 
   /// Flat — no shadow (dark).
   static const List<BoxShadow> e0Dark = <BoxShadow>[];
+
   /// Cards (default) — elevation 1, dark.
   static const List<BoxShadow> e1Dark = <BoxShadow>[
     BoxShadow(color: _darkShadow40, offset: Offset(0, 1), blurRadius: 2),
   ];
+
   /// Raised cards — elevation 2, dark.
   static const List<BoxShadow> e2Dark = <BoxShadow>[
     BoxShadow(color: _darkShadow50, offset: Offset(0, 2), blurRadius: 4),
   ];
+
   /// Sheets — elevation 3, dark.
   static const List<BoxShadow> e3Dark = <BoxShadow>[
     BoxShadow(color: _darkShadow55, offset: Offset(0, 4), blurRadius: 8),
   ];
+
   /// Dialogs — elevation 4, dark.
   static const List<BoxShadow> e4Dark = <BoxShadow>[
     BoxShadow(color: _darkShadow60, offset: Offset(0, 8), blurRadius: 16),
   ];
+
   /// Overlays — elevation 5, dark.
   static const List<BoxShadow> e5Dark = <BoxShadow>[
     BoxShadow(color: _darkShadow65, offset: Offset(0, 12), blurRadius: 24),

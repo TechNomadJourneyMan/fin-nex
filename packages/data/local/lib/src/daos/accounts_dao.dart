@@ -105,7 +105,8 @@ class AccountsDao {
     final expense = (row['expense'] as num).toInt();
     final xferIn = (row['xfer_in'] as num).toInt();
     final xferOut = (row['xfer_out'] as num).toInt();
-    final balance = acc.initialBalanceMinor + income - expense + xferIn - xferOut;
+    final balance =
+        acc.initialBalanceMinor + income - expense + xferIn - xferOut;
     await _raw.update(
       _table,
       <String, Object?>{'balance_minor': balance},

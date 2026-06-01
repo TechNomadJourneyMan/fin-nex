@@ -129,9 +129,8 @@ class _BudgetFormPageState extends ConsumerState<BudgetFormPage> {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
-        title: Text(widget.budgetId == null
-            ? l10n.budgetsCreate
-            : l10n.commonEdit),
+        title: Text(
+            widget.budgetId == null ? l10n.budgetsCreate : l10n.commonEdit),
         actions: <Widget>[
           if (_editing != null)
             IconButton(
@@ -184,10 +183,9 @@ class _BudgetFormPageState extends ConsumerState<BudgetFormPage> {
                     .copyWith(color: colors.textSecondary)),
             SizedBox(height: spacing.s3),
             categoriesAsync.when(
-              loading: () =>
-                  const Center(child: CircularProgressIndicator()),
-              error: (e, _) => Text('$e',
-                  style: TextStyle(color: colors.error)),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (e, _) =>
+                  Text('$e', style: TextStyle(color: colors.error)),
               data: (list) => Wrap(
                 spacing: 8,
                 runSpacing: 8,

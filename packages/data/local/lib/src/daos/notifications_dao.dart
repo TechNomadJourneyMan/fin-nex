@@ -38,7 +38,8 @@ class NotificationsDao {
   }
 
   /// Watches the unread feed for [userId].
-  Stream<List<NotificationRow>> watchUnread(String userId, {int? limit}) async* {
+  Stream<List<NotificationRow>> watchUnread(String userId,
+      {int? limit}) async* {
     yield await unread(userId, limit: limit);
     await for (final _ in db.changeBus.watch(_table)) {
       yield await unread(userId, limit: limit);

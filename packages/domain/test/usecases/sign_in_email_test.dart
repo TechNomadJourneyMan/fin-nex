@@ -42,8 +42,8 @@ void main() {
     when(() => auth.signInWithEmail(email: 'a@b.com', password: '12345678'))
         .thenAnswer((_) async => session);
 
-    final out = await SignInEmail(auth)
-        .call(email: 'a@b.com', password: '12345678');
+    final out =
+        await SignInEmail(auth).call(email: 'a@b.com', password: '12345678');
 
     expect(out, session);
   });

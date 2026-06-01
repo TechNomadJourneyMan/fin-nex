@@ -69,8 +69,7 @@ class _PhoneOtpPageState extends ConsumerState<PhoneOtpPage> {
   Widget build(BuildContext context) {
     final l10n = AppL10n.of(context);
     final state = ref.watch(authControllerProvider);
-    final loading =
-        state.isLoading || (state.valueOrNull is Authenticating);
+    final loading = state.isLoading || (state.valueOrNull is Authenticating);
     final failure = state.hasError && !state.isLoading
         ? state.error
         : (state.valueOrNull is AuthError
@@ -132,7 +131,8 @@ class _PhoneOtpPageState extends ConsumerState<PhoneOtpPage> {
                     const SizedBox(height: 24),
                     if (_resendIn > 0)
                       Text(
-                        l10n.authOtpResendIn('00:${_resendIn.toString().padLeft(2, '0')}'),
+                        l10n.authOtpResendIn(
+                            '00:${_resendIn.toString().padLeft(2, '0')}'),
                         textAlign: TextAlign.center,
                       )
                     else

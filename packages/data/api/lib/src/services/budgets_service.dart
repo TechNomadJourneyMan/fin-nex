@@ -20,11 +20,9 @@ class BudgetsService {
             if (status != null) 'status': status,
           },
         );
-        final data =
-            (res.data?['data'] as List<dynamic>?) ?? const <dynamic>[];
+        final data = (res.data?['data'] as List<dynamic>?) ?? const <dynamic>[];
         return data
-            .map((dynamic e) =>
-                BudgetDto.fromJson(e as Map<String, dynamic>))
+            .map((dynamic e) => BudgetDto.fromJson(e as Map<String, dynamic>))
             .toList(growable: false);
       });
 

@@ -25,8 +25,7 @@ class SessionDevicesPage extends ConsumerStatefulWidget {
   const SessionDevicesPage({super.key});
 
   @override
-  ConsumerState<SessionDevicesPage> createState() =>
-      _SessionDevicesPageState();
+  ConsumerState<SessionDevicesPage> createState() => _SessionDevicesPageState();
 }
 
 class _SessionDevicesPageState extends ConsumerState<SessionDevicesPage> {

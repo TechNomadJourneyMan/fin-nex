@@ -30,8 +30,7 @@ class ExportService {
       });
 
   /// Returns the signed download URL via a 302 redirect's `Location` header.
-  Future<String> downloadUrl(String jobId) =>
-      DioServiceHelpers.guard(() async {
+  Future<String> downloadUrl(String jobId) => DioServiceHelpers.guard(() async {
         final res = await _dio.get<dynamic>(
           '/export/$jobId/download',
           options: Options(

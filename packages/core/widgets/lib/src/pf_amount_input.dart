@@ -118,7 +118,8 @@ class _PfAmountInputState extends State<PfAmountInput> {
               children: [
                 for (final q in widget.quickAmounts)
                   ActionChip(
-                    label: Text('+${formatPfAmount(q, locale: widget.locale, currencySymbol: null)}'),
+                    label: Text(
+                        '+${formatPfAmount(q, locale: widget.locale, currencySymbol: null)}'),
                     onPressed: () => _add(q),
                   ),
               ],

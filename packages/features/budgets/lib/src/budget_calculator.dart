@@ -18,8 +18,7 @@ class BudgetPeriodWindow {
   final DateTime end;
 
   /// True if [t] falls inside `[start, end)`.
-  bool contains(DateTime t) =>
-      !t.isBefore(start) && t.isBefore(end);
+  bool contains(DateTime t) => !t.isBefore(start) && t.isBefore(end);
 }
 
 /// Pure functions that compute budget progress.
@@ -42,8 +41,7 @@ class BudgetCalculator {
       case BudgetPeriod.weekly:
         // ISO week: Monday = 1, Sunday = 7.
         final startOfDay = DateTime(ref.year, ref.month, ref.day);
-        final start =
-            startOfDay.subtract(Duration(days: ref.weekday - 1));
+        final start = startOfDay.subtract(Duration(days: ref.weekday - 1));
         final end = start.add(const Duration(days: 7));
         return BudgetPeriodWindow(start: start, end: end);
       case BudgetPeriod.monthly:
@@ -61,8 +59,8 @@ class BudgetCalculator {
         return BudgetPeriodWindow(start: start, end: end);
       case BudgetPeriod.custom:
         final start = budget.startsOn.toLocal();
-        final end = budget.endsOn?.toLocal() ??
-            start.add(const Duration(days: 30));
+        final end =
+            budget.endsOn?.toLocal() ?? start.add(const Duration(days: 30));
         return BudgetPeriodWindow(start: start, end: end);
     }
   }

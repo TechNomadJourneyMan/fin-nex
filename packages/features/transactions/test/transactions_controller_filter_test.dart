@@ -50,8 +50,8 @@ void main() {
     ];
 
     test('strips soft-deleted rows', () {
-      final List<Transaction> result =
-          TransactionsController.applyFilter(txs, const TransactionFilterState());
+      final List<Transaction> result = TransactionsController.applyFilter(
+          txs, const TransactionFilterState());
       expect(result.length, 3);
       expect(result.every((Transaction t) => t.deletedAt == null), isTrue);
     });
@@ -77,7 +77,8 @@ void main() {
     test('filters by type', () {
       final List<Transaction> result = TransactionsController.applyFilter(
         txs,
-        const TransactionFilterState(types: <TransactionType>[TransactionType.income]),
+        const TransactionFilterState(
+            types: <TransactionType>[TransactionType.income]),
       );
       expect(result.length, 1);
       expect(result.first.type, TransactionType.income);
@@ -104,8 +105,8 @@ void main() {
     });
 
     test('returns rows sorted newest-first', () {
-      final List<Transaction> result =
-          TransactionsController.applyFilter(txs, const TransactionFilterState());
+      final List<Transaction> result = TransactionsController.applyFilter(
+          txs, const TransactionFilterState());
       for (int i = 0; i < result.length - 1; i++) {
         expect(
           result[i].occurredAt.isAfter(result[i + 1].occurredAt) ||

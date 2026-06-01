@@ -43,6 +43,5 @@ abstract final class PfChartPalette {
   ];
 
   /// Returns the [index]-th categorical color, wrapping around.
-  static Color at(int index) =>
-      categorical[index.abs() % categorical.length];
+  static Color at(int index) => categorical[index.abs() % categorical.length];
 }

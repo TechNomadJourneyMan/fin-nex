@@ -7,7 +7,8 @@ import 'package:dio/dio.dart';
 /// `options.extra['skipIdempotency'] = true` or providing the header up-front.
 class IdempotencyInterceptor extends Interceptor {
   /// Default constructor; an optional [random] makes the generator testable.
-  IdempotencyInterceptor({Random? random}) : _random = random ?? Random.secure();
+  IdempotencyInterceptor({Random? random})
+      : _random = random ?? Random.secure();
 
   final Random _random;
 

@@ -87,8 +87,8 @@ void main() {
       ctrl.setAmount(2500);
       await ctrl.save();
 
-      final QuickAddFormState after = container
-          .read(quickAddControllerProvider(TransactionType.expense));
+      final QuickAddFormState after =
+          container.read(quickAddControllerProvider(TransactionType.expense));
       expect(after.amountMinor, 0);
       expect(after.accountId?.value, account.value);
       expect(after.categoryId?.value, category.value);

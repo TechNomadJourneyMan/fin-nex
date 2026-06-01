@@ -19,11 +19,9 @@ class AccountsService {
             'include_archived': includeArchived,
           },
         );
-        final data =
-            (res.data?['data'] as List<dynamic>?) ?? const <dynamic>[];
+        final data = (res.data?['data'] as List<dynamic>?) ?? const <dynamic>[];
         return data
-            .map((dynamic e) =>
-                AccountDto.fromJson(e as Map<String, dynamic>))
+            .map((dynamic e) => AccountDto.fromJson(e as Map<String, dynamic>))
             .toList(growable: false);
       });
 

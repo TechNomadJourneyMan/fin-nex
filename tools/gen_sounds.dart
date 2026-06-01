@@ -108,7 +108,8 @@ Uint8List _genAchievement() {
 
 /// Triangular attack/release envelope for [t] in seconds.
 /// Returns 0 outside [startSec, startSec+attack+release].
-double _attackRelease(double t, double startSec, double attack, double release) {
+double _attackRelease(
+    double t, double startSec, double attack, double release) {
   if (t < startSec) return 0;
   final double dt = t - startSec;
   if (dt < attack) return dt / attack;
@@ -135,8 +136,7 @@ List<double> _synthesize({
 Uint8List _encodeWav(List<double> samples) {
   final int dataLen = samples.length * (_kBitsPerSample ~/ 8);
   final int riffLen = 36 + dataLen;
-  final int byteRate =
-      _kSampleRate * _kChannels * (_kBitsPerSample ~/ 8);
+  final int byteRate = _kSampleRate * _kChannels * (_kBitsPerSample ~/ 8);
   final int blockAlign = _kChannels * (_kBitsPerSample ~/ 8);
 
   final BytesBuilder bb = BytesBuilder(copy: false);

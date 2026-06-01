@@ -27,8 +27,7 @@ class PfChartEmpty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final Color muted =
-        theme.colorScheme.onSurface.withValues(alpha: 0.45);
+    final Color muted = theme.colorScheme.onSurface.withValues(alpha: 0.45);
     return SizedBox(
       height: height,
       child: Center(

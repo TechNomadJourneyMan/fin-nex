@@ -226,8 +226,7 @@ class _TransactionFormPageState extends ConsumerState<TransactionFormPage> {
                   children: <Widget>[
                     _MetaPillAccount(
                       selectedId: _accountId,
-                      onChanged: (Ulid id) =>
-                          setState(() => _accountId = id),
+                      onChanged: (Ulid id) => setState(() => _accountId = id),
                     ),
                     const SizedBox(width: 8),
                     _MetaPill(
@@ -520,8 +519,7 @@ class _CategoryStrip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<Category>> cats =
-        ref.watch(categoriesStreamProvider);
+    final AsyncValue<List<Category>> cats = ref.watch(categoriesStreamProvider);
     final List<Category> visible = (cats.valueOrNull ?? <Category>[])
         .where((Category c) => c.type == type && !c.isArchived)
         .toList(growable: false);
@@ -551,8 +549,8 @@ class _CategoryStrip extends ConsumerWidget {
               icon: _iconFor(c.iconKey),
               label: c.name,
               selected: selectedId == c.id,
-              color: Color(int.parse(c.color.hex.substring(1), radix: 16) |
-                  0xFF000000),
+              color: Color(
+                  int.parse(c.color.hex.substring(1), radix: 16) | 0xFF000000),
               onTap: () => onChanged(c.id),
             ),
             const SizedBox(width: 8),
@@ -582,8 +580,7 @@ class _CategoryChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color bg =
         selected ? color.withValues(alpha: 0.25) : const Color(0xFF14141A);
-    final Color border =
-        selected ? color : const Color(0xFF14141A);
+    final Color border = selected ? color : const Color(0xFF14141A);
     return InkWell(
       borderRadius: BorderRadius.circular(18),
       onTap: onTap,
@@ -677,7 +674,8 @@ class _CalculatorNumpadState extends State<_CalculatorNumpad> {
     final int major = int.tryParse(parts[0]) ?? 0;
     int cents = 0;
     if (parts.length == 2 && parts[1].isNotEmpty) {
-      final String c = parts[1].padRight(widget.minorUnits, '0')
+      final String c = parts[1]
+          .padRight(widget.minorUnits, '0')
           .substring(0, widget.minorUnits);
       cents = int.tryParse(c) ?? 0;
     }

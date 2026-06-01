@@ -30,8 +30,7 @@ class QuickAddBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppL10n.of(context);
     final Currency currency = ref.watch(defaultCurrencyProvider);
-    final QuickAddFormState form =
-        ref.watch(quickAddControllerProvider(type));
+    final QuickAddFormState form = ref.watch(quickAddControllerProvider(type));
     final QuickAddController ctrl =
         ref.read(quickAddControllerProvider(type).notifier);
 

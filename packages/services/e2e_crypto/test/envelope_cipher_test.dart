@@ -6,7 +6,8 @@ import 'package:test/test.dart';
 
 void main() {
   group('AES-GCM-256 envelope roundtrip', () {
-    test('1000 random payloads roundtrip through the envelope cipher', () async {
+    test('1000 random payloads roundtrip through the envelope cipher',
+        () async {
       final rng = Random(0xF12E);
       final key = _randomBytes(rng, 32);
 
@@ -37,7 +38,8 @@ void main() {
       expect(await decrypt(key, restored), equals(plaintext));
     });
 
-    test('two encryptions of the same plaintext use different nonces', () async {
+    test('two encryptions of the same plaintext use different nonces',
+        () async {
       final rng = Random(3);
       final key = _randomBytes(rng, 32);
       final plaintext = _randomBytes(rng, 64);

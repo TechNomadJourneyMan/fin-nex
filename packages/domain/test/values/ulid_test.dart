@@ -26,8 +26,7 @@ void main() {
     test('createdAt round-trips through timestamp', () {
       final fixed = DateTime.utc(2026, 5, 31, 12, 0, 0);
       final id = Ulid.now(at: fixed);
-      expect(id.createdAt.millisecondsSinceEpoch,
-          fixed.millisecondsSinceEpoch);
+      expect(id.createdAt.millisecondsSinceEpoch, fixed.millisecondsSinceEpoch);
     });
 
     test('different generations yield different ids', () {

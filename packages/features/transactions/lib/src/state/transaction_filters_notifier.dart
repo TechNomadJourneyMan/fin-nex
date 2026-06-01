@@ -16,8 +16,7 @@ import 'transaction_filter_state.dart';
 /// discrete, low-frequency interactions.
 class TransactionFiltersNotifier extends StateNotifier<TransactionFilterState> {
   /// Creates the notifier seeded with an empty filter.
-  TransactionFiltersNotifier()
-      : super(const TransactionFilterState());
+  TransactionFiltersNotifier() : super(const TransactionFilterState());
 
   Timer? _debounce;
 
@@ -109,7 +108,6 @@ final filteredTransactionsProvider =
   final AsyncValue<List<Transaction>> all =
       ref.watch(transactionsStreamProvider);
   return all.whenData(
-    (List<Transaction> txs) =>
-        TransactionsController.applyFilter(txs, filter),
+    (List<Transaction> txs) => TransactionsController.applyFilter(txs, filter),
   );
 });

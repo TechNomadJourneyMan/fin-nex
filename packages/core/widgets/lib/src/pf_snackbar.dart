@@ -37,8 +37,7 @@ extension PfSnackbarX on BuildContext {
           message,
           style: TextStyle(color: colors.onBrand),
         ),
-        backgroundColor:
-            isError ? colors.error : colors.textPrimary,
+        backgroundColor: isError ? colors.error : colors.textPrimary,
         behavior: SnackBarBehavior.floating,
         margin: const EdgeInsets.all(16),
         shape: RoundedRectangleBorder(

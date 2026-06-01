@@ -50,8 +50,8 @@ class PfBudgetProgress extends StatelessWidget {
       fill = colors.brand;
     }
 
-    final spentLabel = formatPfAmount(spentMinor,
-        locale: locale, currencySymbol: null);
+    final spentLabel =
+        formatPfAmount(spentMinor, locale: locale, currencySymbol: null);
     final limitLabel = formatPfAmount(limitMinor,
         locale: locale, currencySymbol: currencySymbol);
     final pct = (ratio * 100).round();
@@ -66,8 +66,7 @@ class PfBudgetProgress extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(label,
-                    style: typo.bodyMd
-                        .copyWith(fontWeight: FontWeight.w600)),
+                    style: typo.bodyMd.copyWith(fontWeight: FontWeight.w600)),
               ),
               Text(
                 '$spentLabel / $limitLabel',

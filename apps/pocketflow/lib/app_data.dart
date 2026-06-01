@@ -169,7 +169,8 @@ class AppDataModule {
     required Ulid demoUserId,
     required IdMapper ids,
   }) async {
-    final List<local.AccountRow> existing = await acctRepo.list(demoUserId.value);
+    final List<local.AccountRow> existing =
+        await acctRepo.list(demoUserId.value);
     if (existing.isNotEmpty) {
       return;
     }
@@ -330,8 +331,7 @@ class _TransactionsAdapter implements TransactionsRepository {
   final IdMapper _ids;
 
   Transaction _toDomain(local.TransactionRow r) {
-    final Currency currency =
-        Currency.tryParse(r.currency) ?? Currency.kzt;
+    final Currency currency = Currency.tryParse(r.currency) ?? Currency.kzt;
     return Transaction(
       id: _ids.stringToUlid(r.id),
       userId: _ids.stringToUlid(r.userId),
@@ -385,7 +385,8 @@ class _TransactionsAdapter implements TransactionsRepository {
   }
 
   @override
-  Stream<List<Transaction>> watchAll(Ulid userId) => _safeStream<List<Transaction>>(
+  Stream<List<Transaction>> watchAll(Ulid userId) =>
+      _safeStream<List<Transaction>>(
         () => _repo.watch(_ids.ulidToString(userId)).map(
               (List<local.TransactionRow> rows) =>
                   rows.map(_toDomain).toList(growable: false),
@@ -402,8 +403,7 @@ class _TransactionsAdapter implements TransactionsRepository {
       final String? categoryId = filter.categoryIds.isEmpty
           ? null
           : _ids.ulidToString(filter.categoryIds.first);
-      final String? typeCode =
-          filter.types.isEmpty ? null : filter.types.first;
+      final String? typeCode = filter.types.isEmpty ? null : filter.types.first;
       final List<local.TransactionRow> rows = await _repo.list(
         _ids.ulidToString(userId),
         from: filter.from,
@@ -442,8 +442,7 @@ class _AccountsAdapter implements AccountsRepository {
   final IdMapper _ids;
 
   Account _toDomain(local.AccountRow r) {
-    final Currency currency =
-        Currency.tryParse(r.currency) ?? Currency.kzt;
+    final Currency currency = Currency.tryParse(r.currency) ?? Currency.kzt;
     return Account(
       id: _ids.stringToUlid(r.id),
       userId: _ids.stringToUlid(r.userId),
@@ -516,8 +515,7 @@ class _AccountsAdapter implements AccountsRepository {
   @override
   Future<Account?> getById(Ulid id) async {
     return _safeDb<Account?>(() async {
-      final local.AccountRow? row =
-          await _repo.findById(_ids.ulidToString(id));
+      final local.AccountRow? row = await _repo.findById(_ids.ulidToString(id));
       return row == null ? null : _toDomain(row);
     }, null);
   }
@@ -638,8 +636,7 @@ class _LiveAnalyticsRepository implements AnalyticsRepository {
       const TransactionFilter(),
     );
 
-    final Currency primary =
-        accs.isEmpty ? Currency.kzt : accs.first.currency;
+    final Currency primary = accs.isEmpty ? Currency.kzt : accs.first.currency;
     Money netWorth = Money.zero(primary);
     for (final Account a in accs) {
       if (!a.includeInTotal || a.deletedAt != null) continue;

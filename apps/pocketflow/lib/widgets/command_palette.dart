@@ -112,9 +112,8 @@ List<PaletteCommand> buildCommands(AppL10n l10n) {
       run: (BuildContext context, WidgetRef ref) {
         final ThemeMode current = ref.read(settings.themeProvider);
         // Flip between light and dark explicitly (the app launches dark).
-        final ThemeMode next = current == ThemeMode.light
-            ? ThemeMode.dark
-            : ThemeMode.light;
+        final ThemeMode next =
+            current == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
         // ignore: discarded_futures
         ref.read(settings.themeProvider.notifier).set(next);
       },
@@ -123,7 +122,8 @@ List<PaletteCommand> buildCommands(AppL10n l10n) {
       id: 'switch-language',
       label: l10n.cmdSwitchLanguage,
       icon: Icons.translate_outlined,
-      run: (BuildContext context, WidgetRef ref) => context.go('/settings/language'),
+      run: (BuildContext context, WidgetRef ref) =>
+          context.go('/settings/language'),
     ),
   ];
 }

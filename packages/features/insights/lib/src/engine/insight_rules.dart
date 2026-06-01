@@ -111,7 +111,6 @@ abstract final class _Calc {
     }
     return sum;
   }
-
 }
 
 Insight _build({
@@ -189,9 +188,8 @@ Insight? budgetWarningRule(RuleContext ctx) {
       continue;
     }
     final spent = _Calc.sumMinor(
-      _Calc.expensesBetween(ctx.transactions, start, ctx.currentDate)
-          .where((t) =>
-              b.categoryIds.isEmpty || b.categoryIds.contains(t.categoryId)),
+      _Calc.expensesBetween(ctx.transactions, start, ctx.currentDate).where(
+          (t) => b.categoryIds.isEmpty || b.categoryIds.contains(t.categoryId)),
     );
     if (b.amount.minor == BigInt.zero) {
       continue;
@@ -224,9 +222,8 @@ Insight? budgetExceededRule(RuleContext ctx) {
     }
     final start = b.startsOn;
     final spent = _Calc.sumMinor(
-      _Calc.expensesBetween(ctx.transactions, start, ctx.currentDate)
-          .where((t) =>
-              b.categoryIds.isEmpty || b.categoryIds.contains(t.categoryId)),
+      _Calc.expensesBetween(ctx.transactions, start, ctx.currentDate).where(
+          (t) => b.categoryIds.isEmpty || b.categoryIds.contains(t.categoryId)),
     );
     if (b.amount.minor == BigInt.zero) {
       continue;
@@ -351,7 +348,8 @@ Insight? saveOpportunityRule(RuleContext ctx) {
     ctx: ctx,
     ruleKey: InsightRuleKeys.saveOpportunity,
     title: 'Spending down $pct% this week',
-    body: "Nice — you're spending less than last week. Consider stashing the difference.",
+    body:
+        "Nice — you're spending less than last week. Consider stashing the difference.",
     severity: InsightSeverity.celebration,
     payload: <String, dynamic>{'pct': pct},
   );
@@ -485,8 +483,8 @@ Insight? inactivityRule(RuleContext ctx) {
   final last = ctx.transactions
       .where((t) => t.deletedAt == null)
       .map((t) => t.occurredAt)
-      .fold<DateTime?>(null,
-          (acc, d) => acc == null || d.isAfter(acc) ? d : acc);
+      .fold<DateTime?>(
+          null, (acc, d) => acc == null || d.isAfter(acc) ? d : acc);
   if (last == null) {
     return null;
   }
@@ -798,8 +796,7 @@ Insight? cashflowTrendRule(RuleContext ctx) {
       if (t.deletedAt != null) {
         continue;
       }
-      if (t.occurredAt.isBefore(weekStart) ||
-          !t.occurredAt.isBefore(weekEnd)) {
+      if (t.occurredAt.isBefore(weekStart) || !t.occurredAt.isBefore(weekEnd)) {
         continue;
       }
       if (t.type == TransactionType.income) {
@@ -846,12 +843,10 @@ Insight? budgetForecastRule(RuleContext ctx) {
       continue;
     }
     final start = _Calc.startOfMonth(ctx.currentDate);
-    final daysElapsed =
-        ctx.currentDate.difference(start).inDays.clamp(1, 31);
+    final daysElapsed = ctx.currentDate.difference(start).inDays.clamp(1, 31);
     final spent = _Calc.sumMinor(
-      _Calc.expensesBetween(ctx.transactions, start, ctx.currentDate)
-          .where((t) =>
-              b.categoryIds.isEmpty || b.categoryIds.contains(t.categoryId)),
+      _Calc.expensesBetween(ctx.transactions, start, ctx.currentDate).where(
+          (t) => b.categoryIds.isEmpty || b.categoryIds.contains(t.categoryId)),
     );
     final lastDayOfMonth =
         DateTime(ctx.currentDate.year, ctx.currentDate.month + 1, 0).day;

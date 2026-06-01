@@ -185,9 +185,8 @@ class PfButton extends StatelessWidget {
       button: true,
       enabled: !disabled,
       label: semanticLabel ?? label,
-      child: fullWidth
-          ? SizedBox(width: double.infinity, child: button)
-          : button,
+      child:
+          fullWidth ? SizedBox(width: double.infinity, child: button) : button,
     );
   }
 }

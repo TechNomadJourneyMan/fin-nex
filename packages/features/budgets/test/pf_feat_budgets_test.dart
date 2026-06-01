@@ -126,15 +126,14 @@ void main() {
       final txs = <Transaction>[
         mkTx(minor: 2000, at: at),
       ];
-      expect(calc.hitThreshold(budget, txs, now: DateTime(2026, 5, 11)),
-          isNull);
+      expect(
+          calc.hitThreshold(budget, txs, now: DateTime(2026, 5, 11)), isNull);
     });
 
     test('ratio is zero for zero-cap budget', () {
       final budget = mkBudget(limitMinor: 0);
       expect(
-        calc.ratio(budget, const <Transaction>[],
-            now: DateTime(2026, 5, 11)),
+        calc.ratio(budget, const <Transaction>[], now: DateTime(2026, 5, 11)),
         0.0,
       );
     });

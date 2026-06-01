@@ -82,12 +82,14 @@ class PfSelect<T> extends StatelessWidget {
                   child: Row(
                     children: [
                       if (option.icon != null) ...[
-                        Icon(option.icon, size: 18, color: colors.textSecondary),
+                        Icon(option.icon,
+                            size: 18, color: colors.textSecondary),
                         SizedBox(width: spacing.s3),
                       ],
                       Flexible(
                         child: Text(option.label,
-                            style: typo.bodyMd, overflow: TextOverflow.ellipsis),
+                            style: typo.bodyMd,
+                            overflow: TextOverflow.ellipsis),
                       ),
                     ],
                   ),

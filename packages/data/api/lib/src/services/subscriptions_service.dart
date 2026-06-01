@@ -12,8 +12,7 @@ class SubscriptionsService {
 
   /// Fetch the current user's subscription state.
   Future<SubscriptionDto> me() => DioServiceHelpers.guard(() async {
-        final res =
-            await _dio.get<Map<String, dynamic>>('/subscriptions/me');
+        final res = await _dio.get<Map<String, dynamic>>('/subscriptions/me');
         return SubscriptionDto.fromJson(res.data ?? const <String, dynamic>{});
       });
 

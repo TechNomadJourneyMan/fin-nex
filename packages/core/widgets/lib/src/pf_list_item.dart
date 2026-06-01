@@ -74,8 +74,8 @@ class PfListItem extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          style: typo.bodyLg
-                              .copyWith(fontWeight: FontWeight.w500),
+                          style:
+                              typo.bodyLg.copyWith(fontWeight: FontWeight.w500),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -84,8 +84,8 @@ class PfListItem extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 2),
                             child: Text(
                               subtitle!,
-                              style: typo.bodySm
-                                  .copyWith(color: colors.textMuted),
+                              style:
+                                  typo.bodySm.copyWith(color: colors.textMuted),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),

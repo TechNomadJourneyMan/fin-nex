@@ -37,11 +37,11 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   Future<void> _submit() async {
     final l10n = AppL10n.of(context);
     setState(() {
-      _emailError = !RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(_email.text.trim())
-          ? l10n.commonRequired
-          : null;
-      _passwordError =
-          _password.text.length < 8 ? l10n.commonRequired : null;
+      _emailError =
+          !RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(_email.text.trim())
+              ? l10n.commonRequired
+              : null;
+      _passwordError = _password.text.length < 8 ? l10n.commonRequired : null;
     });
     if (_emailError != null || _passwordError != null) return;
     if (!(_formKey.currentState?.validate() ?? false)) return;
@@ -55,8 +55,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   Widget build(BuildContext context) {
     final l10n = AppL10n.of(context);
     final state = ref.watch(authControllerProvider);
-    final loading =
-        state.isLoading || (state.valueOrNull is Authenticating);
+    final loading = state.isLoading || (state.valueOrNull is Authenticating);
     final failure = state.hasError && !state.isLoading
         ? state.error
         : (state.valueOrNull is AuthError

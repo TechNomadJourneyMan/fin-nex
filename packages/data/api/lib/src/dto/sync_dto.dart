@@ -38,8 +38,7 @@ class SyncChangeDto {
         op: json['op'] as String,
         id: json['id'] as String?,
         clientId: json['client_id'] as String?,
-        clientUpdatedAt:
-            DateTime.parse(json['client_updated_at'] as String),
+        clientUpdatedAt: DateTime.parse(json['client_updated_at'] as String),
         clientRevision: (json['client_revision'] as num?)?.toInt() ?? 0,
         payload: (json['payload'] as Map<String, dynamic>?) ??
             const <String, dynamic>{},
@@ -214,11 +213,10 @@ class PushResponse {
   factory PushResponse.fromJson(Map<String, dynamic> json) => PushResponse(
         accepted: (json['accepted'] as num?)?.toInt() ?? 0,
         serverRevision: (json['server_revision'] as num?)?.toInt() ?? 0,
-        conflicts:
-            ((json['conflicts'] as List<dynamic>?) ?? const <dynamic>[])
-                .map((dynamic e) =>
-                    SyncConflictDto.fromJson(e as Map<String, dynamic>))
-                .toList(growable: false),
+        conflicts: ((json['conflicts'] as List<dynamic>?) ?? const <dynamic>[])
+            .map((dynamic e) =>
+                SyncConflictDto.fromJson(e as Map<String, dynamic>))
+            .toList(growable: false),
         rejected: ((json['rejected'] as List<dynamic>?) ?? const <dynamic>[])
             .map((dynamic e) =>
                 SyncRejectionDto.fromJson(e as Map<String, dynamic>))
@@ -342,8 +340,9 @@ class PullResponse {
 
   /// Serialize to JSON.
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'changes':
-            changes.map((PullChangeDto e) => e.toJson()).toList(growable: false),
+        'changes': changes
+            .map((PullChangeDto e) => e.toJson())
+            .toList(growable: false),
         'server_revision': serverRevision,
         'server_time': serverTime.toUtc().toIso8601String(),
         if (nextCursor != null) 'next_cursor': nextCursor,

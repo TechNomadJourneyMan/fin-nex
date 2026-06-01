@@ -151,8 +151,8 @@ void main() {
         type: 'cash',
         currency: 'KZT',
       ));
-      final key = adapter.recorded.single.headers['X-Idempotency-Key']
-          as String?;
+      final key =
+          adapter.recorded.single.headers['X-Idempotency-Key'] as String?;
       expect(key, isNotNull);
       // UUID v4 format check.
       final regex = RegExp(

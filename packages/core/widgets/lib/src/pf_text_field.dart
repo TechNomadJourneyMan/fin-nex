@@ -135,8 +135,7 @@ class _PfTextFieldState extends State<PfTextField> {
     // we wrap the field in an AnimatedContainer so the *outer* border ramps
     // its width 1 -> 2 and color neutral -> primary using PfMotion tokens.
     // This honors reduced-motion via PfMotion.effective.
-    final Duration borderDuration =
-        PfMotion.effective(context, PfMotion.fast);
+    final Duration borderDuration = PfMotion.effective(context, PfMotion.fast);
     final Color borderColor = widget.errorText != null
         ? colors.error
         : (_focused ? colors.brand : colors.borderDefault);
@@ -159,8 +158,8 @@ class _PfTextFieldState extends State<PfTextField> {
           if (widget.label != null) ...[
             Text(
               widget.label!,
-              style: typo.bodySm
-                  .copyWith(fontWeight: FontWeight.w500, color: colors.textSecondary),
+              style: typo.bodySm.copyWith(
+                  fontWeight: FontWeight.w500, color: colors.textSecondary),
             ),
             SizedBox(height: spacing.s2),
           ],

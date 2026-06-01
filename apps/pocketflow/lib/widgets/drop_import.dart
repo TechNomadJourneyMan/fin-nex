@@ -170,8 +170,7 @@ class _DropImportTargetState extends ConsumerState<DropImportTarget> {
       if (minor == null) {
         continue;
       }
-      final DateTime occurred =
-          _parseDate(_cell(row, mapping.date)) ?? now;
+      final DateTime occurred = _parseDate(_cell(row, mapping.date)) ?? now;
       final String? merchant =
           mapping.merchant == null ? null : _cell(row, mapping.merchant!);
       final String? catName =
@@ -195,9 +194,8 @@ class _DropImportTargetState extends ConsumerState<DropImportTarget> {
           attachmentIds: const <Ulid>[],
           tagIds: const <Ulid>[],
           categoryId: categoryId,
-          description: (merchant != null && merchant.isNotEmpty)
-              ? merchant
-              : null,
+          description:
+              (merchant != null && merchant.isNotEmpty) ? merchant : null,
         ),
       );
       imported++;
@@ -225,8 +223,7 @@ class _DropImportTargetState extends ConsumerState<DropImportTarget> {
     } catch (_) {
       text = '';
     }
-    final receipt.ParsedReceipt parsed =
-        parser.parse(text, currency: currency);
+    final receipt.ParsedReceipt parsed = parser.parse(text, currency: currency);
 
     if (!mounted) {
       return;
@@ -236,8 +233,7 @@ class _DropImportTargetState extends ConsumerState<DropImportTarget> {
         builder: (BuildContext _) => receipt.ReceiptConfirmPage(
           receipt: parsed,
           imagePath: path,
-          onSave: (receipt.ParsedReceipt edited) =>
-              _saveFromReceipt(edited),
+          onSave: (receipt.ParsedReceipt edited) => _saveFromReceipt(edited),
         ),
       ),
     );
@@ -285,9 +281,8 @@ BigInt? _parseAmountMinor(String raw, Currency currency) {
     return null;
   }
   // Strip currency symbols / spaces; tolerate comma decimals.
-  final String cleaned = raw
-      .replaceAll(RegExp(r'[^0-9,.\-]'), '')
-      .replaceAll(',', '.');
+  final String cleaned =
+      raw.replaceAll(RegExp(r'[^0-9,.\-]'), '').replaceAll(',', '.');
   final double? value = double.tryParse(cleaned);
   if (value == null) {
     return null;
@@ -405,15 +400,13 @@ class _CsvPreviewDialogState extends State<_CsvPreviewDialog> {
               label: l10n.importColumnDate,
               header: widget.header,
               value: _date,
-              onChanged: (int? v) =>
-                  setState(() => _date = v ?? _date),
+              onChanged: (int? v) => setState(() => _date = v ?? _date),
             ),
             _ColumnDropdown(
               label: l10n.importColumnAmount,
               header: widget.header,
               value: _amount,
-              onChanged: (int? v) =>
-                  setState(() => _amount = v ?? _amount),
+              onChanged: (int? v) => setState(() => _amount = v ?? _amount),
             ),
             _ColumnDropdown(
               label: l10n.importColumnMerchant,

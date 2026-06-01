@@ -48,7 +48,8 @@ class EncryptedEnvelope {
 /// e.g. the wrong key was supplied or the ciphertext/mac was tampered with.
 class EnvelopeAuthException implements Exception {
   /// Default const ctor.
-  const EnvelopeAuthException([this.message = 'Envelope authentication failed']);
+  const EnvelopeAuthException(
+      [this.message = 'Envelope authentication failed']);
 
   /// Human-readable reason.
   final String message;

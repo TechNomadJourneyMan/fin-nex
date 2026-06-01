@@ -2,11 +2,43 @@
 
 Lightweight backlog. Use `engineering:tech-debt` skill to populate / triage.
 
+## Done (UX iteration, Prompts 1-8)
+
+Moved to STATUS.md "Done" section — F-ADAPTIVE-SHELL, F-MOTION, F-SOUND-V1,
+F-A11Y-BASE, F-HIGH-CONTRAST, F-COMMAND-PALETTE, F-SEARCH-FILTERS,
+F-LOTTIE-EMPTY, F-GOLDEN-TESTS.
+
 ## Now (in flight)
 
-_None yet — initial v1.0 build is complete pending Flutter SDK install + analyze._
+_None — UX iteration complete; see follow-ups below._
 
 ## Next (v1.1)
+
+- **F-REBRAND-OMNIFI** — Remove the leftover internal codename "OMNIFI OS" from
+  the app-bar badge and the splash screen; per the rebrand rule all
+  user-facing strings must read "Pocket Flow". (Found during Prompt 8 QA.)
+- **F-I18N-GAPS** — Several dashboard / AI-chat / splash strings are hardcoded
+  (mostly Russian: "Последние операции", "ПОДПИСКИ", "Почти готово…") instead of
+  going through `AppL10n`. Route them through the en/ru/kk ARBs. (Found during
+  Prompt 8 QA — UI currently shows mixed English + Russian.)
+- **F-LIGHT-THEME-DEFAULT** — The app is dark-first and the "light" path keeps a
+  near-black aesthetic; decide whether a real light surface is in scope and wire
+  the theme toggle / `prefers-color-scheme` accordingly.
+- **F-PRIVACY-MODE** — Balance/amount blur ("privacy mode") toggle from the
+  app bar and Settings (spec'd in 05_ux_spec, not yet built).
+- **F-STREAK** — Daily logging streak + the Achievements surface beyond the
+  current placeholder page.
+- **F-AUTH-REAL** — Replace `StubAuthRepository` with the real backend session
+  flow (umbrella for the F-AUTH-* items below); derive `currentUserId*` from
+  `authControllerProvider` instead of `kDemoUserId`.
+- **F-GOLDEN-STABILITY** — Stabilise the 2 `transaction_form` goldens (single-
+  file run hangs / full-run pixel flakiness) and make `pf_core_theme` goldens
+  use offline fonts so they don't hit `fonts.gstatic.com` in CI.
+- **F-TEST-DRIFT** — Repair the pre-existing failing unit tests not touched by
+  the UX iteration: `pf_domain` (final-class mock of `Transaction`),
+  `pf_data_api` (`AuthFailure` type removed), `pf_feat_budgets` (invalid
+  Crockford ULID "…BUDG01" in test data), `pf_feat_settings` `theme_provider`
+  (async state not reflected synchronously).
 
 - **F-DATA-WIRE** — Replace in-memory app providers (`apps/pocketflow/lib/providers.dart`)
   with the Drift-backed repositories from `fnx_data_local`, wrapped by

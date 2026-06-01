@@ -68,8 +68,7 @@ void main() {
   testWidgets(
     'Cmd+K opens palette; "anal" filters to Open Analytics; Enter navigates',
     (WidgetTester tester) async {
-      final GlobalKey<NavigatorState> navKey =
-          GlobalKey<NavigatorState>();
+      final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
       await tester.pumpWidget(harness(buildRouter(navKey), navKey));
       await tester.pumpAndSettle();
 

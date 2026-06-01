@@ -45,8 +45,8 @@ class _ReceiptConfirmPageState extends State<ReceiptConfirmPage> {
     super.initState();
     final ParsedReceipt r = widget.receipt;
     _merchantCtrl = TextEditingController(text: r.merchant ?? '');
-    _totalCtrl =
-        TextEditingController(text: _minorToMajorString(r.totalMinor, r.currency));
+    _totalCtrl = TextEditingController(
+        text: _minorToMajorString(r.totalMinor, r.currency));
     _occurredAt = r.occurredAt;
     _currency = r.currency;
     _items = List<ReceiptLineItem>.from(r.lineItems);
@@ -76,8 +76,9 @@ class _ReceiptConfirmPageState extends State<ReceiptConfirmPage> {
     final int whole = int.tryParse(parts.first) ?? 0;
     int frac = 0;
     if (parts.length > 1 && currency.minorUnit > 0) {
-      final String fracStr =
-          parts[1].padRight(currency.minorUnit, '0').substring(0, currency.minorUnit);
+      final String fracStr = parts[1]
+          .padRight(currency.minorUnit, '0')
+          .substring(0, currency.minorUnit);
       frac = int.tryParse(fracStr) ?? 0;
     }
     return whole * scale + frac;

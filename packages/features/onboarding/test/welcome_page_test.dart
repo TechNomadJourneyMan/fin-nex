@@ -8,8 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('WelcomePage renders headline and primary CTA',
-      (tester) async {
+  testWidgets('WelcomePage renders headline and primary CTA', (tester) async {
     SharedPreferences.setMockInitialValues(<String, Object>{});
     final prefs = await SharedPreferences.getInstance();
 

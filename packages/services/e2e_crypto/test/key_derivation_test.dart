@@ -75,7 +75,8 @@ void main() {
       expect(f1, equals(f2));
     });
 
-    test('encodes 8 bytes as Crockford base32 (13 chars, valid alphabet)', () async {
+    test('encodes 8 bytes as Crockford base32 (13 chars, valid alphabet)',
+        () async {
       final key = List<int>.filled(32, 0x42);
       final f = await fingerprint(key);
       // 8 bytes = 64 bits -> ceil(64/5) = 13 base32 chars.

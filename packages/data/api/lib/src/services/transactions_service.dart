@@ -94,7 +94,8 @@ class TransactionsService {
       });
 
   /// Bulk-create up to 1000 transactions.
-  Future<BulkCreateResponse> bulkCreate(BulkCreateTransactionsRequest request) =>
+  Future<BulkCreateResponse> bulkCreate(
+          BulkCreateTransactionsRequest request) =>
       DioServiceHelpers.guard(() async {
         final res = await _dio.post<Map<String, dynamic>>(
           '/transactions/bulk',

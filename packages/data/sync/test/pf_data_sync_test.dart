@@ -9,8 +9,8 @@ void main() {
       const status = SyncStatus.idle();
       const resolver = ConflictResolver();
       expect(status, isA<SyncStatus>());
-      expect(resolver.strategyFor('transactions'),
-          ConflictStrategy.lastWriteWins);
+      expect(
+          resolver.strategyFor('transactions'), ConflictStrategy.lastWriteWins);
       expect(const Ok<int, NetworkFailure>(1).unwrap(), 1);
     });
   });

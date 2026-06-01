@@ -46,7 +46,8 @@ class _ReceiptCameraPageState extends ConsumerState<ReceiptCameraPage> {
 
   Future<void> _initCamera() async {
     try {
-      final List<CameraDescription> cameras = widget.cameras ?? await availableCameras();
+      final List<CameraDescription> cameras =
+          widget.cameras ?? await availableCameras();
       if (cameras.isEmpty) {
         setState(() => _error = 'Камера недоступна');
         return;
@@ -81,7 +82,8 @@ class _ReceiptCameraPageState extends ConsumerState<ReceiptCameraPage> {
     setState(() => _capturing = true);
     try {
       final XFile shot = await controller.takePicture();
-      final String text = await ref.read(ocrEngineProvider).recognizeText(shot.path);
+      final String text =
+          await ref.read(ocrEngineProvider).recognizeText(shot.path);
       final ParsedReceipt parsed = ref.read(receiptParserProvider).parse(
             text,
             currency: ref.read(receiptCurrencyProvider),
@@ -134,7 +136,8 @@ class _ReceiptCameraPageState extends ConsumerState<ReceiptCameraPage> {
             );
           }
           final CameraController? controller = _controller;
-          if (controller == null || snapshot.connectionState != ConnectionState.done) {
+          if (controller == null ||
+              snapshot.connectionState != ConnectionState.done) {
             return const Center(child: CircularProgressIndicator());
           }
           return Stack(

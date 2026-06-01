@@ -136,11 +136,10 @@ abstract final class AnalyticsAggregator {
     }
 
     // Category buckets, sorted by amount descending.
-    final List<AnalyticsCategoryBucket> categoryBuckets =
-        byCategory.values.map((_CategoryAccumulator a) {
-      final double pct = expense.isZero
-          ? 0
-          : _ratio(a.total.minor, expense.minor);
+    final List<AnalyticsCategoryBucket> categoryBuckets = byCategory.values
+        .map((_CategoryAccumulator a) {
+      final double pct =
+          expense.isZero ? 0 : _ratio(a.total.minor, expense.minor);
       return AnalyticsCategoryBucket(
         categoryId: a.categoryId,
         amount: a.total,
@@ -148,8 +147,8 @@ abstract final class AnalyticsAggregator {
         transactionCount: a.count,
       );
     }).toList(growable: false)
-          ..sort((AnalyticsCategoryBucket a, AnalyticsCategoryBucket b) =>
-              b.amount.compareTo(a.amount));
+      ..sort((AnalyticsCategoryBucket a, AnalyticsCategoryBucket b) =>
+          b.amount.compareTo(a.amount));
 
     // Weekday list (always 7 entries, anchored to ISO Mon..Sun).
     final DateTime weekdayAnchor = DateTime(2024, 1, 1); // Monday.
@@ -193,8 +192,7 @@ abstract final class AnalyticsAggregator {
   ) {
     final DateTime dayMidnight = DateTime(when.year, when.month, when.day);
     if (bucketDays <= 1) return dayMidnight;
-    final int daysSincePeriodStart =
-        dayMidnight.difference(period.from).inDays;
+    final int daysSincePeriodStart = dayMidnight.difference(period.from).inDays;
     final int bucketIndex = daysSincePeriodStart ~/ bucketDays;
     return period.from.add(Duration(days: bucketIndex * bucketDays));
   }

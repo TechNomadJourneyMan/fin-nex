@@ -78,8 +78,7 @@ Future<List<Transaction>> seedTransactions(
     for (final Category c in categories)
       if (c.type == CategoryType.expense) c,
   ];
-  final List<Category> pool =
-      expenseCats.isNotEmpty ? expenseCats : categories;
+  final List<Category> pool = expenseCats.isNotEmpty ? expenseCats : categories;
 
   // Deterministic amounts (minor units) and notes.
   const List<int> amounts = <int>[125000, 48050, 320075, 91000, 15500];
@@ -158,8 +157,7 @@ Widget _wrap({
     overrides: buildAppProviderOverrides(module),
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme:
-          brightness == Brightness.dark ? PfTheme.dark() : PfTheme.light(),
+      theme: brightness == Brightness.dark ? PfTheme.dark() : PfTheme.light(),
       locale: locale,
       supportedLocales: PfLocales.all,
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[

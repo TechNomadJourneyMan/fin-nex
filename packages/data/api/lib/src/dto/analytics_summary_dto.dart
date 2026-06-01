@@ -105,7 +105,8 @@ class AnalyticsSummaryDto {
         to: (json['to'] ?? '') as String,
         currency: (json['currency'] ?? 'KZT') as String,
         totals: AnalyticsTotalsDto.fromJson(
-          (json['totals'] as Map<String, dynamic>?) ?? const <String, dynamic>{},
+          (json['totals'] as Map<String, dynamic>?) ??
+              const <String, dynamic>{},
         ),
         buckets: ((json['buckets'] as List<dynamic>?) ?? const <dynamic>[])
             .map((dynamic e) =>
@@ -162,10 +163,8 @@ class AnalyticsByCategoryItemDto {
         name: json['name'] as String,
         amountMinor: (json['amount_minor'] as num).toInt(),
         share: (json['share'] as num).toDouble(),
-        transactionCount:
-            (json['transaction_count'] as num?)?.toInt() ?? 0,
-        changeVsPrevPeriod:
-            (json['change_vs_prev_period'] as num?)?.toDouble(),
+        transactionCount: (json['transaction_count'] as num?)?.toInt() ?? 0,
+        changeVsPrevPeriod: (json['change_vs_prev_period'] as num?)?.toDouble(),
       );
 
   /// Serialize to JSON.
@@ -207,9 +206,10 @@ class AnalyticsByCategoryDto {
       AnalyticsByCategoryDto(
         currency: (json['currency'] ?? 'KZT') as String,
         totalMinor: (json['total_minor'] as num?)?.toInt() ?? 0,
-        categories: ((json['categories'] as List<dynamic>?) ?? const <dynamic>[])
-            .map((dynamic e) => AnalyticsByCategoryItemDto.fromJson(
-                e as Map<String, dynamic>))
+        categories: ((json['categories'] as List<dynamic>?) ??
+                const <dynamic>[])
+            .map((dynamic e) =>
+                AnalyticsByCategoryItemDto.fromJson(e as Map<String, dynamic>))
             .toList(growable: false),
         otherMinor: (json['other_minor'] as num?)?.toInt() ?? 0,
       );

@@ -64,8 +64,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   Widget build(BuildContext context) {
     final l10n = AppL10n.of(context);
     final state = ref.watch(authControllerProvider);
-    final loading = state.isLoading ||
-        (state.valueOrNull is Authenticating);
+    final loading = state.isLoading || (state.valueOrNull is Authenticating);
     final errorFailure = state.hasError && !state.isLoading
         ? state.error
         : (state.valueOrNull is AuthError
@@ -121,9 +120,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     Align(
                       alignment: AlignmentDirectional.centerEnd,
                       child: TextButton(
-                        onPressed: loading
-                            ? null
-                            : () => context.go('/auth/otp'),
+                        onPressed:
+                            loading ? null : () => context.go('/auth/otp'),
                         child: Text(l10n.authOtpHelp),
                       ),
                     ),
@@ -184,8 +182,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                       fullWidth: true,
                       size: PfButtonSize.lg,
                       leadingIcon: Icons.phone_outlined,
-                      onPressed:
-                          loading ? null : () => context.go('/auth/otp'),
+                      onPressed: loading ? null : () => context.go('/auth/otp'),
                     ),
                     const SizedBox(height: 24),
                     TextButton(

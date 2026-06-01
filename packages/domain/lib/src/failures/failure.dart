@@ -42,7 +42,8 @@ class ServerFailure extends Failure {
 /// Local validation rejected the input.
 class ValidationFailure extends Failure {
   /// [fieldErrors] maps a field name to a list of error keys.
-  const ValidationFailure(super.message, {this.fieldErrors = const <String, List<String>>{}, super.cause});
+  const ValidationFailure(super.message,
+      {this.fieldErrors = const <String, List<String>>{}, super.cause});
 
   /// Field-level error map (field → list of error keys).
   final Map<String, List<String>> fieldErrors;

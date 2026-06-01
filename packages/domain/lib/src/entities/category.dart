@@ -132,10 +132,12 @@ final class Category extends Equatable {
   /// Reconstructs from JSON.
   factory Category.fromJson(Map<String, dynamic> json) => Category(
         id: Ulid(json['id'] as String),
-        userId: json['user_id'] == null ? null : Ulid(json['user_id'] as String),
+        userId:
+            json['user_id'] == null ? null : Ulid(json['user_id'] as String),
         type: CategoryType.parse(json['type_code'] as String),
-        parentId:
-            json['parent_id'] == null ? null : Ulid(json['parent_id'] as String),
+        parentId: json['parent_id'] == null
+            ? null
+            : Ulid(json['parent_id'] as String),
         name: json['name'] as String,
         nameI18nKey: json['name_i18n_key'] as String?,
         iconKey: json['icon_key'] as String,

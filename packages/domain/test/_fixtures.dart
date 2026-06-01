@@ -14,8 +14,7 @@ class Fixtures {
   static final Ulid categoryId = Ulid('01HXKVZ8R3M4N5P6Q7S8T9V0W3');
 
   /// A KZT amount of [majorUnits] tenge.
-  static Money kzt(int majorUnits) =>
-      Money.major(majorUnits, Currency.kzt);
+  static Money kzt(int majorUnits) => Money.major(majorUnits, Currency.kzt);
 
   /// Builds a sample expense [Transaction] with a given amount.
   static Transaction expense({

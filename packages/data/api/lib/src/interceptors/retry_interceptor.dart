@@ -52,8 +52,7 @@ class RetryInterceptor extends Interceptor {
     await Future<void>.delayed(delay);
     try {
       final retried = await _dio.fetch<dynamic>(
-        options
-          ..extra[_attemptExtraKey] = attempt + 1,
+        options..extra[_attemptExtraKey] = attempt + 1,
       );
       handler.resolve(retried);
     } on DioException catch (e) {
@@ -73,8 +72,7 @@ class RetryInterceptor extends Interceptor {
         method == 'HEAD' ||
         method == 'DELETE' ||
         method == 'PUT' ||
-        (method == 'POST' &&
-            options.headers.containsKey('X-Idempotency-Key'));
+        (method == 'POST' && options.headers.containsKey('X-Idempotency-Key'));
     if (!isSafe) {
       return false;
     }

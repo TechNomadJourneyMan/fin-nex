@@ -106,8 +106,7 @@ Future<void> _duplicate(WidgetRef ref, Transaction tx) async {
     createdAt: now,
     updatedAt: now,
   );
-  final TransactionsRepository repo =
-      ref.read(transactionsRepositoryProvider);
+  final TransactionsRepository repo = ref.read(transactionsRepositoryProvider);
   await repo.upsert(copy);
 }
 
@@ -157,8 +156,7 @@ Future<void> _recategorize(
   if (picked == null) {
     return;
   }
-  final TransactionsRepository repo =
-      ref.read(transactionsRepositoryProvider);
+  final TransactionsRepository repo = ref.read(transactionsRepositoryProvider);
   await repo.upsert(
     tx.copyWith(categoryId: picked, updatedAt: DateTime.now().toUtc()),
   );
@@ -186,8 +184,7 @@ Future<void> _split(
   final BigInt base = total ~/ n;
   final BigInt remainder = total - base * n;
 
-  final TransactionsRepository repo =
-      ref.read(transactionsRepositoryProvider);
+  final TransactionsRepository repo = ref.read(transactionsRepositoryProvider);
   final DateTime now = DateTime.now().toUtc();
   for (int i = 0; i < parts; i++) {
     final BigInt amount = i == 0 ? base + remainder : base;
@@ -226,14 +223,12 @@ class _SplitDialogState extends State<_SplitDialog> {
             children: <Widget>[
               IconButton(
                 icon: const Icon(Icons.remove),
-                onPressed:
-                    _parts > 2 ? () => setState(() => _parts--) : null,
+                onPressed: _parts > 2 ? () => setState(() => _parts--) : null,
               ),
               Text('$_parts', style: Theme.of(context).textTheme.titleLarge),
               IconButton(
                 icon: const Icon(Icons.add),
-                onPressed:
-                    _parts < 20 ? () => setState(() => _parts++) : null,
+                onPressed: _parts < 20 ? () => setState(() => _parts++) : null,
               ),
             ],
           ),

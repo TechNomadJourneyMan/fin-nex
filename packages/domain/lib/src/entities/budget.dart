@@ -134,10 +134,10 @@ final class Budget extends Equatable {
         name: json['name'] as String,
         period: BudgetPeriod.parse(json['period_code'] as String),
         amount: Money.fromJson(json['amount'] as Map<String, dynamic>),
-        categoryIds: ((json['category_ids'] as List<dynamic>?) ??
-                const <dynamic>[])
-            .map((dynamic c) => Ulid(c as String))
-            .toList(growable: false),
+        categoryIds:
+            ((json['category_ids'] as List<dynamic>?) ?? const <dynamic>[])
+                .map((dynamic c) => Ulid(c as String))
+                .toList(growable: false),
         accountIds:
             ((json['account_ids'] as List<dynamic>?) ?? const <dynamic>[])
                 .map((dynamic c) => Ulid(c as String))
@@ -147,10 +147,10 @@ final class Budget extends Equatable {
             ? null
             : DateTime.parse(json['ends_on'] as String),
         rolloverUnspent: json['rollover_unspent'] as bool,
-        alertThresholds: ((json['alert_thresholds'] as List<dynamic>?) ??
-                const <dynamic>[])
-            .map((dynamic t) => (t as num).toInt())
-            .toList(growable: false),
+        alertThresholds:
+            ((json['alert_thresholds'] as List<dynamic>?) ?? const <dynamic>[])
+                .map((dynamic t) => (t as num).toInt())
+                .toList(growable: false),
         isActive: json['is_active'] as bool,
         createdAt: DateTime.parse(json['created_at'] as String),
         updatedAt: DateTime.parse(json['updated_at'] as String),

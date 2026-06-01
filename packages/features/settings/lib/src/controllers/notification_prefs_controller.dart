@@ -53,8 +53,7 @@ class NotificationPrefs {
 /// StateNotifier owning [NotificationPrefs] and persisting individual flags.
 class NotificationPrefsController extends StateNotifier<NotificationPrefs> {
   /// Default constructor. Hydrates from the [PreferencesStore].
-  NotificationPrefsController(this._store)
-      : super(NotificationPrefs.defaults) {
+  NotificationPrefsController(this._store) : super(NotificationPrefs.defaults) {
     _hydrate();
   }
 

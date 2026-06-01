@@ -157,10 +157,10 @@ void main() {
   test('different assets allocate distinct players', () async {
     final svc = build();
     await svc.setSoundEnabled(true);
-    svc.selectTap();      // tap.wav
-    svc.confirmAction();  // success.wav
-    svc.error();          // error.wav
-    svc.achievement();    // achievement.wav
+    svc.selectTap(); // tap.wav
+    svc.confirmAction(); // success.wav
+    svc.error(); // error.wav
+    svc.achievement(); // achievement.wav
     await Future<void>.delayed(Duration.zero);
     expect(spawned, hasLength(4));
   });

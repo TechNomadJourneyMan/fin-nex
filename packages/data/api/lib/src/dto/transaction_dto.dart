@@ -358,8 +358,9 @@ class BulkCreateResponse {
         'skipped': skipped,
         'updated': updated,
         'failed': failed,
-        'failures':
-            failures.map((BulkFailureDto e) => e.toJson()).toList(growable: false),
+        'failures': failures
+            .map((BulkFailureDto e) => e.toJson())
+            .toList(growable: false),
       };
 }
 

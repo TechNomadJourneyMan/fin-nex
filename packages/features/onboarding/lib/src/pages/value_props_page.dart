@@ -118,7 +118,8 @@ class _ValuePropsPageState extends ConsumerState<ValuePropsPage> {
               controller: _pageController,
               itemCount: slides.length,
               onPageChanged: (i) => setState(() => _index = i),
-              itemBuilder: (context, i) => _ValuePropSlideView(slide: slides[i]),
+              itemBuilder: (context, i) =>
+                  _ValuePropSlideView(slide: slides[i]),
             ),
           ),
           _DotsIndicator(count: slides.length, index: _index),

@@ -141,9 +141,10 @@ class HeroBalance extends StatelessWidget {
         ) {
           // Re-host the *source* subtree during the flight so the typography
           // and color do not snap mid-flight on either end.
-          final BuildContext source = flightDirection == HeroFlightDirection.push
-              ? fromHeroContext
-              : toHeroContext;
+          final BuildContext source =
+              flightDirection == HeroFlightDirection.push
+                  ? fromHeroContext
+                  : toHeroContext;
           return DefaultTextStyle(
             style: DefaultTextStyle.of(source).style,
             child: Material(
@@ -176,19 +177,16 @@ class _DeltaChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool positive = !delta.isNegative;
-    final Color tint = positive
-        ? const Color(0xFF24A148)
-        : const Color(0xFFFF453A);
-    final Color subtleTint = positive
-        ? const Color(0x2624A148)
-        : const Color(0x26FF453A);
+    final Color tint =
+        positive ? const Color(0xFF24A148) : const Color(0xFFFF453A);
+    final Color subtleTint =
+        positive ? const Color(0x2624A148) : const Color(0x26FF453A);
     final NumberFormat money = NumberFormat.currency(
       locale: Localizations.localeOf(context).toLanguageTag(),
       symbol: currency.symbol,
       decimalDigits: 0,
     );
-    final String absText =
-        money.format(delta.abs().major.toDouble());
+    final String absText = money.format(delta.abs().major.toDouble());
 
     return Row(
       mainAxisSize: MainAxisSize.min,

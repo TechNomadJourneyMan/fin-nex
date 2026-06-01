@@ -139,7 +139,8 @@ class FeedbackService {
 
   /// Release every cached [PfAudioPlayer]. Safe to call multiple times.
   Future<void> dispose() async {
-    final List<PfAudioPlayer> snapshot = _players.values.toList(growable: false);
+    final List<PfAudioPlayer> snapshot =
+        _players.values.toList(growable: false);
     _players.clear();
     await _settingsCtrl.close();
     for (final PfAudioPlayer p in snapshot) {
@@ -167,8 +168,7 @@ class FeedbackService {
 
   Future<void> _playAsset(String asset) async {
     try {
-      final PfAudioPlayer player =
-          _players.putIfAbsent(asset, _playerFactory);
+      final PfAudioPlayer player = _players.putIfAbsent(asset, _playerFactory);
       await player.setAsset(asset, package: 'pf_core_feedback');
       await player.replay();
     } catch (_) {

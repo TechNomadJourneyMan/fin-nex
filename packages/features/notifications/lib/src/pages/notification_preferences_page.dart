@@ -61,8 +61,7 @@ class NotificationPreferencesPage extends ConsumerWidget {
   ) {
     switch (type) {
       case NotificationPreferenceType.dailyReminder:
-        return l10n?.notifDailyReminderBody ??
-            "Takes 3 seconds. Tap to add.";
+        return l10n?.notifDailyReminderBody ?? "Takes 3 seconds. Tap to add.";
       case NotificationPreferenceType.weeklyRecap:
         return 'Summary of your week, every Monday.';
       case NotificationPreferenceType.monthlyReport:
@@ -112,14 +111,12 @@ class _PreferenceTile extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: typo.bodyMd
-                      .copyWith(fontWeight: FontWeight.w600),
+                  style: typo.bodyMd.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   description,
-                  style: typo.bodySm
-                      .copyWith(color: colors.textSecondary),
+                  style: typo.bodySm.copyWith(color: colors.textSecondary),
                 ),
               ],
             ),

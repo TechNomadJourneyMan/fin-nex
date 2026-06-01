@@ -99,10 +99,8 @@ class ProblemDetailsDto {
         'detail': detail,
         'trace_id': traceId,
         if (instance != null) 'instance': instance,
-        'errors': errors
-            .map((FieldErrorDto e) => e.toJson())
-            .toList(growable: false),
-        if (retryAfterSeconds != null)
-          'retry_after_seconds': retryAfterSeconds,
+        'errors':
+            errors.map((FieldErrorDto e) => e.toJson()).toList(growable: false),
+        if (retryAfterSeconds != null) 'retry_after_seconds': retryAfterSeconds,
       };
 }

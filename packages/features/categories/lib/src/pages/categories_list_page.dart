@@ -148,8 +148,7 @@ class _CategoryTile extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(child: Text(category.name, style: typo.bodyLg)),
               if (category.isSystem)
-                Icon(Icons.lock_outline,
-                    size: 16, color: colors.textMuted)
+                Icon(Icons.lock_outline, size: 16, color: colors.textMuted)
               else
                 Icon(Icons.chevron_right, color: colors.textMuted),
             ],

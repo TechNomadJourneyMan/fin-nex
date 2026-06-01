@@ -55,9 +55,17 @@ class PfBanner extends StatelessWidget {
       case PfBannerTone.info:
         return (bg: c.infoSubtle, fg: c.info, icon: Icons.info_outline);
       case PfBannerTone.success:
-        return (bg: c.successSubtle, fg: c.success, icon: Icons.check_circle_outline);
+        return (
+          bg: c.successSubtle,
+          fg: c.success,
+          icon: Icons.check_circle_outline
+        );
       case PfBannerTone.warning:
-        return (bg: c.warningSubtle, fg: c.warning, icon: Icons.warning_amber_outlined);
+        return (
+          bg: c.warningSubtle,
+          fg: c.warning,
+          icon: Icons.warning_amber_outlined
+        );
       case PfBannerTone.error:
         return (bg: c.errorSubtle, fg: c.error, icon: Icons.error_outline);
     }
