@@ -97,6 +97,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # Web/device integration smoke test (integration_test/web_smoke_test.dart).
+  integration_test:
+    sdk: flutter
   flutter_lints: ^4.0.0
   # In-memory sqflite for accessibility / widget tests.
   sqflite_common_ffi: ^2.3.3

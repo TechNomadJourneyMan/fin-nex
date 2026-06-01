@@ -62,24 +62,38 @@ class GlassCard extends StatefulWidget {
 
 class _GlassCardState extends State<GlassCard>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _press = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 140),
-    lowerBound: 0,
-    upperBound: 1,
-  );
-  late final Animation<double> _scale = Tween<double>(begin: 1.0, end: 0.98)
-      .animate(CurvedAnimation(parent: _press, curve: Curves.easeOutCubic));
+  // Lazily created the first time the card is built with a tap handler, so a
+  // non-interactive card never spins up a Ticker. Created on demand rather than
+  // via `late final` so it is NOT force-initialized inside dispose() — doing so
+  // would call createTicker() (an inherited-widget lookup) on an already
+  // deactivated element and throw.
+  AnimationController? _press;
+  Animation<double>? _scale;
+
+  AnimationController _ensurePress() {
+    return _press ??= AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 140),
+      lowerBound: 0,
+      upperBound: 1,
+    );
+  }
+
+  Animation<double> _ensureScale() {
+    return _scale ??= Tween<double>(begin: 1.0, end: 0.98).animate(
+      CurvedAnimation(parent: _ensurePress(), curve: Curves.easeOutCubic),
+    );
+  }
 
   @override
   void dispose() {
-    _press.dispose();
+    _press?.dispose();
     super.dispose();
   }
 
-  void _down(_) => _press.forward();
-  void _up(_) => _press.reverse();
-  void _cancel() => _press.reverse();
+  void _down(_) => _ensurePress().forward();
+  void _up(_) => _ensurePress().reverse();
+  void _cancel() => _ensurePress().reverse();
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +144,7 @@ class _GlassCardState extends State<GlassCard>
     }
 
     if (widget.onTap != null) {
-      card = ScaleTransition(scale: _scale, child: card);
+      card = ScaleTransition(scale: _ensureScale(), child: card);
       card = GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: _down,
