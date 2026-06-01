@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../auth_state.dart';
@@ -77,20 +77,20 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     if (failure != null) ...[
-                      FnxBanner(
-                        tone: FnxBannerTone.error,
+                      PfBanner(
+                        tone: PfBannerTone.error,
                         message: failure.toString(),
                       ),
                       const SizedBox(height: 16),
                     ],
-                    FnxTextField(
+                    PfTextField(
                       key: const ValueKey<String>('signup.name'),
                       label: l10n.commonOptional,
                       controller: _name,
                       enabled: !loading,
                     ),
                     const SizedBox(height: 12),
-                    FnxTextField(
+                    PfTextField(
                       key: const ValueKey<String>('signup.email'),
                       label: l10n.authContinueEmail,
                       controller: _email,
@@ -99,7 +99,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       errorText: _emailError,
                     ),
                     const SizedBox(height: 12),
-                    FnxTextField(
+                    PfTextField(
                       key: const ValueKey<String>('signup.password'),
                       label: l10n.commonContinue,
                       controller: _password,
@@ -109,13 +109,13 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       onSubmitted: (_) => _submit(),
                     ),
                     const SizedBox(height: 24),
-                    FnxButton(
+                    PfButton(
                       key: const ValueKey<String>('signup.submit'),
                       label: l10n.commonContinue,
                       onPressed: loading ? null : _submit,
                       loading: loading,
                       fullWidth: true,
-                      size: FnxButtonSize.lg,
+                      size: PfButtonSize.lg,
                     ),
                     const SizedBox(height: 16),
                     TextButton(

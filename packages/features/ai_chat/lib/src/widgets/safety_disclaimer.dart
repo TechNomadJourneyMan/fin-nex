@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fnx_core_tokens/fnx_core_tokens.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_tokens/pf_core_tokens.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 /// Matches investment-themed wording in either Russian or English.
 ///
@@ -27,21 +27,21 @@ class SafetyDisclaimer extends StatelessWidget {
     final typo = context.fnxTypography;
     return Container(
       key: const Key('ai_chat_safety_disclaimer'),
-      margin: const EdgeInsets.only(top: FnxSpacing.x2),
-      padding: const EdgeInsets.all(FnxSpacing.x3),
+      margin: const EdgeInsets.only(top: PfSpacing.x2),
+      padding: const EdgeInsets.all(PfSpacing.x3),
       decoration: BoxDecoration(
         color: colors.warningSubtle,
-        borderRadius: BorderRadius.circular(FnxTokens.radiusMd),
+        borderRadius: BorderRadius.circular(PfTokens.radiusMd),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Icon(Icons.info_outline, size: 18, color: colors.warning),
-          const SizedBox(width: FnxSpacing.x2),
+          const SizedBox(width: PfSpacing.x2),
           Expanded(
             child: Text(
               'Это не индивидуальная инвестиционная рекомендация. '
-              'FinNex предоставляет информацию для справки, а не услуги '
+              'Pocket Flow предоставляет информацию для справки, а не услуги '
               'финансового советника.',
               style: typo.caption.copyWith(color: colors.textSecondary),
             ),

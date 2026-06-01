@@ -17,7 +17,7 @@ final cursorStoreProvider = Provider<CursorStore>((ref) {
 });
 
 /// Provider for the platform [OutboxStore] adapter. Overridden by
-/// `fnx_data_local`'s bootstrap once DAOs are wired.
+/// `pf_data_local`'s bootstrap once DAOs are wired.
 final outboxStoreProvider = Provider<OutboxStore>((ref) {
   throw UnimplementedError('outboxStoreProvider must be overridden.');
 });

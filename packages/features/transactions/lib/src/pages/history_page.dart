@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Category;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
@@ -38,7 +38,7 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
 
   Future<void> _openFilters() async {
     final TransactionFilterState? next =
-        await showFnxBottomSheet<TransactionFilterState>(
+        await showPfBottomSheet<TransactionFilterState>(
       context: context,
       builder: (BuildContext ctx) => _FilterSheet(initial: _filter),
     );
@@ -74,7 +74,7 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
           preferredSize: const Size.fromHeight(56),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-            child: FnxTextField(
+            child: PfTextField(
               controller: _searchCtrl,
               hint: l10n.commonSearch,
               prefixIcon: Icons.search,
@@ -99,7 +99,7 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 children: <Widget>[
                   const SizedBox(height: 80),
-                  FnxEmptyState(
+                  PfEmptyState(
                     title: l10n.dashEmptyTitle,
                     body: l10n.qaNotePlaceholder,
                     icon: Icons.receipt_long_outlined,
@@ -131,10 +131,10 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
                 if (!context.mounted) {
                   return;
                 }
-                context.showFnxSnack(
+                context.showPfSnack(
                   l10n.txDeleted,
                   duration: const Duration(seconds: 3),
-                  action: FnxSnackAction(
+                  action: PfSnackAction(
                     label: l10n.txUndo,
                     onPressed: () {
                       // ignore: discarded_futures
@@ -250,7 +250,7 @@ class _SectionedList extends StatelessWidget {
                         onSwipeDelete(t);
                       }
                     },
-                    child: FnxTransactionItem(
+                    child: PfTransactionItem(
                       category: t.categoryId?.value ?? '—',
                       amountMinor: signed,
                       date: t.occurredAt.toLocal(),
@@ -455,7 +455,7 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
                 TransactionType.income,
                 TransactionType.transfer,
               ])
-                FnxChip(
+                PfChip(
                   label: t.code,
                   selected: _draft.types.contains(t),
                   onTap: () => _toggleType(t),
@@ -472,7 +472,7 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
               for (final Category c in cats.where(
                 (Category c) => !c.isArchived,
               ))
-                FnxChip(
+                PfChip(
                   label: c.name,
                   selected: _draft.categoryIds.any(
                     (Ulid u) => u.value == c.id.value,
@@ -491,7 +491,7 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
               for (final Account a in accs.where(
                 (Account a) => !a.isArchived && a.deletedAt == null,
               ))
-                FnxChip(
+                PfChip(
                   label: a.name,
                   selected: _draft.accountIds.any(
                     (Ulid u) => u.value == a.id.value,
@@ -504,16 +504,16 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
           Row(
             children: <Widget>[
               Expanded(
-                child: FnxButton(
+                child: PfButton(
                   label: l10n.commonNone,
-                  variant: FnxButtonVariant.secondary,
+                  variant: PfButtonVariant.secondary,
                   onPressed: () =>
                       Navigator.of(context).pop(const TransactionFilterState()),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: FnxButton(
+                child: PfButton(
                   label: l10n.commonDone,
                   onPressed: () => Navigator.of(context).pop(_draft),
                 ),

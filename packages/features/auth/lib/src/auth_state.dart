@@ -1,6 +1,6 @@
 // Auth state model for the auth feature.
 
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 /// Sealed hierarchy describing the auth controller's lifecycle.
 sealed class AuthState {

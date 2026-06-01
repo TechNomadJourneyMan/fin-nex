@@ -7,9 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_domain/fnx_domain.dart';
-import 'package:fnx_feat_transactions/transactions.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_domain/pf_domain.dart';
+import 'package:pf_feat_transactions/transactions.dart';
 
 import '_fakes.dart';
 
@@ -59,7 +59,7 @@ void main() {
       child: const MaterialApp(
         locale: Locale('ru'),
         localizationsDelegates: AppL10n.localizationsDelegates,
-        supportedLocales: FnxLocales.all,
+        supportedLocales: PfLocales.all,
         home: HistoryPage(),
       ),
     );

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 import '../entities/chat_message.dart';
 import '../entities/chat_session.dart';

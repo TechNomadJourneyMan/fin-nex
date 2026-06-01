@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../controllers/onboarding_controller.dart';
@@ -105,10 +105,10 @@ class _ValuePropsPageState extends ConsumerState<ValuePropsPage> {
           context.go('/dashboard');
         }
       },
-      bottomBar: FnxButton(
+      bottomBar: PfButton(
         label: _index == slides.length - 1 ? l10n.onbStart : l10n.onbNext,
         fullWidth: true,
-        size: FnxButtonSize.lg,
+        size: PfButtonSize.lg,
         onPressed: () => _advance(controller),
       ),
       child: Column(

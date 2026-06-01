@@ -5,8 +5,8 @@
 // the Android NotificationListenerService is being developed in parallel.
 
 import 'package:flutter/material.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_sms_parser/fnx_sms_parser.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_sms_parser/pf_sms_parser.dart';
 
 class SmsSandboxPage extends StatefulWidget {
   const SmsSandboxPage({super.key});

@@ -1,9 +1,9 @@
-/// Barrel export for FinNex design tokens.
+/// Barrel export for PocketFlow design tokens.
 ///
 /// Provides colors, typography, spacing, radius, elevation, motion, and
-/// breakpoint primitives consumed by `fnx_core_theme` and all widget
+/// breakpoint primitives consumed by `pf_core_theme` and all widget
 /// packages.
-library fnx_core_tokens;
+library pf_core_tokens;
 
 export 'src/breakpoints.dart';
 export 'src/colors.dart';

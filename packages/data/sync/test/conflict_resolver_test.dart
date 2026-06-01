@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_data_sync/fnx_data_sync.dart';
+import 'package:pf_data_sync/pf_data_sync.dart';
 
 class _Tag implements TagLike {
   _Tag(this.name);

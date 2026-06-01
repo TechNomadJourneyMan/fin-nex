@@ -1,4 +1,4 @@
-/// Configuration for the FinNex API client.
+/// Configuration for the PocketFlow API client.
 class ApiConfig {
   /// Default constructor.
   const ApiConfig({

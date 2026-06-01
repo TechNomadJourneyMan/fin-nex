@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 import 'conflict_resolver.dart';
 import 'cursor_store.dart';

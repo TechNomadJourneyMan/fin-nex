@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_data_local/fnx_data_local.dart';
+import 'package:pf_data_local/pf_data_local.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
@@ -9,11 +9,11 @@ void main() {
     sqfliteFfiInit();
   });
 
-  group('FnxDatabase (in-memory)', () {
-    late FnxDatabase db;
+  group('PfDatabase (in-memory)', () {
+    late PfDatabase db;
 
     setUp(() async {
-      db = await FnxDatabase.openInMemory(factory: databaseFactoryFfi);
+      db = await PfDatabase.openInMemory(factory: databaseFactoryFfi);
     });
 
     tearDown(() async {

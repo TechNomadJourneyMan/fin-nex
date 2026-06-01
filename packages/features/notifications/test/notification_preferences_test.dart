@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_feat_notifications/fnx_feat_notifications.dart';
+import 'package:pf_feat_notifications/pf_feat_notifications.dart';
 
 void main() {
   group('NotificationPreferences', () {

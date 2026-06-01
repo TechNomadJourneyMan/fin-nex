@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_domain/domain.dart';
-import 'package:fnx_feat_insights/fnx_feat_insights.dart';
+import 'package:pf_domain/domain.dart';
+import 'package:pf_feat_insights/pf_feat_insights.dart';
 
 import '_fixtures.dart';
 

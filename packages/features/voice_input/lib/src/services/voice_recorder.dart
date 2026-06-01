@@ -41,7 +41,7 @@ class RecordVoiceRecorder implements VoiceRecorder {
   @override
   Future<void> start() async {
     // `record` requires a path on most platforms; callers on web get a blob.
-    _path = 'fnx_voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
+    _path = 'pf_voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
     await _recorder.start(
       const RecordConfig(encoder: AudioEncoder.aacLc),
       path: _path!,

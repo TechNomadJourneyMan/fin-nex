@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_tokens/fnx_core_tokens.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_tokens/pf_core_tokens.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 import '../models/notification_type.dart';
 import '../providers.dart';
@@ -23,7 +23,7 @@ class NotificationPreferencesPage extends ConsumerWidget {
         title: Text(l10n?.notifTitle ?? 'Notifications'),
       ),
       body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: FnxSpacing.x2),
+        padding: const EdgeInsets.symmetric(vertical: PfSpacing.x2),
         children: [
           for (final type in NotificationPreferenceType.values)
             _PreferenceTile(
@@ -71,7 +71,7 @@ class NotificationPreferencesPage extends ConsumerWidget {
         return 'Warn me when I approach a budget limit.';
       case NotificationPreferenceType.insight:
         return l10n?.notifInsightReadyBody ??
-            'Open FinNex to see what changed.';
+            'Open PocketFlow to see what changed.';
       case NotificationPreferenceType.syncError:
         return "Tell me when something can't sync.";
     }
@@ -100,8 +100,8 @@ class _PreferenceTile extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: FnxSpacing.x4,
-        vertical: FnxSpacing.x2,
+        horizontal: PfSpacing.x4,
+        vertical: PfSpacing.x2,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,7 +124,7 @@ class _PreferenceTile extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: FnxSpacing.x3),
+          const SizedBox(width: PfSpacing.x3),
           Semantics(
             label: label,
             toggled: enabled,

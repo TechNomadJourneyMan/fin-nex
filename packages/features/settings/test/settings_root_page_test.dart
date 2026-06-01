@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_feat_settings/settings.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_feat_settings/settings.dart';
 
 void main() {
   testWidgets('SettingsRootPage renders all sections', (tester) async {

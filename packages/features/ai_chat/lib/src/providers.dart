@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'services/ai_chat_service.dart';
 
 /// The configured backend [Dio] client. The app shell overrides this with the
-/// authenticated instance from `fnx_data_api`; left unimplemented here so the
+/// authenticated instance from `pf_data_api`; left unimplemented here so the
 /// feature package never accidentally talks to a real backend in previews.
 final aiChatDioProvider = Provider<Dio>((ref) {
   throw UnimplementedError(

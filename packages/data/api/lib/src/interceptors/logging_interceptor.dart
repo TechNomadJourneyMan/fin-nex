@@ -23,7 +23,7 @@ class LoggingInterceptor extends Interceptor {
   ) {
     if (kDebugMode) {
       final headers = _redact(options.headers);
-      debugPrint('[fnx_api] -> ${options.method} ${options.uri} '
+      debugPrint('[pf_api] -> ${options.method} ${options.uri} '
           'headers=$headers');
     }
     handler.next(options);
@@ -35,7 +35,7 @@ class LoggingInterceptor extends Interceptor {
     ResponseInterceptorHandler handler,
   ) {
     if (kDebugMode) {
-      debugPrint('[fnx_api] <- ${response.statusCode} '
+      debugPrint('[pf_api] <- ${response.statusCode} '
           '${response.requestOptions.uri}');
     }
     handler.next(response);
@@ -44,7 +44,7 @@ class LoggingInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     if (kDebugMode) {
-      debugPrint('[fnx_api] xx ${err.response?.statusCode ?? '-'} '
+      debugPrint('[pf_api] xx ${err.response?.statusCode ?? '-'} '
           '${err.requestOptions.uri} ${err.message}');
     }
     handler.next(err);

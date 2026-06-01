@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:intl/intl.dart';
 
 import '../controllers/transactions_controller.dart';
@@ -71,11 +71,11 @@ class _TransactionFormPageState extends ConsumerState<TransactionFormPage> {
   Future<void> _save() async {
     final l10n = AppL10n.of(context);
     if (_amountMinor <= 0) {
-      context.showFnxSnack(l10n.qaAmountRequired, isError: true);
+      context.showPfSnack(l10n.qaAmountRequired, isError: true);
       return;
     }
     if (_accountId == null || _categoryId == null) {
-      context.showFnxSnack(l10n.errorValidation, isError: true);
+      context.showPfSnack(l10n.errorValidation, isError: true);
       return;
     }
     final Currency currency = ref.read(defaultCurrencyProvider);
@@ -114,7 +114,7 @@ class _TransactionFormPageState extends ConsumerState<TransactionFormPage> {
       final String detail = e.toString();
       final String msg = '${l10n.qaSaveErrorOffline}\n'
           '${detail.length > 160 ? '${detail.substring(0, 157)}...' : detail}';
-      context.showFnxSnack(msg, isError: true);
+      context.showPfSnack(msg, isError: true);
     }
   }
 
@@ -239,7 +239,7 @@ class _TransactionFormPageState extends ConsumerState<TransactionFormPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              FnxTextField(
+              PfTextField(
                 label: l10n.txFieldNote,
                 hint: l10n.qaNotePlaceholder,
                 controller: _noteCtrl,
@@ -260,7 +260,7 @@ class _TransactionFormPageState extends ConsumerState<TransactionFormPage> {
                 onChanged: (int v) => setState(() => _amountMinor = v),
               ),
               const SizedBox(height: 16),
-              FnxButton(
+              PfButton(
                 label: l10n.commonSave,
                 fullWidth: true,
                 onPressed: _save,

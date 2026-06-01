@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../preferences_store.dart';
 
-/// Supported BCP-47 locale tags for FinNex.
+/// Supported BCP-47 locale tags for PocketFlow.
 const Set<String> kSupportedLocaleTags = <String>{'en', 'ru', 'kk'};
 
 /// StateNotifier that owns the active locale (or `null` = follow system).

@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../providers.dart';
@@ -54,16 +54,16 @@ class FirstTransactionPromptPage extends ConsumerWidget {
       bottomBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          FnxButton(
+          PfButton(
             label: 'Try it now',
             fullWidth: true,
-            size: FnxButtonSize.lg,
+            size: PfButtonSize.lg,
             onPressed: () => finishAndGo(tryAdd: true),
           ),
           SizedBox(height: spacing.s4),
-          FnxButton(
+          PfButton(
             label: 'Maybe later',
-            variant: FnxButtonVariant.ghost,
+            variant: PfButtonVariant.ghost,
             fullWidth: true,
             onPressed: () => finishAndGo(tryAdd: false),
           ),

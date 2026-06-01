@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_feat_ai_chat/fnx_feat_ai_chat.dart';
+import 'package:pf_feat_ai_chat/pf_feat_ai_chat.dart';
 
 import '_fixtures.dart';
 

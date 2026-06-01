@@ -3,8 +3,8 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 /// Re-entry unlock page shown when reopening the app.
@@ -80,14 +80,14 @@ class _BiometricUnlockPageState extends ConsumerState<BiometricUnlockPage> {
                   ),
                   const SizedBox(height: 24),
                   if (!kIsWeb) ...[
-                    FnxButton(
+                    PfButton(
                       key: const ValueKey<String>('biometric.useBio'),
                       label: l10n.authBiometricPrompt,
                       leadingIcon: Icons.fingerprint,
                       onPressed: _busy ? null : _useBiometric,
                       loading: _busy,
                       fullWidth: true,
-                      size: FnxButtonSize.lg,
+                      size: PfButtonSize.lg,
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -102,7 +102,7 @@ class _BiometricUnlockPageState extends ConsumerState<BiometricUnlockPage> {
                     ),
                     const SizedBox(height: 16),
                   ],
-                  FnxTextField(
+                  PfTextField(
                     key: const ValueKey<String>('biometric.passcode'),
                     label: l10n.commonContinue,
                     controller: _passcode,
@@ -113,7 +113,7 @@ class _BiometricUnlockPageState extends ConsumerState<BiometricUnlockPage> {
                     maxLength: 6,
                   ),
                   const SizedBox(height: 16),
-                  FnxButton(
+                  PfButton(
                     key: const ValueKey<String>('biometric.usePasscode'),
                     label: l10n.commonContinue,
                     onPressed: _busy ? null : _usePasscode,

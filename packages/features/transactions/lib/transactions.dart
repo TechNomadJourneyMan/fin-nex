@@ -1,5 +1,5 @@
-/// Public API for the FinNex transactions feature module.
-library fnx_feat_transactions;
+/// Public API for the PocketFlow transactions feature module.
+library pf_feat_transactions;
 
 // Controllers & providers
 export 'src/controllers/quick_add_controller.dart';

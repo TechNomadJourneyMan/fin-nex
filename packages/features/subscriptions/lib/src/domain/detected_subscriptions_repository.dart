@@ -3,9 +3,9 @@
 // See `detected_subscription.dart` for why these shapes live inside the
 // feature package. The interface is byte-for-byte the contract the UI is
 // written against; the app overrides the providers with the real
-// `fnx_domain` implementation at composition time.
+// `pf_domain` implementation at composition time.
 
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 import 'detected_subscription.dart';
 

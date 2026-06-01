@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-/// FinNex elevation tokens — two-layer (ambient + key) shadows.
+/// PocketFlow elevation tokens — two-layer (ambient + key) shadows.
 ///
 /// Light mode uses cool-grey shadows; dark mode uses near-black with
 /// reduced opacity, matched with surface-elevation overlays in the
 /// theme layer.
 @immutable
-class FnxElevation extends ThemeExtension<FnxElevation> {
+class PfElevation extends ThemeExtension<PfElevation> {
   /// Const constructor — values are static.
-  const FnxElevation();
+  const PfElevation();
 
   static const Color _lightAmbient = Color(0x0F101828); // rgba(16,24,40,0.06)
   static const Color _lightAmbientStrong = Color(0x14101828); // 0.08
@@ -123,8 +123,8 @@ class FnxElevation extends ThemeExtension<FnxElevation> {
   ];
 
   @override
-  FnxElevation copyWith() => const FnxElevation();
+  PfElevation copyWith() => const PfElevation();
 
   @override
-  FnxElevation lerp(ThemeExtension<FnxElevation>? other, double t) => this;
+  PfElevation lerp(ThemeExtension<PfElevation>? other, double t) => this;
 }

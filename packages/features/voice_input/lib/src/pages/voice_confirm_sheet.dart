@@ -7,8 +7,8 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/domain.dart';
 
 import '../services/voice_transcription_service.dart';
 
@@ -18,7 +18,7 @@ Future<bool?> showVoiceConfirmSheet({
   required VoiceTranscriptionResult initial,
   required ValueChanged<VoiceTranscriptionResult> onConfirm,
 }) {
-  return showFnxBottomSheet<bool>(
+  return showPfBottomSheet<bool>(
     context: context,
     semanticLabel: 'Confirm voice transaction',
     builder: (ctx) => VoiceConfirmSheet(initial: initial, onConfirm: onConfirm),
@@ -120,7 +120,7 @@ class _VoiceConfirmSheetState extends State<VoiceConfirmSheet> {
             style: typo.bodySm.copyWith(color: colors.textMuted),
           ),
           SizedBox(height: spacing.s6),
-          FnxTextField(
+          PfTextField(
             label: 'Amount (${_currency.code})',
             controller: _amountCtrl,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -130,16 +130,16 @@ class _VoiceConfirmSheetState extends State<VoiceConfirmSheet> {
             onChanged: (_) => setState(() {}),
           ),
           SizedBox(height: spacing.s5),
-          FnxSelect<TransactionType>(
+          PfSelect<TransactionType>(
             label: 'Type',
             value: _type,
-            options: const <FnxSelectOption<TransactionType>>[
-              FnxSelectOption(
+            options: const <PfSelectOption<TransactionType>>[
+              PfSelectOption(
                 value: TransactionType.expense,
                 label: 'Expense',
               ),
-              FnxSelectOption(value: TransactionType.income, label: 'Income'),
-              FnxSelectOption(
+              PfSelectOption(value: TransactionType.income, label: 'Income'),
+              PfSelectOption(
                 value: TransactionType.transfer,
                 label: 'Transfer',
               ),
@@ -160,13 +160,13 @@ class _VoiceConfirmSheetState extends State<VoiceConfirmSheet> {
             value: widget.initial.suggestedAccountLabel ?? 'Default account',
           ),
           SizedBox(height: spacing.s5),
-          FnxTextField(
+          PfTextField(
             label: 'Note',
             controller: _noteCtrl,
             maxLines: 2,
           ),
           SizedBox(height: spacing.s6),
-          FnxButton(
+          PfButton(
             label: 'Save',
             fullWidth: true,
             onPressed: canSave ? _save : null,

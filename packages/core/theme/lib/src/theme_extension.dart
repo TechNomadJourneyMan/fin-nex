@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:fnx_core_tokens/tokens.dart';
+import 'package:pf_core_tokens/tokens.dart';
 
-/// Convenience accessors so widgets can pull FinNex tokens directly from
+/// Convenience accessors so widgets can pull PocketFlow tokens directly from
 /// a [BuildContext] without manually unwrapping [ThemeData.extension].
-extension FnxThemeContext on BuildContext {
+extension PfThemeContext on BuildContext {
   /// Semantic colour bundle for the current theme.
-  FnxColors get fnxColors =>
-      Theme.of(this).extension<FnxColors>() ?? FnxColors.light;
+  PfColors get fnxColors =>
+      Theme.of(this).extension<PfColors>() ?? PfColors.light;
 
   /// Spacing scale (static — same in every theme).
-  FnxSpacing get fnxSpacing =>
-      Theme.of(this).extension<FnxSpacing>() ?? const FnxSpacing();
+  PfSpacing get fnxSpacing =>
+      Theme.of(this).extension<PfSpacing>() ?? const PfSpacing();
 
   /// Radius scale.
-  FnxRadius get fnxRadius =>
-      Theme.of(this).extension<FnxRadius>() ?? const FnxRadius();
+  PfRadius get fnxRadius =>
+      Theme.of(this).extension<PfRadius>() ?? const PfRadius();
 
   /// Elevation scale.
-  FnxElevation get fnxElevation =>
-      Theme.of(this).extension<FnxElevation>() ?? const FnxElevation();
+  PfElevation get fnxElevation =>
+      Theme.of(this).extension<PfElevation>() ?? const PfElevation();
 
   /// Motion durations and curves.
-  FnxMotion get fnxMotion =>
-      Theme.of(this).extension<FnxMotion>() ?? const FnxMotion();
+  PfMotion get fnxMotion =>
+      Theme.of(this).extension<PfMotion>() ?? const PfMotion();
 
   /// Typography ramp.
-  FnxTypography get fnxTypography =>
-      Theme.of(this).extension<FnxTypography>() ?? const FnxTypography();
+  PfTypography get fnxTypography =>
+      Theme.of(this).extension<PfTypography>() ?? const PfTypography();
 }

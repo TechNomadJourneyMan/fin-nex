@@ -2,11 +2,11 @@
 //
 // The repository and user-id providers throw by default and MUST be overridden
 // in app composition (apps/finnex/lib/providers.dart) with the real
-// `fnx_domain` implementation and the authenticated user id. The stream
+// `pf_domain` implementation and the authenticated user id. The stream
 // provider derives from them so pages can `ref.watch` a live list.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 import 'domain/detected_subscription.dart';
 import 'domain/detected_subscriptions_repository.dart';

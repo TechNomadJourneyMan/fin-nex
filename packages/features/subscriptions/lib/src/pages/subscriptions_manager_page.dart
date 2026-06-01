@@ -7,9 +7,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/domain.dart';
 import 'package:intl/intl.dart';
 
 import '../domain/detected_subscription.dart';
@@ -43,7 +43,7 @@ class SubscriptionsManagerPage extends ConsumerWidget {
           final active =
               subs.where((s) => s.cancelledAt == null).toList(growable: false);
           if (subs.isEmpty) {
-            return FnxEmptyState(
+            return PfEmptyState(
               icon: Icons.subscriptions_outlined,
               title: l10n.subsEmptyTitle,
               body: l10n.subsEmptyBody,
@@ -110,7 +110,7 @@ class _MonthlyTotalCard extends StatelessWidget {
     final monthName = toBeginningOfSentenceCase(
       DateFormat.MMMM(locale).format(DateTime.now()),
     );
-    final amountText = formatFnxAmount(
+    final amountText = formatPfAmount(
       totalMinor.toInt(),
       locale: locale,
       fractionDigits: 0,

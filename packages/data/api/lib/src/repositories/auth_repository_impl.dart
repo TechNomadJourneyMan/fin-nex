@@ -1,4 +1,4 @@
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 import '../dto/auth_dto.dart';
 import '../error_mapper.dart';
@@ -27,7 +27,7 @@ class AuthResult {
 /// Concrete remote auth repository. Returns [Failure] subclasses for
 /// caller-visible errors, swallowing transport details.
 ///
-/// TODO(F-AUTH-01): once `fnx_domain` exposes an `AuthRepository` interface
+/// TODO(F-AUTH-01): once `pf_domain` exposes an `AuthRepository` interface
 /// this class should `implements` it.
 class AuthRepositoryImpl {
   /// Default constructor.

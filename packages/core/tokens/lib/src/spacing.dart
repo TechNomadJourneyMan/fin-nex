@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-/// FinNex spacing tokens — 4px base scale.
+/// PocketFlow spacing tokens — 4px base scale.
 ///
 /// Field names use `xN` where `N` is the step index (`x4 = 16`).
 @immutable
-class FnxSpacing extends ThemeExtension<FnxSpacing> {
+class PfSpacing extends ThemeExtension<PfSpacing> {
   /// Const constructor — all values are static.
-  const FnxSpacing();
+  const PfSpacing();
 
   /// 0 px.
   static const double x0 = 0;
@@ -28,8 +28,8 @@ class FnxSpacing extends ThemeExtension<FnxSpacing> {
   static const double x16 = 64;
 
   @override
-  FnxSpacing copyWith() => const FnxSpacing();
+  PfSpacing copyWith() => const PfSpacing();
 
   @override
-  FnxSpacing lerp(ThemeExtension<FnxSpacing>? other, double t) => this;
+  PfSpacing lerp(ThemeExtension<PfSpacing>? other, double t) => this;
 }

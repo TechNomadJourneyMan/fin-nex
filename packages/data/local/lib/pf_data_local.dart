@@ -1,0 +1,32 @@
+// Public API for PocketFlow local persistence (sqflite-backed).
+library pf_data_local;
+
+export 'src/database/pf_database.dart';
+export 'src/database/sync_state.dart';
+export 'src/schema/schema.dart';
+export 'src/daos/transactions_dao.dart';
+export 'src/daos/accounts_dao.dart';
+export 'src/daos/categories_dao.dart';
+export 'src/daos/budgets_dao.dart';
+export 'src/daos/sync_queue_dao.dart';
+export 'src/daos/insights_dao.dart';
+export 'src/daos/settings_dao.dart';
+export 'src/daos/notifications_dao.dart';
+export 'src/daos/streaks_dao.dart';
+export 'src/models/transaction_row.dart';
+export 'src/models/account_row.dart';
+export 'src/models/category_row.dart';
+export 'src/models/budget_row.dart';
+export 'src/models/sync_queue_row.dart';
+export 'src/models/insight_row.dart';
+export 'src/models/notification_row.dart';
+export 'src/models/setting_row.dart';
+export 'src/models/streak_row.dart';
+export 'src/seed/system_categories.dart';
+export 'src/seed/seeder.dart';
+export 'src/repositories/repository_contracts.dart';
+export 'src/repositories/transactions_repository_impl.dart';
+export 'src/repositories/accounts_repository_impl.dart';
+export 'src/repositories/categories_repository_impl.dart';
+export 'src/repositories/budgets_repository_impl.dart';
+export 'src/repositories/settings_repository_impl.dart';

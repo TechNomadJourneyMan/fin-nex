@@ -1,8 +1,8 @@
 // Eight-swatch color picker for a category.
 
 import 'package:flutter/material.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/domain.dart';
 
 /// Canonical swatch palette for category colors.
 const List<String> fnxCategorySwatches = <String>[

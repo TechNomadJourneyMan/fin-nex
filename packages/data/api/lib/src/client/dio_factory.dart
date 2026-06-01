@@ -17,7 +17,7 @@ typedef TokenRefresher = Future<String?> Function();
 /// Signature for obtaining the device id (ULID).
 typedef DeviceIdProvider = Future<String> Function();
 
-/// Builds a [Dio] instance pre-configured with the FinNex interceptor stack.
+/// Builds a [Dio] instance pre-configured with the PocketFlow interceptor stack.
 class DioFactory {
   const DioFactory._();
 

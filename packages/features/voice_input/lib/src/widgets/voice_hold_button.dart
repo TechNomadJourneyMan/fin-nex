@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 import '../controllers/voice_controller.dart';
 import '../pages/voice_confirm_sheet.dart';
@@ -118,15 +118,15 @@ class _VoiceHoldButtonState extends ConsumerState<VoiceHoldButton>
 
   Future<void> _showDenied(MicPermissionStatus status) async {
     final permanent = status == MicPermissionStatus.permanentlyDenied;
-    final confirmed = await showFnxDialog(
+    final confirmed = await showPfDialog(
       context: context,
       title: 'Microphone needed',
       message: permanent
           ? 'Enable microphone access in Settings to record voice '
               'transactions.'
-          : 'FinNex needs microphone access to capture your voice '
+          : 'Pocket Flow needs microphone access to capture your voice '
               'transaction. Please allow it and try again.',
-      kind: FnxDialogKind.confirm,
+      kind: PfDialogKind.confirm,
       confirmLabel: permanent ? 'Open Settings' : 'OK',
       cancelLabel: 'Not now',
     );

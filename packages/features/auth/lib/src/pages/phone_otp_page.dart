@@ -5,8 +5,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 import '../auth_state.dart';
 import '../providers.dart';
@@ -91,8 +91,8 @@ class _PhoneOtpPageState extends ConsumerState<PhoneOtpPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   if (failure != null) ...[
-                    FnxBanner(
-                      tone: FnxBannerTone.error,
+                    PfBanner(
+                      tone: PfBannerTone.error,
                       message: failure.toString(),
                     ),
                     const SizedBox(height: 16),
@@ -100,7 +100,7 @@ class _PhoneOtpPageState extends ConsumerState<PhoneOtpPage> {
                   if (!_otpStage) ...[
                     Text(l10n.authSubtitle),
                     const SizedBox(height: 16),
-                    FnxTextField(
+                    PfTextField(
                       key: const ValueKey<String>('otp.phone'),
                       label: l10n.authCtaSendCode,
                       controller: _phone,
@@ -113,13 +113,13 @@ class _PhoneOtpPageState extends ConsumerState<PhoneOtpPage> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    FnxButton(
+                    PfButton(
                       key: const ValueKey<String>('otp.request'),
                       label: l10n.authCtaSendCode,
                       onPressed: loading ? null : _requestCode,
                       loading: loading,
                       fullWidth: true,
-                      size: FnxButtonSize.lg,
+                      size: PfButtonSize.lg,
                     ),
                   ] else ...[
                     Text(l10n.authOtpSubtitle(_phone.text.trim())),

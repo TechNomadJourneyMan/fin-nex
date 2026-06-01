@@ -3,8 +3,8 @@
 // not need a Riverpod container.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_domain/fnx_domain.dart';
-import 'package:fnx_feat_analytics/analytics.dart';
+import 'package:pf_domain/pf_domain.dart';
+import 'package:pf_feat_analytics/analytics.dart';
 
 void main() {
   group('AnalyticsAggregator.aggregate', () {

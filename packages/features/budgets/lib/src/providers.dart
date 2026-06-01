@@ -4,7 +4,7 @@
 // layer is wired. Override in app composition.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 import 'budget_calculator.dart';
 import 'data/in_memory_budgets_repository.dart';

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-/// FinNex color tokens — primitive ramps plus semantic light/dark roles.
+/// PocketFlow color tokens — primitive ramps plus semantic light/dark roles.
 ///
 /// All values are sourced from `07_design_system.md` (sections 2.2–2.9).
 /// Brand palette is Indigo-Aurora `#3D5AFE` with Mint `#00C896` for income.
 @immutable
-class FnxColors extends ThemeExtension<FnxColors> {
-  /// Creates a [FnxColors] bundle. Use [FnxColors.light] or [FnxColors.dark]
+class PfColors extends ThemeExtension<PfColors> {
+  /// Creates a [PfColors] bundle. Use [PfColors.light] or [PfColors.dark]
   /// rather than instantiating directly.
-  const FnxColors({
+  const PfColors({
     required this.surfaceBackground,
     required this.surfaceDefault,
     required this.surfaceRaised,
@@ -306,7 +306,7 @@ class FnxColors extends ThemeExtension<FnxColors> {
   final Color infoSubtle;
 
   /// Semantic light-mode token bundle.
-  static const FnxColors light = FnxColors(
+  static const PfColors light = PfColors(
     surfaceBackground: neutral50,
     surfaceDefault: neutral0,
     surfaceRaised: neutral0,
@@ -337,7 +337,7 @@ class FnxColors extends ThemeExtension<FnxColors> {
   );
 
   /// Semantic dark-mode token bundle.
-  static const FnxColors dark = FnxColors(
+  static const PfColors dark = PfColors(
     surfaceBackground: surfaceBackgroundDark,
     surfaceDefault: surfaceDefaultDark,
     surfaceRaised: surfaceRaisedDark,
@@ -368,7 +368,7 @@ class FnxColors extends ThemeExtension<FnxColors> {
   );
 
   @override
-  FnxColors copyWith({
+  PfColors copyWith({
     Color? surfaceBackground,
     Color? surfaceDefault,
     Color? surfaceRaised,
@@ -397,7 +397,7 @@ class FnxColors extends ThemeExtension<FnxColors> {
     Color? info,
     Color? infoSubtle,
   }) {
-    return FnxColors(
+    return PfColors(
       surfaceBackground: surfaceBackground ?? this.surfaceBackground,
       surfaceDefault: surfaceDefault ?? this.surfaceDefault,
       surfaceRaised: surfaceRaised ?? this.surfaceRaised,
@@ -429,9 +429,9 @@ class FnxColors extends ThemeExtension<FnxColors> {
   }
 
   @override
-  FnxColors lerp(ThemeExtension<FnxColors>? other, double t) {
-    if (other is! FnxColors) return this;
-    return FnxColors(
+  PfColors lerp(ThemeExtension<PfColors>? other, double t) {
+    if (other is! PfColors) return this;
+    return PfColors(
       surfaceBackground:
           Color.lerp(surfaceBackground, other.surfaceBackground, t)!,
       surfaceDefault: Color.lerp(surfaceDefault, other.surfaceDefault, t)!,

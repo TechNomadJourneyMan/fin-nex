@@ -1,8 +1,8 @@
 // Application data module.
 //
 // Owns the local sqflite database, exposes ready-to-use domain repositories
-// (adapters bridging the sqflite-shaped repos in `fnx_data_local` to the
-// `Ulid`/`Money`-typed contracts in `fnx_domain`).
+// (adapters bridging the sqflite-shaped repos in `pf_data_local` to the
+// `Ulid`/`Money`-typed contracts in `pf_domain`).
 //
 // Created at app bootstrap and held for the app's lifetime; tear down via
 // [dispose] when running multiple isolated app instances (tests).
@@ -18,8 +18,8 @@ import 'dart:async';
 // Only import the symbol we need from flutter/foundation to avoid the
 // `Category` annotation clashing with the domain `Category` entity.
 import 'package:flutter/foundation.dart' show debugPrint;
-import 'package:fnx_data_local/fnx_data_local.dart' as local;
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_data_local/pf_data_local.dart' as local;
+import 'package:pf_domain/pf_domain.dart';
 
 /// Lazily-constructed singleton holding the database and adapter repositories.
 class AppDataModule {
@@ -37,7 +37,7 @@ class AppDataModule {
               accounts: accounts,
             );
 
-  final local.FnxDatabase? _db;
+  final local.PfDatabase? _db;
 
   /// Domain-shaped transactions repository.
   final TransactionsRepository transactions;
@@ -68,9 +68,9 @@ class AppDataModule {
     required Ulid demoUserId,
     bool inMemory = false,
   }) async {
-    final local.FnxDatabase db = inMemory
-        ? await local.FnxDatabase.openInMemory()
-        : await local.FnxDatabase.open();
+    final local.PfDatabase db = inMemory
+        ? await local.PfDatabase.openInMemory()
+        : await local.PfDatabase.open();
 
     final local.TransactionsDao txDao = local.TransactionsDao(db);
     final local.AccountsDao acctDao = local.AccountsDao(db);

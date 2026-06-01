@@ -4,7 +4,7 @@
 // docs/DESIGN_SYSTEM_OMNIFI.md §2.2 for the full spec.
 
 import 'package:flutter/material.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:intl/intl.dart';
 
 /// Premium balance hero. Overline label, huge number, growth chip.

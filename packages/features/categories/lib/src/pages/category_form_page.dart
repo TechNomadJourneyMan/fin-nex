@@ -5,9 +5,9 @@
 
 import 'package:flutter/material.dart' hide Category;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/domain.dart';
 import 'package:go_router/go_router.dart';
 
 import '../controllers/categories_controller.dart';
@@ -131,7 +131,7 @@ class _CategoryFormPageState extends ConsumerState<CategoryFormPage> {
         child: ListView(
           padding: EdgeInsets.all(spacing.s5),
           children: <Widget>[
-            FnxTextField(
+            PfTextField(
               label: l10n.catFieldName,
               controller: _name,
               enabled: !isSystem,
@@ -161,15 +161,15 @@ class _CategoryFormPageState extends ConsumerState<CategoryFormPage> {
               ),
             ),
             SizedBox(height: spacing.s7),
-            FnxButton(
+            PfButton(
               label: l10n.commonSave,
               fullWidth: true,
               onPressed: isSystem ? null : _save,
             ),
             SizedBox(height: spacing.s3),
-            FnxButton(
+            PfButton(
               label: l10n.commonCancel,
-              variant: FnxButtonVariant.secondary,
+              variant: PfButtonVariant.secondary,
               fullWidth: true,
               onPressed: () => context.pop(),
             ),

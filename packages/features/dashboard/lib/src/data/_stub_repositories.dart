@@ -2,7 +2,7 @@
 //
 // These let the dashboard render in isolation (golden tests, web preview,
 // pre-wiring) and serve as a contract reference for the real
-// `fnx_data_local` implementations. They are intentionally simple — no
+// `pf_data_local` implementations. They are intentionally simple — no
 // streams, no persistence.
 //
 // TODO(F-DASH-WIRE): remove once the app overrides the providers with
@@ -10,7 +10,7 @@
 
 import 'dart:async';
 
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 /// Returns the canonical KZT currency used for stub seed data.
 Currency get _kzt => Currency.kzt;

@@ -5,7 +5,7 @@
 // • Floating DynamicIslandActions hovers above the bottom NavigationBar.
 
 import 'package:flutter/material.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 /// Top-level shell with persistent bottom navigation.

@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../auth_state.dart';
@@ -58,20 +58,20 @@ class _DeleteAccountPageState extends ConsumerState<DeleteAccountPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  FnxBanner(
-                    tone: FnxBannerTone.warning,
+                  PfBanner(
+                    tone: PfBannerTone.warning,
                     title: l10n.commonDelete,
                     message: l10n.txDeleteConfirm,
                   ),
                   const SizedBox(height: 16),
                   if (failure != null) ...[
-                    FnxBanner(
-                      tone: FnxBannerTone.error,
+                    PfBanner(
+                      tone: PfBannerTone.error,
                       message: failure.toString(),
                     ),
                     const SizedBox(height: 16),
                   ],
-                  FnxTextField(
+                  PfTextField(
                     key: const ValueKey<String>('delete.confirm'),
                     label: 'Type "$_gate" to confirm',
                     controller: _confirm,
@@ -79,14 +79,14 @@ class _DeleteAccountPageState extends ConsumerState<DeleteAccountPage> {
                     onChanged: (_) => setState(() {}),
                   ),
                   const SizedBox(height: 24),
-                  FnxButton(
+                  PfButton(
                     key: const ValueKey<String>('delete.submit'),
                     label: l10n.commonDelete,
-                    variant: FnxButtonVariant.destructive,
+                    variant: PfButtonVariant.destructive,
                     onPressed: canSubmit ? _delete : null,
                     loading: loading,
                     fullWidth: true,
-                    size: FnxButtonSize.lg,
+                    size: PfButtonSize.lg,
                   ),
                   const SizedBox(height: 12),
                   TextButton(

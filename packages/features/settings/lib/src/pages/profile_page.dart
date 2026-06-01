@@ -4,8 +4,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 /// Profile page (read-only summary + change-password CTA).
@@ -64,21 +64,21 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               controller: TextEditingController(text: 'you@example.com'),
             ),
             const SizedBox(height: 24),
-            FnxButton(
+            PfButton(
               label: l10n.setSignOut,
               onPressed: () {
                 // TODO(F-AUTH-WIRE): route into the auth sign-out flow.
                 GoRouter.maybeOf(context)?.go('/auth');
               },
-              variant: FnxButtonVariant.secondary,
+              variant: PfButtonVariant.secondary,
               fullWidth: true,
             ),
             const SizedBox(height: 12),
-            FnxButton(
+            PfButton(
               label: l10n.setDeleteAccount,
               onPressed: () =>
                   GoRouter.maybeOf(context)?.push('/auth/delete-account'),
-              variant: FnxButtonVariant.destructive,
+              variant: PfButtonVariant.destructive,
               fullWidth: true,
             ),
           ],

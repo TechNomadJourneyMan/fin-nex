@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart' hide Category;
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 /// Inputs handed to every insight rule.
 @immutable

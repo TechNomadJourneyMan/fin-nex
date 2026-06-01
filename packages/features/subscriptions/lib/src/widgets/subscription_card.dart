@@ -4,8 +4,8 @@
 // the next billing date. Tapping invokes [onTap] (used to open the detail).
 
 import 'package:flutter/material.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:intl/intl.dart';
 
 import '../domain/detected_subscription.dart';
@@ -94,7 +94,7 @@ class SubscriptionCard extends StatelessWidget {
               ),
               SizedBox(width: spacing.s4),
               Text(
-                formatFnxAmount(
+                formatPfAmount(
                   subscription.amount.minor.toInt(),
                   locale: locale,
                   fractionDigits: 0,

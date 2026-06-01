@@ -2,7 +2,7 @@
 // of the dashboard. Optional — collapses to `SizedBox.shrink` when null.
 
 import 'package:flutter/material.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 /// Banner that renders a single informational message with optional action.
 class InsightBanner extends StatelessWidget {
@@ -36,7 +36,7 @@ class InsightBanner extends StatelessWidget {
     final colors = context.fnxColors;
     final typo = context.fnxTypography;
 
-    return FnxCard(
+    return PfCard(
       elevation: 0,
       color: colors.infoSubtle,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),

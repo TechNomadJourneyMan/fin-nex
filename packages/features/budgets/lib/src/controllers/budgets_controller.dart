@@ -1,7 +1,7 @@
 // AsyncNotifier controller for the budgets list.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 import '../providers.dart';
 

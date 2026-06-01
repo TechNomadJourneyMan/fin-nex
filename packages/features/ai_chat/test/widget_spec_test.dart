@@ -1,7 +1,7 @@
 // Unit tests for WidgetSpec JSON round-tripping + disclaimer regex.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_feat_ai_chat/fnx_feat_ai_chat.dart';
+import 'package:pf_feat_ai_chat/pf_feat_ai_chat.dart';
 
 void main() {
   group('WidgetSpec.fromJson', () {

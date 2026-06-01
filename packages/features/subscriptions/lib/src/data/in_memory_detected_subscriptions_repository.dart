@@ -5,7 +5,7 @@
 
 import 'dart:async';
 
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 import '../domain/detected_subscription.dart';
 import '../domain/detected_subscriptions_repository.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_feat_transactions/transactions.dart';
+import 'package:pf_feat_transactions/transactions.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {

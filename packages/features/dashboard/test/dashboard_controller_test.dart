@@ -2,7 +2,7 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_feat_dashboard/dashboard.dart';
+import 'package:pf_feat_dashboard/dashboard.dart';
 
 void main() {
   group('DashboardController', () {

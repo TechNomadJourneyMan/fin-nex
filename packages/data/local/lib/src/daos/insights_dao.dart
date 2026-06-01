@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 
-import '../database/fnx_database.dart';
+import '../database/pf_database.dart';
 import '../models/_helpers.dart';
 import '../models/insight_row.dart';
 
@@ -10,7 +10,7 @@ class InsightsDao {
   InsightsDao(this.db);
 
   /// Underlying database handle.
-  final FnxDatabase db;
+  final PfDatabase db;
 
   static const String _table = 'insights';
   Database get _raw => db.raw;

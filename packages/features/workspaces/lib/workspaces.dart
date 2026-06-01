@@ -1,7 +1,7 @@
-// Alias barrel for the FinNex workspaces feature module.
+// Alias barrel for the PocketFlow workspaces feature module.
 //
-// Re-exports the public surface from `fnx_feat_workspaces.dart`.
+// Re-exports the public surface from `pf_feat_workspaces.dart`.
 
 library workspaces;
 
-export 'fnx_feat_workspaces.dart';
+export 'pf_feat_workspaces.dart';

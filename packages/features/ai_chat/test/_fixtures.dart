@@ -1,4 +1,4 @@
-import 'package:fnx_feat_ai_chat/fnx_feat_ai_chat.dart';
+import 'package:pf_feat_ai_chat/pf_feat_ai_chat.dart';
 
 /// A deterministic [AiChatService] for tests: emits the configured reply (and
 /// optional widgets) as a single synchronous chunk, with no streaming delay.

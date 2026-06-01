@@ -1,7 +1,7 @@
-// Alias barrel for the FinNex categories feature module.
+// Alias barrel for the PocketFlow categories feature module.
 //
-// Re-exports the public surface from `fnx_feat_categories.dart`.
+// Re-exports the public surface from `pf_feat_categories.dart`.
 
 library categories;
 
-export 'fnx_feat_categories.dart';
+export 'pf_feat_categories.dart';

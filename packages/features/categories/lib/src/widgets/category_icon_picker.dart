@@ -4,7 +4,7 @@
 // portable across Web and mobile (no asset bundling required).
 
 import 'package:flutter/material.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 /// Maps an icon key to its [IconData] glyph.
 IconData fnxCategoryIconFor(String key) =>

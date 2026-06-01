@@ -6,7 +6,7 @@ import '../services/transactions_service.dart';
 /// this with the local Drift store to implement the full domain contract.
 ///
 /// TODO(F-TX-01): swap to a domain-defined `TransactionsRepository` once it
-/// lands in `fnx_domain`.
+/// lands in `pf_domain`.
 class RemoteTransactionsRepository {
   /// Default constructor.
   RemoteTransactionsRepository(this._service);

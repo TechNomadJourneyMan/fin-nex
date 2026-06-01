@@ -1,4 +1,4 @@
-// Convenience barrel re-export. Prefer `package:fnx_data_sync/fnx_data_sync.dart`.
+// Convenience barrel re-export. Prefer `package:pf_data_sync/pf_data_sync.dart`.
 library sync;
 
-export 'fnx_data_sync.dart';
+export 'pf_data_sync.dart';

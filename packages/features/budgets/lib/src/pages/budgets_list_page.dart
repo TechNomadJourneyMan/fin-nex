@@ -1,11 +1,11 @@
-// Budgets list page — each row shows an [FnxBudgetProgress] with the
+// Budgets list page — each row shows an [PfBudgetProgress] with the
 // computed spend for the current period.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/domain.dart';
 import 'package:go_router/go_router.dart';
 
 import '../controllers/budgets_controller.dart';
@@ -40,7 +40,7 @@ class BudgetsListPage extends ConsumerWidget {
         ),
         data: (budgets) {
           if (budgets.isEmpty) {
-            return FnxEmptyState(
+            return PfEmptyState(
               icon: Icons.pie_chart_outline,
               title: l10n.budgetsEmpty,
               body: l10n.budgetsCreate,
@@ -93,7 +93,7 @@ class _BudgetRow extends StatelessWidget {
         onTap: onTap,
         child: Padding(
           padding: EdgeInsets.all(context.fnxSpacing.s5),
-          child: FnxBudgetProgress(
+          child: PfBudgetProgress(
             label: budget.name,
             spentMinor: spentMinor,
             limitMinor: budget.amount.minor.toInt(),

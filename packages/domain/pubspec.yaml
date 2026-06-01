@@ -1,4 +1,4 @@
-name: fnx_domain
+name: pf_domain
 description: Pocket Flow pure-Dart domain models, value objects, repositories, and use cases.
 publish_to: none
 version: 0.1.0

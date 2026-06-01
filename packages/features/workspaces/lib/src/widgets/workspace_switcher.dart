@@ -6,8 +6,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/domain.dart';
 import 'package:go_router/go_router.dart';
 
 import '../providers.dart';
@@ -76,7 +76,7 @@ class WorkspaceSwitcher extends ConsumerWidget {
 
 /// Opens the workspace picker bottom sheet.
 Future<void> showWorkspaceSwitcherSheet(BuildContext context) {
-  return showFnxBottomSheet<void>(
+  return showPfBottomSheet<void>(
     context: context,
     semanticLabel: 'Workspaces',
     builder: (ctx) => const WorkspaceSwitcherSheet(),
@@ -149,7 +149,7 @@ class WorkspaceSwitcherSheet extends ConsumerWidget {
             },
           ),
           SizedBox(height: spacing.s4),
-          FnxButton(
+          PfButton(
             label: 'Create workspace',
             leadingIcon: Icons.add,
             fullWidth: true,
@@ -178,7 +178,7 @@ class _WorkspaceRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.fnxColors;
-    return FnxListItem(
+    return PfListItem(
       leading: _ColorDot(color: workspaceAccentColor(workspace), size: 14),
       title: workspace.name,
       subtitle: workspace.type == WorkspaceType.business

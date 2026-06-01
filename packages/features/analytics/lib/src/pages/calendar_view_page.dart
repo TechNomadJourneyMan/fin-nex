@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_charts/fnx_core_charts.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_core_charts/pf_core_charts.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
@@ -56,7 +56,7 @@ class CalendarViewPage extends ConsumerWidget {
             final Map<DateTime, double> byDay =
                 _dailyExpenseTotals(all, period, currency);
             if (byDay.values.every((double v) => v == 0)) {
-              return FnxEmptyState(
+              return PfEmptyState(
                 icon: Icons.calendar_today_outlined,
                 title: l10n.anEmpty,
                 body: l10n.calDayEmpty,
@@ -66,7 +66,7 @@ class CalendarViewPage extends ConsumerWidget {
             return ListView(
               padding: EdgeInsets.all(context.fnxSpacing.s5),
               children: <Widget>[
-                FnxCard(
+                PfCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -78,7 +78,7 @@ class CalendarViewPage extends ConsumerWidget {
                         style: context.fnxTypography.bodySm,
                       ),
                       SizedBox(height: context.fnxSpacing.s4),
-                      FnxHeatmapCalendar(
+                      PfHeatmapCalendar(
                         from: period.from,
                         to: period.to.subtract(const Duration(days: 1)),
                         valueByDay: byDay,

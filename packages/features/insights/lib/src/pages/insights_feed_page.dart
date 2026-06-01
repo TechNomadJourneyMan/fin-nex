@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_tokens/fnx_core_tokens.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_tokens/pf_core_tokens.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/domain.dart';
 
 import '../providers.dart';
 
-/// Insights feed — vertical list of [FnxInsightCard]s.
+/// Insights feed — vertical list of [PfInsightCard]s.
 class InsightsFeedPage extends ConsumerWidget {
   /// Default constructor.
   const InsightsFeedPage({super.key});
@@ -33,18 +33,18 @@ class InsightsFeedPage extends ConsumerWidget {
           ? const Center(child: CircularProgressIndicator())
           : state.items.isEmpty
               ? const Center(
-                  child: FnxEmptyState(
+                  child: PfEmptyState(
                     icon: Icons.auto_awesome_outlined,
                     title: 'No insights yet',
                     body:
-                        'Log a few transactions and FinNex will start finding patterns.',
+                        'Log a few transactions and PocketFlow will start finding patterns.',
                   ),
                 )
               : ListView.separated(
-                  padding: const EdgeInsets.all(FnxSpacing.x4),
+                  padding: const EdgeInsets.all(PfSpacing.x4),
                   itemBuilder: (context, i) {
                     final insight = state.items[i];
-                    return FnxInsightCard(
+                    return PfInsightCard(
                       title: insight.title,
                       body: insight.body,
                       icon: _iconFor(insight.severity),
@@ -52,7 +52,7 @@ class InsightsFeedPage extends ConsumerWidget {
                     );
                   },
                   separatorBuilder: (_, __) =>
-                      const SizedBox(height: FnxSpacing.x3),
+                      const SizedBox(height: PfSpacing.x3),
                   itemCount: state.items.length,
                 ),
     );

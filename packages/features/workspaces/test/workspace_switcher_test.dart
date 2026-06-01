@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/domain.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:fnx_feat_workspaces/fnx_feat_workspaces.dart';
+import 'package:pf_feat_workspaces/pf_feat_workspaces.dart';
 
 Workspace _ws({
   required String id,
@@ -101,7 +101,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Sheet header + both rows render, plus the create CTA.
-      final createCta = find.widgetWithText(FnxButton, 'Create workspace');
+      final createCta = find.widgetWithText(PfButton, 'Create workspace');
       expect(createCta, findsOneWidget);
       expect(find.text('Acme LLC'), findsOneWidget);
       // 'Personal' appears in both the pill (behind the sheet) and the row.
@@ -136,7 +136,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Sheet dismissed; pill now reflects the newly-selected workspace.
-      expect(find.widgetWithText(FnxButton, 'Create workspace'), findsNothing);
+      expect(find.widgetWithText(PfButton, 'Create workspace'), findsNothing);
       expect(find.text('Acme LLC'), findsOneWidget);
     });
 
@@ -150,7 +150,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('No workspaces yet.'), findsOneWidget);
-      final createCta = find.widgetWithText(FnxButton, 'Create workspace');
+      final createCta = find.widgetWithText(PfButton, 'Create workspace');
       expect(createCta, findsOneWidget);
     });
   });

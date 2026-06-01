@@ -4,8 +4,8 @@
 // sub-amounts (income / expense) for the active period.
 
 import 'package:flutter/material.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 import '../controllers/dashboard_controller.dart';
 
@@ -66,7 +66,7 @@ class BalanceCard extends StatelessWidget {
 
   String _formatMoney(Money m) {
     final symbol = m.currency.symbol;
-    return formatFnxAmount(
+    return formatPfAmount(
       m.minor.toInt(),
       locale: locale,
       fractionDigits: 0,
@@ -81,7 +81,7 @@ class BalanceCard extends StatelessWidget {
 
     return Semantics(
       label: '$balanceLabel ${_formatMoney(totalBalance)}',
-      child: FnxCard(
+      child: PfCard(
         elevation: 1,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         child: Column(
@@ -99,7 +99,7 @@ class BalanceCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 16),
-            FnxSegmentedControl<DashboardPeriod>(
+            PfSegmentedControl<DashboardPeriod>(
               segments: <DashboardPeriod, String>{
                 DashboardPeriod.today: todayLabel,
                 DashboardPeriod.week: weekLabel,

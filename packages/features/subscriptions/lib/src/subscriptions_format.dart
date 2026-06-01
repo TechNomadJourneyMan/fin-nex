@@ -1,6 +1,6 @@
 // Shared formatting helpers for the subscriptions feature.
 
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
 
 import 'domain/detected_subscription.dart';
 

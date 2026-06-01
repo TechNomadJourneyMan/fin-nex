@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 /// Data management page.
@@ -23,20 +23,20 @@ class DataPage extends ConsumerWidget {
       body: SafeArea(
         child: ListView(
           children: [
-            FnxListItem(
+            PfListItem(
               leading: Icon(Icons.file_download_outlined,
                   color: colors.textSecondary),
               title: '${l10n.setExport} (CSV)',
               onTap: () => _toast(context, '${l10n.setExport} (CSV)'),
             ),
-            FnxListItem(
+            PfListItem(
               leading: Icon(Icons.file_download_outlined,
                   color: colors.textSecondary),
               title: '${l10n.setExport} (JSON)',
               onTap: () => _toast(context, '${l10n.setExport} (JSON)'),
             ),
             const Divider(height: 1),
-            FnxListItem(
+            PfListItem(
               leading: Icon(Icons.delete_outline, color: colors.error),
               title: l10n.setDeleteAccount,
               onTap: router == null
@@ -50,7 +50,7 @@ class DataPage extends ConsumerWidget {
   }
 
   void _toast(BuildContext context, String message) {
-    // TODO(F-EXPORT): wire to `ExportRepository` from `fnx_domain`.
+    // TODO(F-EXPORT): wire to `ExportRepository` from `pf_domain`.
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('$message — coming soon')),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart' hide Category;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 import '../controllers/quick_add_controller.dart';
 import '../providers.dart';
@@ -83,7 +83,7 @@ class QuickAddBody extends ConsumerWidget {
                 onSelected: ctrl.setAccount,
               ),
               const SizedBox(height: 16),
-              FnxAmountInput(
+              PfAmountInput(
                 key: ValueKey<String>('quick-add-${type.code}-amount'),
                 initialValue: form.amountMinor,
                 currencySymbol: currency.symbol,
@@ -92,7 +92,7 @@ class QuickAddBody extends ConsumerWidget {
                 onDone: (int value) async {
                   ctrl.setAmount(value);
                   if (!ref.read(quickAddControllerProvider(type)).isValid) {
-                    context.showFnxSnack(
+                    context.showPfSnack(
                       l10n.qaAmountRequired,
                       isError: true,
                     );
@@ -105,7 +105,7 @@ class QuickAddBody extends ConsumerWidget {
                     if (!context.mounted) {
                       return;
                     }
-                    context.showFnxSnack(
+                    context.showPfSnack(
                       type == TransactionType.expense
                           ? l10n.qaSavedExpense(amountText)
                           : l10n.qaSavedIncome(amountText),
@@ -115,7 +115,7 @@ class QuickAddBody extends ConsumerWidget {
                     if (!context.mounted) {
                       return;
                     }
-                    context.showFnxSnack(
+                    context.showPfSnack(
                       l10n.qaSaveErrorOffline,
                       isError: true,
                     );
@@ -194,7 +194,7 @@ class _CategoryChips extends StatelessWidget {
             separatorBuilder: (_, __) => const SizedBox(width: 8),
             itemBuilder: (BuildContext ctx, int i) {
               final Category c = visible[i];
-              return FnxChip(
+              return PfChip(
                 label: c.name,
                 selected: selectedId == c.id,
                 onTap: () => onSelected(c.id),
@@ -247,7 +247,7 @@ class _AccountChips extends StatelessWidget {
             separatorBuilder: (_, __) => const SizedBox(width: 8),
             itemBuilder: (BuildContext ctx, int i) {
               final Account a = live[i];
-              return FnxChip(
+              return PfChip(
                 label: a.name,
                 selected: selectedId == a.id,
                 onTap: () => onSelected(a.id),

@@ -1,4 +1,4 @@
-name: fnx_feat_ai_chat
+name: pf_feat_ai_chat
 description: Pocket Flow in-app AI chat (conversational CFO) feature module.
 publish_to: none
 version: 0.1.0
@@ -12,17 +12,17 @@ dependencies:
     sdk: flutter
   flutter_riverpod: ^2.5.1
   dio: ^5.7.0
-  fnx_domain:
+  pf_domain:
     path: ../../domain
-  fnx_core_theme:
+  pf_core_theme:
     path: ../../core/theme
-  fnx_core_tokens:
+  pf_core_tokens:
     path: ../../core/tokens
-  fnx_core_widgets:
+  pf_core_widgets:
     path: ../../core/widgets
-  fnx_core_charts:
+  pf_core_charts:
     path: ../../core/charts
-  fnx_data_api:
+  pf_data_api:
     path: ../../data/api
   intl: ^0.20.0
   flutter_markdown: ^0.7.4

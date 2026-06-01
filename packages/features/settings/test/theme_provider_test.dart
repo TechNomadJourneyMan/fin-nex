@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_feat_settings/settings.dart';
+import 'package:pf_feat_settings/settings.dart';
 
 void main() {
   group('themeProvider', () {

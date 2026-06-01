@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_data_api/fnx_data_api.dart';
+import 'package:pf_data_api/pf_data_api.dart';
 
 import '_mock_adapter.dart';
 

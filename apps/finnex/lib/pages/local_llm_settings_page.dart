@@ -10,8 +10,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_local_llm/fnx_local_llm.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_local_llm/pf_local_llm.dart';
 
 import '../providers.dart' show localLlmServiceProvider;
 

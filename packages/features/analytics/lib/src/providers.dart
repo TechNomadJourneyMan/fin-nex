@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 import 'state/analytics_period.dart';
 
 /// Provides the [TransactionsRepository] used by analytics.
 ///
 /// Must be overridden in `main()` with a concrete implementation (the
-/// sync-aware one from `fnx_data_sync`, or the local-only one from
-/// `fnx_data_local`).
+/// sync-aware one from `pf_data_sync`, or the local-only one from
+/// `pf_data_local`).
 final analyticsTransactionsRepositoryProvider =
     Provider<TransactionsRepository>((Ref ref) {
   throw UnimplementedError(

@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:fnx_e2e_crypto/fnx_e2e_crypto.dart';
+import 'package:pf_e2e_crypto/pf_e2e_crypto.dart';
 import 'package:test/test.dart';
 
 void main() {

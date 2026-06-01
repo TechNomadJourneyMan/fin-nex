@@ -5,7 +5,7 @@
 // real RecomputeAchievements use-case lands as a scheduled job.
 
 import 'package:flutter/material.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 class _Badge {
   const _Badge({

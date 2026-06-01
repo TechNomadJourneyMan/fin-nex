@@ -1,5 +1,5 @@
-// Alias barrel — some specs reference `package:fnx_core_charts/charts.dart`.
-// Re-exports everything from [fnx_core_charts].
-library fnx_core_charts.charts;
+// Alias barrel — some specs reference `package:pf_core_charts/charts.dart`.
+// Re-exports everything from [pf_core_charts].
+library pf_core_charts.charts;
 
-export 'fnx_core_charts.dart';
+export 'pf_core_charts.dart';

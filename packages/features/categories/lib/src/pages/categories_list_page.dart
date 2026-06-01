@@ -7,9 +7,9 @@
 
 import 'package:flutter/material.dart' hide Category;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/domain.dart';
 import 'package:go_router/go_router.dart';
 
 import '../controllers/categories_controller.dart';
@@ -44,7 +44,7 @@ class CategoriesListPage extends ConsumerWidget {
           final system = items.where((c) => c.isSystem).toList();
           final custom = items.where((c) => !c.isSystem).toList();
           if (system.isEmpty && custom.isEmpty) {
-            return FnxEmptyState(
+            return PfEmptyState(
               icon: Icons.category_outlined,
               title: l10n.catScreenTitle,
               body: l10n.catAdd,

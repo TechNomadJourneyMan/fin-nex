@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fnx_core_charts/fnx_core_charts.dart';
-import 'package:fnx_core_tokens/fnx_core_tokens.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_charts/pf_core_charts.dart';
+import 'package:pf_core_tokens/pf_core_tokens.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 import '../entities/widget_spec.dart';
 
-/// Renders an inline AI [WidgetSpec] as the matching FinNex chart, wrapped in
+/// Renders an inline AI [WidgetSpec] as the matching PocketFlow chart, wrapped in
 /// a card. Switches on the sealed [WidgetSpec] subtype.
 class InlineWidgetRenderer extends StatelessWidget {
   /// Default constructor.
@@ -18,21 +18,21 @@ class InlineWidgetRenderer extends StatelessWidget {
   Widget build(BuildContext context) {
     final typo = context.fnxTypography;
     final Widget chart = switch (spec) {
-      final BarChartSpec s => FnxBarChart(
+      final BarChartSpec s => PfBarChart(
           height: 180,
-          data: <FnxBarPoint>[
+          data: <PfBarPoint>[
             for (final BarChartBar b in s.bars)
-              FnxBarPoint(label: b.label, expense: b.value),
+              PfBarPoint(label: b.label, expense: b.value),
           ],
         ),
-      final LineChartSpec s => FnxLineChart(
+      final LineChartSpec s => PfLineChart(
           height: 180,
-          series: <FnxLineSeries>[
-            FnxLineSeries(
+          series: <PfLineSeries>[
+            PfLineSeries(
               name: s.seriesName,
-              points: <FnxLinePoint>[
+              points: <PfLinePoint>[
                 for (final LineChartPoint p in s.points)
-                  FnxLinePoint(x: p.x, y: p.y, label: p.label),
+                  PfLinePoint(x: p.x, y: p.y, label: p.label),
               ],
             ),
           ],
@@ -41,14 +41,14 @@ class InlineWidgetRenderer extends StatelessWidget {
     };
 
     return Padding(
-      padding: const EdgeInsets.only(top: FnxSpacing.x2),
-      child: FnxCard(
+      padding: const EdgeInsets.only(top: PfSpacing.x2),
+      child: PfCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             if (spec.title != null) ...<Widget>[
               Text(spec.title!, style: typo.bodyMd),
-              const SizedBox(height: FnxSpacing.x2),
+              const SizedBox(height: PfSpacing.x2),
             ],
             chart,
           ],
@@ -72,7 +72,7 @@ class _ProgressBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         ClipRRect(
-          borderRadius: BorderRadius.circular(FnxTokens.radiusSm),
+          borderRadius: BorderRadius.circular(PfTokens.radiusSm),
           child: LinearProgressIndicator(
             value: spec.fraction,
             minHeight: 10,
@@ -80,7 +80,7 @@ class _ProgressBar extends StatelessWidget {
             valueColor: AlwaysStoppedAnimation<Color>(colors.brand),
           ),
         ),
-        const SizedBox(height: FnxSpacing.x1),
+        const SizedBox(height: PfSpacing.x1),
         Text(
           spec.label == null ? '$percent%' : '$percent% · ${spec.label}',
           style: typo.caption.copyWith(color: colors.textSecondary),

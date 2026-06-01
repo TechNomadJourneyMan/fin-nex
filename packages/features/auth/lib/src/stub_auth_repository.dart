@@ -1,12 +1,12 @@
 // In-memory stub AuthRepository implementation.
 //
-// TODO(F-AUTH-WEB): replace with real impl from `fnx_data_api` once the
+// TODO(F-AUTH-WEB): replace with real impl from `pf_data_api` once the
 // backend AuthService and dio wiring is finalized. Until then, this stub
 // satisfies the domain contract so the UI can be developed end-to-end.
 
 import 'dart:async';
 
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 /// Simulated [AuthRepository] backed by an in-memory map.
 class StubAuthRepository implements AuthRepository {

@@ -1,4 +1,4 @@
-name: fnx_core_charts
+name: pf_core_charts
 description: Pocket Flow chart primitives — thin wrappers around fl_chart.
 publish_to: none
 version: 0.1.0
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fnx_core_tokens:
+  pf_core_tokens:
     path: ../tokens
   fl_chart: ^0.69.0
   intl: ^0.20.0

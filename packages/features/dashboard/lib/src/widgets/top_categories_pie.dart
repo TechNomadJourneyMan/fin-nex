@@ -1,13 +1,13 @@
 // Top categories breakdown card.
 //
-// Wraps `FnxDonutChart` from `fnx_core_charts` with dashboard-specific
+// Wraps `PfDonutChart` from `pf_core_charts` with dashboard-specific
 // layout (header + chart + "see all" link + legend) and tolerates the
 // empty-state by short-circuiting to a small placeholder.
 
 import 'package:flutter/material.dart' hide Category;
-import 'package:fnx_core_charts/fnx_core_charts.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_core_charts/pf_core_charts.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 /// Donut card showing the top spend categories.
 class TopCategoriesPie extends StatelessWidget {
@@ -45,16 +45,16 @@ class TopCategoriesPie extends StatelessWidget {
     final colors = context.fnxColors;
     final typo = context.fnxTypography;
 
-    final donutData = <FnxDonutSlice>[
+    final donutData = <PfDonutSlice>[
       for (final s in slices)
-        FnxDonutSlice(
+        PfDonutSlice(
           label: categoriesById[s.categoryId]?.name ?? '—',
           value: s.percent * 100,
           color: _hexToColor(categoriesById[s.categoryId]?.color.hex),
         ),
     ];
 
-    return FnxCard(
+    return PfCard(
       elevation: 1,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       child: Column(
@@ -84,7 +84,7 @@ class TopCategoriesPie extends StatelessWidget {
           else
             SizedBox(
               height: 180,
-              child: FnxDonutChart(
+              child: PfDonutChart(
                 data: donutData,
                 size: 180,
                 outerRadius: 80,

@@ -1,4 +1,4 @@
-name: fnx_e2e_crypto
+name: pf_e2e_crypto
 description: Pocket Flow client-side end-to-end encryption primitives (AES-GCM-256 envelope cipher + PBKDF2 key derivation).
 publish_to: none
 version: 0.1.0

@@ -6,8 +6,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/domain.dart';
 import 'package:go_router/go_router.dart';
 
 import '../providers.dart';
@@ -139,7 +139,7 @@ class _CreateWorkspacePageState extends ConsumerState<CreateWorkspacePage> {
         child: ListView(
           padding: EdgeInsets.all(spacing.s5),
           children: <Widget>[
-            FnxTextField(
+            PfTextField(
               label: 'Name',
               hint: 'e.g. Personal, Acme LLC',
               controller: _name,
@@ -157,7 +157,7 @@ class _CreateWorkspacePageState extends ConsumerState<CreateWorkspacePage> {
               style: typo.bodySm.copyWith(color: colors.textSecondary),
             ),
             SizedBox(height: spacing.s3),
-            FnxSegmentedControl<WorkspaceType>(
+            PfSegmentedControl<WorkspaceType>(
               value: _type,
               segments: const <WorkspaceType, String>{
                 WorkspaceType.personal: 'Personal',
@@ -166,12 +166,12 @@ class _CreateWorkspacePageState extends ConsumerState<CreateWorkspacePage> {
               onChanged: _onTypeChanged,
             ),
             SizedBox(height: spacing.s5),
-            FnxSelect<Currency>(
+            PfSelect<Currency>(
               label: 'Base currency',
               value: _currency,
-              options: <FnxSelectOption<Currency>>[
+              options: <PfSelectOption<Currency>>[
                 for (final Currency c in Currency.values)
-                  FnxSelectOption<Currency>(
+                  PfSelectOption<Currency>(
                     value: c,
                     label: '${c.code} ${c.symbol}',
                   ),
@@ -223,16 +223,16 @@ class _CreateWorkspacePageState extends ConsumerState<CreateWorkspacePage> {
               ],
             ),
             SizedBox(height: spacing.s7),
-            FnxButton(
+            PfButton(
               label: 'Create',
               fullWidth: true,
               loading: _saving,
               onPressed: _saving ? null : _save,
             ),
             SizedBox(height: spacing.s3),
-            FnxButton(
+            PfButton(
               label: 'Cancel',
-              variant: FnxButtonVariant.secondary,
+              variant: PfButtonVariant.secondary,
               fullWidth: true,
               onPressed: _saving ? null : () => context.pop(),
             ),

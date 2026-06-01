@@ -1,4 +1,4 @@
-name: fnx_core_tokens
+name: pf_core_tokens
 description: Pocket Flow design tokens — colors, spacing, radii, type ramps.
 publish_to: none
 version: 0.1.0

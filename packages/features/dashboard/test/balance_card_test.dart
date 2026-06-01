@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_domain/fnx_domain.dart';
-import 'package:fnx_feat_dashboard/dashboard.dart';
+import 'package:pf_domain/pf_domain.dart';
+import 'package:pf_feat_dashboard/dashboard.dart';
 
 void main() {
   testWidgets('BalanceCard renders amounts and segment labels', (tester) async {

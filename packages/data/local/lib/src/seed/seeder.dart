@@ -2,12 +2,12 @@ import 'package:sqflite/sqflite.dart';
 
 import 'system_categories.dart';
 
-/// Idempotent seeding entrypoints for the FinNex local database.
+/// Idempotent seeding entrypoints for the PocketFlow local database.
 ///
 /// Seeders are safe to invoke multiple times — they use INSERT OR REPLACE on
 /// rows that own a stable primary key.
-class FnxSeeder {
-  const FnxSeeder._();
+class PfSeeder {
+  const PfSeeder._();
 
   /// Inserts the canonical 28 system categories.
   ///

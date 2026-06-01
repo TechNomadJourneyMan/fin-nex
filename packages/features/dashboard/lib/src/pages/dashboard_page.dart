@@ -11,9 +11,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
@@ -24,7 +24,7 @@ import '../widgets/quick_stats_card.dart';
 import '../widgets/recent_transactions_list.dart';
 import '../widgets/top_categories_pie.dart';
 
-/// FinNex dashboard / home page. Routed at `/home`.
+/// PocketFlow dashboard / home page. Routed at `/home`.
 class DashboardPage extends ConsumerWidget {
   /// Default constructor.
   const DashboardPage({super.key});
@@ -294,16 +294,16 @@ class _LoadingView extends StatelessWidget {
       physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
       children: const <Widget>[
-        FnxSkeleton(
+        PfSkeleton(
             height: 168, borderRadius: BorderRadius.all(Radius.circular(16))),
         SizedBox(height: 16),
-        FnxSkeleton(
+        PfSkeleton(
             height: 88, borderRadius: BorderRadius.all(Radius.circular(16))),
         SizedBox(height: 16),
-        FnxSkeleton(
+        PfSkeleton(
             height: 240, borderRadius: BorderRadius.all(Radius.circular(16))),
         SizedBox(height: 24),
-        FnxSkeleton(
+        PfSkeleton(
             height: 320, borderRadius: BorderRadius.all(Radius.circular(16))),
       ],
     );
@@ -336,7 +336,7 @@ class _ErrorView extends StatelessWidget {
             Text(error.toString(),
                 style: typo.bodyMd, textAlign: TextAlign.center),
             const SizedBox(height: 16),
-            FnxButton(label: retryLabel, onPressed: onRetry),
+            PfButton(label: retryLabel, onPressed: onRetry),
           ],
         ),
       ),

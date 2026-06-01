@@ -5,8 +5,8 @@
 // These are deliberately tiny and obviously-fake so the UI has something to
 // render in the preview build without depending on auth or sync.
 
-import 'package:fnx_domain/fnx_domain.dart';
-import 'package:fnx_feat_subscriptions/subscriptions.dart' as subs;
+import 'package:pf_domain/pf_domain.dart';
+import 'package:pf_feat_subscriptions/subscriptions.dart' as subs;
 
 /// Returns a short list of [DetectedSubscription]s for the home preview.
 List<subs.DetectedSubscription> buildDemoSubscriptions(Ulid userId) {

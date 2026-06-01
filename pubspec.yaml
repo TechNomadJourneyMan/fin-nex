@@ -1,4 +1,4 @@
-name: finnex_workspace
+name: pocketflow_workspace
 description: Pocket Flow personal finance Flutter monorepo root.
 publish_to: none
 version: 0.1.0

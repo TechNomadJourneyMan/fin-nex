@@ -1,7 +1,7 @@
-// Alias barrel for the FinNex subscriptions feature module.
+// Alias barrel for the PocketFlow subscriptions feature module.
 //
-// Re-exports the public surface from `fnx_feat_subscriptions.dart`.
+// Re-exports the public surface from `pf_feat_subscriptions.dart`.
 
 library subscriptions;
 
-export 'fnx_feat_subscriptions.dart';
+export 'pf_feat_subscriptions.dart';

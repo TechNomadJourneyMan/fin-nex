@@ -3,7 +3,7 @@
 //
 // Web-safe: no Flutter, no native bindings.
 
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 /// The closed/half-open `[start, end)` window that a [Budget] covers
 /// "right now" relative to a reference [DateTime].

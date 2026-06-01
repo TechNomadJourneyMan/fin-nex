@@ -1,7 +1,7 @@
 import '../database/sync_state.dart';
 import '../models/category_row.dart';
 
-/// Canonical list of FinNex system categories (E3 taxonomy, 28 entries).
+/// Canonical list of PocketFlow system categories (E3 taxonomy, 28 entries).
 ///
 /// IDs are stable English keys (`food_groceries`, ...) used across clients and
 /// server. Localisation lives in `name_i18n_key`; the `name` column carries

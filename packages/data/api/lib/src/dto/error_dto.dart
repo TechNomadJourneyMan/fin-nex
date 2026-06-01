@@ -31,7 +31,7 @@ class FieldErrorDto {
       };
 }
 
-/// RFC 9457 Problem Details document returned by the FinNex backend.
+/// RFC 9457 Problem Details document returned by the PocketFlow backend.
 class ProblemDetailsDto {
   /// Default constructor.
   const ProblemDetailsDto({

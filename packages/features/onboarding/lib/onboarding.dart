@@ -1,4 +1,4 @@
-/// Public API for FinNex onboarding feature module.
+/// Public API for PocketFlow onboarding feature module.
 ///
 /// Re-exports pages, controllers, providers, and routes used by the host
 /// app to wire the first-run experience.

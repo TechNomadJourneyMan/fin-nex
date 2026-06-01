@@ -1,4 +1,4 @@
-/// ISO-4217 currency codes supported by FinNex.
+/// ISO-4217 currency codes supported by PocketFlow.
 ///
 /// Only the subset relevant to the Kazakhstan-first launch is enumerated.
 enum Currency {

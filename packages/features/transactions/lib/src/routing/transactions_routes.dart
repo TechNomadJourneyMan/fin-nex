@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:go_router/go_router.dart';
 
 import '../pages/history_page.dart';

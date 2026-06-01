@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 /// A single AI chat conversation.
 @immutable

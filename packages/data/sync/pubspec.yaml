@@ -1,4 +1,4 @@
-name: fnx_data_sync
+name: pf_data_sync
 description: Pocket Flow offline-first sync engine (outbox, pull cursors, conflict resolver).
 publish_to: none
 version: 0.1.0
@@ -10,11 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fnx_domain:
+  pf_domain:
     path: ../../domain
-  fnx_data_local:
+  pf_data_local:
     path: ../local
-  fnx_data_api:
+  pf_data_api:
     path: ../api
   flutter_riverpod: ^2.5.0
   connectivity_plus: ^6.1.0

@@ -1,7 +1,7 @@
-/// FinNex auth feature — sign-in, sign-up, OTP, biometric, sessions, delete.
+/// PocketFlow auth feature — sign-in, sign-up, OTP, biometric, sessions, delete.
 ///
 /// Mount [authRoutes] in the app router and override
-/// [authRepositoryProvider] with the real impl from `fnx_data_api`.
+/// [authRepositoryProvider] with the real impl from `pf_data_api`.
 library auth;
 
 export 'src/auth_routes.dart';

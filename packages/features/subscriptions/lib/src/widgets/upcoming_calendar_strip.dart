@@ -4,7 +4,7 @@
 // least one upcoming charge get a brand dot indicator beneath the date.
 
 import 'package:flutter/material.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:intl/intl.dart';
 
 import '../domain/detected_subscription.dart';

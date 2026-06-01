@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 /// About page (version, links).
 class AboutPage extends ConsumerWidget {
@@ -44,7 +44,7 @@ class AboutPage extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 24),
-            FnxListItem(
+            PfListItem(
               leading: Icon(Icons.shield_outlined, color: colors.textSecondary),
               title: 'Privacy policy',
               trailing: Icon(Icons.open_in_new, color: colors.textMuted),
@@ -52,7 +52,7 @@ class AboutPage extends ConsumerWidget {
                 /* TODO(F-LEGAL): open privacy URL. */
               },
             ),
-            FnxListItem(
+            PfListItem(
               leading: Icon(
                 Icons.description_outlined,
                 color: colors.textSecondary,

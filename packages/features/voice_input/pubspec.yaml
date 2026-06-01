@@ -1,4 +1,4 @@
-name: fnx_feat_voice_input
+name: pf_feat_voice_input
 description: Pocket Flow voice-input feature module (hold-to-record transcription).
 publish_to: none
 version: 0.1.0
@@ -15,13 +15,13 @@ dependencies:
   dio: ^5.7.0
   record: ^5.1.2
   permission_handler: ^11.3.1
-  fnx_domain:
+  pf_domain:
     path: ../../domain
-  fnx_core_theme:
+  pf_core_theme:
     path: ../../core/theme
-  fnx_core_widgets:
+  pf_core_widgets:
     path: ../../core/widgets
-  fnx_data_api:
+  pf_data_api:
     path: ../../data/api
 
 dev_dependencies:

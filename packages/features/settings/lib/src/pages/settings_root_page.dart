@@ -4,8 +4,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 /// Settings hub page. Routed at `/settings`.
@@ -78,7 +78,7 @@ class SettingsRootPage extends ConsumerWidget {
           ),
           itemBuilder: (context, index) {
             final s = sections[index];
-            return FnxListItem(
+            return PfListItem(
               leading: Icon(s.icon, color: colors.textSecondary),
               title: s.title,
               trailing: Icon(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_tokens/fnx_core_tokens.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_tokens/pf_core_tokens.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 import '../controllers/chat_controller.dart';
 import '../entities/chat_message.dart';
@@ -16,7 +16,7 @@ const List<String> kQuickPrompts = <String>[
   'Кассовый разрыв?',
 ];
 
-/// Conversational CFO page: a chat thread with the FinNex AI assistant.
+/// Conversational CFO page: a chat thread with the PocketFlow AI assistant.
 ///
 /// User bubbles are right-aligned in the brand accent; AI bubbles are
 /// left-aligned with markdown rendering and inline data widgets. Quick prompt
@@ -83,7 +83,7 @@ class _AiChatPageState extends ConsumerState<AiChatPage> {
                     : ListView.builder(
                         key: const Key('ai_chat_message_list'),
                         controller: _scroll,
-                        padding: const EdgeInsets.all(FnxSpacing.x4),
+                        padding: const EdgeInsets.all(PfSpacing.x4),
                         itemCount: messages.length,
                         itemBuilder: (BuildContext context, int i) =>
                             _MessageBubble(message: messages[i]),
@@ -114,13 +114,13 @@ class _QuickPromptBar extends StatelessWidget {
       height: 48,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: FnxSpacing.x4),
+        padding: const EdgeInsets.symmetric(horizontal: PfSpacing.x4),
         itemCount: kQuickPrompts.length,
-        separatorBuilder: (_, __) => const SizedBox(width: FnxSpacing.x2),
+        separatorBuilder: (_, __) => const SizedBox(width: PfSpacing.x2),
         itemBuilder: (BuildContext context, int i) {
           final prompt = kQuickPrompts[i];
           return Center(
-            child: FnxChip(
+            child: PfChip(
               label: prompt,
               icon: Icons.auto_awesome,
               onTap: () => onSelect(prompt),
@@ -138,7 +138,7 @@ class _EmptyConversation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: FnxEmptyState(
+      child: PfEmptyState(
         icon: Icons.forum_outlined,
         title: 'Спросите вашего AI-CFO',
         body: 'Задайте вопрос о расходах, подписках или прогнозе бюджета.',
@@ -177,16 +177,16 @@ class _MessageBubble extends StatelessWidget {
         maxWidth: MediaQuery.sizeOf(context).width * 0.8,
       ),
       padding: const EdgeInsets.symmetric(
-        horizontal: FnxSpacing.x4,
-        vertical: FnxSpacing.x3,
+        horizontal: PfSpacing.x4,
+        vertical: PfSpacing.x3,
       ),
       decoration: BoxDecoration(
         color: bubbleColor,
         borderRadius: BorderRadius.only(
-          topLeft: const Radius.circular(FnxTokens.radiusLg),
-          topRight: const Radius.circular(FnxTokens.radiusLg),
-          bottomLeft: Radius.circular(isUser ? FnxTokens.radiusLg : 4),
-          bottomRight: Radius.circular(isUser ? 4 : FnxTokens.radiusLg),
+          topLeft: const Radius.circular(PfTokens.radiusLg),
+          topRight: const Radius.circular(PfTokens.radiusLg),
+          bottomLeft: Radius.circular(isUser ? PfTokens.radiusLg : 4),
+          bottomRight: Radius.circular(isUser ? 4 : PfTokens.radiusLg),
         ),
       ),
       child: Column(
@@ -201,7 +201,7 @@ class _MessageBubble extends StatelessWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: FnxSpacing.x3),
+      padding: const EdgeInsets.only(bottom: PfSpacing.x3),
       child: Row(
         mainAxisAlignment:
             isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
@@ -229,12 +229,12 @@ class _Composer extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.all(FnxSpacing.x3),
+        padding: const EdgeInsets.all(PfSpacing.x3),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             Expanded(
-              child: FnxTextField(
+              child: PfTextField(
                 key: const Key('ai_chat_composer_field'),
                 controller: controller,
                 hint: 'Спросите что-нибудь…',
@@ -244,7 +244,7 @@ class _Composer extends StatelessWidget {
                 onSubmitted: enabled ? onSend : null,
               ),
             ),
-            const SizedBox(width: FnxSpacing.x2),
+            const SizedBox(width: PfSpacing.x2),
             IconButton.filled(
               key: const Key('ai_chat_send_button'),
               style: IconButton.styleFrom(backgroundColor: accent),

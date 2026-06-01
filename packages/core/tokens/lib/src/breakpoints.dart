@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 
-/// FinNex responsive breakpoints (logical pixels).
+/// PocketFlow responsive breakpoints (logical pixels).
 @immutable
-class FnxBreakpoints {
+class PfBreakpoints {
   /// Const constructor — values are static.
-  const FnxBreakpoints();
+  const PfBreakpoints();
 
   /// Small phones — 375 px.
   static const double sm = 375;

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 import '../dto/auth_dto.dart';
 import '../dto/user_dto.dart';

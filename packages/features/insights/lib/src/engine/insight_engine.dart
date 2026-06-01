@@ -1,4 +1,4 @@
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 import 'insight_rules.dart';
 import 'rule_context.dart';

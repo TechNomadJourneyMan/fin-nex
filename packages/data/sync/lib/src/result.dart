@@ -1,4 +1,4 @@
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:meta/meta.dart';
 
 /// Lightweight result type used by sync service calls.

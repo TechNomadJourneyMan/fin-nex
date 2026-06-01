@@ -1,4 +1,4 @@
-// Top-level router for FinNex.
+// Top-level router for PocketFlow.
 //
 // Composes feature-package routes into a single [GoRouter]. The four primary
 // tabs (Home, Transactions, Analytics, Settings) live under a
@@ -10,19 +10,19 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_feat_ai_chat/fnx_feat_ai_chat.dart' as ai_chat;
-import 'package:fnx_feat_analytics/analytics.dart' as analytics;
-import 'package:fnx_feat_auth/auth.dart' as auth;
-import 'package:fnx_feat_budgets/fnx_feat_budgets.dart' as budgets;
-import 'package:fnx_feat_categories/fnx_feat_categories.dart' as categories;
-import 'package:fnx_feat_dashboard/dashboard.dart' as dashboard;
-import 'package:fnx_feat_notifications/fnx_feat_notifications.dart'
+import 'package:pf_feat_ai_chat/pf_feat_ai_chat.dart' as ai_chat;
+import 'package:pf_feat_analytics/analytics.dart' as analytics;
+import 'package:pf_feat_auth/auth.dart' as auth;
+import 'package:pf_feat_budgets/pf_feat_budgets.dart' as budgets;
+import 'package:pf_feat_categories/pf_feat_categories.dart' as categories;
+import 'package:pf_feat_dashboard/dashboard.dart' as dashboard;
+import 'package:pf_feat_notifications/pf_feat_notifications.dart'
     as notifications;
-import 'package:fnx_feat_onboarding/onboarding.dart' as onboarding;
-import 'package:fnx_feat_settings/settings.dart' as settings;
-import 'package:fnx_feat_subscriptions/subscriptions.dart' as subs;
-import 'package:fnx_feat_transactions/transactions.dart' as transactions;
-import 'package:fnx_feat_workspaces/fnx_feat_workspaces.dart' as workspaces;
+import 'package:pf_feat_onboarding/onboarding.dart' as onboarding;
+import 'package:pf_feat_settings/settings.dart' as settings;
+import 'package:pf_feat_subscriptions/subscriptions.dart' as subs;
+import 'package:pf_feat_transactions/transactions.dart' as transactions;
+import 'package:pf_feat_workspaces/pf_feat_workspaces.dart' as workspaces;
 import 'package:go_router/go_router.dart';
 
 import 'pages/achievements_page.dart';
@@ -36,13 +36,13 @@ final GlobalKey<NavigatorState> _rootKey = GlobalKey<NavigatorState>(
   debugLabel: 'root',
 );
 
-/// Build the top-level [GoRouter] for FinNex.
+/// Build the top-level [GoRouter] for PocketFlow.
 ///
 /// Pass a [ProviderContainer] so the router can read auth/onboarding state for
 /// redirects. When [container] is null, redirects fall back to "let the user
 /// see whatever they navigated to" — useful for golden tests and standalone
 /// previews.
-GoRouter buildFinnexRouter({ProviderContainer? container}) {
+GoRouter buildPocketFlowRouter({ProviderContainer? container}) {
   return GoRouter(
     navigatorKey: _rootKey,
     initialLocation: '/',
@@ -230,8 +230,8 @@ GoRouter buildFinnexRouter({ProviderContainer? container}) {
 /// Default router instance for use by [MaterialApp.router].
 ///
 /// Tests and the app entrypoint may rebuild a fresh router via
-/// [buildFinnexRouter] when they need to inject a [ProviderContainer].
-final GoRouter finnexRouter = buildFinnexRouter();
+/// [buildPocketFlowRouter] when they need to inject a [ProviderContainer].
+final GoRouter pocketFlowRouter = buildPocketFlowRouter();
 
 class _SplashScreen extends StatefulWidget {
   const _SplashScreen();

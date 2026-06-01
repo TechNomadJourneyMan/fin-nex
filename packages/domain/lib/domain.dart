@@ -1,6 +1,6 @@
-/// FinNex pure-Dart domain layer: value objects, entities, repository
+/// PocketFlow pure-Dart domain layer: value objects, entities, repository
 /// interfaces, and use cases. No Flutter or platform-channel dependencies.
-library fnx_domain;
+library pf_domain;
 
 // Value objects
 export 'src/values/category_color.dart';
@@ -39,7 +39,7 @@ export 'src/repositories/settings_repository.dart';
 export 'src/repositories/streak_repository.dart';
 export 'src/repositories/sync_repository.dart';
 export 'src/repositories/transactions_repository.dart';
-// 'src/repositories/workspaces_repository.dart' removed — fnx_feat_workspaces
+// 'src/repositories/workspaces_repository.dart' removed — pf_feat_workspaces
 // ships its own contract until the data layer needs a domain-level one.
 
 // Use cases

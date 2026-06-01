@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-/// FinNex corner-radius tokens.
+/// PocketFlow corner-radius tokens.
 @immutable
-class FnxRadius extends ThemeExtension<FnxRadius> {
+class PfRadius extends ThemeExtension<PfRadius> {
   /// Const constructor.
-  const FnxRadius();
+  const PfRadius();
 
   /// Zero radius (sharp).
   static const BorderRadius none = BorderRadius.zero;
@@ -22,8 +22,8 @@ class FnxRadius extends ThemeExtension<FnxRadius> {
   static const BorderRadius pill = BorderRadius.all(Radius.circular(999));
 
   @override
-  FnxRadius copyWith() => const FnxRadius();
+  PfRadius copyWith() => const PfRadius();
 
   @override
-  FnxRadius lerp(ThemeExtension<FnxRadius>? other, double t) => this;
+  PfRadius lerp(ThemeExtension<PfRadius>? other, double t) => this;
 }

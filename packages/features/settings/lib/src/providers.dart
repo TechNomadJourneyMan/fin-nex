@@ -1,4 +1,4 @@
-// Riverpod providers for the FinNex settings feature.
+// Riverpod providers for the PocketFlow settings feature.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

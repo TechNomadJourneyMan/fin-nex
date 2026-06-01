@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 import 'sync_engine.dart';
 
@@ -61,7 +61,7 @@ class SyncAwareTransactionsRepository implements TransactionsRepository {
 }
 
 /// Abstract bridge between repository writes and the outbox table. The real
-/// implementation lives in `fnx_data_local` once DAOs are wired up.
+/// implementation lives in `pf_data_local` once DAOs are wired up.
 abstract class OutboxBridge {
   /// Enqueues an upsert entry into `sync_queue`.
   Future<void> enqueueUpsert({

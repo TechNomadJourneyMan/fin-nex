@@ -1,4 +1,4 @@
-name: fnx_core_widgets
+name: pf_core_widgets
 description: Pocket Flow shared widget library (buttons, cards, sheets, fields).
 publish_to: none
 version: 0.1.0
@@ -10,11 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fnx_core_theme:
+  pf_core_theme:
     path: ../theme
-  fnx_core_tokens:
+  pf_core_tokens:
     path: ../tokens
-  fnx_domain:
+  pf_domain:
     path: ../../domain
   intl: ^0.20.0
 

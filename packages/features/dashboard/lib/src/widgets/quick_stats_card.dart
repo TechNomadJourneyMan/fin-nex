@@ -5,7 +5,7 @@
 // stays scannable on a 320 dp width.
 
 import 'package:flutter/material.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 /// A pair of caption + headline blocks rendered side-by-side.
 class QuickStatsCard extends StatelessWidget {
@@ -41,7 +41,7 @@ class QuickStatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.fnxColors;
-    return FnxCard(
+    return PfCard(
       elevation: 1,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Row(

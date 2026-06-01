@@ -6,9 +6,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_domain/domain.dart';
-import 'package:fnx_feat_subscriptions/fnx_feat_subscriptions.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_domain/domain.dart';
+import 'package:pf_feat_subscriptions/pf_feat_subscriptions.dart';
 
 void main() {
   // 26-char Crockford base-32 ids (alphabet excludes I, L, O, U).
@@ -44,7 +44,7 @@ void main() {
       child: const MaterialApp(
         locale: Locale('ru'),
         localizationsDelegates: AppL10n.localizationsDelegates,
-        supportedLocales: FnxLocales.all,
+        supportedLocales: PfLocales.all,
         home: SubscriptionsManagerPage(),
       ),
     );

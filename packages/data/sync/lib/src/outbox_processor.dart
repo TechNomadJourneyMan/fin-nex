@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
-import 'package:fnx_data_local/fnx_data_local.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_data_local/pf_data_local.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 import 'result.dart';
 import 'sync_contracts.dart';

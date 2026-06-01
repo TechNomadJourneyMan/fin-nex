@@ -20,7 +20,7 @@ class ParsedTxnType {
 
 /// The structured result of parsing a single bank SMS or push notification.
 ///
-/// This is a transport DTO: it is intentionally decoupled from the `fnx_domain`
+/// This is a transport DTO: it is intentionally decoupled from the `pf_domain`
 /// `Transaction`/`Money`/`Ulid` types. The consuming app converts it into a
 /// domain `Transaction` (e.g. via the IdMapper bridge and `Money(minor, ...)`).
 @immutable

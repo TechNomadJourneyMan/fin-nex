@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_domain/fnx_domain.dart';
-import 'package:fnx_feat_auth/auth.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_domain/pf_domain.dart';
+import 'package:pf_feat_auth/auth.dart';
 
 class _NoopRepo implements AuthRepository {
   final StreamController<User?> _c = StreamController<User?>.broadcast();

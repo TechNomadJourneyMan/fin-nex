@@ -4,7 +4,7 @@ import '../services/budgets_service.dart';
 /// Thin facade over [BudgetsService].
 ///
 /// TODO(F-BUD-01): swap to a domain-defined `BudgetsRepository` once it
-/// lands in `fnx_domain`.
+/// lands in `pf_domain`.
 class RemoteBudgetsRepository {
   /// Default constructor.
   RemoteBudgetsRepository(this._service);

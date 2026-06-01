@@ -1,4 +1,4 @@
-/// Public API for the FinNex analytics feature module.
+/// Public API for the PocketFlow analytics feature module.
 ///
 /// Exposes:
 ///  * [AnalyticsPeriod] — selectable Day/Week/Month/Year/Custom range.
@@ -6,7 +6,7 @@
 ///  * Providers and the [AnalyticsController] AsyncNotifier.
 ///  * Pages — [AnalyticsPage], [CategoryDetailPage], [CalendarViewPage].
 ///  * [analyticsRoutes] for go_router composition.
-library fnx_feat_analytics;
+library pf_feat_analytics;
 
 export 'src/analytics_summary.dart';
 export 'src/controllers/analytics_controller.dart';

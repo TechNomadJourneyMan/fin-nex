@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// FinNex typography ramp.
+/// PocketFlow typography ramp.
 ///
 /// Body uses Inter; numeric/mono uses JetBrains Mono (loaded via
 /// `google_fonts`). Tabular numerals are enabled for amount styles.
 @immutable
-class FnxTypography extends ThemeExtension<FnxTypography> {
+class PfTypography extends ThemeExtension<PfTypography> {
   /// Default const constructor — uses Google Fonts lazily via getters.
-  const FnxTypography();
+  const PfTypography();
 
   static const String _interFamily = 'Inter';
   static const String _monoFamily = 'JetBrainsMono';
@@ -166,10 +166,10 @@ class FnxTypography extends ThemeExtension<FnxTypography> {
       );
 
   @override
-  FnxTypography copyWith() => const FnxTypography();
+  PfTypography copyWith() => const PfTypography();
 
   @override
-  FnxTypography lerp(ThemeExtension<FnxTypography>? other, double t) {
+  PfTypography lerp(ThemeExtension<PfTypography>? other, double t) {
     return this;
   }
 }

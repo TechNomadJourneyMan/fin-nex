@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart' hide Category;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_charts/fnx_core_charts.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_core_charts/pf_core_charts.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
@@ -101,7 +101,7 @@ class _AnalyticsBody extends ConsumerWidget {
         _TotalsCard(summary: summary),
         SizedBox(height: gap),
         if (summary.isEmpty)
-          FnxEmptyState(
+          PfEmptyState(
             icon: Icons.insights_outlined,
             title: l10n.anEmpty,
             body: l10n.onbP2Body,
@@ -136,7 +136,7 @@ class _PeriodSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AppL10n l10n = AppL10n.of(context);
-    return FnxSegmentedControl<AnalyticsPeriodKind>(
+    return PfSegmentedControl<AnalyticsPeriodKind>(
       segments: <AnalyticsPeriodKind, String>{
         AnalyticsPeriodKind.day: l10n.anPeriodDay,
         AnalyticsPeriodKind.week: l10n.anPeriodWeek,
@@ -165,7 +165,7 @@ class _TotalsCard extends StatelessWidget {
     final colors = context.fnxColors;
     final NumberFormat fmt = _amountFormat(context, summary.currency);
 
-    return FnxCard(
+    return PfCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -248,31 +248,31 @@ class _CategoryDonutSection extends ConsumerWidget {
     final NumberFormat fmt = _amountFormat(context, summary.currency);
 
     final List<AnalyticsCategoryBucket> buckets = summary.byCategory;
-    final List<FnxDonutSlice> slices = <FnxDonutSlice>[
+    final List<PfDonutSlice> slices = <PfDonutSlice>[
       for (int i = 0; i < buckets.length; i++)
-        FnxDonutSlice(
+        PfDonutSlice(
           label: _categoryLabel(buckets[i].categoryId, l10n),
           value: buckets[i].amount.major.toDouble(),
-          color: FnxChartPalette.at(i),
+          color: PfChartPalette.at(i),
         ),
     ];
-    final List<FnxLegendEntry> legend = <FnxLegendEntry>[
+    final List<PfLegendEntry> legend = <PfLegendEntry>[
       for (int i = 0; i < buckets.length; i++)
-        FnxLegendEntry(
+        PfLegendEntry(
           label: _categoryLabel(buckets[i].categoryId, l10n),
-          color: FnxChartPalette.at(i),
+          color: PfChartPalette.at(i),
           value: fmt.format(buckets[i].amount.major.toDouble()),
         ),
     ];
 
-    return FnxCard(
+    return PfCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(l10n.anByCategory, style: typo.heading3),
           SizedBox(height: context.fnxSpacing.s4),
           Center(
-            child: FnxDonutChart(
+            child: PfDonutChart(
               data: slices,
               centerLabel: l10n.anSumExpense,
               numberFormat: fmt,
@@ -288,9 +288,9 @@ class _CategoryDonutSection extends ConsumerWidget {
             ),
           ),
           SizedBox(height: context.fnxSpacing.s5),
-          FnxChartLegend(
+          PfChartLegend(
             entries: legend,
-            onTap: (FnxLegendEntry e) {
+            onTap: (PfLegendEntry e) {
               final int idx = legend.indexOf(e);
               if (idx < 0 || idx >= buckets.length) return;
               final Ulid? cat = buckets[idx].categoryId;
@@ -325,21 +325,21 @@ class _ByWeekdaySection extends StatelessWidget {
     final String locale =
         Localizations.maybeLocaleOf(context)?.toLanguageTag() ?? 'en';
     final DateFormat weekdayFmt = DateFormat.E(locale);
-    final List<FnxBarPoint> points = <FnxBarPoint>[
+    final List<PfBarPoint> points = <PfBarPoint>[
       for (final AnalyticsTimeBucket b in summary.byWeekday)
-        FnxBarPoint(
+        PfBarPoint(
           label: weekdayFmt.format(b.bucketStart),
           income: b.income.major.toDouble(),
           expense: b.expense.major.toDouble(),
         ),
     ];
-    return FnxCard(
+    return PfCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(l10n.anByWeek, style: typo.heading3),
           SizedBox(height: context.fnxSpacing.s4),
-          FnxBarChart(data: points),
+          PfBarChart(data: points),
         ],
       ),
     );
@@ -361,37 +361,37 @@ class _CashflowSection extends StatelessWidget {
     final DateFormat fmt = DateFormat.MMMd(locale);
 
     final List<AnalyticsTimeBucket> buckets = summary.cashflow;
-    final List<FnxLinePoint> income = <FnxLinePoint>[
+    final List<PfLinePoint> income = <PfLinePoint>[
       for (int i = 0; i < buckets.length; i++)
-        FnxLinePoint(
+        PfLinePoint(
           x: i.toDouble(),
           y: buckets[i].income.major.toDouble(),
           label: fmt.format(buckets[i].bucketStart),
         ),
     ];
-    final List<FnxLinePoint> expense = <FnxLinePoint>[
+    final List<PfLinePoint> expense = <PfLinePoint>[
       for (int i = 0; i < buckets.length; i++)
-        FnxLinePoint(
+        PfLinePoint(
           x: i.toDouble(),
           y: buckets[i].expense.major.toDouble(),
           label: fmt.format(buckets[i].bucketStart),
         ),
     ];
 
-    return FnxCard(
+    return PfCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(l10n.anCashFlow, style: typo.heading3),
           SizedBox(height: context.fnxSpacing.s4),
-          FnxLineChart(
-            series: <FnxLineSeries>[
-              FnxLineSeries(
+          PfLineChart(
+            series: <PfLineSeries>[
+              PfLineSeries(
                 name: l10n.anSumIncome,
                 points: income,
                 color: colors.income,
               ),
-              FnxLineSeries(
+              PfLineSeries(
                 name: l10n.anSumExpense,
                 points: expense,
                 color: colors.error,
@@ -414,7 +414,7 @@ class _SparseDataHint extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppL10n l10n = AppL10n.of(context);
     final typo = context.fnxTypography;
-    return FnxCard(
+    return PfCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

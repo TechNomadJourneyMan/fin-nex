@@ -1,4 +1,4 @@
-name: fnx_feat_settings
+name: pf_feat_settings
 description: Pocket Flow settings feature module.
 publish_to: none
 version: 0.1.0
@@ -12,15 +12,15 @@ dependencies:
     sdk: flutter
   flutter_riverpod: ^2.5.1
   go_router: ^14.2.7
-  fnx_core_theme:
+  pf_core_theme:
     path: ../../core/theme
-  fnx_core_tokens:
+  pf_core_tokens:
     path: ../../core/tokens
-  fnx_core_widgets:
+  pf_core_widgets:
     path: ../../core/widgets
-  fnx_core_l10n:
+  pf_core_l10n:
     path: ../../core/l10n
-  fnx_domain:
+  pf_domain:
     path: ../../domain
   shared_preferences: ^2.3.2
 

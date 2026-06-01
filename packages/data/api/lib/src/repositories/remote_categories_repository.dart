@@ -4,7 +4,7 @@ import '../services/categories_service.dart';
 /// Thin facade over [CategoriesService].
 ///
 /// TODO(F-CAT-01): swap to a domain-defined `CategoriesRepository` once it
-/// lands in `fnx_domain`.
+/// lands in `pf_domain`.
 class RemoteCategoriesRepository {
   /// Default constructor.
   RemoteCategoriesRepository(this._service);

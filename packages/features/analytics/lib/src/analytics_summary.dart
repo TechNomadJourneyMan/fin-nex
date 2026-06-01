@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 import 'state/analytics_period.dart';
 

@@ -4,7 +4,7 @@
 // request so it can scope sessions to a device. We generate one lazily on the
 // first call and persist it in `shared_preferences` so it survives restarts.
 
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Lazily generates and persists a stable device id (ULID).

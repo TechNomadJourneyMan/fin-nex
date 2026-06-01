@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart' hide Category;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
@@ -62,7 +62,7 @@ class CategoryDetailPage extends ConsumerWidget {
             final List<Transaction> filtered =
                 _filter(all, period, currency, categoryId);
             if (filtered.isEmpty) {
-              return FnxEmptyState(
+              return PfEmptyState(
                 icon: Icons.receipt_long_outlined,
                 title: l10n.anEmpty,
                 body: l10n.calDayEmpty,
@@ -85,7 +85,7 @@ class CategoryDetailPage extends ConsumerWidget {
                   SizedBox(height: context.fnxSpacing.s3),
               itemBuilder: (BuildContext context, int idx) {
                 if (idx == 0) {
-                  return FnxCard(
+                  return PfCard(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -103,7 +103,7 @@ class CategoryDetailPage extends ConsumerWidget {
                   );
                 }
                 final Transaction tx = filtered[idx - 1];
-                return FnxListItem(
+                return PfListItem(
                   title: tx.description?.trim().isNotEmpty == true
                       ? tx.description!
                       : categoryName,

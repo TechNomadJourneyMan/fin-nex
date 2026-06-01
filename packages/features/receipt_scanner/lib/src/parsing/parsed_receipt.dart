@@ -1,4 +1,4 @@
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 /// A single line item extracted from a receipt.
 ///
@@ -36,7 +36,7 @@ class ReceiptLineItem {
 /// Structured output of [ReceiptParser.parse].
 ///
 /// Money is always represented as an integer minor amount plus a [Currency]
-/// — never as a double, per FinNex money rules.
+/// — never as a double, per PocketFlow money rules.
 class ParsedReceipt {
   /// Creates a parsed receipt result.
   const ParsedReceipt({

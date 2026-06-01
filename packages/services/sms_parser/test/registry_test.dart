@@ -1,4 +1,4 @@
-import 'package:fnx_sms_parser/fnx_sms_parser.dart';
+import 'package:pf_sms_parser/pf_sms_parser.dart';
 import 'package:test/test.dart';
 
 void main() {

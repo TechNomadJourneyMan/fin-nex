@@ -7,7 +7,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_feat_voice_input/fnx_feat_voice_input.dart';
+import 'package:pf_feat_voice_input/pf_feat_voice_input.dart';
 
 class _FakeRecorder implements VoiceRecorder {
   bool started = false;

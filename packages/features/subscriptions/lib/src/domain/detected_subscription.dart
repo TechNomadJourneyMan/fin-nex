@@ -7,7 +7,7 @@
 // this UI is written against — we declare structurally-identical shapes here.
 //
 // On integration the app composition layer overrides the providers in
-// `providers.dart` with the real `fnx_domain` implementations. These local
+// `providers.dart` with the real `pf_domain` implementations. These local
 // types mirror the agreed contract:
 //
 //   abstract interface class DetectedSubscriptionsRepository {
@@ -18,7 +18,7 @@
 //   }
 
 import 'package:equatable/equatable.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 /// Cadence at which a detected subscription is billed.
 enum BillingPeriod {

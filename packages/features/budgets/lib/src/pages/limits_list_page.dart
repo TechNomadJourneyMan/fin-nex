@@ -5,8 +5,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 import '../controllers/budgets_controller.dart';
 
@@ -31,7 +31,7 @@ class LimitsListPage extends ConsumerWidget {
             Center(child: Text('$e', style: TextStyle(color: colors.error))),
         data: (limits) {
           if (limits.isEmpty) {
-            return FnxEmptyState(
+            return PfEmptyState(
               icon: Icons.shield_outlined,
               title: l10n.budgetsEmpty,
               body: l10n.budgetsCreate,

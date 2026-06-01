@@ -1,4 +1,4 @@
-name: fnx_data_api
+name: pf_data_api
 description: Pocket Flow REST API client.
 publish_to: none
 version: 0.1.0
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fnx_domain:
+  pf_domain:
     path: ../../domain
   dio: ^5.7.0
 

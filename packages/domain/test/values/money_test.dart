@@ -1,5 +1,5 @@
 import 'package:decimal/decimal.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 import 'package:test/test.dart';
 
 void main() {

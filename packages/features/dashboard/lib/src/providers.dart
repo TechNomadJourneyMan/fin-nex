@@ -1,17 +1,17 @@
-// Riverpod providers for the FinNex dashboard feature.
+// Riverpod providers for the PocketFlow dashboard feature.
 //
 // The dashboard depends on three domain repositories — accounts,
 // transactions, and analytics. Each is exposed as a `Provider` so the app
-// layer can override them with the concrete `fnx_data_local` / API
+// layer can override them with the concrete `pf_data_local` / API
 // implementations. The defaults below are in-memory stubs that satisfy
 // the contracts and let the feature render in isolation (e.g. golden
 // tests, storybook, web preview).
 //
 // TODO(F-DASH-WIRE): replace the stubs in `apps/finnex/lib/main.dart`
-// with the real repos from `fnx_data_local`.
+// with the real repos from `pf_data_local`.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 import 'controllers/dashboard_controller.dart';
 import 'data/_stub_repositories.dart';
@@ -19,7 +19,7 @@ import 'data/_stub_repositories.dart';
 /// Provides the [AccountsRepository] used by the dashboard.
 ///
 /// Override in the app composition root with the real implementation
-/// from `fnx_data_local`.
+/// from `pf_data_local`.
 final dashboardAccountsRepositoryProvider = Provider<AccountsRepository>((ref) {
   return StubAccountsRepository();
 });

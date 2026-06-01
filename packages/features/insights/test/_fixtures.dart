@@ -1,4 +1,4 @@
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 /// Test helpers shared by the insights test suite.
 

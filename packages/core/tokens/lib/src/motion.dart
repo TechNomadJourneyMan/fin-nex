@@ -2,11 +2,11 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-/// FinNex motion tokens — Material 3 durations and easing curves.
+/// PocketFlow motion tokens — Material 3 durations and easing curves.
 @immutable
-class FnxMotion extends ThemeExtension<FnxMotion> {
+class PfMotion extends ThemeExtension<PfMotion> {
   /// Const constructor.
-  const FnxMotion();
+  const PfMotion();
 
   /// 75 ms — micro interactions.
   static const Duration instant = Duration(milliseconds: 75);
@@ -29,9 +29,9 @@ class FnxMotion extends ThemeExtension<FnxMotion> {
   static const Cubic accelerated = Cubic(0.3, 0.0, 1.0, 1.0);
 
   @override
-  FnxMotion copyWith() => const FnxMotion();
+  PfMotion copyWith() => const PfMotion();
 
   @override
-  ThemeExtension<FnxMotion> lerp(ThemeExtension<FnxMotion>? other, double t) =>
+  ThemeExtension<PfMotion> lerp(ThemeExtension<PfMotion>? other, double t) =>
       this;
 }

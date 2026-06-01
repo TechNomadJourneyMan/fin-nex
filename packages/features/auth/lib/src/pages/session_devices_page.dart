@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 /// In-memory device record for the placeholder list.
 class _Device {
@@ -30,7 +30,7 @@ class SessionDevicesPage extends ConsumerStatefulWidget {
 }
 
 class _SessionDevicesPageState extends ConsumerState<SessionDevicesPage> {
-  // TODO(F-AUTH-WEB): wire to DevicesService from fnx_data_api once available.
+  // TODO(F-AUTH-WEB): wire to DevicesService from pf_data_api once available.
   final List<_Device> _devices = <_Device>[
     _Device(
       id: 'cur',
@@ -67,7 +67,7 @@ class _SessionDevicesPageState extends ConsumerState<SessionDevicesPage> {
         separatorBuilder: (_, __) => const SizedBox(height: 8),
         itemBuilder: (context, i) {
           final d = _devices[i];
-          return FnxCard(
+          return PfCard(
             child: ListTile(
               key: ValueKey<String>('devices.row.${d.id}'),
               leading: Icon(

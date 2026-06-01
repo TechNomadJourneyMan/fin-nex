@@ -6,7 +6,7 @@
 
 import 'dart:async';
 
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 import '../workspaces_repository.dart';
 

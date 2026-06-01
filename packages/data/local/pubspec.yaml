@@ -1,4 +1,4 @@
-name: fnx_data_local
+name: pf_data_local
 description: Pocket Flow local persistence via sqflite (web + mobile + desktop).
 publish_to: none
 version: 0.1.0
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fnx_domain:
+  pf_domain:
     path: ../../domain
   sqflite: ^2.4.0
   sqflite_common_ffi_web: ^0.4.5

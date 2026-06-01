@@ -1,4 +1,4 @@
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 

@@ -1,5 +1,5 @@
-/// Public API for the FinNex settings feature.
-library fnx_feat_settings;
+/// Public API for the PocketFlow settings feature.
+library pf_feat_settings;
 
 export 'src/controllers/settings_controller.dart';
 export 'src/pages/about_page.dart';

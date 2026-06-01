@@ -9,7 +9,7 @@
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 /// Result of a successful transcription + parse round-trip.
 ///

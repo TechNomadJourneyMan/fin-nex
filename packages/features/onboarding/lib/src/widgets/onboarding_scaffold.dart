@@ -1,7 +1,7 @@
 // Shared scaffold + step indicator for onboarding pages.
 
 import 'package:flutter/material.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 
 /// Wraps an onboarding page with a top "Skip" affordance and a bottom
 /// step indicator. Keeps visual rhythm consistent across all 5 pages.
@@ -53,10 +53,10 @@ class OnboardingScaffold extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     if (showSkip && onSkip != null)
-                      FnxButton(
+                      PfButton(
                         label: 'Skip',
-                        variant: FnxButtonVariant.ghost,
-                        size: FnxButtonSize.sm,
+                        variant: PfButtonVariant.ghost,
+                        size: PfButtonSize.sm,
                         onPressed: onSkip,
                       ),
                   ],

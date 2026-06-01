@@ -1,4 +1,4 @@
-name: fnx_local_llm
+name: pf_local_llm
 description: On-device LLM (Gemma via flutter_gemma) for Pocket Flow — private,
   offline inference for receipt parsing, push categorisation and quick advice.
 publish_to: none

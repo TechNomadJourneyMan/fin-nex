@@ -1,5 +1,5 @@
-/// Public API for the FinNex OCR receipt-scanning feature module.
-library fnx_feat_receipt_scanner;
+/// Public API for the PocketFlow OCR receipt-scanning feature module.
+library pf_feat_receipt_scanner;
 
 // Parsing (pure Dart)
 export 'src/parsing/parsed_receipt.dart';

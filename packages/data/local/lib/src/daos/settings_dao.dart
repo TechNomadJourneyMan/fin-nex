@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 
-import '../database/fnx_database.dart';
+import '../database/pf_database.dart';
 import '../models/setting_row.dart';
 
 /// Data access object for the per-user `user_settings` table.
@@ -9,7 +9,7 @@ class SettingsDao {
   SettingsDao(this.db);
 
   /// Underlying database handle.
-  final FnxDatabase db;
+  final PfDatabase db;
 
   static const String _table = 'user_settings';
   Database get _raw => db.raw;

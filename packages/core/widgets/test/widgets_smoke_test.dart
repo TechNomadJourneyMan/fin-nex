@@ -1,6 +1,6 @@
-// Re-export of the FinNex widget smoke tests so it can be run via the
+// Re-export of the PocketFlow widget smoke tests so it can be run via the
 // canonical name spec'd in the brief.
 
-import 'fnx_core_widgets_test.dart' as smoke;
+import 'pf_core_widgets_test.dart' as smoke;
 
 void main() => smoke.main();

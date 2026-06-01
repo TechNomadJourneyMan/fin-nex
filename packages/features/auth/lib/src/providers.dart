@@ -1,7 +1,7 @@
 // Riverpod providers for the auth feature.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 import 'auth_state.dart';
 import 'controllers/auth_controller.dart';
@@ -16,7 +16,7 @@ final tokenStorageProvider = Provider<TokenStorage>((ref) {
 /// Provides the [AuthRepository] implementation.
 ///
 /// Defaults to [StubAuthRepository]. The app should override with the real
-/// impl from `fnx_data_api` once wiring is complete. TODO(F-AUTH-WEB).
+/// impl from `pf_data_api` once wiring is complete. TODO(F-AUTH-WEB).
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return StubAuthRepository();
 });

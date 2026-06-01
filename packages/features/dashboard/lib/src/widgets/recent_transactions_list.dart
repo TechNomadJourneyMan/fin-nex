@@ -1,11 +1,11 @@
 // Compact list of recent transactions used at the bottom of the dashboard.
 //
-// Uses `FnxListItem` from `fnx_core_widgets`; the list is intentionally
+// Uses `PfListItem` from `pf_core_widgets`; the list is intentionally
 // non-scrollable (relies on the parent `ListView`).
 
 import 'package:flutter/material.dart' hide Category;
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:intl/intl.dart';
 
 /// Renders up to N recent [Transaction] rows.
@@ -63,10 +63,10 @@ class RecentTransactionsList extends StatelessWidget {
             Text(emptyTitle, style: typo.bodyMd),
             if (onEmptyCta != null) ...[
               const SizedBox(height: 12),
-              FnxButton(
+              PfButton(
                 label: emptyCta,
                 onPressed: onEmptyCta,
-                variant: FnxButtonVariant.primary,
+                variant: PfButtonVariant.primary,
               ),
             ],
           ],
@@ -77,7 +77,7 @@ class RecentTransactionsList extends StatelessWidget {
     return Column(
       children: [
         for (final t in transactions)
-          FnxListItem(
+          PfListItem(
             leading: CircleAvatar(
               radius: 20,
               backgroundColor: colors.brandSubtle,
@@ -111,7 +111,7 @@ class RecentTransactionsList extends StatelessWidget {
   }
 
   String _formatSigned(Transaction t) {
-    final formatted = formatFnxAmount(
+    final formatted = formatPfAmount(
       t.amount.minor.toInt(),
       locale: locale,
       fractionDigits: 0,

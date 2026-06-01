@@ -1,4 +1,4 @@
-name: fnx_core_theme
+name: pf_core_theme
 description: Pocket Flow Material theme builders (light / dark).
 publish_to: none
 version: 0.1.0
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fnx_core_tokens:
+  pf_core_tokens:
     path: ../tokens
 
 dev_dependencies:

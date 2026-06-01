@@ -1,5 +1,5 @@
-import 'package:fnx_data_local/fnx_data_local.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_data_local/pf_data_local.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:meta/meta.dart';
 
 import 'result.dart';
@@ -97,7 +97,7 @@ class PullPage {
 
 /// Abstract REST-style contract the sync engine talks to.
 ///
-/// The concrete implementation lives in `fnx_data_api` (Dio + retrofit-style).
+/// The concrete implementation lives in `pf_data_api` (Dio + retrofit-style).
 /// Keeping the engine decoupled lets us inject in-memory fakes for tests.
 abstract class SyncService {
   /// Push a batch of outbox rows; the response is one [PushAck] per input row
@@ -113,7 +113,7 @@ abstract class SyncService {
 }
 
 /// Minimal facade over the local outbox DAO so the engine doesn't depend on a
-/// specific DAO class. Implementers wrap [FnxDatabase] DAOs.
+/// specific DAO class. Implementers wrap [PfDatabase] DAOs.
 abstract class OutboxStore {
   /// Returns up to [limit] entries with `status = pending`, oldest first.
   Future<List<SyncQueueRow>> pickPending({int limit = 50});

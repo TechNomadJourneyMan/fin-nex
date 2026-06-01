@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:intl/intl.dart';
 
 import '../controllers/transactions_controller.dart';
@@ -81,10 +81,10 @@ class _DetailsBody extends ConsumerWidget {
     if (!context.mounted) {
       return;
     }
-    context.showFnxSnack(
+    context.showPfSnack(
       l10n.txDeleted,
       duration: const Duration(seconds: 5),
-      action: FnxSnackAction(
+      action: PfSnackAction(
         label: l10n.txUndo,
         onPressed: () {
           // Restore best-effort; ignore errors.
@@ -125,9 +125,9 @@ class _DetailsBody extends ConsumerWidget {
           Row(
             children: <Widget>[
               Expanded(
-                child: FnxButton(
+                child: PfButton(
                   label: l10n.commonEdit,
-                  variant: FnxButtonVariant.secondary,
+                  variant: PfButtonVariant.secondary,
                   onPressed: () {
                     Navigator.of(context).push<Transaction>(
                       MaterialPageRoute<Transaction>(
@@ -140,9 +140,9 @@ class _DetailsBody extends ConsumerWidget {
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: FnxButton(
+                child: PfButton(
                   label: l10n.commonDelete,
-                  variant: FnxButtonVariant.destructive,
+                  variant: PfButtonVariant.destructive,
                   onPressed: () => _confirmDelete(context, ref),
                 ),
               ),

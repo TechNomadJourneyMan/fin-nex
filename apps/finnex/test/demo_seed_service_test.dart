@@ -5,9 +5,9 @@
 
 import 'dart:async';
 
-import 'package:finnex/onboarding/demo_seed_service.dart';
+import 'package:pocketflow/onboarding/demo_seed_service.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// In-memory [TransactionsRepository] backing the tests. Stores rows in a

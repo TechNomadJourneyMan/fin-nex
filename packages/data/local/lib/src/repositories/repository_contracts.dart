@@ -1,6 +1,6 @@
 // Minimal repository contracts used by the local persistence layer.
 //
-// These mirror the (intended) interfaces in `fnx_domain`. As of v0.1 the
+// These mirror the (intended) interfaces in `pf_domain`. As of v0.1 the
 // domain package only exports its library declaration, so we define the
 // contracts here to keep this layer self-contained and testable. When the
 // domain package publishes real interfaces, the implementations in this

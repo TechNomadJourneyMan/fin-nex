@@ -4,7 +4,7 @@ import '../services/accounts_service.dart';
 /// Thin facade over [AccountsService].
 ///
 /// TODO(F-ACC-01): swap to a domain-defined `AccountsRepository` once it
-/// lands in `fnx_domain`.
+/// lands in `pf_domain`.
 class RemoteAccountsRepository {
   /// Default constructor.
   RemoteAccountsRepository(this._service);

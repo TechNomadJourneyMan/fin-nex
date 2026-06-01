@@ -11,18 +11,18 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_data_api/fnx_data_api.dart';
-import 'package:fnx_domain/fnx_domain.dart';
-import 'package:fnx_feat_ai_chat/fnx_feat_ai_chat.dart' as ai_chat;
-import 'package:fnx_feat_analytics/analytics.dart' as analytics;
-import 'package:fnx_feat_dashboard/dashboard.dart' as dashboard;
-import 'package:fnx_feat_insights/fnx_feat_insights.dart' as insights;
-import 'package:fnx_feat_notifications/fnx_feat_notifications.dart'
+import 'package:pf_data_api/pf_data_api.dart';
+import 'package:pf_domain/pf_domain.dart';
+import 'package:pf_feat_ai_chat/pf_feat_ai_chat.dart' as ai_chat;
+import 'package:pf_feat_analytics/analytics.dart' as analytics;
+import 'package:pf_feat_dashboard/dashboard.dart' as dashboard;
+import 'package:pf_feat_insights/pf_feat_insights.dart' as insights;
+import 'package:pf_feat_notifications/pf_feat_notifications.dart'
     as notifications;
-import 'package:fnx_feat_auth/auth.dart' as auth;
-import 'package:fnx_feat_subscriptions/subscriptions.dart' as subs;
-import 'package:fnx_feat_transactions/transactions.dart' as transactions;
-import 'package:fnx_local_llm/fnx_local_llm.dart';
+import 'package:pf_feat_auth/auth.dart' as auth;
+import 'package:pf_feat_subscriptions/subscriptions.dart' as subs;
+import 'package:pf_feat_transactions/transactions.dart' as transactions;
+import 'package:pf_local_llm/pf_local_llm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_data.dart';
@@ -38,7 +38,7 @@ import 'services/device_id_provider.dart';
 final Ulid kDemoUserId = Ulid('00000000000000000000000001');
 
 // ---------------------------------------------------------------------------
-// On-device LLM (fnx_local_llm) — Gemma via flutter_gemma on mobile/desktop,
+// On-device LLM (pf_local_llm) — Gemma via flutter_gemma on mobile/desktop,
 // no-op stub on Web. The local-LLM settings/playground page reads this.
 // ---------------------------------------------------------------------------
 
@@ -87,7 +87,7 @@ const String kApiBaseUrl = String.fromEnvironment(
   defaultValue: 'http://localhost:3000/v1',
 );
 
-/// Authenticated [Dio] wired to the backend with the FinNex interceptor stack
+/// Authenticated [Dio] wired to the backend with the PocketFlow interceptor stack
 /// (auth header, device id, idempotency, retry, problem-details).
 final authedDioProvider = Provider<Dio>((Ref ref) {
   final store = ref.watch(authSessionStoreProvider.notifier);

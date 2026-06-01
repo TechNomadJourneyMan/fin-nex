@@ -1,7 +1,7 @@
-// Alias barrel for the FinNex voice-input feature module.
+// Alias barrel for the PocketFlow voice-input feature module.
 //
-// Re-exports the public surface from `fnx_feat_voice_input.dart`.
+// Re-exports the public surface from `pf_feat_voice_input.dart`.
 
 library voice_input;
 
-export 'fnx_feat_voice_input.dart';
+export 'pf_feat_voice_input.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_domain/fnx_domain.dart';
-import 'package:fnx_feat_receipt_scanner/receipt_scanner.dart';
+import 'package:pf_domain/pf_domain.dart';
+import 'package:pf_feat_receipt_scanner/receipt_scanner.dart';
 
 void main() {
   const ReceiptParser parser = ReceiptParser();

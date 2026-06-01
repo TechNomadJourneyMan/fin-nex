@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../values/currency.dart';
 import '../values/ulid.dart';
 
-/// FinNex application user.
+/// PocketFlow application user.
 final class User extends Equatable {
   /// Default constructor.
   const User({

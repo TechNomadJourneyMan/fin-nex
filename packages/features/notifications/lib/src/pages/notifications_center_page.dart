@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_tokens/fnx_core_tokens.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_tokens/pf_core_tokens.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/domain.dart';
 
 import '../controllers/notifications_controller.dart';
 import '../providers.dart';
@@ -27,7 +27,7 @@ class NotificationsCenterPage extends ConsumerWidget {
           ? const Center(child: CircularProgressIndicator())
           : state.items.isEmpty
               ? Center(
-                  child: FnxEmptyState(
+                  child: PfEmptyState(
                     icon: Icons.notifications_off_outlined,
                     title: l10n?.notifEmpty ?? 'All caught up',
                     body: '',
@@ -45,7 +45,7 @@ class _NotificationsList extends ConsumerWidget {
   });
 
   final NotificationsState state;
-  final FnxSemanticColors colors;
+  final PfSemanticColors colors;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -53,7 +53,7 @@ class _NotificationsList extends ConsumerWidget {
     final controller = ref.read(notificationsControllerProvider.notifier);
 
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: FnxSpacing.x2),
+      padding: const EdgeInsets.symmetric(vertical: PfSpacing.x2),
       itemCount: groups.length,
       itemBuilder: (context, index) {
         final group = groups[index];
@@ -62,10 +62,10 @@ class _NotificationsList extends ConsumerWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(
-                FnxSpacing.x4,
-                FnxSpacing.x3,
-                FnxSpacing.x4,
-                FnxSpacing.x2,
+                PfSpacing.x4,
+                PfSpacing.x3,
+                PfSpacing.x4,
+                PfSpacing.x2,
               ),
               child: Text(
                 group.label,
@@ -136,8 +136,8 @@ class _NotificationTile extends StatelessWidget {
       onLongPress: onLongPress,
       child: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: FnxSpacing.x4,
-          vertical: FnxSpacing.x3,
+          horizontal: PfSpacing.x4,
+          vertical: PfSpacing.x3,
         ),
         color: unread ? colors.brandSubtle.withValues(alpha: 0.5) : null,
         child: Row(
@@ -147,7 +147,7 @@ class _NotificationTile extends StatelessWidget {
               _iconFor(notification.kind),
               color: unread ? colors.brand : colors.textSecondary,
             ),
-            const SizedBox(width: FnxSpacing.x3),
+            const SizedBox(width: PfSpacing.x3),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

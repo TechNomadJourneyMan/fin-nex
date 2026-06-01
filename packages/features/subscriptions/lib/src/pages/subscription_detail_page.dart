@@ -8,9 +8,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/domain.dart';
 import 'package:intl/intl.dart';
 
 import '../domain/detected_subscription.dart';
@@ -73,7 +73,7 @@ class _DetailBody extends ConsumerWidget {
     final typography = context.fnxTypography;
     final locale = Localizations.localeOf(context).toLanguageTag();
 
-    final amountText = formatFnxAmount(
+    final amountText = formatPfAmount(
       subscription.amount.minor.toInt(),
       locale: locale,
       fractionDigits: 0,
@@ -133,7 +133,7 @@ class _DetailBody extends ConsumerWidget {
           )
         else
           ...subscription.sourceTransactionIds.map(
-            (id) => FnxListItem(
+            (id) => PfListItem(
               leading: Icon(
                 Icons.receipt_long_outlined,
                 color: colors.textSecondary,
@@ -146,17 +146,17 @@ class _DetailBody extends ConsumerWidget {
         SizedBox(height: spacing.s7),
 
         // Actions.
-        FnxButton(
+        PfButton(
           label: l10n.subsHowToUnsubscribe,
-          variant: FnxButtonVariant.secondary,
+          variant: PfButtonVariant.secondary,
           fullWidth: true,
           leadingIcon: Icons.help_outline,
           onPressed: () => _showUnsubscribeSheet(context, subscription),
         ),
         SizedBox(height: spacing.s4),
-        FnxButton(
+        PfButton(
           label: cancelled ? l10n.subsAlreadyCancelled : l10n.subsMarkCancelled,
-          variant: FnxButtonVariant.destructive,
+          variant: PfButtonVariant.destructive,
           fullWidth: true,
           leadingIcon: Icons.cancel_outlined,
           onPressed: cancelled
@@ -177,7 +177,7 @@ class _DetailBody extends ConsumerWidget {
     final now = DateTime.now().toUtc();
     await repo.upsert(sub.copyWith(cancelledAt: now, updatedAt: now));
     if (context.mounted) {
-      context.showFnxSnack(l10n.subsMarkedCancelled(sub.merchantName));
+      context.showPfSnack(l10n.subsMarkedCancelled(sub.merchantName));
     }
   }
 
@@ -185,7 +185,7 @@ class _DetailBody extends ConsumerWidget {
     BuildContext context,
     DetectedSubscription sub,
   ) {
-    showFnxBottomSheet<void>(
+    showPfBottomSheet<void>(
       context: context,
       builder: (ctx) => _UnsubscribeHint(subscription: sub),
     );
@@ -244,7 +244,7 @@ class _UnsubscribeHint extends StatelessWidget {
             ),
           ),
           SizedBox(height: spacing.s5),
-          FnxButton(
+          PfButton(
             label: l10n.commonOk,
             fullWidth: true,
             onPressed: () => Navigator.of(context).pop(),

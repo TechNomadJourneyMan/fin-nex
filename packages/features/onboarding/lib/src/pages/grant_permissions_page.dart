@@ -3,8 +3,8 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../controllers/onboarding_controller.dart';
@@ -40,10 +40,10 @@ class GrantPermissionsPage extends ConsumerWidget {
       bottomBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          FnxButton(
+          PfButton(
             label: l10n.commonNext,
             fullWidth: true,
-            size: FnxButtonSize.lg,
+            size: PfButtonSize.lg,
             onPressed: () {
               controller.goTo(OnboardingStep.firstTransaction);
               context.go('/onboarding/first-transaction');
@@ -57,7 +57,7 @@ class GrantPermissionsPage extends ConsumerWidget {
           Text('Stay in the loop', style: typo.heading1),
           SizedBox(height: spacing.s4),
           Text(
-            'A couple of optional permissions to make FinNex feel native. '
+            'A couple of optional permissions to make PocketFlow feel native. '
             'Both can be changed later in Settings.',
             style: typo.bodyMd.copyWith(color: colors.textSecondary),
           ),
@@ -141,10 +141,10 @@ class _PermissionRow extends StatelessWidget {
           if (granted)
             Icon(Icons.check_circle, color: colors.success)
           else
-            FnxButton(
+            PfButton(
               label: 'Allow',
-              variant: FnxButtonVariant.secondary,
-              size: FnxButtonSize.sm,
+              variant: PfButtonVariant.secondary,
+              size: PfButtonSize.sm,
               onPressed: () => onAsk(),
             ),
         ],

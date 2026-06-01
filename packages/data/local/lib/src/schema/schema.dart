@@ -1,4 +1,4 @@
-/// SQL schema definition for FinNex local SQLite database, v1 baseline.
+/// SQL schema definition for PocketFlow local SQLite database, v1 baseline.
 ///
 /// The schema is a SQLite-compatible subset of the canonical Postgres schema
 /// described in `09_database_schema.md`. Differences:
@@ -9,8 +9,8 @@
 /// * Array columns (`TEXT[]`, `INT[]`) are stored as JSON `TEXT`.
 /// * Partial unique indexes with predicates are replaced by composite uniques
 ///   plus query-side filters.
-class FnxSchema {
-  const FnxSchema._();
+class PfSchema {
+  const PfSchema._();
 
   /// Current schema version. Bump on every breaking migration.
   static const int version = 1;

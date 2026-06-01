@@ -6,14 +6,14 @@
 // `CategoriesRepository` to swap in persistence.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 import 'data/in_memory_categories_repository.dart';
 
 /// Provides the active [CategoriesRepository].
 ///
 /// Apps must override this with a real implementation in their composition
-/// root (e.g. one backed by `fnx_data_local`).
+/// root (e.g. one backed by `pf_data_local`).
 final categoriesRepositoryProvider = Provider<CategoriesRepository>((ref) {
   // TODO(F-cat): replace with real repository wired in app composition.
   return InMemoryCategoriesRepository.seeded();

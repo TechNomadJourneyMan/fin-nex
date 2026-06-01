@@ -1,4 +1,4 @@
-import 'package:fnx_domain/domain.dart';
+import 'package:pf_domain/domain.dart';
 
 /// Deterministic, hand-rolled fixtures for use-case tests.
 class Fixtures {

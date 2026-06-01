@@ -5,7 +5,7 @@
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/// Persists OAuth/session tokens for the FinNex app.
+/// Persists OAuth/session tokens for the PocketFlow app.
 ///
 /// Backed by [FlutterSecureStorage]; on web this delegates to wrapped
 /// `window.localStorage` keys (handled by flutter_secure_storage itself).

@@ -1,8 +1,8 @@
-/// Public API for the FinNex dashboard feature.
+/// Public API for the PocketFlow dashboard feature.
 ///
 /// Re-exports the page, controller, providers and supporting widgets so
 /// the app can wire routes with a single import.
-library fnx_feat_dashboard;
+library pf_feat_dashboard;
 
 export 'src/controllers/dashboard_controller.dart';
 export 'src/pages/dashboard_page.dart';

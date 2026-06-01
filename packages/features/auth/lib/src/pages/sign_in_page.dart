@@ -3,8 +3,8 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../auth_state.dart';
@@ -91,13 +91,13 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     ),
                     const SizedBox(height: 24),
                     if (errorFailure != null) ...[
-                      FnxBanner(
-                        tone: FnxBannerTone.error,
+                      PfBanner(
+                        tone: PfBannerTone.error,
                         message: errorFailure.toString(),
                       ),
                       const SizedBox(height: 16),
                     ],
-                    FnxTextField(
+                    PfTextField(
                       key: const ValueKey<String>('signin.email'),
                       label: l10n.authContinueEmail,
                       controller: _email,
@@ -107,7 +107,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                       errorText: _emailError,
                     ),
                     const SizedBox(height: 12),
-                    FnxTextField(
+                    PfTextField(
                       key: const ValueKey<String>('signin.password'),
                       label: l10n.commonContinue,
                       controller: _password,
@@ -128,13 +128,13 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    FnxButton(
+                    PfButton(
                       key: const ValueKey<String>('signin.submit'),
                       label: l10n.commonContinue,
                       onPressed: loading ? null : _submit,
                       loading: loading,
                       fullWidth: true,
-                      size: FnxButtonSize.lg,
+                      size: PfButtonSize.lg,
                     ),
                     const SizedBox(height: 24),
                     Row(
@@ -149,12 +149,12 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     ),
                     const SizedBox(height: 16),
                     if (!kIsWeb)
-                      FnxButton(
+                      PfButton(
                         key: const ValueKey<String>('signin.apple'),
                         label: l10n.authContinueApple,
-                        variant: FnxButtonVariant.secondary,
+                        variant: PfButtonVariant.secondary,
                         fullWidth: true,
-                        size: FnxButtonSize.lg,
+                        size: PfButtonSize.lg,
                         leadingIcon: Icons.apple,
                         onPressed: loading
                             ? null
@@ -163,12 +163,12 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                                 .signInOAuth(OAuthProvider.apple),
                       ),
                     if (!kIsWeb) const SizedBox(height: 12),
-                    FnxButton(
+                    PfButton(
                       key: const ValueKey<String>('signin.google'),
                       label: l10n.authContinueGoogle,
-                      variant: FnxButtonVariant.secondary,
+                      variant: PfButtonVariant.secondary,
                       fullWidth: true,
-                      size: FnxButtonSize.lg,
+                      size: PfButtonSize.lg,
                       leadingIcon: Icons.g_mobiledata,
                       onPressed: loading
                           ? null
@@ -177,12 +177,12 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                               .signInOAuth(OAuthProvider.google),
                     ),
                     const SizedBox(height: 12),
-                    FnxButton(
+                    PfButton(
                       key: const ValueKey<String>('signin.phone'),
                       label: l10n.authCtaSendCode,
-                      variant: FnxButtonVariant.ghost,
+                      variant: PfButtonVariant.ghost,
                       fullWidth: true,
-                      size: FnxButtonSize.lg,
+                      size: PfButtonSize.lg,
                       leadingIcon: Icons.phone_outlined,
                       onPressed:
                           loading ? null : () => context.go('/auth/otp'),

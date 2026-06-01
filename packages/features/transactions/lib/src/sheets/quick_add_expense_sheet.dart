@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_core_l10n/fnx_core_l10n.dart';
-import 'package:fnx_core_widgets/fnx_core_widgets.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_core_l10n/pf_core_l10n.dart';
+import 'package:pf_core_widgets/pf_core_widgets.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 import 'quick_add_common.dart';
 
-/// Opens the quick-add expense sheet via [showFnxBottomSheet].
+/// Opens the quick-add expense sheet via [showPfBottomSheet].
 Future<void> showQuickAddExpenseSheet(BuildContext context) {
-  return showFnxBottomSheet<void>(
+  return showPfBottomSheet<void>(
     context: context,
     semanticLabel: AppL10n.of(context).qaExpenseTitle,
     builder: (BuildContext ctx) => const QuickAddExpenseSheet(),

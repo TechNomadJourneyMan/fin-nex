@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:sqflite/sqflite.dart';
 
-import '../database/fnx_database.dart';
+import '../database/pf_database.dart';
 import '../models/account_row.dart';
 
 /// Data access object for the `accounts` table.
@@ -11,7 +11,7 @@ class AccountsDao {
   AccountsDao(this.db);
 
   /// Underlying database handle.
-  final FnxDatabase db;
+  final PfDatabase db;
 
   static const String _table = 'accounts';
   Database get _raw => db.raw;

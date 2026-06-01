@@ -6,7 +6,7 @@
 // single immutable [DashboardSnapshot].
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 
 import '../providers.dart';
 

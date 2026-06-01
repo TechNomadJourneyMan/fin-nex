@@ -1,4 +1,4 @@
-// FinNex app entrypoint.
+// PocketFlow app entrypoint.
 //
 // Failsafe bootstrap:
 //   1. Install a global ErrorWidget.builder so render errors show a readable
@@ -84,7 +84,7 @@ void main() {
               '(${module.fallbackReason})',
             ),
         ],
-        child: const FinNexApp(),
+        child: const PocketFlowApp(),
       ),
     );
   });

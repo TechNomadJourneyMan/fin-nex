@@ -14,7 +14,7 @@
 // it works against the real sqflite-backed repo, the in-memory fallback, and
 // the test fake interchangeably.
 
-import 'package:fnx_domain/fnx_domain.dart';
+import 'package:pf_domain/pf_domain.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// SharedPreferences key recording that the first-run demo data has been

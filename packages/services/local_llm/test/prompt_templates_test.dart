@@ -4,7 +4,7 @@
 // that the parsers tolerate noisy model output.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fnx_local_llm/fnx_local_llm.dart';
+import 'package:pf_local_llm/pf_local_llm.dart';
 
 void main() {
   group('buildReceiptPrompt', () {

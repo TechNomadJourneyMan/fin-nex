@@ -1,7 +1,7 @@
 /// Feature-local presentation entities describing inline data-visualisation
 /// widgets the AI can attach to a reply.
 ///
-/// These intentionally live inside the feature package (not `fnx_domain`)
+/// These intentionally live inside the feature package (not `pf_domain`)
 /// because they describe *presentation* contracts between the backend AI
 /// service and this page, not core business entities.
 library;
