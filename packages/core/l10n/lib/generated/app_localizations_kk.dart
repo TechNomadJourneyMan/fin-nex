@@ -87,6 +87,24 @@ class AppL10nKk extends AppL10n {
   String get navBudgets => 'Бюджеттер';
 
   @override
+  String get menuGoals => 'Мақсаттар';
+
+  @override
+  String get menuAchievements => 'Жетістіктер';
+
+  @override
+  String get menuWorkspaces => 'Жұмыс кеңістіктері';
+
+  @override
+  String get menuSmsSandbox => 'SMS құмсалғыш';
+
+  @override
+  String get menuNotifications => 'Хабарландырулар';
+
+  @override
+  String get menuMore => 'Тағы';
+
+  @override
   String get splashLoadingLong => 'Деректер жүктелуде…';
 
   @override

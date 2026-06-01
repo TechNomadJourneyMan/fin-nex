@@ -87,6 +87,24 @@ class AppL10nRu extends AppL10n {
   String get navBudgets => 'Бюджеты';
 
   @override
+  String get menuGoals => 'Цели';
+
+  @override
+  String get menuAchievements => 'Достижения';
+
+  @override
+  String get menuWorkspaces => 'Рабочие пространства';
+
+  @override
+  String get menuSmsSandbox => 'Песочница SMS';
+
+  @override
+  String get menuNotifications => 'Уведомления';
+
+  @override
+  String get menuMore => 'Ещё';
+
+  @override
   String get splashLoadingLong => 'Загружаем ваши данные…';
 
   @override

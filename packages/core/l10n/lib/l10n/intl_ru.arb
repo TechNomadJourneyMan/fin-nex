@@ -29,6 +29,13 @@
   "navTransactions": "Операции",
   "navBudgets": "Бюджеты",
 
+  "menuGoals": "Цели",
+  "menuAchievements": "Достижения",
+  "menuWorkspaces": "Рабочие пространства",
+  "menuSmsSandbox": "Песочница SMS",
+  "menuNotifications": "Уведомления",
+  "menuMore": "Ещё",
+
   "splashLoadingLong": "Загружаем ваши данные…",
   "splashLoadingError": "Не удалось запустить приложение",
 

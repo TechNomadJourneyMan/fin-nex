@@ -29,6 +29,13 @@
   "navTransactions": "Операциялар",
   "navBudgets": "Бюджеттер",
 
+  "menuGoals": "Мақсаттар",
+  "menuAchievements": "Жетістіктер",
+  "menuWorkspaces": "Жұмыс кеңістіктері",
+  "menuSmsSandbox": "SMS құмсалғыш",
+  "menuNotifications": "Хабарландырулар",
+  "menuMore": "Тағы",
+
   "splashLoadingLong": "Деректер жүктелуде…",
   "splashLoadingError": "Қолданба іске қосылмады",
 

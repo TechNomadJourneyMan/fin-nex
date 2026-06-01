@@ -87,6 +87,24 @@ class AppL10nEn extends AppL10n {
   String get navBudgets => 'Budgets';
 
   @override
+  String get menuGoals => 'Goals';
+
+  @override
+  String get menuAchievements => 'Achievements';
+
+  @override
+  String get menuWorkspaces => 'Workspaces';
+
+  @override
+  String get menuSmsSandbox => 'SMS Sandbox';
+
+  @override
+  String get menuNotifications => 'Notifications';
+
+  @override
+  String get menuMore => 'More';
+
+  @override
   String get splashLoadingLong => 'Loading your data…';
 
   @override

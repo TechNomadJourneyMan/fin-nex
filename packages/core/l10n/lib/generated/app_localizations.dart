@@ -255,6 +255,42 @@ abstract class AppL10n {
   /// **'Budgets'**
   String get navBudgets;
 
+  /// Overflow menu entry: goals.
+  ///
+  /// In en, this message translates to:
+  /// **'Goals'**
+  String get menuGoals;
+
+  /// Overflow menu entry: achievements.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements'**
+  String get menuAchievements;
+
+  /// Overflow menu entry: workspaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspaces'**
+  String get menuWorkspaces;
+
+  /// Overflow menu entry: SMS sandbox developer tool.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS Sandbox'**
+  String get menuSmsSandbox;
+
+  /// Overflow menu entry: notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get menuNotifications;
+
+  /// Tooltip for the overflow menu trigger.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get menuMore;
+
   /// Shown after >1.5s of splash init.
   ///
   /// In en, this message translates to:
