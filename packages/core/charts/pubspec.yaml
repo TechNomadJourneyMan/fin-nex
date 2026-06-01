@@ -1,5 +1,5 @@
 name: fnx_core_charts
-description: FinNex chart primitives — thin wrappers around fl_chart.
+description: Pocket Flow chart primitives — thin wrappers around fl_chart.
 publish_to: none
 version: 0.1.0
 

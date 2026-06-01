@@ -1,5 +1,5 @@
 name: fnx_feat_voice_input
-description: FinNex voice-input feature module (hold-to-record transcription).
+description: Pocket Flow voice-input feature module (hold-to-record transcription).
 publish_to: none
 version: 0.1.0
 

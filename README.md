@@ -1,4 +1,4 @@
-# FinNex
+# Pocket Flow
 
 Personal finance tracking app built with Flutter. Web-first deployment to Vercel,
 with mobile builds for iOS and Android coming later.
@@ -52,4 +52,4 @@ The Flutter web build is deployed to Vercel via `install-flutter.sh`. See
 ## Documentation
 
 The product spec, UX spec, UI spec, architecture and DB schema live in the
-sibling `FinNex_Product_Package/` folder.
+sibling `Pocket Flow_Product_Package/` folder.

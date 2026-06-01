@@ -1,5 +1,5 @@
 name: fnx_data_local
-description: FinNex local persistence via sqflite (web + mobile + desktop).
+description: Pocket Flow local persistence via sqflite (web + mobile + desktop).
 publish_to: none
 version: 0.1.0
 

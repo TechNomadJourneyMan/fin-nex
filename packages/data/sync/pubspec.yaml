@@ -1,5 +1,5 @@
 name: fnx_data_sync
-description: FinNex offline-first sync engine (outbox, pull cursors, conflict resolver).
+description: Pocket Flow offline-first sync engine (outbox, pull cursors, conflict resolver).
 publish_to: none
 version: 0.1.0
 

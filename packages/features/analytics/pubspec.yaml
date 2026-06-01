@@ -1,5 +1,5 @@
 name: fnx_feat_analytics
-description: FinNex analytics feature module — charts, calendar heatmap, drill-down.
+description: Pocket Flow analytics feature module — charts, calendar heatmap, drill-down.
 publish_to: none
 version: 0.1.0
 

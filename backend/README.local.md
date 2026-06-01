@@ -1,4 +1,4 @@
-# FinNex Backend (local dev)
+# Pocket Flow Backend (local dev)
 
 ## Prerequisites
 - Node.js 20+

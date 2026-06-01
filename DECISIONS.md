@@ -1,4 +1,4 @@
-# FinNex — Architecture Decisions
+# Pocket Flow — Architecture Decisions
 
 This file records fixed technology choices for the build. Changing any of these
 requires explicit consensus from all feature owners.

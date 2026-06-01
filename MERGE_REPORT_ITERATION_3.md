@@ -13,7 +13,7 @@
 | Commit | Type / Scope | Summary | Files |
 |--------|--------------|---------|-------|
 | `bb5702b` | chore(deploy) | vercel smoke test (agent-report stamp) | 1 |
-| `6677a94` | fix(settings) | finish FinNex → Pocket Flow rebrand in About page (+3 .arb locales, generated l10n, profile default name, "OmniFi OS · design philosophy" subtitle) | 10 |
+| `6677a94` | fix(settings) | finish Pocket Flow → Pocket Flow rebrand in About page (+3 .arb locales, generated l10n, profile default name, "OmniFi OS · design philosophy" subtitle) | 10 |
 | `ade75c9` | feat(e2e) | AES-GCM-256 client-side envelope cipher + PBKDF2 key derivation (new `fnx_e2e_crypto` pkg, 23 tests) | 10 |
 | `11cec07` | feat(auth) | wire `HttpAuthRepository` to backend `/v1/auth/sign-in` + token/device-id persistence | 9 |
 | `5a928ac` | feat(local-llm) | on-device Gemma 3n E4B int4 (`fnx_local_llm`) + `/settings/local-llm` page (Web no-op) | 15 |
@@ -29,7 +29,7 @@ Net: **47 files changed, +3432 / −95** across the iteration.
 
 | Task | Verdict | Notes |
 |------|---------|-------|
-| Settings rebrand (FinNex → Pocket Flow) | ✅ done | About + Profile + 3 ARB locales + regenerated l10n. Visible strings only; package identifiers untouched per policy. |
+| Settings rebrand (Pocket Flow → Pocket Flow) | ✅ done | About + Profile + 3 ARB locales + regenerated l10n. Visible strings only; package identifiers untouched per policy. |
 | E2E crypto envelope | ⚠️ partial | Crypto package complete and tested (23 tests), but **not yet wired** into app/sync — opt-in `EncryptedSyncService` decorator documented in `NEXT_STEPS.md` only. |
 | Auth wiring to backend | ⚠️ partial | `HttpAuthRepository` + `AuthSessionStore` + `DeviceIdStore` live and providers wired; smoke tests pass. `onRefresh` body, email/password `method=password` DTO, and account-delete call left as TODOs. |
 | On-device LLM (Gemma) | ⚠️ partial | Package, use-cases, settings/playground page, provider wiring, and prompt-template tests all landed; `flutter analyze` clean. Native-asset tests blocked locally by Xcode-license `objective_c` hook (Web build unaffected). |

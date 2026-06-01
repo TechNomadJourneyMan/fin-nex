@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "FinNex API server (Fastify + Prisma + Postgres).",
+  "description": "Pocket Flow API server (Fastify + Prisma + Postgres).",
   "engines": {
     "node": ">=20.0.0"
   },

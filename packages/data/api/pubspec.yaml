@@ -1,5 +1,5 @@
 name: fnx_data_api
-description: FinNex REST API client.
+description: Pocket Flow REST API client.
 publish_to: none
 version: 0.1.0
 

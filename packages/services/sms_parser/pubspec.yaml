@@ -1,5 +1,5 @@
 name: fnx_sms_parser
-description: FinNex SMS/Push notification parsing for Kazakhstan banks (PRD F-03).
+description: Pocket Flow SMS/Push notification parsing for Kazakhstan banks (PRD F-03).
 publish_to: none
 version: 0.1.0
 

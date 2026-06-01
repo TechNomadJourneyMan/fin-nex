@@ -1,4 +1,4 @@
-# FinNex — Backlog
+# Pocket Flow — Backlog
 
 Lightweight backlog. Use `engineering:tech-debt` skill to populate / triage.
 

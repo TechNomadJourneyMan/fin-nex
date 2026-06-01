@@ -1,4 +1,4 @@
-# FinNex — Build Status (v1.0)
+# Pocket Flow — Build Status (v1.0)
 
 Snapshot of the post-integration state after the 18-agent build. The Flutter
 SDK install runs in parallel with the build, so `flutter analyze` / `flutter
@@ -44,7 +44,7 @@ test` validation happens after this document is written.
   - Composed `GoRouter` via `StatefulShellRoute.indexedStack` plus
     top-level routes for auth, onboarding, transaction forms, categories,
     budgets, and notifications.
-  - `FinNexApp` reads `themeMode` and `locale` from the settings
+  - `Pocket FlowApp` reads `themeMode` and `locale` from the settings
     providers and supplies the full `AppL10n` delegate chain.
   - Cross-feature provider overrides in `apps/finnex/lib/providers.dart`.
 - **Web deploy** — `vercel.json` + `web/index.html` ready for `flutter build web`.
@@ -83,7 +83,7 @@ test` validation happens after this document is written.
 
 ## Known issues / TODOs
 
-- The smoke test mounts `FinNexApp` and verifies no exceptions, but cannot
+- The smoke test mounts `Pocket FlowApp` and verifies no exceptions, but cannot
   exercise navigation past the splash redirect without a pumped timer.
 - `apps/finnex/lib/providers.dart` uses a single fixed demo user ULID
   (`kDemoUserId`); once real auth lands, replace these overrides with a

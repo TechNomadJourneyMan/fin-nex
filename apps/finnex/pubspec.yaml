@@ -1,5 +1,5 @@
 name: finnex
-description: FinNex — personal finance tracker (Flutter app entrypoint).
+description: Pocket Flow — personal finance tracker (Flutter app entrypoint).
 publish_to: none
 version: 0.1.0+1
 
@@ -25,7 +25,7 @@ dependencies:
   # i18n
   intl: ^0.20.0
 
-  # FinNex packages
+  # Pocket Flow packages
   fnx_core_theme:
     path: ../../packages/core/theme
   fnx_core_tokens:

@@ -21,4 +21,4 @@ text and does not depend on these icons.
 
 Use a tool like https://realfavicongenerator.net/ or
 `flutter pub run flutter_launcher_icons` with a 1024x1024 source PNG that
-matches the FinNex brand mark (primary `#0EA5E9` on `#0B1220`).
+matches the Pocket Flow brand mark (primary `#0EA5E9` on `#0B1220`).

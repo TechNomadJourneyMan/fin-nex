@@ -16,7 +16,7 @@ Composition (see `lib/providers.dart`):
   `SharedPreferences` instance.
 - `authSessionStoreProvider` — `AuthSessionStore`, persists tokens.
 - `deviceIdProvider` — `DeviceIdStore`, persists a stable ULID device id.
-- `authedDioProvider` — `DioFactory.create(...)` with the FinNex
+- `authedDioProvider` — `DioFactory.create(...)` with the Pocket Flow
   interceptor stack (auth header, `X-Device-Id`, idempotency, retry,
   problem-details).
 - `httpAuthRepositoryProvider` — `HttpAuthRepository(AuthService(dio), …)`

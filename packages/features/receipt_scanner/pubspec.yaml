@@ -1,5 +1,5 @@
 name: fnx_feat_receipt_scanner
-description: FinNex OCR receipt-scanning feature module.
+description: Pocket Flow OCR receipt-scanning feature module.
 publish_to: none
 version: 0.1.0
 

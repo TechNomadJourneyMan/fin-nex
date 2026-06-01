@@ -1,6 +1,6 @@
 # Web Deployment
 
-FinNex's primary deployment target is **Flutter Web on Vercel**.
+Pocket Flow's primary deployment target is **Flutter Web on Vercel**.
 
 ## Local dev
 
