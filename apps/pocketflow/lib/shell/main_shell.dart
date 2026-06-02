@@ -5,9 +5,10 @@
 // • 600 ≤ w < 1200 → left NavigationRail (selected labels)
 // • width ≥ 1200  → extended NavigationRail with overflow items merged in
 //
-// The DynamicIslandActions float above the bottom nav on phone, and collapse
-// into an extended FAB on tablet+. AppBar uses translucent dark surface and
-// keeps the brand wordmark.
+// Quick actions (Add / AI / Subscriptions): on phone a single FAB opens them
+// as a popup bottom sheet (so nothing floats over content); on tablet+ they
+// stay as a docked island in the bottom-right corner. AppBar uses a translucent
+// dark surface and keeps the brand wordmark.
 
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
@@ -213,26 +214,32 @@ class _AdaptiveShell extends StatelessWidget {
       ],
     );
 
+    final List<IslandAction> islandActionList = <IslandAction>[
+      IslandAction(
+        icon: Icons.add,
+        label: l10n.dashFab,
+        onTap: () => context.push('/transactions/add'),
+      ),
+      IslandAction(
+        icon: Icons.auto_awesome_outlined,
+        label: 'AI',
+        onTap: () => context.push('/ai-chat'),
+      ),
+      IslandAction(
+        icon: Icons.subscriptions_outlined,
+        label: l10n.subsTitle,
+        onTap: () => context.push('/subscriptions'),
+      ),
+    ];
+
+    // Desktop/tablet keep the always-visible docked island in the corner — it
+    // has room and never overlaps content. Phones get a single FAB that opens
+    // the actions as a popup (see [floatingActionButton] below), so the bar no
+    // longer floats over the screen.
     final Widget islandActions = DynamicIslandActions(
       expanded: !isPhone,
       pulsingIndex: 1,
-      actions: <IslandAction>[
-        IslandAction(
-          icon: Icons.add,
-          label: l10n.dashFab,
-          onTap: () => context.push('/transactions/add'),
-        ),
-        IslandAction(
-          icon: Icons.auto_awesome_outlined,
-          label: 'AI',
-          onTap: () => context.push('/ai-chat'),
-        ),
-        IslandAction(
-          icon: Icons.subscriptions_outlined,
-          label: l10n.subsTitle,
-          onTap: () => context.push('/subscriptions'),
-        ),
-      ],
+      actions: islandActionList,
     );
 
     // Wrap the navigationShell in a PageTransitionSwitcher so tab swaps fade
@@ -261,20 +268,12 @@ class _AdaptiveShell extends StatelessWidget {
       ),
     );
 
-    // Body content: animatedShell with the floating island on phone, or a
-    // non-floating action bar on tablet/desktop.
+    // Body content. On phone the actions live behind a single FAB that opens a
+    // popup (see [floatingActionButton] on the phone Scaffold below), so nothing
+    // floats over the content. On tablet/desktop the docked island sits in the
+    // bottom-right corner where it never overlaps the body.
     final Widget body = isPhone
-        ? Stack(
-            children: <Widget>[
-              animatedShell,
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 72, // above NavigationBar height
-                child: islandActions,
-              ),
-            ],
-          )
+        ? animatedShell
         : Stack(
             children: <Widget>[
               animatedShell,
@@ -319,6 +318,11 @@ class _AdaptiveShell extends StatelessWidget {
         appBar: appBar,
         body: body,
         bottomNavigationBar: bottomNav,
+        floatingActionButton: _QuickActionsFab(
+          actions: islandActionList,
+          onPressed: () => _showQuickActionsSheet(context, islandActionList),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       );
     }
 
@@ -511,4 +515,177 @@ class _OverflowEntry {
   final String route;
   final String label;
   final IconData icon;
+}
+
+/// Shows the quick actions (Add / AI / Subscriptions) as a popup bottom sheet.
+///
+/// Used on phone where a persistent floating bar would cover content. The
+/// sheet animates its rows in with a short staggered scale/slide and routes
+/// through the same [IslandAction.onTap] callbacks as the desktop docked bar.
+Future<void> _showQuickActionsSheet(
+  BuildContext context,
+  List<IslandAction> actions,
+) async {
+  // Light haptic on open. The provider is read lazily so tests without an
+  // override still work (FeedbackService no-ops when unconfigured).
+  final container = ProviderScope.containerOf(context, listen: false);
+  container.read(feedbackServiceProvider).selectTap();
+
+  await showModalBottomSheet<void>(
+    context: context,
+    backgroundColor: Colors.transparent,
+    barrierColor: const Color(0x99000000),
+    isScrollControlled: true,
+    builder: (BuildContext sheetContext) {
+      return _QuickActionsSheet(
+        actions: actions,
+        reduceMotion: MediaQuery.disableAnimationsOf(sheetContext),
+      );
+    },
+  );
+}
+
+/// The animated content of the quick-actions popup.
+class _QuickActionsSheet extends StatefulWidget {
+  const _QuickActionsSheet({required this.actions, required this.reduceMotion});
+
+  final List<IslandAction> actions;
+  final bool reduceMotion;
+
+  @override
+  State<_QuickActionsSheet> createState() => _QuickActionsSheetState();
+}
+
+class _QuickActionsSheetState extends State<_QuickActionsSheet>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: widget.reduceMotion
+        ? Duration.zero
+        : PfMotion.base,
+  )..forward();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final EdgeInsets safe = MediaQuery.viewPaddingOf(context);
+    return SafeArea(
+      top: false,
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+        padding: EdgeInsets.only(bottom: safe.bottom > 0 ? 0 : 4),
+        decoration: BoxDecoration(
+          color: const Color(0xFF161618),
+          borderRadius: BorderRadius.circular(28),
+          border: Border.all(color: const Color(0x1FFFFFFF), width: 0.5),
+          boxShadow: const <BoxShadow>[
+            BoxShadow(
+              color: Color(0x66000000),
+              blurRadius: 32,
+              offset: Offset(0, 12),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const SizedBox(height: 10),
+            // Grab handle.
+            Container(
+              width: 36,
+              height: 4,
+              decoration: BoxDecoration(
+                color: const Color(0x33FFFFFF),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: 8),
+            for (int i = 0; i < widget.actions.length; i++)
+              _buildRow(context, widget.actions[i], i),
+            const SizedBox(height: 6),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRow(BuildContext context, IslandAction action, int index) {
+    final int count = widget.actions.length;
+    final double start = count <= 1 ? 0 : (index / count) * 0.5;
+    final Animation<double> anim = CurvedAnimation(
+      parent: _controller,
+      curve: Interval(
+        start,
+        (start + 0.6).clamp(0.0, 1.0),
+        curve: Curves.easeOutCubic,
+      ),
+    );
+    return FadeTransition(
+      opacity: anim,
+      child: SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(0, 0.25),
+          end: Offset.zero,
+        ).animate(anim),
+        child: Semantics(
+          button: true,
+          label: action.label,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(20),
+            onTap: () {
+              Navigator.of(context).pop();
+              action.onTap();
+            },
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              child: Row(
+                children: <Widget>[
+                  Icon(action.icon, color: const Color(0xFFE5E5EA), size: 24),
+                  const SizedBox(width: 16),
+                  Text(
+                    action.label,
+                    style: const TextStyle(
+                      color: Color(0xFFF5F5F7),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The single phone FAB that opens the quick-actions popup. Shows the primary
+/// "+" glyph; the [actions] are surfaced in the sheet, not on the button.
+class _QuickActionsFab extends StatelessWidget {
+  const _QuickActionsFab({required this.actions, required this.onPressed});
+
+  final List<IslandAction> actions;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: 'Quick actions',
+      child: FloatingActionButton(
+        onPressed: onPressed,
+        backgroundColor: const Color(0xFF3D5AFE),
+        foregroundColor: Colors.white,
+        elevation: 6,
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
 }
