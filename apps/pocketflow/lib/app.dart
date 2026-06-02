@@ -20,6 +20,7 @@ import 'package:pf_feat_transactions/transactions.dart' as transactions;
 import 'intents.dart';
 import 'routes.dart';
 import 'services/home_surface_updater.dart';
+import 'services/test_env.dart';
 import 'widgets/command_palette.dart';
 
 /// Top-level application widget. Hosts the router, theme and locale.
@@ -39,12 +40,20 @@ class _PocketFlowAppState extends ConsumerState<PocketFlowApp> {
   @override
   void initState() {
     super.initState();
-    // Materialise any due recurring rules on app start. Idempotent — safe to
-    // run unconditionally; no-op when there are no due rules.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) {
         return;
       }
+      // These startup side-effects (recurring-rule materialisation, native
+      // notification permission, home-widget refresh) reach into DB streams
+      // and platform plugins. Under `flutter test` kIsWeb is false, so those
+      // paths would execute with no platform channel behind them and leave
+      // pending timers; skip the whole block in the test harness.
+      if (isFlutterTest) {
+        return;
+      }
+      // Materialise any due recurring rules on app start. Idempotent — safe to
+      // run unconditionally; no-op when there are no due rules.
       // ignore: discarded_futures
       transactions.runRecurringEngine(ref);
       // Initialise + request local-notification permission on native when the
@@ -62,6 +71,11 @@ class _PocketFlowAppState extends ConsumerState<PocketFlowApp> {
   /// Refreshes the home-screen widget + local payment reminders whenever the
   /// balance (dashboard) or upcoming payments (subscriptions) change.
   void _refreshHomeSurfaces() {
+    // Skip under `flutter test` — the refresh reaches native notification /
+    // home-widget plugins that have no platform channel in the test harness.
+    if (isFlutterTest) {
+      return;
+    }
     // ignore: discarded_futures
     ref.read(homeSurfaceUpdaterProvider).refresh();
   }

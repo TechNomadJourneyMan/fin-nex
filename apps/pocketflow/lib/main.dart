@@ -74,8 +74,7 @@ void main() {
           ...buildAppProviderOverrides(module),
           // Calendar backend: web → Google Calendar API, mobile → device
           // (EventKit / Calendar Provider). Tests/analyze keep the stub.
-          calendarServiceProvider
-              .overrideWithValue(createCalendarService()),
+          calendarServiceProvider.overrideWithValue(createCalendarService()),
           // Auth wiring requires shared_preferences; only install the override
           // (and the backend-backed auth repository it unlocks) when prefs
           // loaded successfully. Otherwise the auth feature keeps its stub.

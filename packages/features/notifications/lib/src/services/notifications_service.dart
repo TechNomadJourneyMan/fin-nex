@@ -120,4 +120,3 @@ class _NoopNotificationsService implements NotificationsService {
     debugPrint('[NotificationsService.noop] cancelAll()');
   }
 }
-

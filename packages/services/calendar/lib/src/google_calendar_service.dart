@@ -71,8 +71,7 @@ class GoogleCalendarService implements CalendarService {
           id: c.id ?? '',
           name: c.summary ?? c.id ?? 'Calendar',
           accountName: _account?.email,
-          isWritable:
-              c.accessRole == 'owner' || c.accessRole == 'writer',
+          isWritable: c.accessRole == 'owner' || c.accessRole == 'writer',
         ),
     ];
   }
@@ -129,8 +128,7 @@ class GoogleCalendarService implements CalendarService {
       singleEvents: true,
     );
     return <PfCalendarEvent>[
-      for (final ev in res.items ?? const <gcal.Event>[])
-        _fromGoogle(ev),
+      for (final ev in res.items ?? const <gcal.Event>[]) _fromGoogle(ev),
     ];
   }
 

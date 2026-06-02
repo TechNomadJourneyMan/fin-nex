@@ -2,6 +2,15 @@
 
 Lightweight backlog. Use `engineering:tech-debt` skill to populate / triage.
 
+## Done (Native + Calendar iteration)
+
+Moved to STATUS.md "Done" section — F-NATIVE-PLATFORMS, F-MOBILE-POPUP,
+F-CALENDAR, F-CAL-REMINDERS, F-SPEND-CALENDAR, F-RECURRING, F-PUSH-LOCAL,
+F-HOME-WIDGETS, F-SHARE-ICS. This supersedes the earlier `F-NATIVE-SCAFFOLD`
+and the local-push half of `F-PUSH` (remote FCM/APNS still pending). The
+WidgetKit/Glance *native UI targets* (formerly F-IOS-WIDGET / F-ANDROID-WIDGET)
+are now tracked as F-WIDGETKIT-TARGET below — the Dart-side bridge is shipped.
+
 ## Done (UX iteration, Prompts 1-8)
 
 Moved to STATUS.md "Done" section — F-ADAPTIVE-SHELL, F-MOTION, F-SOUND-V1,
@@ -10,7 +19,32 @@ F-LOTTIE-EMPTY, F-GOLDEN-TESTS.
 
 ## Now (in flight)
 
-_None — UX iteration complete; see follow-ups below._
+_None — Native + Calendar iteration complete; see follow-ups below._
+
+## Next — Native + Calendar follow-ups
+
+- **F-OAUTH-CLIENT-ID** — Provision a real Google OAuth client id (web + iOS +
+  Android) for the Google Calendar backend. The `GoogleCalendarService`
+  currently expects a configured client; without a real id the web/Google
+  calendar path cannot authenticate against a live account.
+- **F-IOS-SIM-MLKIT** — The iOS *simulator* link fails on Google MLKit (no
+  arm64-sim slice). Add a build-config gate (exclude MLKit / SMS-parser deps for
+  the simulator slice, or use an xcframework with a sim stub) so `flutter run`
+  on the simulator links. Device builds are unaffected.
+- **F-ANDROID-CI** — Install the Android SDK in CI and add an
+  `assembleDebug` / `flutter build apk` job. Android code/config is written but
+  was never built in this env.
+- **F-WIDGETKIT-TARGET** — Wire the iOS WidgetKit extension target (Swift) to
+  the `home_widget` payload group + add the Glance/AppWidget provider on
+  Android. `WidgetBridge`/`WidgetPayload` push the data; the native widget UI
+  targets are not yet added to the Xcode/Gradle projects.
+- **F-DATA-WIRE-RECURRING** — Persist recurring rules. The recurring engine +
+  rules repository currently run against the in-memory app providers (same gap
+  as F-DATA-WIRE); back them with the Drift-backed `pf_data_local` store so
+  rules survive reload and so the materialised transactions persist.
+- **F-CAL-WEB-DEVICE** — On web there is no device calendar; only the Google
+  API backend applies. Decide UX for users who decline Google connect (currently
+  the device backend is mobile-only and the web path no-ops without OAuth).
 
 ## Next (v1.1)
 

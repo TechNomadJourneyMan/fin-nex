@@ -50,8 +50,7 @@ class _MemRuleRepo implements RecurringRulesRepository {
       .toList(growable: false);
 
   @override
-  Future<void> upsert(RecurringRule rule) async =>
-      _store[rule.id.value] = rule;
+  Future<void> upsert(RecurringRule rule) async => _store[rule.id.value] = rule;
 
   @override
   Stream<List<RecurringRule>> watchAll(Ulid userId) =>

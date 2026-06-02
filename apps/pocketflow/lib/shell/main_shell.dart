@@ -560,9 +560,7 @@ class _QuickActionsSheetState extends State<_QuickActionsSheet>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
-    duration: widget.reduceMotion
-        ? Duration.zero
-        : PfMotion.base,
+    duration: widget.reduceMotion ? Duration.zero : PfMotion.base,
   )..forward();
 
   @override
@@ -642,8 +640,7 @@ class _QuickActionsSheetState extends State<_QuickActionsSheet>
               action.onTap();
             },
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               child: Row(
                 children: <Widget>[
                   Icon(action.icon, color: const Color(0xFFE5E5EA), size: 24),

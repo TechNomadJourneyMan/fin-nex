@@ -37,8 +37,7 @@ class NativeNotificationsService implements NotificationsService {
     // on the right wall-clock time across DST.
     tzdata.initializeTimeZones();
 
-    const androidInit =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
     const darwinInit = DarwinInitializationSettings(
       // We request permission explicitly via [requestPermission]; don't prompt
       // at init time.
@@ -54,9 +53,8 @@ class NativeNotificationsService implements NotificationsService {
     await _plugin.initialize(settings);
 
     // Pre-create the Android channel so reminders have a stable home.
-    final android =
-        _plugin.resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>();
+    final android = _plugin.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
     await android?.createNotificationChannel(
       const AndroidNotificationChannel(
         kPaymentsChannelId,

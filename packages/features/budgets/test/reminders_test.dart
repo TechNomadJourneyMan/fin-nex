@@ -54,7 +54,8 @@ void main() {
     reminderService = PfReminderService(stub);
   });
 
-  BudgetRemindersSync sync({required bool enabled, String? calendarId = calId}) =>
+  BudgetRemindersSync sync(
+          {required bool enabled, String? calendarId = calId}) =>
       BudgetRemindersSync(
         reminderService: reminderService,
         calendarId: calendarId,

@@ -48,8 +48,7 @@ class HomeSurfaceUpdater {
   /// the app). [now] is injectable for tests.
   Future<void> refresh({DateTime? now}) async {
     final clock = now ?? DateTime.now();
-    final locale =
-        _ref.read(settings.localeProvider)?.toLanguageTag() ?? 'en';
+    final locale = _ref.read(settings.localeProvider)?.toLanguageTag() ?? 'en';
 
     // Detected subscriptions → reminder inputs (active only, future-dated).
     final subsAsync = _ref.read(subs.detectedSubscriptionsStreamProvider);
@@ -114,7 +113,8 @@ class HomeSurfaceUpdater {
         final sorted = [...inputs]
           ..sort((a, b) => a.dueDate.compareTo(b.dueDate));
         final next = sorted.firstWhere(
-          (i) => !i.dueDate.isBefore(DateTime(clock.year, clock.month, clock.day)),
+          (i) =>
+              !i.dueDate.isBefore(DateTime(clock.year, clock.month, clock.day)),
           orElse: () => sorted.first,
         );
         nextLabel = '${next.title} · ${next.amountLabel}';

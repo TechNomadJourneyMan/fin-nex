@@ -4,6 +4,66 @@ Snapshot of the post-integration state after the 18-agent build, followed by the
 UX iteration (Prompts 1-8: adaptive shell, motion, feedback, a11y, polish,
 search/command-palette, golden tests, and this final regression).
 
+## Done — Native + Calendar iteration
+
+Shipped on `main`, validated by `flutter analyze` (14 pre-existing info lints,
+0 new errors), `dart format`, the package + app test suites, and a
+`flutter build web --release`. iOS *simulator* link is knowingly broken on
+Google MLKit (no arm64-sim slice) — verified via Web build + analyze + tests,
+not iOS sim builds. Android cannot be built in this env (no SDK).
+
+- **F-NATIVE-PLATFORMS** — iOS + Android registered as managed platforms.
+  `ios/Runner.xcodeproj` present; bundle id / applicationId `kz.pocketflow.app`;
+  iOS deployment target 16.0; Podfile uses `use_frameworks! :linkage => :static`
+  and excludes arm64 for the simulator slice. CocoaPods 1.16.2.
+- **F-MOBILE-POPUP** — Phone quick actions (Add / AI / Subscriptions) collapse
+  into a single FAB that opens a popup bottom sheet so nothing floats over
+  content; tablet/desktop keep the docked corner island (`shell/main_shell.dart`).
+- **F-CALENDAR** — `pf_calendar` `CalendarService` with a device backend
+  (EventKit / Calendar Provider via `device_calendar`) and a Google Calendar
+  API backend, selected by `createCalendarService()` (web → Google, mobile →
+  device; stub under analyze/test). Settings → Calendar connect section.
+- **F-CAL-REMINDERS** — Subscription + budget reminders synced to the calendar
+  (`pf_feat_budgets/reminders.dart`, calendar `reminder_service`).
+- **F-SPEND-CALENDAR** — Full-screen spending heatmap calendar with per-day
+  drilldown (`analytics/pages/spending_calendar_page.dart`).
+- **F-RECURRING** — Recurring-rules engine (`RecurringEngine`, domain use-case
+  `run_recurring_rules`) with a rules page + make-recurring dialog, materialised
+  idempotently on app start and synced to the calendar.
+- **F-PUSH-LOCAL** — Local payment-reminder push via
+  `flutter_local_notifications` + `timezone` (`NativeNotificationsService`,
+  `PaymentReminderSync`); no-op on web. Driven by `HomeSurfaceUpdater`.
+- **F-HOME-WIDGETS** — Home-screen widget scaffold via `home_widget`
+  (`WidgetBridge`, `WidgetPayload`) pushing balance / next-payment / today-spend;
+  WidgetKit + Glance native targets still need manual wiring (see BACKLOG).
+- **F-SHARE-ICS** — Share service + ICS calendar export
+  (`services/share_service.dart`, calendar `ics_export`).
+
+### Regression notes (this iteration)
+
+- Fixed a **startup-side-effect regression**: `app.dart` fired the recurring
+  engine, native notification permission, and home-widget refresh from a
+  post-frame callback gated only on `!kIsWeb`. Under `flutter test` `kIsWeb` is
+  `false`, so those native-plugin paths ran with no platform channel and left a
+  pending 10 s timer — failing `smoke_test.dart` (and cascading into
+  `a11y/text_scaling_test.dart`). Added a web-safe `isFlutterTest` guard
+  (`services/test_env*.dart`, conditional `dart:io` import) and skipped the
+  native startup block + `_refreshHomeSurfaces()` under test. Both tests green
+  again; production behaviour is unchanged.
+- App tests: **26 pass / 2 skip / 10 fail**. All 10 failures are the
+  pre-existing golden pixel-diff drift (dashboard/history/analytics/transaction
+  goldens, ~8.7% diff) — confirmed identical at the pre-iteration commit
+  `fd8322c`, tracked under F-GOLDEN-STABILITY; not a regression.
+- Touched-package suites green: `pf_calendar` (15), `pf_feat_transactions` (33),
+  `pf_feat_notifications` (18), `pf_feat_analytics` (14), plus the new
+  `run_recurring_rules` (domain) and `reminders` (budgets) tests. The residual
+  `pf_domain` (5) and `pf_feat_budgets` (4) failures are the pre-existing
+  F-TEST-DRIFT cases (final-class mock / invalid ULID), not new.
+- **Web release build:** succeeds; `build/web` totals **44 MB**
+  (`main.dart.js` ≈ 5.2 MB; MaterialIcons tree-shaken 1.6 MB → 37 KB). Wasm
+  dry-run flags `flutter_secure_storage_web` / `flutter_gemma` as wasm-incompatible
+  (informational only — the JS build is the target).
+
 ## Done — UX iteration (Prompts 1-8)
 
 Shipped on branch `rebrand/pocket-flow`, validated by `flutter analyze`,

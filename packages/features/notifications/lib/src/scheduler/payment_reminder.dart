@@ -225,8 +225,7 @@ class PaymentReminderScheduler {
 
     for (final input in inputs) {
       final due = input.dueDate;
-      final dueAt =
-          DateTime(due.year, due.month, due.day, reminderHour);
+      final dueAt = DateTime(due.year, due.month, due.day, reminderHour);
 
       if (dayBefore) {
         final prior = dueAt.subtract(const Duration(days: 1));

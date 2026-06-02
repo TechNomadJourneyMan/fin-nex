@@ -96,7 +96,8 @@ class BudgetRemindersSync {
       await _reminders.remove(calId, budgetReminderSourceId(budget));
       return;
     }
-    await _reminders.sync(calId, buildBudgetReminder(budget, l10n, locale: locale));
+    await _reminders.sync(
+        calId, buildBudgetReminder(budget, l10n, locale: locale));
   }
 
   /// Removes [budget]'s reminder (used on delete / toggle-off).

@@ -95,8 +95,7 @@ class CalendarSection extends ConsumerWidget {
                     : colors.textMuted,
               ),
               title: Text(cal.name),
-              subtitle:
-                  cal.accountName == null ? null : Text(cal.accountName!),
+              subtitle: cal.accountName == null ? null : Text(cal.accountName!),
               onTap: cal.isWritable
                   ? () {
                       feedback.selectTap();

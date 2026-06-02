@@ -114,9 +114,8 @@ class _MakeRecurringDialogState extends ConsumerState<_MakeRecurringDialog> {
       paused: e?.paused ?? false,
       // Encode the sync intent: keep the real id when editing, else the
       // sentinel so the sync helper creates one; null when sync is off.
-      calendarEventId: _calendarSync
-          ? (e?.calendarEventId ?? _kSyncSentinel)
-          : null,
+      calendarEventId:
+          _calendarSync ? (e?.calendarEventId ?? _kSyncSentinel) : null,
       createdAt: e?.createdAt ?? now,
       updatedAt: now,
     );
@@ -182,9 +181,8 @@ class _MakeRecurringDialogState extends ConsumerState<_MakeRecurringDialog> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.add),
-                  onPressed: _interval < 99
-                      ? () => setState(() => _interval++)
-                      : null,
+                  onPressed:
+                      _interval < 99 ? () => setState(() => _interval++) : null,
                 ),
               ],
             ),

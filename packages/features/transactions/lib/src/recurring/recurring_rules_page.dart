@@ -45,8 +45,7 @@ class RecurringRulesPage extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(vertical: 8),
             itemCount: rules.length,
             separatorBuilder: (_, __) => const Divider(height: 1),
-            itemBuilder: (BuildContext ctx, int i) =>
-                _RuleTile(rule: rules[i]),
+            itemBuilder: (BuildContext ctx, int i) => _RuleTile(rule: rules[i]),
           );
         },
       ),
@@ -125,8 +124,7 @@ class _RuleTile extends ConsumerWidget {
   ) async {
     final RecurringRulesRepository repo =
         ref.read(recurringRulesRepositoryProvider);
-    final RecurringCalendarSync sync =
-        ref.read(recurringCalendarSyncProvider);
+    final RecurringCalendarSync sync = ref.read(recurringCalendarSyncProvider);
     final FeedbackService feedback = ref.read(feedbackServiceProvider);
 
     switch (action) {

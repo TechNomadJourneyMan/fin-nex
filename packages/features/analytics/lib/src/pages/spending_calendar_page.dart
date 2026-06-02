@@ -112,10 +112,10 @@ class _SpendingCalendarPageState extends ConsumerState<SpendingCalendarPage> {
                 controller: _controller,
                 itemCount: _kMonthRadius * 2 + 1,
                 onPageChanged: (int p) => setState(() => _page = p),
-                physics: PfMotion.effective(context, PfMotion.base) ==
-                        Duration.zero
-                    ? const NeverScrollableScrollPhysics()
-                    : const PageScrollPhysics(),
+                physics:
+                    PfMotion.effective(context, PfMotion.base) == Duration.zero
+                        ? const NeverScrollableScrollPhysics()
+                        : const PageScrollPhysics(),
                 itemBuilder: (BuildContext ctx, int p) =>
                     _MonthGrid(month: _monthForPage(p)),
               ),
@@ -333,9 +333,8 @@ class _DayCell extends StatelessWidget {
     final AppL10n l10n = AppL10n.of(context);
     final Color bg = _intensityColor(context, spend, maxSpend);
     final bool filled = spend > 0;
-    final Color fg = filled
-        ? context.fnxColors.onBrand
-        : context.fnxColors.textSecondary;
+    final Color fg =
+        filled ? context.fnxColors.onBrand : context.fnxColors.textSecondary;
 
     final String semantic = filled
         ? '$dayNum, '
@@ -382,9 +381,12 @@ class _Legend extends StatelessWidget {
     final PfSemanticColors colors = context.fnxColors;
     final List<Color> swatches = <Color>[
       colors.surfaceSunken,
-      Color.alphaBlend(colors.brand.withValues(alpha: 0.35), colors.surfaceSunken),
-      Color.alphaBlend(colors.brand.withValues(alpha: 0.6), colors.surfaceSunken),
-      Color.alphaBlend(colors.brand.withValues(alpha: 0.9), colors.surfaceSunken),
+      Color.alphaBlend(
+          colors.brand.withValues(alpha: 0.35), colors.surfaceSunken),
+      Color.alphaBlend(
+          colors.brand.withValues(alpha: 0.6), colors.surfaceSunken),
+      Color.alphaBlend(
+          colors.brand.withValues(alpha: 0.9), colors.surfaceSunken),
       Color.alphaBlend(colors.error.withValues(alpha: 0.85), colors.brand),
     ];
     return Semantics(
@@ -473,8 +475,7 @@ class _DayDetailSheet extends ConsumerWidget {
             t.occurredAt.toLocal().isBefore(dayEnd))
           t,
     ]..sort(
-        (Transaction a, Transaction b) =>
-            b.occurredAt.compareTo(a.occurredAt),
+        (Transaction a, Transaction b) => b.occurredAt.compareTo(a.occurredAt),
       );
 
     final int totalMinor = rows.fold<int>(
