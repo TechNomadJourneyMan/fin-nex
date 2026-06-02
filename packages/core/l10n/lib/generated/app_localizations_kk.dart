@@ -1017,4 +1017,31 @@ class AppL10nKk extends AppL10n {
   String importDone(int count) {
     return 'Импортталған операциялар: $count';
   }
+
+  @override
+  String get setCalendar => 'Күнтізбе';
+
+  @override
+  String get calConnect => 'Күнтізбені қосу';
+
+  @override
+  String get calConnected => 'Қосылды';
+
+  @override
+  String get calNotConnected => 'Қосылмаған';
+
+  @override
+  String get calConnectDesc =>
+      'Төлемдер мен жазылымдар туралы еске салғыштарды күнтізбеге қосыңыз.';
+
+  @override
+  String get calChooseCalendar => 'Күнтізбені таңдаңыз';
+
+  @override
+  String get calPermissionDenied => 'Күнтізбеге қол жеткізу қабылданбады.';
+
+  @override
+  String calSelected(String name) {
+    return '$name қолданылуда';
+  }
 }

@@ -1017,4 +1017,31 @@ class AppL10nEn extends AppL10n {
   String importDone(int count) {
     return 'Imported $count transactions';
   }
+
+  @override
+  String get setCalendar => 'Calendar';
+
+  @override
+  String get calConnect => 'Connect calendar';
+
+  @override
+  String get calConnected => 'Connected';
+
+  @override
+  String get calNotConnected => 'Not connected';
+
+  @override
+  String get calConnectDesc =>
+      'Add payment and subscription reminders to your calendar.';
+
+  @override
+  String get calChooseCalendar => 'Choose a calendar';
+
+  @override
+  String get calPermissionDenied => 'Calendar access was denied.';
+
+  @override
+  String calSelected(String name) {
+    return 'Using $name';
+  }
 }

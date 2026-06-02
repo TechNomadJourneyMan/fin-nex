@@ -1031,4 +1031,31 @@ class AppL10nRu extends AppL10n {
   String importDone(int count) {
     return 'Импортировано операций: $count';
   }
+
+  @override
+  String get setCalendar => 'Календарь';
+
+  @override
+  String get calConnect => 'Подключить календарь';
+
+  @override
+  String get calConnected => 'Подключено';
+
+  @override
+  String get calNotConnected => 'Не подключено';
+
+  @override
+  String get calConnectDesc =>
+      'Добавляйте напоминания о платежах и подписках в календарь.';
+
+  @override
+  String get calChooseCalendar => 'Выберите календарь';
+
+  @override
+  String get calPermissionDenied => 'Доступ к календарю отклонён.';
+
+  @override
+  String calSelected(String name) {
+    return 'Используется $name';
+  }
 }

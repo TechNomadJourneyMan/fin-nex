@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pf_calendar/pf_calendar.dart';
 
+import 'controllers/calendar_controller.dart';
 import 'controllers/high_contrast_controller.dart';
 import 'controllers/locale_controller.dart';
 import 'controllers/notification_prefs_controller.dart';
@@ -46,6 +48,17 @@ final notificationPrefsProvider =
 final privacyProvider =
     StateNotifierProvider<PrivacyController, PrivacyPrefs>((ref) {
   return PrivacyController(ref.watch(preferencesStoreProvider));
+});
+
+/// Drives the "Connect calendar" flow. Reads the platform [CalendarService]
+/// from [calendarServiceProvider] (defaults to the in-memory stub; the app
+/// overrides it at the root with the device / Google backend).
+final calendarControllerProvider =
+    StateNotifierProvider<CalendarController, CalendarConnectState>((ref) {
+  return CalendarController(
+    ref.watch(calendarServiceProvider),
+    ref.watch(preferencesStoreProvider),
+  );
 });
 
 /// The top-level [SettingsController] composed from the smaller providers.

@@ -78,6 +78,8 @@ dependencies:
     path: ../../packages/services/sms_parser
   pf_local_llm:
     path: ../../packages/services/local_llm
+  pf_calendar:
+    path: ../../packages/services/calendar
 
   # Direct deps surfaced by the new feature packages.
   flutter_markdown: ^0.7.4

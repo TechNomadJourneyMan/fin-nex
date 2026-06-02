@@ -1934,6 +1934,54 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Imported {count} transactions'**
   String importDone(int count);
+
+  /// Settings section: calendar integration.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get setCalendar;
+
+  /// Button to connect a calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect calendar'**
+  String get calConnect;
+
+  /// Calendar connection status: connected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get calConnected;
+
+  /// Calendar connection status: not connected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not connected'**
+  String get calNotConnected;
+
+  /// Calendar section description.
+  ///
+  /// In en, this message translates to:
+  /// **'Add payment and subscription reminders to your calendar.'**
+  String get calConnectDesc;
+
+  /// Title of the calendar picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a calendar'**
+  String get calChooseCalendar;
+
+  /// Shown when calendar permission is refused.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar access was denied.'**
+  String get calPermissionDenied;
+
+  /// Shows the chosen calendar name.
+  ///
+  /// In en, this message translates to:
+  /// **'Using {name}'**
+  String calSelected(String name);
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

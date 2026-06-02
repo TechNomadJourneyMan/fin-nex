@@ -328,5 +328,14 @@
   "importColumnMerchant": "Продавец",
   "importColumnCategory": "Категория",
   "importConfirm": "Импортировать {count} строк",
-  "importDone": "Импортировано операций: {count}"
+  "importDone": "Импортировано операций: {count}",
+
+  "setCalendar": "Календарь",
+  "calConnect": "Подключить календарь",
+  "calConnected": "Подключено",
+  "calNotConnected": "Не подключено",
+  "calConnectDesc": "Добавляйте напоминания о платежах и подписках в календарь.",
+  "calChooseCalendar": "Выберите календарь",
+  "calPermissionDenied": "Доступ к календарю отклонён.",
+  "calSelected": "Используется {name}"
 }

@@ -9,6 +9,7 @@ import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../providers.dart';
+import '../widgets/calendar_section.dart';
 import '../widgets/sound_haptics_section.dart';
 
 /// Settings hub page. Routed at `/settings`.
@@ -77,6 +78,9 @@ class SettingsRootPage extends ConsumerWidget {
             // New "Sound & Haptics" section sits above the routed-section
             // list so it's immediately discoverable on first open.
             const SoundHapticsSection(),
+            // Calendar integration: connect a device / Google calendar and
+            // pick the target calendar for payment & subscription reminders.
+            const CalendarSection(),
             // Accessibility section: toggles that apply app-wide (sits under
             // the Appearance grouping; uses a distinct "Accessibility" header
             // so it doesn't collide with the routed Appearance tile).

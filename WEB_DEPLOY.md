@@ -87,6 +87,34 @@ flutter build web --release \
   --dart-define=FNX_ENV=prod
 ```
 
+## Google Calendar OAuth (`GOOGLE_OAUTH_CLIENT_ID`)
+
+On web, the calendar integration (`pf_calendar`) uses the Google Calendar
+API over OAuth via `google_sign_in`. The OAuth client id is
+environment-specific and **must not be hardcoded** — it is read from a
+compile-time dart-define:
+
+```bash
+flutter build web --release \
+  --dart-define=FNX_API_BASE_URL=https://api.finnex.app \
+  --dart-define=FNX_ENV=prod \
+  --dart-define=GOOGLE_OAUTH_CLIENT_ID=<your-web-client-id>.apps.googleusercontent.com
+```
+
+Create the **Web application** OAuth client in the Google Cloud Console
+(APIs & Services → Credentials), enable the **Google Calendar API**, and add
+the deploy origin to the client's authorized JavaScript origins. The scope
+requested is `https://www.googleapis.com/auth/calendar`.
+
+When `GOOGLE_OAUTH_CLIENT_ID` is empty (the default), the Settings →
+Calendar "Connect" action is a no-op: `GoogleCalendarService.requestPermission()`
+returns `false` and logs a hint instead of attempting a sign-in. The web
+build still compiles and runs; only the calendar connect is disabled.
+
+On mobile the OAuth define is not required — `DeviceCalendarService` uses the
+on-device calendar store (EventKit / Calendar Provider), which already
+surfaces the user's synced Google and Apple accounts.
+
 ## SPA rewrites
 
 `vercel.json` rewrites all paths to `/index.html` so go_router deep

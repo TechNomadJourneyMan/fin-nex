@@ -26,6 +26,8 @@ dependencies:
     path: ../../core/l10n
   pf_domain:
     path: ../../domain
+  pf_calendar:
+    path: ../../services/calendar
   shared_preferences: ^2.3.2
 
 dev_dependencies:

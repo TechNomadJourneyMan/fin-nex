@@ -1,0 +1,30 @@
+name: pf_calendar
+description: Pocket Flow calendar abstraction — device (EventKit/Calendar Provider) and Google Calendar backends for payment & subscription reminders.
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.0
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.5.1
+  meta: ^1.15.0
+
+  # Device-side calendars (EventKit on iOS, Calendar Provider on Android).
+  # Surfaces both Apple and Google accounts the user has synced on-device.
+  device_calendar: ^4.3.3
+  # Google Calendar API + OAuth (web + optional mobile).
+  googleapis: ^13.2.0
+  google_sign_in: ^6.2.1
+  # Auth client for the Google Calendar API requests.
+  http: ^1.0.0
+  # Timezone-aware DateTime conversion required by device_calendar.
+  timezone: ^0.9.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0

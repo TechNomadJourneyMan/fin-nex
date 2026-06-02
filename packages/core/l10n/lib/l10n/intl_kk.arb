@@ -328,5 +328,14 @@
   "importColumnMerchant": "Сатушы",
   "importColumnCategory": "Санат",
   "importConfirm": "{count} жолды импорттау",
-  "importDone": "Импортталған операциялар: {count}"
+  "importDone": "Импортталған операциялар: {count}",
+
+  "setCalendar": "Күнтізбе",
+  "calConnect": "Күнтізбені қосу",
+  "calConnected": "Қосылды",
+  "calNotConnected": "Қосылмаған",
+  "calConnectDesc": "Төлемдер мен жазылымдар туралы еске салғыштарды күнтізбеге қосыңыз.",
+  "calChooseCalendar": "Күнтізбені таңдаңыз",
+  "calPermissionDenied": "Күнтізбеге қол жеткізу қабылданбады.",
+  "calSelected": "{name} қолданылуда"
 }

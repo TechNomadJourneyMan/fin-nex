@@ -730,5 +730,25 @@
   "@importDone": {
     "description": "Snackbar after a successful CSV import.",
     "placeholders": {"count": {"type": "int", "example": "12"}}
+  },
+
+  "setCalendar": "Calendar",
+  "@setCalendar": {"description": "Settings section: calendar integration."},
+  "calConnect": "Connect calendar",
+  "@calConnect": {"description": "Button to connect a calendar."},
+  "calConnected": "Connected",
+  "@calConnected": {"description": "Calendar connection status: connected."},
+  "calNotConnected": "Not connected",
+  "@calNotConnected": {"description": "Calendar connection status: not connected."},
+  "calConnectDesc": "Add payment and subscription reminders to your calendar.",
+  "@calConnectDesc": {"description": "Calendar section description."},
+  "calChooseCalendar": "Choose a calendar",
+  "@calChooseCalendar": {"description": "Title of the calendar picker."},
+  "calPermissionDenied": "Calendar access was denied.",
+  "@calPermissionDenied": {"description": "Shown when calendar permission is refused."},
+  "calSelected": "Using {name}",
+  "@calSelected": {
+    "description": "Shows the chosen calendar name.",
+    "placeholders": {"name": {"type": "String", "example": "Personal"}}
   }
 }

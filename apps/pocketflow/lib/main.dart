@@ -14,6 +14,7 @@
 import 'package:flutter/foundation.dart' show debugPrint, kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pf_calendar/pf_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
@@ -71,6 +72,10 @@ void main() {
       ProviderScope(
         overrides: <Override>[
           ...buildAppProviderOverrides(module),
+          // Calendar backend: web → Google Calendar API, mobile → device
+          // (EventKit / Calendar Provider). Tests/analyze keep the stub.
+          calendarServiceProvider
+              .overrideWithValue(createCalendarService()),
           // Auth wiring requires shared_preferences; only install the override
           // (and the backend-backed auth repository it unlocks) when prefs
           // loaded successfully. Otherwise the auth feature keeps its stub.
