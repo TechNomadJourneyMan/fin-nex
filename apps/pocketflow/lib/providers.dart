@@ -21,6 +21,8 @@ import 'package:pf_feat_insights/pf_feat_insights.dart' as insights;
 import 'package:pf_feat_notifications/pf_feat_notifications.dart'
     as notifications;
 import 'package:pf_feat_auth/auth.dart' as auth;
+import 'package:pf_feat_budgets/budgets.dart' as budgets;
+import 'package:pf_feat_settings/settings.dart' as settings;
 import 'package:pf_feat_subscriptions/subscriptions.dart' as subs;
 import 'package:pf_feat_transactions/transactions.dart' as transactions;
 import 'package:pf_local_llm/pf_local_llm.dart';
@@ -214,6 +216,35 @@ List<Override> buildAppProviderOverrides(AppDataModule module) {
     // AI-CFO chat (F-07) — fake stream service for preview, no backend.
     ai_chat.aiChatServiceProvider.overrideWithValue(
       const ai_chat.FakeAiChatService(),
+    ),
+
+    // Calendar reminders (Phase 2) — bridge the settings calendar selection +
+    // reminder toggles into the subscriptions and budgets features so all
+    // three share the same connected calendar id, toggle state and locale.
+    subs.subscriptionRemindersCalendarIdProvider.overrideWith(
+      (ref) => ref.watch(
+        settings.calendarControllerProvider.select((s) => s.selectedId),
+      ),
+    ),
+    subs.subscriptionRemindersEnabledProvider.overrideWith(
+      (ref) => ref.watch(
+        settings.reminderPrefsProvider.select((p) => p.subscriptions),
+      ),
+    ),
+    subs.subscriptionRemindersLocaleProvider.overrideWith(
+      (ref) => ref.watch(settings.localeProvider)?.toLanguageTag() ?? 'en',
+    ),
+    budgets.budgetRemindersCalendarIdProvider.overrideWith(
+      (ref) => ref.watch(
+        settings.calendarControllerProvider.select((s) => s.selectedId),
+      ),
+    ),
+    budgets.budgetRemindersEnabledProvider.overrideWith(
+      (ref) =>
+          ref.watch(settings.reminderPrefsProvider.select((p) => p.budgets)),
+    ),
+    budgets.budgetRemindersLocaleProvider.overrideWith(
+      (ref) => ref.watch(settings.localeProvider)?.toLanguageTag() ?? 'en',
     ),
   ];
 }

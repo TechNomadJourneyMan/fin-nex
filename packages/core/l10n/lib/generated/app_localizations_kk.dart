@@ -1044,4 +1044,29 @@ class AppL10nKk extends AppL10n {
   String calSelected(String name) {
     return '$name қолданылуда';
   }
+
+  @override
+  String get calSubscriptionReminders => 'Жазылым еске салғыштары';
+
+  @override
+  String get calSubscriptionRemindersDesc =>
+      'Әр жазылым жаңартылар алдында күнтізбеге оқиға қосу.';
+
+  @override
+  String get calBudgetReminders => 'Бюджет еске салғыштары';
+
+  @override
+  String get calBudgetRemindersDesc =>
+      'Бюджет кезеңі аяқталар алдында күнтізбеге оқиға қосу.';
+
+  @override
+  String get subsAddToCalendar => 'Күнтізбеге қосу';
+
+  @override
+  String get subsReminderAdded => 'Еске салғыш қосылды';
+
+  @override
+  String budgetReminderTitle(String name, String date) {
+    return '«$name» бюджеті $date аяқталады';
+  }
 }

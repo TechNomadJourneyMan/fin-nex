@@ -9,6 +9,7 @@ import 'controllers/high_contrast_controller.dart';
 import 'controllers/locale_controller.dart';
 import 'controllers/notification_prefs_controller.dart';
 import 'controllers/privacy_controller.dart';
+import 'controllers/reminder_prefs_controller.dart';
 import 'controllers/settings_controller.dart';
 import 'controllers/theme_controller.dart';
 import 'preferences_store.dart';
@@ -58,6 +59,22 @@ final calendarControllerProvider =
   return CalendarController(
     ref.watch(calendarServiceProvider),
     ref.watch(preferencesStoreProvider),
+  );
+});
+
+/// Calendar reminder toggles ("subscription reminders" / "budget reminders").
+///
+/// The subscription toggle defaults ON once a calendar is connected; the
+/// budget toggle defaults OFF. Persisted under `pf_reminders_subscriptions`
+/// and `pf_reminders_budgets`.
+final reminderPrefsProvider =
+    StateNotifierProvider<ReminderPrefsController, ReminderPrefs>((ref) {
+  final connected = ref.watch(
+    calendarControllerProvider.select((s) => s.connected),
+  );
+  return ReminderPrefsController(
+    ref.watch(preferencesStoreProvider),
+    calendarConnected: connected,
   );
 });
 

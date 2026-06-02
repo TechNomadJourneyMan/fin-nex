@@ -337,5 +337,12 @@
   "calConnectDesc": "Төлемдер мен жазылымдар туралы еске салғыштарды күнтізбеге қосыңыз.",
   "calChooseCalendar": "Күнтізбені таңдаңыз",
   "calPermissionDenied": "Күнтізбеге қол жеткізу қабылданбады.",
-  "calSelected": "{name} қолданылуда"
+  "calSelected": "{name} қолданылуда",
+  "calSubscriptionReminders": "Жазылым еске салғыштары",
+  "calSubscriptionRemindersDesc": "Әр жазылым жаңартылар алдында күнтізбеге оқиға қосу.",
+  "calBudgetReminders": "Бюджет еске салғыштары",
+  "calBudgetRemindersDesc": "Бюджет кезеңі аяқталар алдында күнтізбеге оқиға қосу.",
+  "subsAddToCalendar": "Күнтізбеге қосу",
+  "subsReminderAdded": "Еске салғыш қосылды",
+  "budgetReminderTitle": "«{name}» бюджеті {date} аяқталады"
 }

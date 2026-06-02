@@ -11,6 +11,7 @@ export 'src/domain/detected_subscriptions_repository.dart';
 export 'src/pages/subscription_detail_page.dart';
 export 'src/pages/subscriptions_manager_page.dart';
 export 'src/providers.dart';
+export 'src/reminders.dart';
 export 'src/subscriptions_format.dart';
 export 'src/widgets/brand_icon.dart';
 export 'src/widgets/subscription_card.dart';

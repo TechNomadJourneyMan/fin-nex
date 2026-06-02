@@ -11,4 +11,5 @@ export 'src/factory.dart';
 export 'src/google_calendar_service.dart';
 export 'src/models.dart';
 export 'src/provider.dart';
+export 'src/reminder_service.dart';
 export 'src/stub_calendar_service.dart';

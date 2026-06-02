@@ -1058,4 +1058,29 @@ class AppL10nRu extends AppL10n {
   String calSelected(String name) {
     return 'Используется $name';
   }
+
+  @override
+  String get calSubscriptionReminders => 'Напоминания о подписках';
+
+  @override
+  String get calSubscriptionRemindersDesc =>
+      'Добавлять событие в календарь перед каждым продлением подписки.';
+
+  @override
+  String get calBudgetReminders => 'Напоминания о бюджетах';
+
+  @override
+  String get calBudgetRemindersDesc =>
+      'Добавлять событие в календарь, когда период бюджета подходит к концу.';
+
+  @override
+  String get subsAddToCalendar => 'Добавить в календарь';
+
+  @override
+  String get subsReminderAdded => 'Напоминание добавлено';
+
+  @override
+  String budgetReminderTitle(String name, String date) {
+    return 'Бюджет «$name» заканчивается $date';
+  }
 }

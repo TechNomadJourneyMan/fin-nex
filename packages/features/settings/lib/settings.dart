@@ -3,6 +3,7 @@ library pf_feat_settings;
 
 export 'src/controllers/calendar_controller.dart';
 export 'src/controllers/high_contrast_controller.dart';
+export 'src/controllers/reminder_prefs_controller.dart';
 export 'src/controllers/settings_controller.dart';
 export 'src/pages/about_page.dart';
 export 'src/pages/appearance_page.dart';

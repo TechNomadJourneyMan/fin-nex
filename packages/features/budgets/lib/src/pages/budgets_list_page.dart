@@ -9,8 +9,11 @@ import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:pf_domain/domain.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:pf_calendar/pf_calendar.dart';
+
 import '../controllers/budgets_controller.dart';
 import '../providers.dart';
+import '../reminders.dart';
 
 /// List of active budgets with progress bars and a "create" FAB.
 class BudgetsListPage extends ConsumerStatefulWidget {
@@ -25,6 +28,30 @@ class _BudgetsListPageState extends ConsumerState<BudgetsListPage> {
   /// Budget IDs we've already fired a "limit reached" haptic for this session,
   /// so re-renders don't re-buzz the device.
   final Set<String> _warnedExceeded = <String>{};
+
+  /// Budget IDs we've already reconciled calendar reminders for this build
+  /// pass, so a single data emission doesn't re-sync on every rebuild.
+  final Set<String> _remindersSynced = <String>{};
+
+  void _syncBudgetReminders(List<Budget> budgets) {
+    final calId = ref.read(budgetRemindersCalendarIdProvider);
+    if (calId == null) return;
+    final enabled = ref.read(budgetRemindersEnabledProvider);
+    final l10n = AppL10n.of(context);
+    final sync = BudgetRemindersSync(
+      reminderService: ref.read(reminderServiceProvider),
+      calendarId: calId,
+      enabled: enabled,
+      l10n: l10n,
+      locale: ref.read(budgetRemindersLocaleProvider),
+    );
+    for (final b in budgets) {
+      if (_remindersSynced.contains(b.id.value)) continue;
+      _remindersSynced.add(b.id.value);
+      // ignore: discarded_futures
+      sync.sync(b);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +76,10 @@ class _BudgetsListPageState extends ConsumerState<BudgetsListPage> {
           child: Text('$e', style: TextStyle(color: colors.error)),
         ),
         data: (budgets) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted) return;
+            _syncBudgetReminders(budgets);
+          });
           if (budgets.isEmpty) {
             return PfEmptyState(
               icon: Icons.pie_chart_outline,

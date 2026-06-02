@@ -750,5 +750,25 @@
   "@calSelected": {
     "description": "Shows the chosen calendar name.",
     "placeholders": {"name": {"type": "String", "example": "Personal"}}
+  },
+  "calSubscriptionReminders": "Subscription reminders",
+  "@calSubscriptionReminders": {"description": "Toggle: add subscription due-date reminders to the calendar."},
+  "calSubscriptionRemindersDesc": "Add a calendar event before each subscription renews.",
+  "@calSubscriptionRemindersDesc": {"description": "Subscription reminders toggle description."},
+  "calBudgetReminders": "Budget reminders",
+  "@calBudgetReminders": {"description": "Toggle: add budget end-of-period reminders to the calendar."},
+  "calBudgetRemindersDesc": "Add a calendar event when a budget period is about to end.",
+  "@calBudgetRemindersDesc": {"description": "Budget reminders toggle description."},
+  "subsAddToCalendar": "Add to calendar",
+  "@subsAddToCalendar": {"description": "Button: add this subscription's next charge to the calendar."},
+  "subsReminderAdded": "Reminder added",
+  "@subsReminderAdded": {"description": "Shown after a subscription reminder is added to the calendar."},
+  "budgetReminderTitle": "Budget '{name}' ends {date}",
+  "@budgetReminderTitle": {
+    "description": "Calendar event title for a budget ending soon.",
+    "placeholders": {
+      "name": {"type": "String", "example": "Groceries"},
+      "date": {"type": "String", "example": "June 30, 2026"}
+    }
   }
 }

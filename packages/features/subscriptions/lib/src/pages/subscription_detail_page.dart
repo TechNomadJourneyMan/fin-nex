@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pf_calendar/pf_calendar.dart';
 import 'package:pf_core_l10n/pf_core_l10n.dart';
 import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:pf_domain/domain.dart';
@@ -15,6 +16,7 @@ import 'package:intl/intl.dart';
 
 import '../domain/detected_subscription.dart';
 import '../providers.dart';
+import '../reminders.dart';
 import '../subscriptions_format.dart';
 import '../widgets/brand_icon.dart';
 
@@ -146,6 +148,24 @@ class _DetailBody extends ConsumerWidget {
         SizedBox(height: spacing.s7),
 
         // Actions.
+        if (ref.watch(subscriptionRemindersCalendarIdProvider) != null &&
+            !cancelled) ...<Widget>[
+          PfButton(
+            key: const Key('subscription.addToCalendar'),
+            label: subscription.calendarEventId != null
+                ? l10n.subsReminderAdded
+                : l10n.subsAddToCalendar,
+            variant: PfButtonVariant.secondary,
+            fullWidth: true,
+            leadingIcon: subscription.calendarEventId != null
+                ? Icons.event_available
+                : Icons.event,
+            onPressed: subscription.calendarEventId != null
+                ? null
+                : () => _addToCalendar(context, ref, subscription),
+          ),
+          SizedBox(height: spacing.s4),
+        ],
         PfButton(
           label: l10n.subsHowToUnsubscribe,
           variant: PfButtonVariant.secondary,
@@ -167,6 +187,33 @@ class _DetailBody extends ConsumerWidget {
     );
   }
 
+  Future<void> _addToCalendar(
+    BuildContext context,
+    WidgetRef ref,
+    DetectedSubscription sub,
+  ) async {
+    final l10n = AppL10n.of(context);
+    final calId = ref.read(subscriptionRemindersCalendarIdProvider);
+    if (calId == null) return;
+    final reminders = ref.read(reminderServiceProvider);
+    final repo = ref.read(detectedSubscriptionsRepositoryProvider);
+    final locale = ref.read(subscriptionRemindersLocaleProvider);
+    final id = await reminders.sync(
+      calId,
+      buildSubscriptionReminder(sub, locale: locale),
+    );
+    if (id != null) {
+      await repo.upsert(
+        sub.copyWith(calendarEventId: id, updatedAt: DateTime.now().toUtc()),
+      );
+    }
+    if (context.mounted) {
+      context.showPfSnack(
+        id != null ? l10n.subsReminderAdded : l10n.calPermissionDenied,
+      );
+    }
+  }
+
   Future<void> _markCancelled(
     BuildContext context,
     WidgetRef ref,
@@ -175,7 +222,20 @@ class _DetailBody extends ConsumerWidget {
     final l10n = AppL10n.of(context);
     final repo = ref.read(detectedSubscriptionsRepositoryProvider);
     final now = DateTime.now().toUtc();
-    await repo.upsert(sub.copyWith(cancelledAt: now, updatedAt: now));
+    // Cancelling removes any calendar reminder for this subscription.
+    final calId = ref.read(subscriptionRemindersCalendarIdProvider);
+    if (calId != null) {
+      await ref
+          .read(reminderServiceProvider)
+          .remove(calId, 'subscription:${sub.id.value}');
+    }
+    await repo.upsert(
+      sub.copyWith(
+        cancelledAt: now,
+        updatedAt: now,
+        clearCalendarEventId: true,
+      ),
+    );
     if (context.mounted) {
       context.showPfSnack(l10n.subsMarkedCancelled(sub.merchantName));
     }

@@ -1982,6 +1982,48 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Using {name}'**
   String calSelected(String name);
+
+  /// Toggle: add subscription due-date reminders to the calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription reminders'**
+  String get calSubscriptionReminders;
+
+  /// Subscription reminders toggle description.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a calendar event before each subscription renews.'**
+  String get calSubscriptionRemindersDesc;
+
+  /// Toggle: add budget end-of-period reminders to the calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget reminders'**
+  String get calBudgetReminders;
+
+  /// Budget reminders toggle description.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a calendar event when a budget period is about to end.'**
+  String get calBudgetRemindersDesc;
+
+  /// Button: add this subscription's next charge to the calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to calendar'**
+  String get subsAddToCalendar;
+
+  /// Shown after a subscription reminder is added to the calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder added'**
+  String get subsReminderAdded;
+
+  /// Calendar event title for a budget ending soon.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget \'{name}\' ends {date}'**
+  String budgetReminderTitle(String name, String date);
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

@@ -112,6 +112,47 @@ class CalendarSection extends ConsumerWidget {
             style: typo.bodySm.copyWith(color: colors.textMuted),
           ),
         ),
+        // Reminder toggles — only meaningful once a calendar is connected.
+        if (state.connected) ...<Widget>[
+          Builder(
+            builder: (context) {
+              final prefs = ref.watch(reminderPrefsProvider);
+              final ctrl = ref.read(reminderPrefsProvider.notifier);
+              return Column(
+                children: <Widget>[
+                  SwitchListTile(
+                    key: const Key('settings.calendar.subscriptionReminders'),
+                    title: Text(l10n.calSubscriptionReminders),
+                    subtitle: Text(
+                      l10n.calSubscriptionRemindersDesc,
+                      style: typo.bodySm.copyWith(color: colors.textMuted),
+                    ),
+                    value: prefs.subscriptions,
+                    onChanged: (v) {
+                      feedback.selectTap();
+                      // ignore: discarded_futures
+                      ctrl.setSubscriptions(v);
+                    },
+                  ),
+                  SwitchListTile(
+                    key: const Key('settings.calendar.budgetReminders'),
+                    title: Text(l10n.calBudgetReminders),
+                    subtitle: Text(
+                      l10n.calBudgetRemindersDesc,
+                      style: typo.bodySm.copyWith(color: colors.textMuted),
+                    ),
+                    value: prefs.budgets,
+                    onChanged: (v) {
+                      feedback.selectTap();
+                      // ignore: discarded_futures
+                      ctrl.setBudgets(v);
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
         Divider(
           height: 1,
           color: colors.divider,

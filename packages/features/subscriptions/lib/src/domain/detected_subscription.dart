@@ -74,6 +74,7 @@ final class DetectedSubscription extends Equatable {
     this.sourceTransactionIds = const <Ulid>[],
     this.cancelledAt,
     this.deletedAt,
+    this.calendarEventId,
   });
 
   /// Stable identifier.
@@ -109,6 +110,11 @@ final class DetectedSubscription extends Equatable {
   /// Soft-delete tombstone.
   final DateTime? deletedAt;
 
+  /// Id of the calendar event created for this subscription's next-due date,
+  /// or null when no reminder has been added. Stored so toggling reminders off
+  /// or deleting the subscription can remove exactly that event.
+  final String? calendarEventId;
+
   /// Creation timestamp (UTC).
   final DateTime createdAt;
 
@@ -132,6 +138,10 @@ final class DetectedSubscription extends Equatable {
   }
 
   /// Returns a copy with the given fields replaced.
+  ///
+  /// [calendarEventId] uses a sentinel so it can be *cleared*: pass
+  /// `clearCalendarEventId: true` to drop the stored event id (e.g. after the
+  /// reminder is removed). Passing a non-null [calendarEventId] sets it.
   DetectedSubscription copyWith({
     Ulid? id,
     Ulid? userId,
@@ -146,6 +156,8 @@ final class DetectedSubscription extends Equatable {
     DateTime? deletedAt,
     DateTime? createdAt,
     DateTime? updatedAt,
+    String? calendarEventId,
+    bool clearCalendarEventId = false,
   }) =>
       DetectedSubscription(
         id: id ?? this.id,
@@ -161,6 +173,9 @@ final class DetectedSubscription extends Equatable {
         deletedAt: deletedAt ?? this.deletedAt,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
+        calendarEventId: clearCalendarEventId
+            ? null
+            : (calendarEventId ?? this.calendarEventId),
       );
 
   @override
@@ -176,6 +191,7 @@ final class DetectedSubscription extends Equatable {
         sourceTransactionIds,
         cancelledAt,
         deletedAt,
+        calendarEventId,
         createdAt,
         updatedAt,
       ];

@@ -337,5 +337,12 @@
   "calConnectDesc": "Добавляйте напоминания о платежах и подписках в календарь.",
   "calChooseCalendar": "Выберите календарь",
   "calPermissionDenied": "Доступ к календарю отклонён.",
-  "calSelected": "Используется {name}"
+  "calSelected": "Используется {name}",
+  "calSubscriptionReminders": "Напоминания о подписках",
+  "calSubscriptionRemindersDesc": "Добавлять событие в календарь перед каждым продлением подписки.",
+  "calBudgetReminders": "Напоминания о бюджетах",
+  "calBudgetRemindersDesc": "Добавлять событие в календарь, когда период бюджета подходит к концу.",
+  "subsAddToCalendar": "Добавить в календарь",
+  "subsReminderAdded": "Напоминание добавлено",
+  "budgetReminderTitle": "Бюджет «{name}» заканчивается {date}"
 }

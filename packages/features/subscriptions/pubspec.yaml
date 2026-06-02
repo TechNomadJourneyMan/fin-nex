@@ -23,6 +23,8 @@ dependencies:
     path: ../../core/charts
   pf_core_l10n:
     path: ../../core/l10n
+  pf_calendar:
+    path: ../../services/calendar
 
 dev_dependencies:
   flutter_test:

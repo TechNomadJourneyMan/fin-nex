@@ -11,3 +11,4 @@ export 'src/pages/budget_form_page.dart';
 export 'src/pages/budgets_list_page.dart';
 export 'src/pages/limits_list_page.dart';
 export 'src/providers.dart';
+export 'src/reminders.dart';

@@ -1044,4 +1044,29 @@ class AppL10nEn extends AppL10n {
   String calSelected(String name) {
     return 'Using $name';
   }
+
+  @override
+  String get calSubscriptionReminders => 'Subscription reminders';
+
+  @override
+  String get calSubscriptionRemindersDesc =>
+      'Add a calendar event before each subscription renews.';
+
+  @override
+  String get calBudgetReminders => 'Budget reminders';
+
+  @override
+  String get calBudgetRemindersDesc =>
+      'Add a calendar event when a budget period is about to end.';
+
+  @override
+  String get subsAddToCalendar => 'Add to calendar';
+
+  @override
+  String get subsReminderAdded => 'Reminder added';
+
+  @override
+  String budgetReminderTitle(String name, String date) {
+    return 'Budget \'$name\' ends $date';
+  }
 }
