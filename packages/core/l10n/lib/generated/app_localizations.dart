@@ -2055,6 +2055,66 @@ abstract class AppL10n {
   /// **'Add a calendar event when a budget period is about to end.'**
   String get calBudgetRemindersDesc;
 
+  /// Toggle: local push notifications for upcoming payments.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment push reminders'**
+  String get notifPaymentPush;
+
+  /// Payment push reminders toggle description.
+  ///
+  /// In en, this message translates to:
+  /// **'Get a phone notification a day before and on the day a payment is due.'**
+  String get notifPaymentPushDesc;
+
+  /// Local notification title, day before a payment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment tomorrow'**
+  String get notifPaymentTomorrowTitle;
+
+  /// Local notification body, day before.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} — {amount} is due tomorrow'**
+  String notifPaymentTomorrowBody(String title, String amount);
+
+  /// Local notification title, day of a payment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment due today'**
+  String get notifPaymentTodayTitle;
+
+  /// Local notification body, day of.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} — {amount} is due today'**
+  String notifPaymentTodayBody(String title, String amount);
+
+  /// Generic share button label.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get shareAction;
+
+  /// Share a single transaction via the OS share sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Share transaction'**
+  String get shareTransaction;
+
+  /// Share a day's spending summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Share day summary'**
+  String get shareDaySummary;
+
+  /// Export upcoming payment events as an iCalendar file.
+  ///
+  /// In en, this message translates to:
+  /// **'Export upcoming payments (.ics)'**
+  String get shareExportPayments;
+
   /// Button: add this subscription's next charge to the calendar.
   ///
   /// In en, this message translates to:

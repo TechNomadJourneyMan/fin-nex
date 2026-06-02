@@ -1,6 +1,12 @@
 import 'package:flutter/foundation.dart';
 
 import '../models/notification_type.dart';
+// Conditional import: the native implementation (which references
+// `flutter_local_notifications` + `timezone`) is only pulled in off-web. Web
+// builds resolve `native_notifications_stub.dart` so the native bindings are
+// never tree-shaken into the JS output.
+import 'native_notifications_stub.dart'
+    if (dart.library.io) 'native_notifications_service.dart';
 
 /// Display payload sent through the [NotificationsService].
 @immutable
@@ -51,7 +57,7 @@ abstract interface class NotificationsService {
         'Use NotificationsService.noop() instead.',
       );
     }
-    return _NativeNotificationsService();
+    return createNativeNotificationsService();
   }
 
   /// Initialises the underlying channel/categories. Must be awaited before
@@ -115,59 +121,3 @@ class _NoopNotificationsService implements NotificationsService {
   }
 }
 
-class _NativeNotificationsService implements NotificationsService {
-  _NativeNotificationsService();
-
-  // TODO(F-NOTIF): wire flutter_local_notifications plugin.
-  // We avoid importing the package symbols at file scope so a Web build that
-  // accidentally evaluates this class still has a chance to fail loudly at
-  // `init` rather than during tree-shake.
-  bool _initialized = false;
-
-  @override
-  Future<void> init() async {
-    _initialized = true;
-    debugPrint('[NotificationsService.native] init() stub');
-  }
-
-  @override
-  Future<bool> requestPermission() async {
-    _ensureInit();
-    return true;
-  }
-
-  @override
-  Future<void> show(NotificationDisplay display) async {
-    _ensureInit();
-    debugPrint(
-      '[NotificationsService.native] show id=${display.id} '
-      'title=${display.title}',
-    );
-  }
-
-  @override
-  Future<void> schedule(NotificationDisplay display, DateTime when) async {
-    _ensureInit();
-    debugPrint(
-      '[NotificationsService.native] schedule id=${display.id} when=$when',
-    );
-  }
-
-  @override
-  Future<void> cancel(int id) async {
-    _ensureInit();
-    debugPrint('[NotificationsService.native] cancel id=$id');
-  }
-
-  @override
-  Future<void> cancelAll() async {
-    _ensureInit();
-    debugPrint('[NotificationsService.native] cancelAll()');
-  }
-
-  void _ensureInit() {
-    if (!_initialized) {
-      throw StateError('NotificationsService.init() must be called first.');
-    }
-  }
-}

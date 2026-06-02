@@ -13,6 +13,7 @@ class NotificationPrefs {
     required this.weeklyRecap,
     required this.limitWarnings,
     required this.insights,
+    this.paymentPush = true,
   });
 
   /// Daily "log today's expenses" reminder.
@@ -27,12 +28,17 @@ class NotificationPrefs {
   /// Smart insight notifications.
   final bool insights;
 
-  /// All four flags toggled to their startup defaults.
+  /// Local payment / subscription push reminders (native only; the toggle is
+  /// hidden on web). Defaults ON.
+  final bool paymentPush;
+
+  /// Default flags at startup.
   static const NotificationPrefs defaults = NotificationPrefs(
     dailyReminder: true,
     weeklyRecap: true,
     limitWarnings: true,
     insights: false,
+    paymentPush: true,
   );
 
   /// Returns a copy with the given fields replaced.
@@ -41,12 +47,14 @@ class NotificationPrefs {
     bool? weeklyRecap,
     bool? limitWarnings,
     bool? insights,
+    bool? paymentPush,
   }) =>
       NotificationPrefs(
         dailyReminder: dailyReminder ?? this.dailyReminder,
         weeklyRecap: weeklyRecap ?? this.weeklyRecap,
         limitWarnings: limitWarnings ?? this.limitWarnings,
         insights: insights ?? this.insights,
+        paymentPush: paymentPush ?? this.paymentPush,
       );
 }
 
@@ -64,11 +72,13 @@ class NotificationPrefsController extends StateNotifier<NotificationPrefs> {
     final weekly = await _store.getBool(PreferenceKeys.weeklyRecap);
     final limits = await _store.getBool(PreferenceKeys.limitWarnings);
     final insights = await _store.getBool(PreferenceKeys.insights);
+    final paymentPush = await _store.getBool(PreferenceKeys.paymentPush);
     state = state.copyWith(
       dailyReminder: daily ?? state.dailyReminder,
       weeklyRecap: weekly ?? state.weeklyRecap,
       limitWarnings: limits ?? state.limitWarnings,
       insights: insights ?? state.insights,
+      paymentPush: paymentPush ?? state.paymentPush,
     );
   }
 
@@ -94,5 +104,11 @@ class NotificationPrefsController extends StateNotifier<NotificationPrefs> {
   Future<void> setInsights(bool value) async {
     state = state.copyWith(insights: value);
     await _store.setBool(PreferenceKeys.insights, value);
+  }
+
+  /// Toggle local payment / subscription push reminders.
+  Future<void> setPaymentPush(bool value) async {
+    state = state.copyWith(paymentPush: value);
+    await _store.setBool(PreferenceKeys.paymentPush, value);
   }
 }

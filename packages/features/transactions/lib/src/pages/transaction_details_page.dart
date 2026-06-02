@@ -183,6 +183,24 @@ class _DetailsBody extends ConsumerWidget {
           _Row(label: l10n.txFieldCategory, value: tx.categoryId?.value ?? '—'),
           _Row(label: l10n.txFieldAccount, value: tx.accountId.value),
           const SizedBox(height: 24),
+          if (ref.watch(transactionShareHandlerProvider) != null) ...<Widget>[
+            SizedBox(
+              width: double.infinity,
+              child: PfButton(
+                key: const Key('tx.details.share'),
+                label: l10n.shareTransaction,
+                variant: PfButtonVariant.secondary,
+                onPressed: () {
+                  final handler = ref.read(transactionShareHandlerProvider);
+                  if (handler != null) {
+                    // ignore: discarded_futures
+                    handler(tx);
+                  }
+                },
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
           Row(
             children: <Widget>[
               Expanded(

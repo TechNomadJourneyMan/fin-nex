@@ -11,4 +11,6 @@ export 'src/models/notification_type.dart';
 export 'src/pages/notification_preferences_page.dart';
 export 'src/pages/notifications_center_page.dart';
 export 'src/providers.dart';
+export 'src/scheduler/payment_reminder.dart';
 export 'src/services/notifications_service.dart';
+export 'src/services/payment_reminder_sync.dart';

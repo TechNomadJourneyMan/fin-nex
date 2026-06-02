@@ -11,11 +11,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pf_core_l10n/pf_core_l10n.dart';
 import 'package:pf_core_theme/pf_core_theme.dart';
+import 'package:pf_feat_dashboard/dashboard.dart' as dashboard;
+import 'package:pf_feat_notifications/pf_feat_notifications.dart' as notif;
 import 'package:pf_feat_settings/settings.dart' as settings;
+import 'package:pf_feat_subscriptions/subscriptions.dart' as subs;
 import 'package:pf_feat_transactions/transactions.dart' as transactions;
 
 import 'intents.dart';
 import 'routes.dart';
+import 'services/home_surface_updater.dart';
 import 'widgets/command_palette.dart';
 
 /// Top-level application widget. Hosts the router, theme and locale.
@@ -43,7 +47,23 @@ class _PocketFlowAppState extends ConsumerState<PocketFlowApp> {
       }
       // ignore: discarded_futures
       transactions.runRecurringEngine(ref);
+      // Initialise + request local-notification permission on native when the
+      // payment-push reminder setting is on (no-op on web).
+      if (!kIsWeb && ref.read(notif.paymentPushEnabledProvider)) {
+        // ignore: discarded_futures
+        ref.read(notif.notificationsServiceProvider).requestPermission();
+      }
+      // Push the initial home-screen widget payload + payment reminders.
+      // ignore: discarded_futures
+      ref.read(homeSurfaceUpdaterProvider).refresh();
     });
+  }
+
+  /// Refreshes the home-screen widget + local payment reminders whenever the
+  /// balance (dashboard) or upcoming payments (subscriptions) change.
+  void _refreshHomeSurfaces() {
+    // ignore: discarded_futures
+    ref.read(homeSurfaceUpdaterProvider).refresh();
   }
 
   void _openCommandPalette() {
@@ -79,6 +99,18 @@ class _PocketFlowAppState extends ConsumerState<PocketFlowApp> {
         highContrast ? PfTheme.lightHighContrast() : PfTheme.light();
     final ThemeData darkTheme =
         highContrast ? PfTheme.darkHighContrast() : PfTheme.dark();
+
+    // Keep the home-screen widget + local payment reminders in sync with the
+    // live data. Fires on balance/account changes (dashboard) and on
+    // subscription add/remove/re-date (subscriptions stream).
+    ref.listen<AsyncValue<dashboard.DashboardSnapshot>>(
+      dashboard.dashboardControllerProvider,
+      (_, __) => _refreshHomeSurfaces(),
+    );
+    ref.listen<AsyncValue<List<subs.DetectedSubscription>>>(
+      subs.detectedSubscriptionsStreamProvider,
+      (_, __) => _refreshHomeSurfaces(),
+    );
 
     // App-wide keyboard shortcuts (web/desktop). Cmd+K / Ctrl+K opens the
     // command palette; Esc maps to Flutter's built-in DismissIntent, which

@@ -3,6 +3,7 @@
 // A connect button that requests calendar permission, lists the available
 // calendars, and persists the chosen calendar id under `pf_calendar_id`.
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pf_core_feedback/pf_core_feedback.dart';
@@ -112,6 +113,30 @@ class CalendarSection extends ConsumerWidget {
             style: typo.bodySm.copyWith(color: colors.textMuted),
           ),
         ),
+        // Local payment push reminders. Independent of the calendar (the
+        // calendar event is the shared/system surface; this is the in-app
+        // nudge). Hidden on web where local notifications are a no-op.
+        if (!kIsWeb)
+          Builder(
+            builder: (context) {
+              final prefs = ref.watch(notificationPrefsProvider);
+              final ctrl = ref.read(notificationPrefsProvider.notifier);
+              return SwitchListTile(
+                key: const Key('settings.calendar.paymentPush'),
+                title: Text(l10n.notifPaymentPush),
+                subtitle: Text(
+                  l10n.notifPaymentPushDesc,
+                  style: typo.bodySm.copyWith(color: colors.textMuted),
+                ),
+                value: prefs.paymentPush,
+                onChanged: (v) {
+                  feedback.selectTap();
+                  // ignore: discarded_futures
+                  ctrl.setPaymentPush(v);
+                },
+              );
+            },
+          ),
         // Reminder toggles — only meaningful once a calendar is connected.
         if (state.connected) ...<Widget>[
           Builder(

@@ -90,6 +90,11 @@ dependencies:
   shared_preferences: ^2.3.2
   dio: ^5.7.0
 
+  # Home-screen widgets (iOS WidgetKit / Android AppWidget) bridge.
+  home_widget: ^0.6.0
+  # OS share sheet ("integration with other apps") + .ics export hand-off.
+  share_plus: ^10.0.0
+
   # Drag-and-drop file import (web/desktop) + CSV parsing.
   desktop_drop: ^0.4.4
   csv: ^6.0.0

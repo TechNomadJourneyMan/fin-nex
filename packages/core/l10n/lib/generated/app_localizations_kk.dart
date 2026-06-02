@@ -1087,6 +1087,41 @@ class AppL10nKk extends AppL10n {
       'Бюджет кезеңі аяқталар алдында күнтізбеге оқиға қосу.';
 
   @override
+  String get notifPaymentPush => 'Төлем туралы push-еске салғыштар';
+
+  @override
+  String get notifPaymentPushDesc =>
+      'Төлем алдындағы күні және төлем күні хабарландыру алыңыз.';
+
+  @override
+  String get notifPaymentTomorrowTitle => 'Ертең төлем';
+
+  @override
+  String notifPaymentTomorrowBody(String title, String amount) {
+    return '$title — $amount ертең есептен шығады';
+  }
+
+  @override
+  String get notifPaymentTodayTitle => 'Бүгін төлем';
+
+  @override
+  String notifPaymentTodayBody(String title, String amount) {
+    return '$title — $amount бүгін есептен шығады';
+  }
+
+  @override
+  String get shareAction => 'Бөлісу';
+
+  @override
+  String get shareTransaction => 'Транзакциямен бөлісу';
+
+  @override
+  String get shareDaySummary => 'Күн қорытындысымен бөлісу';
+
+  @override
+  String get shareExportPayments => 'Алдағы төлемдерді экспорттау (.ics)';
+
+  @override
   String get subsAddToCalendar => 'Күнтізбеге қосу';
 
   @override

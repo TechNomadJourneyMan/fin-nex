@@ -9,6 +9,7 @@ export 'src/calendar_service.dart';
 export 'src/device_calendar_service.dart';
 export 'src/factory.dart';
 export 'src/google_calendar_service.dart';
+export 'src/ics_export.dart';
 export 'src/models.dart';
 export 'src/provider.dart';
 export 'src/reminder_service.dart';

@@ -1086,6 +1086,41 @@ class AppL10nEn extends AppL10n {
       'Add a calendar event when a budget period is about to end.';
 
   @override
+  String get notifPaymentPush => 'Payment push reminders';
+
+  @override
+  String get notifPaymentPushDesc =>
+      'Get a phone notification a day before and on the day a payment is due.';
+
+  @override
+  String get notifPaymentTomorrowTitle => 'Payment tomorrow';
+
+  @override
+  String notifPaymentTomorrowBody(String title, String amount) {
+    return '$title — $amount is due tomorrow';
+  }
+
+  @override
+  String get notifPaymentTodayTitle => 'Payment due today';
+
+  @override
+  String notifPaymentTodayBody(String title, String amount) {
+    return '$title — $amount is due today';
+  }
+
+  @override
+  String get shareAction => 'Share';
+
+  @override
+  String get shareTransaction => 'Share transaction';
+
+  @override
+  String get shareDaySummary => 'Share day summary';
+
+  @override
+  String get shareExportPayments => 'Export upcoming payments (.ics)';
+
+  @override
   String get subsAddToCalendar => 'Add to calendar';
 
   @override

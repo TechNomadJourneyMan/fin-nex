@@ -1101,6 +1101,41 @@ class AppL10nRu extends AppL10n {
       'Добавлять событие в календарь, когда период бюджета подходит к концу.';
 
   @override
+  String get notifPaymentPush => 'Push-напоминания о платежах';
+
+  @override
+  String get notifPaymentPushDesc =>
+      'Получайте уведомление за день и в день платежа.';
+
+  @override
+  String get notifPaymentTomorrowTitle => 'Платёж завтра';
+
+  @override
+  String notifPaymentTomorrowBody(String title, String amount) {
+    return '$title — $amount спишется завтра';
+  }
+
+  @override
+  String get notifPaymentTodayTitle => 'Платёж сегодня';
+
+  @override
+  String notifPaymentTodayBody(String title, String amount) {
+    return '$title — $amount спишется сегодня';
+  }
+
+  @override
+  String get shareAction => 'Поделиться';
+
+  @override
+  String get shareTransaction => 'Поделиться операцией';
+
+  @override
+  String get shareDaySummary => 'Поделиться сводкой за день';
+
+  @override
+  String get shareExportPayments => 'Экспорт предстоящих платежей (.ics)';
+
+  @override
   String get subsAddToCalendar => 'Добавить в календарь';
 
   @override

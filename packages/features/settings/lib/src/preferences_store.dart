@@ -104,6 +104,9 @@ abstract final class PreferenceKeys {
   /// Insights notifications enabled.
   static const String insights = 'fnx.notif.insights';
 
+  /// Local payment / subscription push reminders enabled (native only).
+  static const String paymentPush = 'fnx.notif.paymentPush';
+
   /// Biometric lock on app open.
   static const String biometric = 'fnx.privacy.biometric';
 

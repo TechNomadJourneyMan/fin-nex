@@ -10,8 +10,12 @@
 //   3. runApp(ProviderScope(overrides: buildAppProviderOverrides(module), ...))
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/widgets.dart' show Locale;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pf_core_feedback/pf_core_feedback.dart' as feedback;
+import 'package:pf_core_l10n/pf_core_l10n.dart' show lookupAppL10n;
+import 'package:pf_core_widgets/pf_core_widgets.dart' show formatPfSignedAmount;
 import 'package:pf_data_api/pf_data_api.dart';
 import 'package:pf_domain/pf_domain.dart';
 import 'package:pf_feat_ai_chat/pf_feat_ai_chat.dart' as ai_chat;
@@ -33,6 +37,7 @@ import 'app_data.dart';
 // the app no longer ships any mock data. Only persisted user data.
 import 'services/auth_session_store.dart';
 import 'services/device_id_provider.dart';
+import 'services/share_service.dart';
 
 /// The placeholder signed-in user ULID used until real auth is wired.
 ///
@@ -266,5 +271,50 @@ List<Override> buildAppProviderOverrides(AppDataModule module) {
     transactions.recurringRemindersLocaleProvider.overrideWith(
       (ref) => ref.watch(settings.localeProvider)?.toLanguageTag() ?? 'en',
     ),
+
+    // Phase 5 — local payment-push reminders. The master switch follows the
+    // settings toggle (and is forced off on web). Localised copy is built from
+    // AppL10n using literal {title}/{amount} placeholders so the pure scheduler
+    // can fill them.
+    notifications.paymentPushEnabledProvider.overrideWith(
+      (ref) =>
+          !kIsWeb &&
+          ref.watch(
+            settings.notificationPrefsProvider.select((p) => p.paymentPush),
+          ),
+    ),
+    notifications.paymentReminderCopyProvider.overrideWith((ref) {
+      final locale = ref.watch(settings.localeProvider) ?? const Locale('en');
+      final l10n = lookupAppL10n(locale);
+      return notifications.PaymentReminderCopy(
+        dayBeforeTitle: l10n.notifPaymentTomorrowTitle,
+        dayBeforeBody: l10n.notifPaymentTomorrowBody('{title}', '{amount}'),
+        dueTodayTitle: l10n.notifPaymentTodayTitle,
+        dueTodayBody: l10n.notifPaymentTodayBody('{title}', '{amount}'),
+      );
+    }),
+
+    // Phase 5 — OS share sheet for a single transaction. Builds a localised
+    // text body and hands it to the ShareService (share_plus).
+    transactions.transactionShareHandlerProvider.overrideWith((ref) {
+      return (Transaction tx) async {
+        final locale =
+            ref.read(settings.localeProvider)?.toLanguageTag() ?? 'en';
+        final signedMinor = tx.type == TransactionType.expense
+            ? -tx.amount.minor.toInt()
+            : tx.amount.minor.toInt();
+        final amountLabel = formatPfSignedAmount(
+          signedMinor,
+          locale: locale,
+          fractionDigits: 0,
+          currencySymbol: tx.amount.currency.symbol,
+        );
+        await const ShareService().shareTransaction(
+          tx,
+          amountLabel: amountLabel,
+          locale: locale,
+        );
+      };
+    }),
   ];
 }

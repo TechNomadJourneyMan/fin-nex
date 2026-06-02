@@ -15,6 +15,14 @@ final transactionsRepositoryProvider =
   );
 });
 
+/// Optional share-out handler for a single transaction (OS share sheet).
+///
+/// Defaults to `null` (no Share action shown). The app composition layer
+/// overrides this with a function that builds the text body and calls
+/// `share_plus`, keeping this feature package free of the platform dependency.
+final transactionShareHandlerProvider =
+    Provider<Future<void> Function(Transaction tx)?>((Ref ref) => null);
+
 /// Provides the [AccountsRepository] used for account chips & defaults.
 ///
 /// Must be overridden in `main()`.
