@@ -487,6 +487,21 @@
   "@calDayEmpty": {"description": "Empty state for selected day."},
   "calDayAdd": "Add for this day",
   "@calDayAdd": {"description": "Day detail CTA."},
+  "calPrevMonth": "Previous month",
+  "@calPrevMonth": {"description": "Calendar: page to the previous month."},
+  "calNextMonth": "Next month",
+  "@calNextMonth": {"description": "Calendar: page to the next month."},
+  "calLegendLow": "Low",
+  "@calLegendLow": {"description": "Heatmap legend: lowest-spend end of the scale."},
+  "calLegendHigh": "High",
+  "@calLegendHigh": {"description": "Heatmap legend: highest-spend end of the scale."},
+  "calLegendSemantic": "Spending intensity scale from low to high.",
+  "@calLegendSemantic": {"description": "Screen-reader label for the calendar heatmap legend."},
+  "calHeatmapSemantic": "Spending calendar for {month}. Total spent {total}. Tap a highlighted day for details.",
+  "@calHeatmapSemantic": {
+    "description": "Screen-reader description of the spending heatmap.",
+    "placeholders": {"month": {"type": "String"}, "total": {"type": "String"}}
+  },
 
   "notifTitle": "Notifications",
   "@notifTitle": {"description": "Notifications screen title."},
@@ -710,6 +725,8 @@
   "@cmdToggleTheme": {"description": "Command: flip between light and dark theme."},
   "cmdSwitchLanguage": "Switch language (en/ru/kk)",
   "@cmdSwitchLanguage": {"description": "Command: open the language sub-menu."},
+  "cmdOpenCalendar": "Open spending calendar",
+  "@cmdOpenCalendar": {"description": "Command: navigate to the spending heatmap calendar."},
 
   "importPreviewTitle": "Import preview",
   "@importPreviewTitle": {"description": "Title of the CSV import column-mapping dialog."},

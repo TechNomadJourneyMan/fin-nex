@@ -683,6 +683,27 @@ class AppL10nKk extends AppL10n {
   String get calDayAdd => 'Осы күнге қосу';
 
   @override
+  String get calPrevMonth => 'Алдыңғы ай';
+
+  @override
+  String get calNextMonth => 'Келесі ай';
+
+  @override
+  String get calLegendLow => 'Аз';
+
+  @override
+  String get calLegendHigh => 'Көп';
+
+  @override
+  String get calLegendSemantic =>
+      'Шығыс қарқындылығының шкаласы: төменнен жоғарыға.';
+
+  @override
+  String calHeatmapSemantic(String month, String total) {
+    return '$month айының шығыс күнтізбесі. Барлығы $total жұмсалды. Толығырақ көру үшін белгіленген күнді басыңыз.';
+  }
+
+  @override
   String get notifTitle => 'Хабарландырулар';
 
   @override
@@ -992,6 +1013,9 @@ class AppL10nKk extends AppL10n {
 
   @override
   String get cmdSwitchLanguage => 'Тілді ауыстыру (en/ru/kk)';
+
+  @override
+  String get cmdOpenCalendar => 'Шығыс күнтізбесін ашу';
 
   @override
   String get importPreviewTitle => 'Импорт алдын ала қарау';

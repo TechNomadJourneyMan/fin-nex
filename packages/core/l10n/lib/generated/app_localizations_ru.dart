@@ -694,6 +694,27 @@ class AppL10nRu extends AppL10n {
   String get calDayAdd => 'Добавить за этот день';
 
   @override
+  String get calPrevMonth => 'Предыдущий месяц';
+
+  @override
+  String get calNextMonth => 'Следующий месяц';
+
+  @override
+  String get calLegendLow => 'Мало';
+
+  @override
+  String get calLegendHigh => 'Много';
+
+  @override
+  String get calLegendSemantic =>
+      'Шкала интенсивности расходов от низкой к высокой.';
+
+  @override
+  String calHeatmapSemantic(String month, String total) {
+    return 'Календарь расходов за $month. Всего потрачено $total. Нажмите на выделенный день для подробностей.';
+  }
+
+  @override
   String get notifTitle => 'Уведомления';
 
   @override
@@ -1006,6 +1027,9 @@ class AppL10nRu extends AppL10n {
 
   @override
   String get cmdSwitchLanguage => 'Сменить язык (en/ru/kk)';
+
+  @override
+  String get cmdOpenCalendar => 'Открыть календарь расходов';
 
   @override
   String get importPreviewTitle => 'Предпросмотр импорта';

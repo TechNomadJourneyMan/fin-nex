@@ -1329,6 +1329,42 @@ abstract class AppL10n {
   /// **'Add for this day'**
   String get calDayAdd;
 
+  /// Calendar: page to the previous month.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous month'**
+  String get calPrevMonth;
+
+  /// Calendar: page to the next month.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get calNextMonth;
+
+  /// Heatmap legend: lowest-spend end of the scale.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get calLegendLow;
+
+  /// Heatmap legend: highest-spend end of the scale.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get calLegendHigh;
+
+  /// Screen-reader label for the calendar heatmap legend.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending intensity scale from low to high.'**
+  String get calLegendSemantic;
+
+  /// Screen-reader description of the spending heatmap.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending calendar for {month}. Total spent {total}. Tap a highlighted day for details.'**
+  String calHeatmapSemantic(String month, String total);
+
   /// Notifications screen title.
   ///
   /// In en, this message translates to:
@@ -1892,6 +1928,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Switch language (en/ru/kk)'**
   String get cmdSwitchLanguage;
+
+  /// Command: navigate to the spending heatmap calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Open spending calendar'**
+  String get cmdOpenCalendar;
 
   /// Title of the CSV import column-mapping dialog.
   ///

@@ -65,3 +65,41 @@ final analyticsTransactionsStreamProvider =
   final Ulid userId = ref.watch(analyticsCurrentUserIdProvider);
   return repo.watchAll(userId);
 });
+
+/// First-of-month anchor for the spending-calendar page. Normalised to the
+/// first day of the visible month (local midnight). Paging ← / → on the
+/// calendar updates this.
+final calendarMonthProvider = StateProvider<DateTime>((Ref ref) {
+  final DateTime now = DateTime.now();
+  return DateTime(now.year, now.month, 1);
+});
+
+/// Daily expense totals (in **minor units**) for the month containing [month].
+///
+/// Keyed by local-midnight `DateTime`. Only non-deleted *expense* transactions
+/// whose currency matches [analyticsDisplayCurrencyProvider] and whose
+/// `occurredAt` falls inside the calendar month are summed. Days with no
+/// spend are simply absent from the map (callers treat missing as `0`).
+final dailyTotalsProvider =
+    Provider.family<Map<DateTime, int>, DateTime>((Ref ref, DateTime month) {
+  final AsyncValue<List<Transaction>> txsAsync =
+      ref.watch(analyticsTransactionsStreamProvider);
+  final Currency currency = ref.watch(analyticsDisplayCurrencyProvider);
+  final List<Transaction> all = txsAsync.valueOrNull ?? const <Transaction>[];
+
+  final DateTime monthStart = DateTime(month.year, month.month, 1);
+  final DateTime monthEnd = DateTime(month.year, month.month + 1, 1);
+
+  final Map<DateTime, int> totals = <DateTime, int>{};
+  for (final Transaction tx in all) {
+    if (tx.deletedAt != null) continue;
+    if (tx.type != TransactionType.expense) continue;
+    if (tx.amount.currency != currency) continue;
+    final DateTime when = tx.occurredAt.toLocal();
+    if (when.isBefore(monthStart)) continue;
+    if (!when.isBefore(monthEnd)) continue;
+    final DateTime day = DateTime(when.year, when.month, when.day);
+    totals[day] = (totals[day] ?? 0) + tx.amount.minor.toInt();
+  }
+  return totals;
+});

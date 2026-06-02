@@ -219,6 +219,12 @@
   "calViewWeek": "Неделя",
   "calDayEmpty": "Нет операций",
   "calDayAdd": "Добавить за этот день",
+  "calPrevMonth": "Предыдущий месяц",
+  "calNextMonth": "Следующий месяц",
+  "calLegendLow": "Мало",
+  "calLegendHigh": "Много",
+  "calLegendSemantic": "Шкала интенсивности расходов от низкой к высокой.",
+  "calHeatmapSemantic": "Календарь расходов за {month}. Всего потрачено {total}. Нажмите на выделенный день для подробностей.",
 
   "notifTitle": "Уведомления",
   "notifEmpty": "Всё прочитано",
@@ -321,6 +327,7 @@
   "cmdOpenSettings": "Открыть Настройки",
   "cmdToggleTheme": "Сменить тему (светлая/тёмная)",
   "cmdSwitchLanguage": "Сменить язык (en/ru/kk)",
+  "cmdOpenCalendar": "Открыть календарь расходов",
 
   "importPreviewTitle": "Предпросмотр импорта",
   "importColumnDate": "Дата",

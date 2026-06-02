@@ -100,6 +100,13 @@ List<PaletteCommand> buildCommands(AppL10n l10n) {
       run: (BuildContext context, WidgetRef ref) => context.go('/analytics'),
     ),
     PaletteCommand(
+      id: 'open-spending-calendar',
+      label: l10n.cmdOpenCalendar,
+      icon: Icons.calendar_month_outlined,
+      run: (BuildContext context, WidgetRef ref) =>
+          context.go('/analytics/calendar'),
+    ),
+    PaletteCommand(
       id: 'open-settings',
       label: l10n.cmdOpenSettings,
       icon: Icons.settings_outlined,

@@ -685,6 +685,26 @@ class AppL10nEn extends AppL10n {
   String get calDayAdd => 'Add for this day';
 
   @override
+  String get calPrevMonth => 'Previous month';
+
+  @override
+  String get calNextMonth => 'Next month';
+
+  @override
+  String get calLegendLow => 'Low';
+
+  @override
+  String get calLegendHigh => 'High';
+
+  @override
+  String get calLegendSemantic => 'Spending intensity scale from low to high.';
+
+  @override
+  String calHeatmapSemantic(String month, String total) {
+    return 'Spending calendar for $month. Total spent $total. Tap a highlighted day for details.';
+  }
+
+  @override
   String get notifTitle => 'Notifications';
 
   @override
@@ -992,6 +1012,9 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get cmdSwitchLanguage => 'Switch language (en/ru/kk)';
+
+  @override
+  String get cmdOpenCalendar => 'Open spending calendar';
 
   @override
   String get importPreviewTitle => 'Import preview';

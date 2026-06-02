@@ -219,6 +219,12 @@
   "calViewWeek": "Апта",
   "calDayEmpty": "Операция жоқ",
   "calDayAdd": "Осы күнге қосу",
+  "calPrevMonth": "Алдыңғы ай",
+  "calNextMonth": "Келесі ай",
+  "calLegendLow": "Аз",
+  "calLegendHigh": "Көп",
+  "calLegendSemantic": "Шығыс қарқындылығының шкаласы: төменнен жоғарыға.",
+  "calHeatmapSemantic": "{month} айының шығыс күнтізбесі. Барлығы {total} жұмсалды. Толығырақ көру үшін белгіленген күнді басыңыз.",
 
   "notifTitle": "Хабарландырулар",
   "notifEmpty": "Барлығы оқылды",
@@ -321,6 +327,7 @@
   "cmdOpenSettings": "Параметрлерді ашу",
   "cmdToggleTheme": "Тақырыпты ауыстыру (ашық/қараңғы)",
   "cmdSwitchLanguage": "Тілді ауыстыру (en/ru/kk)",
+  "cmdOpenCalendar": "Шығыс күнтізбесін ашу",
 
   "importPreviewTitle": "Импорт алдын ала қарау",
   "importColumnDate": "Күні",

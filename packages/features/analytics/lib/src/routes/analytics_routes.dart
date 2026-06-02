@@ -3,8 +3,8 @@ import 'package:pf_domain/pf_domain.dart';
 import 'package:go_router/go_router.dart';
 
 import '../pages/analytics_page.dart';
-import '../pages/calendar_view_page.dart';
 import '../pages/category_detail_page.dart';
+import '../pages/spending_calendar_page.dart';
 
 /// Named-route constants for the analytics feature.
 abstract final class AnalyticsRouteNames {
@@ -59,7 +59,7 @@ final List<RouteBase> analyticsRoutes = <RouteBase>[
         path: 'calendar',
         name: AnalyticsRouteNames.analyticsCalendar,
         builder: (BuildContext context, GoRouterState state) =>
-            const CalendarViewPage(),
+            const SpendingCalendarPage(),
       ),
     ],
   ),
