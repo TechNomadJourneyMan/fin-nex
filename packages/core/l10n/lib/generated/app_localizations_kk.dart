@@ -1018,6 +1018,9 @@ class AppL10nKk extends AppL10n {
   String get cmdOpenCalendar => 'Шығыс күнтізбесін ашу';
 
   @override
+  String get cmdOpenRecurring => 'Қайталанатын операцияларды ашу';
+
+  @override
   String get importPreviewTitle => 'Импорт алдын ала қарау';
 
   @override
@@ -1092,5 +1095,94 @@ class AppL10nKk extends AppL10n {
   @override
   String budgetReminderTitle(String name, String date) {
     return '«$name» бюджеті $date аяқталады';
+  }
+
+  @override
+  String get recurMakeRecurring => 'Қайталанатын ету';
+
+  @override
+  String get recurMakeTitle => 'Қайталанатын ету';
+
+  @override
+  String get recurEditTitle => 'Ережені өзгерту';
+
+  @override
+  String get recurPageTitle => 'Қайталанатын';
+
+  @override
+  String get recurCadenceLabel => 'Қайталау';
+
+  @override
+  String get recurCadenceDaily => 'Күн сайын';
+
+  @override
+  String get recurCadenceWeekly => 'Апта сайын';
+
+  @override
+  String get recurCadenceBiweekly => 'Әр 2 аптада';
+
+  @override
+  String get recurCadenceMonthly => 'Ай сайын';
+
+  @override
+  String get recurCadenceYearly => 'Жыл сайын';
+
+  @override
+  String get recurEveryLabel => 'Әр (аралық)';
+
+  @override
+  String get recurEndDateLabel => 'Аяқталу күні';
+
+  @override
+  String get recurNoEndDate => 'Аяқталу күнісіз';
+
+  @override
+  String get recurSetEndDate => 'Көрсету';
+
+  @override
+  String get recurCalendarSync => 'Күнтізбеге еске салғыш қосу';
+
+  @override
+  String get recurCalendarSyncHint =>
+      'Келесі қайталану туралы еске салғышты күнтізбеде сақтайды.';
+
+  @override
+  String get recurRunNow => 'Қазір орындау';
+
+  @override
+  String get recurNoneDue => 'Жоспарланғаны жоқ';
+
+  @override
+  String get recurPause => 'Кідірту';
+
+  @override
+  String get recurResume => 'Жалғастыру';
+
+  @override
+  String get recurEmptyTitle => 'Қайталанатын операциялар жоқ';
+
+  @override
+  String get recurEmptyBody =>
+      'Операцияны басып ұстап тұрып, «Қайталанатын ету» дегенді таңдаңыз.';
+
+  @override
+  String recurMaterialised(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count операция қосылды',
+      one: '1 операция қосылды',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recurNextRun(String date) {
+    return 'Келесі $date';
+  }
+
+  @override
+  String recurEvery(int interval, String cadence) {
+    return 'Әр $interval $cadence';
   }
 }

@@ -7,6 +7,7 @@ import 'package:pf_core_widgets/pf_core_widgets.dart';
 import 'package:pf_domain/pf_domain.dart';
 
 import '../providers.dart';
+import '../recurring/make_recurring_dialog.dart';
 
 /// Outcome the caller may surface to the user (e.g. a snackbar) after a quick
 /// action completes.
@@ -78,6 +79,14 @@ Future<void> showTransactionQuickActions(
               onTap: () async {
                 Navigator.of(sheetCtx).pop();
                 await _split(context, ref, tx);
+              },
+            ),
+            _ActionTile(
+              icon: Icons.repeat,
+              label: l10n.recurMakeRecurring,
+              onTap: () async {
+                Navigator.of(sheetCtx).pop();
+                await showMakeRecurringDialog(context, ref, template: tx);
               },
             ),
             _ActionTile(

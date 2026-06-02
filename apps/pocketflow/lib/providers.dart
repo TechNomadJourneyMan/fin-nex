@@ -246,5 +246,25 @@ List<Override> buildAppProviderOverrides(AppDataModule module) {
     budgets.budgetRemindersLocaleProvider.overrideWith(
       (ref) => ref.watch(settings.localeProvider)?.toLanguageTag() ?? 'en',
     ),
+
+    // Recurring rules (Phase 4) — calendar reminders share the same connected
+    // calendar id and locale as subscriptions/budgets. Enabled whenever a
+    // calendar is connected; the per-rule editor toggle is the fine-grained
+    // opt-in stored on each rule.
+    transactions.recurringRemindersCalendarIdProvider.overrideWith(
+      (ref) => ref.watch(
+        settings.calendarControllerProvider.select((s) => s.selectedId),
+      ),
+    ),
+    transactions.recurringRemindersEnabledProvider.overrideWith(
+      (ref) =>
+          ref.watch(
+            settings.calendarControllerProvider.select((s) => s.selectedId),
+          ) !=
+          null,
+    ),
+    transactions.recurringRemindersLocaleProvider.overrideWith(
+      (ref) => ref.watch(settings.localeProvider)?.toLanguageTag() ?? 'en',
+    ),
   ];
 }

@@ -128,6 +128,37 @@ enum BudgetPeriod {
   }
 }
 
+/// How often a [RecurringRule] materialises a new transaction.
+enum RecurrenceCadence {
+  /// Every N days.
+  daily,
+
+  /// Every N weeks (same weekday).
+  weekly,
+
+  /// Every 2*N weeks (same weekday).
+  biweekly,
+
+  /// Every N months (same day-of-month, clamped to the month length).
+  monthly,
+
+  /// Every N years (same month/day).
+  yearly;
+
+  /// Wire code.
+  String get code => name;
+
+  /// Parses a database code.
+  static RecurrenceCadence parse(String code) {
+    for (final c in RecurrenceCadence.values) {
+      if (c.code == code) {
+        return c;
+      }
+    }
+    throw ArgumentError.value(code, 'code', 'Unknown recurrence cadence');
+  }
+}
+
 /// Severity of a limit alert reaction.
 enum LimitSeverity {
   soft,

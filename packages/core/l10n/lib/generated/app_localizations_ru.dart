@@ -1032,6 +1032,9 @@ class AppL10nRu extends AppL10n {
   String get cmdOpenCalendar => 'Открыть календарь расходов';
 
   @override
+  String get cmdOpenRecurring => 'Открыть повторяющиеся операции';
+
+  @override
   String get importPreviewTitle => 'Предпросмотр импорта';
 
   @override
@@ -1106,5 +1109,95 @@ class AppL10nRu extends AppL10n {
   @override
   String budgetReminderTitle(String name, String date) {
     return 'Бюджет «$name» заканчивается $date';
+  }
+
+  @override
+  String get recurMakeRecurring => 'Сделать повторяющейся';
+
+  @override
+  String get recurMakeTitle => 'Сделать повторяющейся';
+
+  @override
+  String get recurEditTitle => 'Изменить правило';
+
+  @override
+  String get recurPageTitle => 'Повторяющиеся';
+
+  @override
+  String get recurCadenceLabel => 'Повтор';
+
+  @override
+  String get recurCadenceDaily => 'Ежедневно';
+
+  @override
+  String get recurCadenceWeekly => 'Еженедельно';
+
+  @override
+  String get recurCadenceBiweekly => 'Каждые 2 недели';
+
+  @override
+  String get recurCadenceMonthly => 'Ежемесячно';
+
+  @override
+  String get recurCadenceYearly => 'Ежегодно';
+
+  @override
+  String get recurEveryLabel => 'Каждые (интервал)';
+
+  @override
+  String get recurEndDateLabel => 'Дата окончания';
+
+  @override
+  String get recurNoEndDate => 'Без даты окончания';
+
+  @override
+  String get recurSetEndDate => 'Указать';
+
+  @override
+  String get recurCalendarSync => 'Добавить напоминание в календарь';
+
+  @override
+  String get recurCalendarSyncHint =>
+      'Поддерживает напоминание о следующем повторе в календаре.';
+
+  @override
+  String get recurRunNow => 'Выполнить сейчас';
+
+  @override
+  String get recurNoneDue => 'Нет запланированных';
+
+  @override
+  String get recurPause => 'Приостановить';
+
+  @override
+  String get recurResume => 'Возобновить';
+
+  @override
+  String get recurEmptyTitle => 'Нет повторяющихся операций';
+
+  @override
+  String get recurEmptyBody =>
+      'Удерживайте операцию и выберите «Сделать повторяющейся», чтобы запланировать её.';
+
+  @override
+  String recurMaterialised(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Добавлено $count операций',
+      few: 'Добавлено $count операции',
+      one: 'Добавлена 1 операция',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recurNextRun(String date) {
+    return 'Далее $date';
+  }
+
+  @override
+  String recurEvery(int interval, String cadence) {
+    return 'Каждые $interval $cadence';
   }
 }

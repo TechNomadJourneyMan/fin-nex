@@ -1017,6 +1017,9 @@ class AppL10nEn extends AppL10n {
   String get cmdOpenCalendar => 'Open spending calendar';
 
   @override
+  String get cmdOpenRecurring => 'Open recurring transactions';
+
+  @override
   String get importPreviewTitle => 'Import preview';
 
   @override
@@ -1091,5 +1094,94 @@ class AppL10nEn extends AppL10n {
   @override
   String budgetReminderTitle(String name, String date) {
     return 'Budget \'$name\' ends $date';
+  }
+
+  @override
+  String get recurMakeRecurring => 'Make recurring';
+
+  @override
+  String get recurMakeTitle => 'Make recurring';
+
+  @override
+  String get recurEditTitle => 'Edit recurring rule';
+
+  @override
+  String get recurPageTitle => 'Recurring';
+
+  @override
+  String get recurCadenceLabel => 'Repeat';
+
+  @override
+  String get recurCadenceDaily => 'Daily';
+
+  @override
+  String get recurCadenceWeekly => 'Weekly';
+
+  @override
+  String get recurCadenceBiweekly => 'Every 2 weeks';
+
+  @override
+  String get recurCadenceMonthly => 'Monthly';
+
+  @override
+  String get recurCadenceYearly => 'Yearly';
+
+  @override
+  String get recurEveryLabel => 'Every (interval)';
+
+  @override
+  String get recurEndDateLabel => 'End date';
+
+  @override
+  String get recurNoEndDate => 'No end date';
+
+  @override
+  String get recurSetEndDate => 'Set';
+
+  @override
+  String get recurCalendarSync => 'Add calendar reminder';
+
+  @override
+  String get recurCalendarSyncHint =>
+      'Keeps a reminder on your calendar for the next occurrence.';
+
+  @override
+  String get recurRunNow => 'Run now';
+
+  @override
+  String get recurNoneDue => 'Nothing due';
+
+  @override
+  String get recurPause => 'Pause';
+
+  @override
+  String get recurResume => 'Resume';
+
+  @override
+  String get recurEmptyTitle => 'No recurring transactions';
+
+  @override
+  String get recurEmptyBody =>
+      'Long-press a transaction and choose \"Make recurring\" to schedule it.';
+
+  @override
+  String recurMaterialised(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Added $count transactions',
+      one: 'Added 1 transaction',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recurNextRun(String date) {
+    return 'Next $date';
+  }
+
+  @override
+  String recurEvery(int interval, String cadence) {
+    return 'Every $interval $cadence';
   }
 }

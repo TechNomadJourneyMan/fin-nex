@@ -727,6 +727,8 @@
   "@cmdSwitchLanguage": {"description": "Command: open the language sub-menu."},
   "cmdOpenCalendar": "Open spending calendar",
   "@cmdOpenCalendar": {"description": "Command: navigate to the spending heatmap calendar."},
+  "cmdOpenRecurring": "Open recurring transactions",
+  "@cmdOpenRecurring": {"description": "Command: navigate to the recurring rules manager."},
 
   "importPreviewTitle": "Import preview",
   "@importPreviewTitle": {"description": "Title of the CSV import column-mapping dialog."},
@@ -786,6 +788,69 @@
     "placeholders": {
       "name": {"type": "String", "example": "Groceries"},
       "date": {"type": "String", "example": "June 30, 2026"}
+    }
+  },
+
+  "recurMakeRecurring": "Make recurring",
+  "@recurMakeRecurring": {"description": "Quick action: turn a transaction into a recurring rule."},
+  "recurMakeTitle": "Make recurring",
+  "@recurMakeTitle": {"description": "Title of the make-recurring dialog."},
+  "recurEditTitle": "Edit recurring rule",
+  "@recurEditTitle": {"description": "Title of the edit-recurring dialog."},
+  "recurPageTitle": "Recurring",
+  "@recurPageTitle": {"description": "Title of the recurring rules manager page."},
+  "recurCadenceLabel": "Repeat",
+  "@recurCadenceLabel": {"description": "Label above the cadence chooser."},
+  "recurCadenceDaily": "Daily",
+  "@recurCadenceDaily": {"description": "Cadence: daily."},
+  "recurCadenceWeekly": "Weekly",
+  "@recurCadenceWeekly": {"description": "Cadence: weekly."},
+  "recurCadenceBiweekly": "Every 2 weeks",
+  "@recurCadenceBiweekly": {"description": "Cadence: biweekly."},
+  "recurCadenceMonthly": "Monthly",
+  "@recurCadenceMonthly": {"description": "Cadence: monthly."},
+  "recurCadenceYearly": "Yearly",
+  "@recurCadenceYearly": {"description": "Cadence: yearly."},
+  "recurEveryLabel": "Every (interval)",
+  "@recurEveryLabel": {"description": "Label for the interval stepper."},
+  "recurEndDateLabel": "End date",
+  "@recurEndDateLabel": {"description": "Label for the optional end date."},
+  "recurNoEndDate": "No end date",
+  "@recurNoEndDate": {"description": "Shown when no end date is set."},
+  "recurSetEndDate": "Set",
+  "@recurSetEndDate": {"description": "Button to pick an end date."},
+  "recurCalendarSync": "Add calendar reminder",
+  "@recurCalendarSync": {"description": "Toggle to create a calendar reminder for the rule."},
+  "recurCalendarSyncHint": "Keeps a reminder on your calendar for the next occurrence.",
+  "@recurCalendarSyncHint": {"description": "Subtitle for the calendar reminder toggle."},
+  "recurRunNow": "Run now",
+  "@recurRunNow": {"description": "Tooltip: materialise any due recurring rules now."},
+  "recurNoneDue": "Nothing due",
+  "@recurNoneDue": {"description": "Snackbar shown when no recurring rule was due."},
+  "recurPause": "Pause",
+  "@recurPause": {"description": "Menu action to pause a recurring rule."},
+  "recurResume": "Resume",
+  "@recurResume": {"description": "Menu action to resume a paused recurring rule."},
+  "recurEmptyTitle": "No recurring transactions",
+  "@recurEmptyTitle": {"description": "Empty-state title on the recurring page."},
+  "recurEmptyBody": "Long-press a transaction and choose \"Make recurring\" to schedule it.",
+  "@recurEmptyBody": {"description": "Empty-state body on the recurring page."},
+  "recurMaterialised": "{count, plural, =1{Added 1 transaction} other{Added {count} transactions}}",
+  "@recurMaterialised": {
+    "description": "Snackbar after running the engine.",
+    "placeholders": {"count": {"type": "int", "example": "2"}}
+  },
+  "recurNextRun": "Next {date}",
+  "@recurNextRun": {
+    "description": "Subtitle showing the next occurrence date.",
+    "placeholders": {"date": {"type": "String", "example": "Jul 1, 2026"}}
+  },
+  "recurEvery": "Every {interval} {cadence}",
+  "@recurEvery": {
+    "description": "Summary of an interval > 1 (e.g. Every 2 Monthly).",
+    "placeholders": {
+      "interval": {"type": "int", "example": "2"},
+      "cadence": {"type": "String", "example": "Monthly"}
     }
   }
 }

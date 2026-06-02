@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pf_core_l10n/pf_core_l10n.dart';
 import 'package:pf_core_theme/pf_core_theme.dart';
 import 'package:pf_feat_settings/settings.dart' as settings;
+import 'package:pf_feat_transactions/transactions.dart' as transactions;
 
 import 'intents.dart';
 import 'routes.dart';
@@ -30,6 +31,20 @@ class _PocketFlowAppState extends ConsumerState<PocketFlowApp> {
   /// True while a palette dialog is open, so repeated Cmd+K presses don't
   /// stack dialogs.
   bool _paletteOpen = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Materialise any due recurring rules on app start. Idempotent — safe to
+    // run unconditionally; no-op when there are no due rules.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      // ignore: discarded_futures
+      transactions.runRecurringEngine(ref);
+    });
+  }
 
   void _openCommandPalette() {
     // Command palette is a web/desktop affordance; no-op on touch platforms.

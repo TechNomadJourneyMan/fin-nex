@@ -1935,6 +1935,12 @@ abstract class AppL10n {
   /// **'Open spending calendar'**
   String get cmdOpenCalendar;
 
+  /// Command: navigate to the recurring rules manager.
+  ///
+  /// In en, this message translates to:
+  /// **'Open recurring transactions'**
+  String get cmdOpenRecurring;
+
   /// Title of the CSV import column-mapping dialog.
   ///
   /// In en, this message translates to:
@@ -2066,6 +2072,156 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Budget \'{name}\' ends {date}'**
   String budgetReminderTitle(String name, String date);
+
+  /// Quick action: turn a transaction into a recurring rule.
+  ///
+  /// In en, this message translates to:
+  /// **'Make recurring'**
+  String get recurMakeRecurring;
+
+  /// Title of the make-recurring dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Make recurring'**
+  String get recurMakeTitle;
+
+  /// Title of the edit-recurring dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit recurring rule'**
+  String get recurEditTitle;
+
+  /// Title of the recurring rules manager page.
+  ///
+  /// In en, this message translates to:
+  /// **'Recurring'**
+  String get recurPageTitle;
+
+  /// Label above the cadence chooser.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat'**
+  String get recurCadenceLabel;
+
+  /// Cadence: daily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get recurCadenceDaily;
+
+  /// Cadence: weekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get recurCadenceWeekly;
+
+  /// Cadence: biweekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Every 2 weeks'**
+  String get recurCadenceBiweekly;
+
+  /// Cadence: monthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get recurCadenceMonthly;
+
+  /// Cadence: yearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get recurCadenceYearly;
+
+  /// Label for the interval stepper.
+  ///
+  /// In en, this message translates to:
+  /// **'Every (interval)'**
+  String get recurEveryLabel;
+
+  /// Label for the optional end date.
+  ///
+  /// In en, this message translates to:
+  /// **'End date'**
+  String get recurEndDateLabel;
+
+  /// Shown when no end date is set.
+  ///
+  /// In en, this message translates to:
+  /// **'No end date'**
+  String get recurNoEndDate;
+
+  /// Button to pick an end date.
+  ///
+  /// In en, this message translates to:
+  /// **'Set'**
+  String get recurSetEndDate;
+
+  /// Toggle to create a calendar reminder for the rule.
+  ///
+  /// In en, this message translates to:
+  /// **'Add calendar reminder'**
+  String get recurCalendarSync;
+
+  /// Subtitle for the calendar reminder toggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keeps a reminder on your calendar for the next occurrence.'**
+  String get recurCalendarSyncHint;
+
+  /// Tooltip: materialise any due recurring rules now.
+  ///
+  /// In en, this message translates to:
+  /// **'Run now'**
+  String get recurRunNow;
+
+  /// Snackbar shown when no recurring rule was due.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing due'**
+  String get recurNoneDue;
+
+  /// Menu action to pause a recurring rule.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get recurPause;
+
+  /// Menu action to resume a paused recurring rule.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get recurResume;
+
+  /// Empty-state title on the recurring page.
+  ///
+  /// In en, this message translates to:
+  /// **'No recurring transactions'**
+  String get recurEmptyTitle;
+
+  /// Empty-state body on the recurring page.
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press a transaction and choose \"Make recurring\" to schedule it.'**
+  String get recurEmptyBody;
+
+  /// Snackbar after running the engine.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Added 1 transaction} other{Added {count} transactions}}'**
+  String recurMaterialised(int count);
+
+  /// Subtitle showing the next occurrence date.
+  ///
+  /// In en, this message translates to:
+  /// **'Next {date}'**
+  String recurNextRun(String date);
+
+  /// Summary of an interval > 1 (e.g. Every 2 Monthly).
+  ///
+  /// In en, this message translates to:
+  /// **'Every {interval} {cadence}'**
+  String recurEvery(int interval, String cadence);
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

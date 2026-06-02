@@ -18,6 +18,14 @@ export 'src/sheets/quick_add_income_sheet.dart';
 // Predictor
 export 'src/predictor/category_predictor.dart';
 
+// Recurring rules
+export 'src/recurring/in_memory_recurring_rules_repository.dart';
+export 'src/recurring/make_recurring_dialog.dart';
+export 'src/recurring/recurring_calendar_sync.dart';
+export 'src/recurring/recurring_providers.dart';
+export 'src/recurring/recurring_rules_page.dart';
+export 'src/recurring/recurring_source.dart';
+
 // State
 export 'src/state/transaction_filter_state.dart';
 export 'src/state/transaction_filters_notifier.dart';

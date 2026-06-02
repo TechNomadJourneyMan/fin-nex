@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../pages/history_page.dart';
 import '../pages/transaction_details_page.dart';
 import '../pages/transaction_form_page.dart';
+import '../recurring/recurring_rules_page.dart';
 import '../sheets/quick_add_expense_sheet.dart';
 import '../sheets/quick_add_income_sheet.dart';
 
@@ -24,6 +25,9 @@ abstract final class TransactionsRoutePaths {
 
   /// Edit page.
   static const String edit = '/transactions/:id/edit';
+
+  /// Recurring rules manager.
+  static const String recurring = '/transactions/recurring';
 }
 
 /// Returns the [GoRoute]s contributed by this feature.
@@ -52,6 +56,12 @@ List<GoRoute> buildTransactionsRoutes({
           path: 'income',
           builder: (BuildContext ctx, GoRouterState state) =>
               const TransactionFormPage(),
+        ),
+        // Static `recurring` must precede `:id` so it is not captured as an id.
+        GoRoute(
+          path: 'recurring',
+          builder: (BuildContext ctx, GoRouterState state) =>
+              const RecurringRulesPage(),
         ),
         GoRoute(
           path: ':id',
